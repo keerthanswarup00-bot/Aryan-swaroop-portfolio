@@ -24,16 +24,17 @@ module.exports = async function handler(req, res) {
     const file = form.get('file');
     if (!file) return res.status(400).json({ success: false, error: 'No file' });
 
-    const ext = '.' + file.name.split('.').pop().toLowerCase();
+    const filename = file.name;
+    const ext = '.' + filename.split('.').pop().toLowerCase();
     if (!ALLOWED.has(ext)) return res.status(400).json({ success: false, error: 'File type not allowed' });
 
-    const blob = await put('images/' + file.name, file, {
+    const blob = await put('images/' + filename, file, {
       access: 'public',
       contentType: file.type,
     });
 
-    console.log(`[UPLOAD] ${file.name} → ${blob.url}`);
-    return res.status(200).json({ success: true, filename: file.name, url: blob.url });
+    console.log('[UPLOAD]', filename);
+    return res.status(200).json({ success: true, filename, url: blob.url });
   } catch (err) {
     console.error('[UPLOAD ERROR]', err);
     return res.status(500).json({ success: false, error: err.message });

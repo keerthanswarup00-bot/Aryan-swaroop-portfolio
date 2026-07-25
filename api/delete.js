@@ -1,4 +1,4 @@
-const { del } = require('@vercel/blob');
+const { list, del } = require('@vercel/blob');
 const crypto = require('crypto');
 
 const ADMIN_HASH = '82580f067c62f6655090f7e49f349c685e1588d189e50118b437d6a830d72dbb';
@@ -29,11 +29,17 @@ module.exports = async function handler(req, res) {
     if (!name) return res.status(400).json({ success: false, error: 'No name provided' });
 
     const safe = name.replace(/[^a-zA-Z0-9._-]/g, '');
-    const url = `${process.env.BLOB_BASE_URL || ''}/images/${safe}`;
+    const targetPath = 'images/' + safe;
 
-    await del(url);
+    const { blobs } = await list({ prefix: 'images/' });
+    const match = blobs.find(b => b.pathname === targetPath);
 
-    console.log(`[DELETE] ${safe}`);
+    if (!match) {
+      return res.status(404).json({ success: false, error: 'File not found in blob storage' });
+    }
+
+    await del(match.url);
+    console.log('[DELETE]', safe);
     return res.status(200).json({ success: true });
   } catch (err) {
     console.error('[DELETE ERROR]', err);

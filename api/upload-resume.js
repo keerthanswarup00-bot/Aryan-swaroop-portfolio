@@ -31,7 +31,7 @@ module.exports = async function handler(req, res) {
       contentType: 'application/pdf',
     });
 
-    console.log(`[UPLOAD RESUME] ${file.name} → ${blob.url}`);
+    console.log('[UPLOAD RESUME]', file.name);
     return res.status(200).json({ success: true, filename: 'Aryan_Swaroop_Resume.pdf', url: blob.url });
   } catch (err) {
     console.error('[UPLOAD RESUME ERROR]', err);

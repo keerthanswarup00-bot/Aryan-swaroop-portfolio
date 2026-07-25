@@ -343,7 +343,7 @@
           if (data.success) {
             const img = card.querySelector("img");
             const ph = card.querySelector(".placeholder");
-            img.src = "images/" + name + "?t=" + Date.now();
+            img.src = data.url || ("images/" + name + "?t=" + Date.now());
             img.classList.add("visible");
             ph.classList.add("visible");
             card.classList.add("uploaded");
