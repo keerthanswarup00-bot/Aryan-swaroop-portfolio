@@ -14,7 +14,10 @@
 <meta name="twitter:title" content="Tools — Aryan Swaroop">
 <meta name="twitter:description" content="Design, motion, 3D, and front-end capabilities, with a downloadable resume.">
 <meta name="twitter:image" content="https://www.aryanswaroop.com/images/portrait.jpg">
-<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
@@ -34,9 +37,16 @@
     <div class="nav-right">
       <div class="status-badge"><span class="status-dot"></span>Open to Work — <span class="type-cycle"></span></div>
       <a class="nav-cta" href="Aryan_Swaroop_Resume.pdf" download data-cur="GET">Resume</a>
+      <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
     </div>
   </div>
 </nav>
+<div class="nav-overlay" id="navOverlay">
+  <a href="/real-estate">Real Estate</a>
+  <a href="/lifestyle">Lifestyle</a>
+  <a href="/builds">Builds</a>
+  <a href="/tools">Tools</a>
+</div>
 
 <div class="page-header wrap">
   <div class="kicker">Capabilities</div>

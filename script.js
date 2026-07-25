@@ -18,6 +18,24 @@ if (cur) {
   });
 }
 
+// Hamburger menu
+var hamburger = document.getElementById('hamburger');
+var navOverlay = document.getElementById('navOverlay');
+if (hamburger && navOverlay) {
+  hamburger.addEventListener('click', function () {
+    var open = hamburger.classList.toggle('open');
+    navOverlay.classList.toggle('open');
+    hamburger.setAttribute('aria-expanded', open);
+  });
+  navOverlay.querySelectorAll('a').forEach(function (a) {
+    a.addEventListener('click', function () {
+      hamburger.classList.remove('open');
+      navOverlay.classList.remove('open');
+      hamburger.setAttribute('aria-expanded', 'false');
+    });
+  });
+}
+
 // Typewriter cycle for "Open to Work" badge
 function typeCycle(el, words) {
   var wIndex = 0, cIndex = 0, deleting = false;
