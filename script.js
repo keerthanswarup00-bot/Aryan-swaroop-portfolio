@@ -1,6 +1,21 @@
 // Reduced motion check
 var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+// Page transition — fade in on load, fade out on nav
+document.body.classList.add('loaded');
+if (!prefersReducedMotion) {
+  document.querySelectorAll('a[href^="/"]').forEach(function (a) {
+    a.addEventListener('click', function (e) {
+      if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      e.preventDefault();
+      var href = a.getAttribute('href');
+      document.body.classList.remove('loaded');
+      document.body.classList.add('fade-out');
+      setTimeout(function () { window.location.href = href; }, 180);
+    });
+  });
+}
+
 // Custom cursor
 var cur = document.getElementById('cur');
 if (cur && !prefersReducedMotion) {
