@@ -101,9 +101,43 @@
       transition: all 0.3s; z-index: 100; pointer-events: none;
     }
     .toast.show { opacity: 1; transform: translateY(0); }
+
+    .auth-gate {
+      position: fixed; inset: 0; z-index: 9999;
+      background: #0a0a0a; display: flex; align-items: center; justify-content: center;
+    }
+    .auth-gate.hidden { display: none; }
+    .auth-box {
+      background: #141414; border: 1px solid #222; border-radius: 16px;
+      padding: 48px; width: 100%; max-width: 360px; text-align: center;
+    }
+    .auth-box h2 { font-size: 18px; font-weight: 600; margin-bottom: 6px; letter-spacing: -0.5px; }
+    .auth-box p { font-size: 13px; color: #666; margin-bottom: 28px; }
+    .auth-box input {
+      width: 100%; padding: 12px 16px; background: #0a0a0a; border: 1px solid #333;
+      border-radius: 8px; color: #fff; font-size: 14px; outline: none; margin-bottom: 16px;
+      font-family: 'SF Mono', monospace; letter-spacing: 1px;
+    }
+    .auth-box input:focus { border-color: #555; }
+    .auth-box button {
+      width: 100%; padding: 12px; background: #fff; color: #000; border: none;
+      border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    .auth-box button:hover { opacity: 0.85; }
+    .auth-error { color: #f87171; font-size: 12px; margin-top: 12px; display: none; }
   </style>
 </head>
 <body>
+  <div class="auth-gate" id="auth-gate">
+    <div class="auth-box">
+      <h2>Admin Access</h2>
+      <p>Enter password to continue</p>
+      <input type="password" id="auth-password" placeholder="Password" autofocus />
+      <button onclick="attemptLogin()">Unlock</button>
+      <div class="auth-error" id="auth-error">Incorrect password</div>
+    </div>
+  </div>
   <div class="header">
     <h1>Image Manager</h1>
     <div class="stats"><span id="count">0</span> / 39 uploaded</div>
@@ -294,11 +328,16 @@
       if (input.files.length) handleFileObj(input.files[0], name, input.closest(".card"));
     }
 
+    function authHeaders(extra) {
+      const pw = sessionStorage.getItem('admin_pw') || '';
+      return Object.assign({ 'Authorization': 'Bearer ' + pw }, extra || {});
+    }
+
     function handleFileObj(file, name, card) {
       const formData = new FormData();
       formData.append("file", file, name);
 
-      fetch("/upload", { method: "POST", body: formData })
+      fetch("/api/upload", { method: "POST", headers: authHeaders(), body: formData })
         .then(r => r.json())
         .then(data => {
           if (data.success) {
@@ -316,9 +355,9 @@
     }
 
     function removeImage(name) {
-      fetch("/delete", {
+      fetch("/api/delete", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: authHeaders({ "Content-Type": "application/json" }),
         body: JSON.stringify({ name })
       })
       .then(r => r.json())
@@ -371,7 +410,7 @@
       const file = input.files[0];
       const formData = new FormData();
       formData.append("file", file, "Aryan_Swaroop_Resume.pdf");
-      fetch("/upload-resume", { method: "POST", body: formData })
+      fetch("/api/upload-resume", { method: "POST", headers: authHeaders(), body: formData })
         .then(r => r.json())
         .then(data => {
           if (data.success) {
@@ -383,9 +422,9 @@
         .catch(() => toast("Upload failed"));
     }
     function removeResume() {
-      fetch("/delete", {
+      fetch("/api/delete", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: authHeaders({ "Content-Type": "application/json" }),
         body: JSON.stringify({ name: "Aryan_Swaroop_Resume.pdf" })
       })
         .then(r => r.json())
@@ -405,6 +444,32 @@
     });
 
     renderGrid();
+
+    // --- Auth gate ---
+    const AUTH_HASH = '82580f067c62f6655090f7e49f349c685e1588d189e50118b437d6a830d72dbb';
+    function attemptLogin() {
+      const pw = document.getElementById('auth-password').value;
+      sha256(pw).then(hash => {
+        if (hash === AUTH_HASH) {
+          sessionStorage.setItem('admin_ok', '1');
+          sessionStorage.setItem('admin_pw', pw);
+          document.getElementById('auth-gate').classList.add('hidden');
+        } else {
+          document.getElementById('auth-error').style.display = 'block';
+        }
+      });
+    }
+    document.getElementById('auth-password').addEventListener('keydown', e => {
+      if (e.key === 'Enter') attemptLogin();
+    });
+    async function sha256(msg) {
+      const buf = new TextEncoder().encode(msg);
+      const hash = await crypto.subtle.digest('SHA-256', buf);
+      return Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2,'0')).join('');
+    }
+    if (sessionStorage.getItem('admin_ok') === '1') {
+      document.getElementById('auth-gate').classList.add('hidden');
+    }
   </script>
 </body>
 </html>

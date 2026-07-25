@@ -2,7 +2,7 @@
 import http.server
 import json
 import os
-import uuid
+import hashlib
 
 PORT = 8000
 DIR = os.path.dirname(os.path.abspath(__file__))
@@ -12,6 +12,16 @@ os.makedirs(IMAGES_DIR, exist_ok=True)
 
 ALLOWED = {".jpg", ".jpeg", ".png", ".webp", ".gif", ".avif"}
 RESUME_ALLOWED = {".pdf"}
+
+ADMIN_HASH = "82580f067c62f6655090f7e49f349c685e1588d189e50118b437d6a830d72dbb"
+
+
+def check_auth(handler):
+    auth = handler.headers.get("Authorization", "")
+    token = auth.replace("Bearer ", "").strip()
+    if hashlib.sha256(token.encode()).hexdigest() != ADMIN_HASH:
+        return False
+    return True
 
 
 def parse_multipart(rfile, content_length, content_type):
@@ -47,16 +57,21 @@ class Handler(http.server.SimpleHTTPRequestHandler):
         super().__init__(*args, directory=DIR, **kwargs)
 
     def do_POST(self):
-        if self.path == "/upload":
+        path = self.path
+        if path in ("/upload", "/api/upload"):
             self._handle_upload()
-        elif self.path == "/upload-resume":
+        elif path in ("/upload-resume", "/api/upload-resume"):
             self._handle_upload_resume()
-        elif self.path == "/delete":
+        elif path in ("/delete", "/api/delete"):
             self._handle_delete()
         else:
             self.send_error(404)
 
     def _handle_upload(self):
+        if not check_auth(self):
+            self._json_response(401, {"success": False, "error": "Unauthorized"})
+            return
+
         content_type = self.headers.get("Content-Type", "")
         if "multipart/form-data" not in content_type:
             self._json_response(400, {"success": False, "error": "Invalid content type"})
@@ -88,6 +103,10 @@ class Handler(http.server.SimpleHTTPRequestHandler):
         self._json_response(200, {"success": True, "filename": filename})
 
     def _handle_upload_resume(self):
+        if not check_auth(self):
+            self._json_response(401, {"success": False, "error": "Unauthorized"})
+            return
+
         content_type = self.headers.get("Content-Type", "")
         if "multipart/form-data" not in content_type:
             self._json_response(400, {"success": False, "error": "Invalid content type"})
@@ -119,12 +138,15 @@ class Handler(http.server.SimpleHTTPRequestHandler):
         self._json_response(200, {"success": True, "filename": filename})
 
     def _handle_delete(self):
+        if not check_auth(self):
+            self._json_response(401, {"success": False, "error": "Unauthorized"})
+            return
+
         length = int(self.headers.get("Content-Length", 0))
         body = self.rfile.read(length)
         data = json.loads(body)
         name = os.path.basename(data.get("name", ""))
 
-        # Check images directory first, then root
         filepath = os.path.join(IMAGES_DIR, name)
         if not os.path.exists(filepath):
             filepath = os.path.join(DIR, name)
