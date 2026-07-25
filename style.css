@@ -133,8 +133,6 @@ h2{font-family:var(--serif); font-weight:500; font-size:clamp(26px,4.2vw,46px); 
 
 /* Devaiah gallery — full-bleed, no gaps */
 .devaiah-gallery{margin-top:34px;}
-.devaiah-hero{width:100%;}
-.devaiah-hero img{width:100%; height:auto; display:block;}
 .devaiah-row{display:grid; gap:0;}
 .devaiah-row-2{grid-template-columns:1fr 1fr;}
 .devaiah-row-3{grid-template-columns:1fr 1fr 1fr;}
