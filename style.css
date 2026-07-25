@@ -131,13 +131,14 @@ h2{font-family:var(--serif); font-weight:500; font-size:clamp(26px,4.2vw,46px); 
 @media(max-width:760px){.gallery-strip{grid-template-columns:repeat(2,1fr); gap:10px;}}
 @media(max-width:420px){.gallery-strip{grid-template-columns:1fr 1fr; gap:8px;}}
 
-/* Devaiah gallery — full-bleed, no gaps */
-.devaiah-gallery{margin-top:34px;}
-.devaiah-row{display:grid; gap:0;}
+/* Devaiah gallery — contained, no gaps */
+.devaiah-gallery{margin-top:34px; max-width:1240px; margin-left:auto; margin-right:auto; padding:0 40px;}
+.devaiah-row{display:grid; gap:12px;}
 .devaiah-row-2{grid-template-columns:1fr 1fr;}
 .devaiah-row-3{grid-template-columns:1fr 1fr 1fr;}
-.devaiah-row img{width:100%; aspect-ratio:16/9; object-fit:cover; display:block;}
-@media(max-width:700px){.devaiah-row-2,.devaiah-row-3{grid-template-columns:1fr;}}
+.devaiah-row img{width:100%; aspect-ratio:16/9; object-fit:cover; display:block; border-radius:4px;}
+@media(max-width:920px){.devaiah-gallery{padding:0 20px;}}
+@media(max-width:700px){.devaiah-row-2,.devaiah-row-3{grid-template-columns:1fr; gap:10px;}}
 
 /* work grids */
 .work-grid{display:grid; grid-template-columns:1fr 1fr; gap:36px; margin-top:36px;}
