@@ -1,0 +1,9 @@
+{
+  "rewrites": [
+    { "source": "/real-estate", "destination": "/real-estate.html" },
+    { "source": "/lifestyle", "destination": "/lifestyle.html" },
+    { "source": "/builds", "destination": "/builds.html" },
+    { "source": "/tools", "destination": "/tools.html" },
+    { "source": "/admin", "destination": "/admin.html" }
+  ]
+}
