@@ -1,9 +1,9 @@
 {
+  "cleanUrls": true,
+  "trailingSlash": false,
   "rewrites": [
-    { "source": "/real-estate", "destination": "/real-estate.html" },
-    { "source": "/lifestyle", "destination": "/lifestyle.html" },
-    { "source": "/builds", "destination": "/builds.html" },
-    { "source": "/tools", "destination": "/tools.html" },
-    { "source": "/admin", "destination": "/admin.html" }
+    { "source": "/api/upload", "destination": "/api/upload.js" },
+    { "source": "/api/upload-resume", "destination": "/api/upload-resume.js" },
+    { "source": "/api/delete", "destination": "/api/delete.js" }
   ]
 }
