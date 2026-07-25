@@ -1,0 +1,19 @@
+# Aryan Swaroop
+
+> Brand Designer & Creative Lead based in Bengaluru, India. 3+ years leading end-to-end creative — brand identity, packaging, video, 3D visualization, and digital campaigns — across real estate, F&B, and consumer brands. Also builds functional web products in React, Next.js, and Supabase.
+
+Currently open to full-time Creative Lead / Brand Designer roles at agencies or startups working across multiple industries.
+
+## Pages
+
+- [Home](https://www.aryanswaroop.com/): Overview, hero, and links to all work
+- [Real Estate](https://www.aryanswaroop.com/real-estate): Paavani Properties, Sidvin Serenity, Royal Farm, VR Devaiah Enclave — brand identity, 3D visualization, and campaign systems
+- [Lifestyle](https://www.aryanswaroop.com/lifestyle): Sastry's by Brahmi (coffee packaging), Isha V (security & facility management) — full identity systems
+- [Builds](https://www.aryanswaroop.com/builds): Selixo, AlbumFlow, Striv, Foundations — web products designed and shipped in React, Next.js, and Supabase
+- [Tools](https://www.aryanswaroop.com/tools): Skills, 3D visualization capability, and downloadable resume
+
+## Contact
+
+Email: aryanswaroop.0@gmail.com
+LinkedIn: https://linkedin.com/in/aryanswaroop
+Behance: https://behance.net/Aryan-swaroop
