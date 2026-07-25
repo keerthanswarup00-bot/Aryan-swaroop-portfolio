@@ -48,10 +48,8 @@ nav .wrap{display:flex; align-items:center; justify-content:space-between; heigh
   .navlinks{display:none;}
   .nav-cta{display:none;}
   .hamburger{display:block;}
-  nav .wrap{height:auto; min-height:64px; padding:12px 0;}
-  .nav-left{flex-direction:column; align-items:flex-start; gap:2px;}
+  nav .wrap{height:64px;}
   .logo{font-size:19px;}
-  .status-badge{font-size:11px; gap:6px;}
 }
 
 /* mobile nav overlay */
