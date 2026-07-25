@@ -3,24 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tools — Aryan Swaroop</title>
-<meta name="description" content="Tools and capabilities — Aryan Swaroop, Brand Designer & Creative Lead. Design, motion, 3D visualization, and front-end development.">
-<meta property="og:title" content="Tools — Aryan Swaroop">
-<meta property="og:description" content="Design, motion, 3D, and front-end capabilities, with a downloadable resume.">
-<meta property="og:image" content="https://www.aryanswaroop.com/images/portrait.jpg">
-<meta property="og:url" content="https://www.aryanswaroop.com/tools">
-<meta property="og:type" content="website">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Tools — Aryan Swaroop">
-<meta name="twitter:description" content="Design, motion, 3D, and front-end capabilities, with a downloadable resume.">
-<meta name="twitter:image" content="https://www.aryanswaroop.com/images/portrait.jpg">
+<title>Page Not Found — Aryan Swaroop</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="icon" href="/favicon.ico">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="manifest" href="/site.webmanifest">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -35,7 +25,7 @@
       <a href="/real-estate" data-cur="VIEW">Real Estate</a>
       <a href="/lifestyle" data-cur="VIEW">Lifestyle</a>
       <a href="/builds" data-cur="VIEW">Builds</a>
-      <a href="/tools" class="active" data-cur="VIEW">Tools</a>
+      <a href="/tools" data-cur="VIEW">Tools</a>
     </div>
     <div class="nav-right">
       <a class="nav-cta" href="Aryan_Swaroop_Resume.pdf" download data-cur="GET">Resume</a>
@@ -52,42 +42,13 @@
   <a class="overlay-resume" href="Aryan_Swaroop_Resume.pdf" download>Resume</a>
 </div>
 
-<div class="page-header wrap">
-  <div class="kicker">Capabilities</div>
-  <h1>Tools</h1>
-  <p>What I actually work in, day to day — grouped by discipline, not a wall of software icons.</p>
-</div>
-
-<section class="tight">
-  <div class="wrap">
-    <div class="tool-groups">
-      <div class="tool-group">
-        <h4>Design</h4>
-        <ul><li>Photoshop</li><li>Illustrator</li><li>InDesign</li><li>Figma</li></ul>
-      </div>
-      <div class="tool-group">
-        <h4>Motion &amp; 3D</h4>
-        <ul><li>Premiere Pro</li><li>After Effects</li><li>SketchUp</li><li>Lumion / TwinMotion / D5</li></ul>
-      </div>
-      <div class="tool-group">
-        <h4>Digital &amp; Technical</h4>
-        <ul><li>React / Next.js</li><li>Supabase</li><li>Wix Studio</li><li>AI-Assisted Workflows</li></ul>
-      </div>
-    </div>
-  </div>
-</section>
-
-
-
-<section>
-  <div class="wrap">
-    <div class="resume-block">
-      <div>
-        <h3>Full Resume</h3>
-        <p>See the experience behind the work. Download my resume.</p>
-      </div>
-      <a class="btn btn-solid" href="Aryan_Swaroop_Resume.pdf" download data-cur="GET">Download PDF</a>
-    </div>
+<section class="notfound-section">
+  <div class="wrap notfound-wrap">
+    <canvas id="notfoundScene" width="400" height="220"></canvas>
+    <div class="kicker">404</div>
+    <h1 class="notfound-h">This page took a detour.</h1>
+    <p class="notfound-sub">Wrong turn somewhere — the page you're looking for doesn't exist.</p>
+    <a class="btn btn-solid" href="/" data-cur="GO">Head Back Home</a>
   </div>
 </section>
 
@@ -114,5 +75,39 @@
 </footer>
 
 <script src="script.js"></script>
+<script>
+(function(){
+  var canvas = document.getElementById('notfoundScene');
+  if (!canvas) return;
+  var ctx = canvas.getContext('2d');
+  var boy = new Image(); boy.src = 'images/sprite-boy.png';
+  var auto = new Image(); auto.src = 'images/sprite-auto.png';
+  var loaded = 0;
+  function draw(){
+    loaded++;
+    if (loaded < 2) return;
+    ctx.clearRect(0,0,400,220);
+    ctx.strokeStyle = '#333'; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(0,180); ctx.lineTo(400,180); ctx.stroke();
+    ctx.drawImage(boy, 60, 110, boy.width*0.65, boy.height*0.65);
+    ctx.save();
+    ctx.translate(300, 170);
+    ctx.scale(-1, 1);
+    ctx.drawImage(auto, -75, -68, 150, 68);
+    ctx.restore();
+    ctx.strokeStyle = '#F2F1EA'; ctx.lineWidth = 3;
+    ctx.beginPath(); ctx.moveTo(190,180); ctx.lineTo(190,120); ctx.stroke();
+    ctx.fillStyle = '#F2F1EA';
+    ctx.beginPath();
+    ctx.moveTo(155,110); ctx.lineTo(225,110); ctx.lineTo(225,135); ctx.lineTo(155,135); ctx.lineTo(140,122.5); ctx.closePath();
+    ctx.fill();
+    ctx.fillStyle = '#161616';
+    ctx.font = '11px sans-serif'; ctx.textAlign = 'center';
+    ctx.fillText('HOME \u2192', 190, 126);
+    ctx.textAlign = 'left';
+  }
+  boy.onload = auto.onload = draw;
+})();
+</script>
 </body>
 </html>

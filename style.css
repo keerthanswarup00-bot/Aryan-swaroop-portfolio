@@ -250,3 +250,27 @@ footer .btn-ghost{border-color:#444; color:var(--paper);}
   #cur{display:none !important;}
   body{cursor:auto;}
 }
+
+/* 404 */
+.notfound-section{padding:90px 0 110px;}
+.notfound-wrap{text-align:center;}
+#notfoundScene{max-width:400px; width:100%; height:auto; margin:0 auto 30px; display:block;}
+.notfound-h{font-family:var(--serif); font-weight:500; font-size:clamp(32px,5vw,52px); margin:14px 0 12px;}
+.notfound-sub{color:var(--graphite); font-size:16px; margin-bottom:34px;}
+@media(max-width:500px){.notfound-section{padding:60px 0 80px;}}
+
+/* Scroll reveal */
+.reveal{opacity:0; transform:translateY(15px); transition:opacity .35s ease, transform .35s ease;}
+.reveal.in-view{opacity:1; transform:translateY(0);}
+
+/* Copy email */
+.copy-email{
+  margin-top:18px; background:none; border:none; padding:0; cursor:none;
+  font-family:var(--sans); font-size:13px; color:#999; display:flex; align-items:center; gap:8px;
+}
+.copy-email:hover{color:var(--paper);}
+.copy-icon{font-size:13px;}
+.copy-email.copied{color:var(--accent);}
+
+/* Currently line */
+.currently-line{font-family:var(--sans); font-size:13px; color:#888; margin-top:26px;}

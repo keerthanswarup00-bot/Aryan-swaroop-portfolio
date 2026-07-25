@@ -111,3 +111,32 @@ fetch('/api/manifest').then(function(r){return r.json();}).then(function(manifes
   });
 }).catch(function(){});
 
+// Scroll reveal — section headers (skip hero elements)
+(function(){
+  if (prefersReducedMotion) return;
+  var targets = document.querySelectorAll('section .kicker, section h2, .page-header .kicker, .page-header h1');
+  targets.forEach(function(el){ el.classList.add('reveal'); });
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in-view');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+  targets.forEach(function(el) { observer.observe(el); });
+})();
+
+// Copy email
+document.querySelectorAll('.copy-email').forEach(function(btn) {
+  var original = btn.innerHTML;
+  btn.addEventListener('click', async function() {
+    try {
+      await navigator.clipboard.writeText(btn.dataset.email);
+      btn.innerHTML = 'Copied \u2713';
+      btn.classList.add('copied');
+      setTimeout(function() { btn.innerHTML = original; btn.classList.remove('copied'); }, 1800);
+    } catch(e) {}
+  });
+});
+
