@@ -138,7 +138,7 @@ h2{font-family:var(--serif); font-weight:500; font-size:clamp(26px,4.2vw,46px); 
 .devaiah-row{display:grid; gap:0;}
 .devaiah-row-2{grid-template-columns:1fr 1fr;}
 .devaiah-row-3{grid-template-columns:1fr 1fr 1fr;}
-.devaiah-row img{width:100%; height:auto; display:block;}
+.devaiah-row img{width:100%; aspect-ratio:16/9; object-fit:cover; display:block;}
 @media(max-width:700px){.devaiah-row-2,.devaiah-row-3{grid-template-columns:1fr;}}
 
 /* work grids */
