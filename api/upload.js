@@ -46,14 +46,14 @@ module.exports = async function handler(req, res) {
   try {
     const ct = req.headers['content-type'] || '';
     const bm = ct.match(/boundary=(.+)/);
-    if (!bm) return res.status(400).json({ error: 'No boundary' });
+    if (!bm) return res.status(400).json({ error: 'No boundary in content-type' });
 
     const chunks = [];
     for await (const c of req) chunks.push(c);
     const buf = Buffer.concat(chunks);
 
     const files = parseMultipart(buf, bm[1]);
-    if (!files.length) return res.status(400).json({ error: 'No file found' });
+    if (!files.length) return res.status(400).json({ error: 'No file found in multipart body' });
 
     const file = files[0];
     const ext = ('.' + file.filename.split('.').pop().toLowerCase());
@@ -61,19 +61,16 @@ module.exports = async function handler(req, res) {
       return res.status(400).json({ error: 'Type not allowed: ' + ext });
     }
 
-    // Convert Buffer to Blob for @vercel/blob v2
-    const blob = new Blob([file.body], { type: file.contentType });
-
     const { put } = require('@vercel/blob');
-    const result = await put('images/' + file.filename, blob, {
+    const result = await put('images/' + file.filename, file.body, {
       access: 'public',
       contentType: file.contentType,
     });
 
-    console.log('[UPLOAD OK]', file.filename, result.url);
+    console.log('[UPLOAD]', file.filename, result.url);
     return res.status(200).json({ success: true, filename: file.filename, url: result.url });
   } catch (err) {
-    console.error('[UPLOAD ERR]', err.message, err.stack);
+    console.error('[UPLOAD ERR]', err.message);
     return res.status(500).json({ error: err.message });
   }
 };

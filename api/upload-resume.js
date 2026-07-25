@@ -12,23 +12,17 @@ function parseMultipart(buffer, boundary) {
   const parts = [];
   const sep = Buffer.from('--' + boundary);
   let pos = buffer.indexOf(sep) + sep.length + 2;
-
   while (true) {
     const next = buffer.indexOf(sep, pos);
     if (next === -1) break;
-
     const raw = buffer.slice(pos, next - 2);
     const hdrEnd = raw.indexOf('\r\n\r\n');
     if (hdrEnd === -1) { pos = next + sep.length + 2; continue; }
-
     const hdr = raw.slice(0, hdrEnd).toString();
     const body = raw.slice(hdrEnd + 4);
-
     const fn = hdr.match(/filename="([^"]+)"/);
     if (!fn) { pos = next + sep.length + 2; continue; }
-
-    const ct = (hdr.match(/Content-Type:\s*(.+)/i) || [,'application/octet-stream'])[1].trim();
-    parts.push({ filename: fn[1], contentType: ct, body });
+    parts.push({ filename: fn[1], body });
     pos = next + sep.length + 2;
   }
   return parts;
@@ -38,7 +32,6 @@ module.exports = async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Authorization, Content-Type');
-
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
   if (!checkAuth(req)) return res.status(401).json({ error: 'Unauthorized' });
@@ -47,24 +40,20 @@ module.exports = async function handler(req, res) {
     const ct = req.headers['content-type'] || '';
     const bm = ct.match(/boundary=(.+)/);
     if (!bm) return res.status(400).json({ error: 'No boundary' });
-
     const chunks = [];
     for await (const c of req) chunks.push(c);
     const buf = Buffer.concat(chunks);
-
     const files = parseMultipart(buf, bm[1]);
-    if (!files.length) return res.status(400).json({ error: 'No file found' });
+    if (!files.length) return res.status(400).json({ error: 'No file' });
 
     const file = files[0];
-    const blob = new Blob([file.body], { type: 'application/pdf' });
-
     const { put } = require('@vercel/blob');
-    const result = await put('Aryan_Swaroop_Resume.pdf', blob, {
+    const result = await put('Aryan_Swaroop_Resume.pdf', file.body, {
       access: 'public',
       contentType: 'application/pdf',
     });
 
-    console.log('[UPLOAD RESUME OK]', result.url);
+    console.log('[UPLOAD RESUME]', result.url);
     return res.status(200).json({ success: true, filename: 'Aryan_Swaroop_Resume.pdf', url: result.url });
   } catch (err) {
     console.error('[UPLOAD RESUME ERR]', err.message);
