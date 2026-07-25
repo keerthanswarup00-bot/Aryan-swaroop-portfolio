@@ -446,27 +446,20 @@
     renderGrid();
 
     // --- Auth gate ---
-    const AUTH_HASH = '82580f067c62f6655090f7e49f349c685e1588d189e50118b437d6a830d72dbb';
+    const ADMIN_PASS = 'HNqljb!7$DBHVI%%vhj1';
     function attemptLogin() {
       const pw = document.getElementById('auth-password').value;
-      sha256(pw).then(hash => {
-        if (hash === AUTH_HASH) {
-          sessionStorage.setItem('admin_ok', '1');
-          sessionStorage.setItem('admin_pw', pw);
-          document.getElementById('auth-gate').classList.add('hidden');
-        } else {
-          document.getElementById('auth-error').style.display = 'block';
-        }
-      });
+      if (pw === ADMIN_PASS) {
+        sessionStorage.setItem('admin_ok', '1');
+        sessionStorage.setItem('admin_pw', pw);
+        document.getElementById('auth-gate').classList.add('hidden');
+      } else {
+        document.getElementById('auth-error').style.display = 'block';
+      }
     }
     document.getElementById('auth-password').addEventListener('keydown', e => {
       if (e.key === 'Enter') attemptLogin();
     });
-    async function sha256(msg) {
-      const buf = new TextEncoder().encode(msg);
-      const hash = await crypto.subtle.digest('SHA-256', buf);
-      return Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2,'0')).join('');
-    }
     if (sessionStorage.getItem('admin_ok') === '1') {
       document.getElementById('auth-gate').classList.add('hidden');
     }
