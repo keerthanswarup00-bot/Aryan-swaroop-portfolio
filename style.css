@@ -75,11 +75,11 @@ nav .wrap{display:flex; align-items:center; justify-content:space-between; heigh
 @keyframes blink{50%{opacity:0;}}
 
 /* page header (for sub-pages) */
-.page-header{padding:70px 0 20px;}
+.page-header{padding-top:70px; padding-bottom:20px;}
 .page-header .kicker{font-size:13px; letter-spacing:.1em; text-transform:uppercase; color:var(--accent); margin-bottom:14px; font-weight:600;}
 .page-header h1{font-family:var(--serif); font-weight:500; font-size:clamp(36px,6vw,68px); letter-spacing:-.01em; margin-bottom:20px;}
 .page-header p{max-width:560px; font-size:16px; color:var(--graphite);}
-@media(max-width:600px){.page-header{padding:48px 0 16px;} .page-header p{font-size:15px;}}
+@media(max-width:600px){.page-header{padding-top:48px; padding-bottom:16px;} .page-header p{font-size:15px;}}
 
 /* hero (home only) */
 header.hero{padding:60px 0 60px;}
