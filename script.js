@@ -23,7 +23,7 @@ if (cur && !prefersReducedMotion) {
   window.addEventListener('mousemove', function (e) {
     cur.style.left = e.clientX + 'px';
     cur.style.top = e.clientY + 'px';
-  });
+  }, { passive: true });
   document.querySelectorAll('[data-cur]').forEach(function (el) {
     el.addEventListener('mouseenter', function () {
       cur.classList.add('grow');
