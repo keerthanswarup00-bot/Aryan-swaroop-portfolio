@@ -254,7 +254,6 @@ footer .btn-ghost{border-color:#444; color:var(--paper);}
 /* 404 */
 .notfound-section{padding:90px 0 110px;}
 .notfound-wrap{text-align:center;}
-#notfoundScene{max-width:400px; width:100%; height:auto; margin:0 auto 30px; display:block;}
 .notfound-h{font-family:var(--serif); font-weight:500; font-size:clamp(32px,5vw,52px); margin:14px 0 12px;}
 .notfound-sub{color:var(--graphite); font-size:16px; margin-bottom:34px;}
 @media(max-width:500px){.notfound-section{padding:60px 0 80px;}}

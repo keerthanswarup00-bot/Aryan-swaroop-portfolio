@@ -44,7 +44,6 @@
 
 <section class="notfound-section">
   <div class="wrap notfound-wrap">
-    <canvas id="notfoundScene" width="400" height="220"></canvas>
     <div class="kicker">404</div>
     <h1 class="notfound-h">This page took a detour.</h1>
     <p class="notfound-sub">Wrong turn somewhere — the page you're looking for doesn't exist.</p>
@@ -52,18 +51,16 @@
   </div>
 </section>
 
-<footer id="contact">
+<div class="game-section">
   <div class="wrap">
-    <div class="kicker">Get in touch</div>
-    <h2>Let's talk<br><em style="font-style:italic;">about the role.</em></h2>
-    <div class="contact-row">
-      <a class="btn btn-solid" href="mailto:aryanswaroop.0@gmail.com" data-cur="SEND">Email Me</a>
-      <a class="btn btn-ghost" href="Aryan_Swaroop_Resume.pdf" download data-cur="GET">Resume</a>
+    <div class="run-game">
+      <p class="run-caption run-caption--desktop">Click to start · Spacebar to jump</p>
+      <p class="run-caption run-caption--mobile">Tap to start · Tap to jump</p>
+      <div class="game-shell">
+        <canvas id="game" width="1000" height="350" aria-label="Auto Run endless runner"></canvas>
+        <button id="mute" aria-label="Mute sound" title="Mute sound">♪</button>
+      </div>
     </div>
-    <button class="copy-email" data-email="aryanswaroop.0@gmail.com" data-cur="COPY">
-      aryanswaroop.0@gmail.com <span class="copy-icon">⧉</span>
-    </button>
-    <p class="currently-line">Currently: open to Creative Lead roles in Bengaluru.</p>
     <div class="foot-bottom">
       <span>© Aryan Swaroop, Bengaluru</span>
       <div style="display:flex; gap:22px;">
@@ -72,42 +69,9 @@
       </div>
     </div>
   </div>
-</footer>
+</div>
 
 <script src="script.js"></script>
-<script>
-(function(){
-  var canvas = document.getElementById('notfoundScene');
-  if (!canvas) return;
-  var ctx = canvas.getContext('2d');
-  var boy = new Image(); boy.src = 'images/sprite-boy.png';
-  var auto = new Image(); auto.src = 'images/sprite-auto.png';
-  var loaded = 0;
-  function draw(){
-    loaded++;
-    if (loaded < 2) return;
-    ctx.clearRect(0,0,400,220);
-    ctx.strokeStyle = '#333'; ctx.lineWidth = 1;
-    ctx.beginPath(); ctx.moveTo(0,180); ctx.lineTo(400,180); ctx.stroke();
-    ctx.drawImage(boy, 60, 110, boy.width*0.65, boy.height*0.65);
-    ctx.save();
-    ctx.translate(300, 170);
-    ctx.scale(-1, 1);
-    ctx.drawImage(auto, -75, -68, 150, 68);
-    ctx.restore();
-    ctx.strokeStyle = '#F2F1EA'; ctx.lineWidth = 3;
-    ctx.beginPath(); ctx.moveTo(190,180); ctx.lineTo(190,120); ctx.stroke();
-    ctx.fillStyle = '#F2F1EA';
-    ctx.beginPath();
-    ctx.moveTo(155,110); ctx.lineTo(225,110); ctx.lineTo(225,135); ctx.lineTo(155,135); ctx.lineTo(140,122.5); ctx.closePath();
-    ctx.fill();
-    ctx.fillStyle = '#161616';
-    ctx.font = '11px sans-serif'; ctx.textAlign = 'center';
-    ctx.fillText('HOME \u2192', 190, 126);
-    ctx.textAlign = 'left';
-  }
-  boy.onload = auto.onload = draw;
-})();
-</script>
+<script type="module" src="main.js"></script>
 </body>
 </html>
