@@ -1,6 +1,9 @@
+// Reduced motion check
+var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
 // Custom cursor
 var cur = document.getElementById('cur');
-if (cur) {
+if (cur && !prefersReducedMotion) {
   var curSpan = cur.querySelector('span');
   window.addEventListener('mousemove', function (e) {
     cur.style.left = e.clientX + 'px';
@@ -62,14 +65,24 @@ function typeCycle(el, words) {
   }
   tick();
 }
-document.querySelectorAll('.type-cycle').forEach(function (el) {
-  typeCycle(el, ['Branding', 'Logo Design', 'Packaging', '3D Walkthrough', 'Motion Design']);
-});
+if (!prefersReducedMotion) {
+  document.querySelectorAll('.type-cycle').forEach(function (el) {
+    typeCycle(el, ['Branding', 'Logo Design', 'Packaging', '3D Walkthrough', 'Motion Design']);
+  });
+} else {
+  document.querySelectorAll('.type-cycle').forEach(function (el) {
+    el.textContent = 'Design';
+  });
+}
 
 // Rolling number animation for stats
 document.querySelectorAll('.stat-num').forEach(function (el) {
   var target = parseInt(el.getAttribute('data-target'), 10);
   var suffix = el.getAttribute('data-suffix') || '';
+  if (prefersReducedMotion) {
+    el.textContent = target + suffix;
+    return;
+  }
   var duration = 2000;
   var startTime = null;
   function animate(ts) {

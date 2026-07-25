@@ -17,10 +17,15 @@ export class Game {
     this.ground=new Ground(290,1000); this.background=new Background(290,1000); this.player=new Player(290); this.score=new Score();
     this.obstacles=[]; this.clouds=[new Cloud(520),new Cloud(900)]; this.particles=[]; this.intro=new Intro(); this.mode='intro';
     this.running=true; this.last=0; this.nextObstacle=850; this.nextCloud=430; this.dustTimer=0; this.runIn=0; this.shake=0; this.flash=0; this.honked=false; this.whistled=false;
+    this._paused=false; this._raf=null;
+    const self=this;
+    document.addEventListener('visibilitychange',function(){
+      if(document.hidden){self._paused=true;} else {self._paused=false; self.last=0; requestAnimationFrame(function(t){self.loop(t);});}
+    });
   }
   start() { requestAnimationFrame(t=>this.loop(t)); }
   restart() { this.mode='play'; this.running=true; this.player.reset(); this.obstacles.length=0; this.particles.length=0; this.background.reset(); this.score.reset(); this.nextObstacle=750; this.runIn=0; this.flash=10; }
-  loop(now) { const dt=Math.min(2.2,(now-this.last||16.67)/16.67); this.last=now; this.update(dt); this.render(); requestAnimationFrame(t=>this.loop(t)); }
+  loop(now) { if(this._paused) return; const dt=Math.min(2.2,(now-this.last||16.67)/16.67); this.last=now; this.update(dt); this.render(); requestAnimationFrame(t=>this.loop(t)); }
   update(dt) {
     if (this.mode==='intro') {
       this.intro.update(dt); this.ground.update(1.1,dt); this.clouds.forEach(c=>c.update(dt));
