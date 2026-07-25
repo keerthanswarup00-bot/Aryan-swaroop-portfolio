@@ -274,7 +274,7 @@
 
       card.innerHTML = `
         <div class="card-preview" style="aspect-ratio:${img.ratio}" onclick="this.querySelector('input').click()">
-          <img id="preview-${i}" />
+          <img id="preview-${i}" alt="${img.name}" />
           <div class="placeholder" id="ph-${i}">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
               <path d="M12 16V4m0 0l-4 4m4-4l4 4M4 20h16"/>
