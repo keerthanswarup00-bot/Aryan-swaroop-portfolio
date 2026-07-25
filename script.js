@@ -100,3 +100,14 @@ document.querySelectorAll('.stat-num').forEach(function (el) {
   obs.observe(el);
 });
 
+// Blob manifest — remap images uploaded via admin
+fetch('/api/manifest').then(function(r){return r.json();}).then(function(manifest){
+  if(!manifest || typeof manifest!=='object') return;
+  document.querySelectorAll('img').forEach(function(img){
+    var src=img.getAttribute('src');
+    if(!src) return;
+    var name=src.replace(/^.*[\\/]/,'').split('?')[0];
+    if(manifest[name]) img.src=manifest[name];
+  });
+}).catch(function(){});
+
