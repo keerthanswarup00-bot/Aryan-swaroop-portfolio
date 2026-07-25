@@ -10,31 +10,26 @@ function checkAuth(req) {
 
 function parseMultipart(buffer, boundary) {
   const parts = [];
-  const boundaryBuf = Buffer.from('--' + boundary);
-  let start = buffer.indexOf(boundaryBuf) + boundaryBuf.length + 2;
+  const sep = Buffer.from('--' + boundary);
+  let pos = buffer.indexOf(sep) + sep.length + 2;
 
   while (true) {
-    const end = buffer.indexOf(boundaryBuf, start);
-    if (end === -1) break;
+    const next = buffer.indexOf(sep, pos);
+    if (next === -1) break;
 
-    const part = buffer.slice(start, end - 2);
-    const headerEnd = part.indexOf('\r\n\r\n');
-    if (headerEnd === -1) { start = end + boundaryBuf.length + 2; continue; }
+    const raw = buffer.slice(pos, next - 2);
+    const hdrEnd = raw.indexOf('\r\n\r\n');
+    if (hdrEnd === -1) { pos = next + sep.length + 2; continue; }
 
-    const headers = part.slice(0, headerEnd).toString();
-    const body = part.slice(headerEnd + 4);
+    const hdr = raw.slice(0, hdrEnd).toString();
+    const body = raw.slice(hdrEnd + 4);
 
-    const filenameMatch = headers.match(/filename="([^"]+)"/);
-    const contentTypeMatch = headers.match(/Content-Type:\s*(.+)/i);
+    const fn = hdr.match(/filename="([^"]+)"/);
+    if (!fn) { pos = next + sep.length + 2; continue; }
 
-    if (filenameMatch) {
-      parts.push({
-        filename: filenameMatch[1],
-        contentType: contentTypeMatch ? contentTypeMatch[1].trim() : 'application/octet-stream',
-        data: body
-      });
-    }
-    start = end + boundaryBuf.length + 2;
+    const ct = (hdr.match(/Content-Type:\s*(.+)/i) || [,'application/octet-stream'])[1].trim();
+    parts.push({ filename: fn[1], contentType: ct, body });
+    pos = next + sep.length + 2;
   }
   return parts;
 }
@@ -45,32 +40,34 @@ module.exports = async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Headers', 'Authorization, Content-Type');
 
   if (req.method === 'OPTIONS') return res.status(200).end();
-  if (req.method !== 'POST') return res.status(405).json({ success: false, error: 'Method not allowed' });
-  if (!checkAuth(req)) return res.status(401).json({ success: false, error: 'Unauthorized' });
+  if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
+  if (!checkAuth(req)) return res.status(401).json({ error: 'Unauthorized' });
 
   try {
-    const contentType = req.headers['content-type'] || '';
-    const boundaryMatch = contentType.match(/boundary=(.+)/);
-    if (!boundaryMatch) return res.status(400).json({ success: false, error: 'No boundary' });
+    const ct = req.headers['content-type'] || '';
+    const bm = ct.match(/boundary=(.+)/);
+    if (!bm) return res.status(400).json({ error: 'No boundary' });
 
     const chunks = [];
-    for await (const chunk of req) chunks.push(chunk);
-    const buffer = Buffer.concat(chunks);
+    for await (const c of req) chunks.push(c);
+    const buf = Buffer.concat(chunks);
 
-    const files = parseMultipart(buffer, boundaryMatch[1]);
-    if (!files.length) return res.status(400).json({ success: false, error: 'No file' });
+    const files = parseMultipart(buf, bm[1]);
+    if (!files.length) return res.status(400).json({ error: 'No file found' });
 
     const file = files[0];
+    const blob = new Blob([file.body], { type: 'application/pdf' });
+
     const { put } = require('@vercel/blob');
-    const blob = await put('Aryan_Swaroop_Resume.pdf', file.data, {
+    const result = await put('Aryan_Swaroop_Resume.pdf', blob, {
       access: 'public',
       contentType: 'application/pdf',
     });
 
-    console.log('[UPLOAD RESUME]', file.filename);
-    return res.status(200).json({ success: true, filename: 'Aryan_Swaroop_Resume.pdf', url: blob.url });
+    console.log('[UPLOAD RESUME OK]', result.url);
+    return res.status(200).json({ success: true, filename: 'Aryan_Swaroop_Resume.pdf', url: result.url });
   } catch (err) {
-    console.error('[UPLOAD RESUME ERROR]', err);
-    return res.status(500).json({ success: false, error: err.message });
+    console.error('[UPLOAD RESUME ERR]', err.message);
+    return res.status(500).json({ error: err.message });
   }
 };
