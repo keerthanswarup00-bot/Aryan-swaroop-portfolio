@@ -19,8 +19,9 @@
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="manifest" href="/site.webmanifest">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preload" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600&display=swap"></noscript>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -68,7 +69,7 @@
     <div class="kicker">Case Study 01</div>
     <h2>Sastry's <em style="font-style:italic;">by Brahmi</em></h2>
     <div class="feature-grid">
-      <div class="feature-visual" data-cur="TASTE"><img src="images/brahmi-pourshot.jpg" alt="Sastry's by Brahmi"></div>
+      <div class="feature-visual" data-cur="TASTE"><img fetchpriority="high" src="images/brahmi-pourshot.jpg" alt="Sastry's by Brahmi"></div>
       <div class="feature-copy">
         <div class="kicker">The Idea</div>
         <h3 class="idea-title">How It Started</h3>
@@ -82,28 +83,28 @@
     <div class="kicker" style="margin-top:56px;">Applied to the Pack</div>
     <div class="idea-gallery">
       <div class="idea-tile" data-cur="VIEW">
-        <div class="idea-visual"><img src="images/brahmi-kolam.jpg" alt="Kolam pattern inspiration"></div>
+        <div class="idea-visual"><img loading="lazy" src="images/brahmi-kolam.jpg" alt="Kolam pattern inspiration"></div>
       </div>
       <div class="idea-tile" data-cur="VIEW">
-        <div class="idea-visual"><img src="images/brahmi-pour.jpg" alt="Filter coffee pour"></div>
+        <div class="idea-visual"><img loading="lazy" src="images/brahmi-pour.jpg" alt="Filter coffee pour"></div>
       </div>
       <div class="idea-tile" data-cur="VIEW">
-        <div class="idea-visual"><img src="images/brahmi-doorway.jpg" alt="Doorway at dawn"></div>
+        <div class="idea-visual"><img loading="lazy" src="images/brahmi-doorway.jpg" alt="Doorway at dawn"></div>
       </div>
       <div class="idea-tile" data-cur="VIEW">
-        <div class="idea-visual"><img src="images/brahmi-courtyard.jpg" alt="Festival morning courtyard"></div>
+        <div class="idea-visual"><img loading="lazy" src="images/brahmi-courtyard.jpg" alt="Festival morning courtyard"></div>
       </div>
       <div class="idea-tile" data-cur="VIEW">
-        <div class="idea-visual"><img src="images/brahmi-tumbler.jpg" alt="Coffee tumbler and davara"></div>
+        <div class="idea-visual"><img loading="lazy" src="images/brahmi-tumbler.jpg" alt="Coffee tumbler and davara"></div>
       </div>
       <div class="idea-tile" data-cur="VIEW">
-        <div class="idea-visual"><img src="images/brahmi-spices.jpg" alt="Spices and incense"></div>
+        <div class="idea-visual"><img loading="lazy" src="images/brahmi-spices.jpg" alt="Spices and incense"></div>
       </div>
       <div class="idea-tile" data-cur="VIEW">
-        <div class="idea-visual"><img src="images/brahmi-label.jpg" alt="Packaging label detail"></div>
+        <div class="idea-visual"><img loading="lazy" src="images/brahmi-label.jpg" alt="Packaging label detail"></div>
       </div>
       <div class="idea-tile" data-cur="VIEW">
-        <div class="idea-visual"><img src="images/brahmi-shelf.jpg" alt="Packaging on shelf"></div>
+        <div class="idea-visual"><img loading="lazy" src="images/brahmi-shelf.jpg" alt="Packaging on shelf"></div>
       </div>
     </div>
   </div>
@@ -114,7 +115,7 @@
     <div class="kicker">Case Study 02</div>
     <h2>Isha V<br><em style="font-style:italic;">Security &amp; Facility Management</em></h2>
     <div class="feature-grid">
-      <div class="feature-visual" data-cur="VIEW"><img src="images/ishav-guards.jpg" alt="Isha V security"></div>
+      <div class="feature-visual" data-cur="VIEW"><img loading="lazy" src="images/ishav-guards.jpg" alt="Isha V security"></div>
       <div class="feature-copy">
         <p>Isha V required a professional brand identity that reflected trust, reliability, and operational excellence while positioning the company as a modern, full-service facility management provider. The branding needed to communicate a strong sense of security and professionalism across a diverse range of services that extend well beyond traditional security personnel.</p>
         <p style="margin-top:12px;">The identity was designed to represent the company's complete service ecosystem, including security services, housekeeping, electrical maintenance, plumbing, technical support, and facility management. Every visual element was crafted to inspire confidence, reinforce credibility, and ensure consistent recognition across both corporate communications and on-site operations.</p>
@@ -129,10 +130,10 @@
     </div>
     <div class="kicker" style="margin-top:56px;">Applied Across the Business</div>
     <div class="gallery-strip">
-      <div class="gallery-tile" data-cur="VIEW"><img src="images/ishav-guards.jpg" alt="Isha V security guards"></div>
-      <div class="gallery-tile" data-cur="VIEW"><img src="images/ishav-housekeeping.jpg" alt="Isha V housekeeping"></div>
-      <div class="gallery-tile" data-cur="VIEW"><img src="images/ishav-maintenance.jpg" alt="Isha V maintenance"></div>
-      <div class="gallery-tile" data-cur="VIEW"><img src="images/isha-v-website.jpg" alt="Isha V website"></div>
+      <div class="gallery-tile" data-cur="VIEW"><img loading="lazy" src="images/ishav-guards.jpg" alt="Isha V security guards"></div>
+      <div class="gallery-tile" data-cur="VIEW"><img loading="lazy" src="images/ishav-housekeeping.jpg" alt="Isha V housekeeping"></div>
+      <div class="gallery-tile" data-cur="VIEW"><img loading="lazy" src="images/ishav-maintenance.jpg" alt="Isha V maintenance"></div>
+      <div class="gallery-tile" data-cur="VIEW"><img loading="lazy" src="images/isha-v-website.jpg" alt="Isha V website"></div>
     </div>
   </div>
 </section>
@@ -142,7 +143,7 @@
     <div class="kicker">Case Study 03</div>
     <h2>Snehaloka<br><em style="font-style:italic;">Cricket Academy</em></h2>
     <div class="feature-grid">
-      <div class="feature-visual" data-cur="VIEW"><img src="images/snehaloka-aerial.jpg" alt="Snehaloka Cricket Academy aerial"></div>
+      <div class="feature-visual" data-cur="VIEW"><img loading="lazy" src="images/snehaloka-aerial.jpg" alt="Snehaloka Cricket Academy aerial"></div>
       <div class="feature-copy">
         <p>Comprehensive Sports Complex Visualization featuring a fully master-planned, world-class sports facility rather than a single standalone building. The project encompasses the complete architectural design, site planning, landscape architecture, circulation, lighting strategy, and environmental visualization across the entire campus, creating a cohesive and immersive sports destination.</p>
         <p style="margin-top:12px;">The visualization includes a professional cricket academy with ICC-inspired practice facilities, a full-size cricket stadium with a well-maintained turf ground, multiple practice pitches, indoor and outdoor training nets, player development zones, coaching facilities, and modern sports infrastructure. The stadium features covered spectator seating, dedicated viewing galleries, team benches, VIP seating, media areas, and comfortable audience spaces designed for tournaments, academy matches, and public events.</p>
@@ -156,10 +157,10 @@
     </div>
     <div class="kicker" style="margin-top:56px;">Applied Across the Facility</div>
     <div class="gallery-strip">
-      <div class="gallery-tile" data-cur="VIEW"><img src="images/snehaloka-aerial.jpg" alt="Snehaloka aerial facility render"></div>
-      <div class="gallery-tile" data-cur="VIEW"><img src="images/snehaloka-pitch.jpg" alt="Snehaloka ground-level pitch render"></div>
-      <div class="gallery-tile" data-cur="VIEW"><img src="images/snehaloka-clubhouse.jpg" alt="Snehaloka clubhouse render"></div>
-      <div class="gallery-tile" data-cur="VIEW"><img src="images/snehaloka-sunset.jpg" alt="Snehaloka sunset lighting render"></div>
+      <div class="gallery-tile" data-cur="VIEW"><img loading="lazy" src="images/snehaloka-aerial.jpg" alt="Snehaloka aerial facility render"></div>
+      <div class="gallery-tile" data-cur="VIEW"><img loading="lazy" src="images/snehaloka-pitch.jpg" alt="Snehaloka ground-level pitch render"></div>
+      <div class="gallery-tile" data-cur="VIEW"><img loading="lazy" src="images/snehaloka-clubhouse.jpg" alt="Snehaloka clubhouse render"></div>
+      <div class="gallery-tile" data-cur="VIEW"><img loading="lazy" src="images/snehaloka-sunset.jpg" alt="Snehaloka sunset lighting render"></div>
     </div>
   </div>
 </section>

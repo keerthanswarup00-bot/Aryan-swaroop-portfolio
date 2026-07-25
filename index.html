@@ -37,8 +37,9 @@
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="manifest" href="/site.webmanifest">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preload" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600&display=swap"></noscript>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -97,7 +98,7 @@
     <div class="kicker">Featured Case Study</div>
     <h2>Sastry's <em style="font-style:italic;">by Brahmi</em></h2>
     <div class="feature-grid">
-      <div class="feature-visual" data-cur="TASTE"><img src="images/brahmi-pourshot.jpg" alt="Sastry's by Brahmi"></div>
+      <div class="feature-visual" data-cur="TASTE"><img fetchpriority="high" src="images/brahmi-pourshot.jpg" alt="Sastry's by Brahmi"></div>
       <div class="feature-copy">
         <p>Brahmi needed a packaging system that could earn its place on a premium shelf without losing its authentic South Indian filter coffee roots. Most regional coffee brands felt either outdated in their presentation or stripped of the heritage that made them distinctive.</p>
         <p style="margin-top:12px;">I built the identity from the ground up to balance both worlds. Every design decision was made to celebrate tradition while presenting the brand with a refined, contemporary aesthetic that feels premium, memorable, and unmistakably rooted in its origin.</p>
@@ -119,7 +120,7 @@
     <h2>Three ways I build brands</h2>
     <div class="teaser-grid">
       <a class="teaser-card" href="/real-estate" data-cur="VIEW">
-        <div class="teaser-visual"><img src="images/paavani-main-gate.jpg" alt="Paavani Properties"></div>
+        <div class="teaser-visual"><img loading="lazy" src="images/paavani-main-gate.jpg" alt="Paavani Properties"></div>
         <div class="teaser-body">
           <h3>Real Estate</h3>
           <p>4 launches — identity, 3D, film, campaign. Includes a 20× return on ad spend.</p>
@@ -127,7 +128,7 @@
         </div>
       </a>
       <a class="teaser-card" href="/lifestyle" data-cur="VIEW">
-        <div class="teaser-visual"><img src="images/brahmi-teaser.jpg" alt="Sastry's by Brahmi"></div>
+        <div class="teaser-visual"><img loading="lazy" src="images/brahmi-teaser.jpg" alt="Sastry's by Brahmi"></div>
         <div class="teaser-body">
           <h3>Lifestyle</h3>
           <p>Coffee, security & facility, and more — full identity systems end-to-end.</p>
@@ -135,7 +136,7 @@
         </div>
       </a>
       <a class="teaser-card" href="/builds" data-cur="VIEW">
-        <div class="teaser-visual"><img src="images/build-home-teaser.jpg" alt="Builds"></div>
+        <div class="teaser-visual"><img loading="lazy" src="images/build-home-teaser.jpg" alt="Builds"></div>
         <div class="teaser-body">
           <h3>Builds</h3>
           <p>Web products I've designed and shipped in React, Next.js, and Supabase.</p>
@@ -149,7 +150,7 @@
 <section id="about" style="background:#F2F1EB;">
   <div class="wrap">
     <div class="about-grid">
-      <div class="about-photo" data-cur="HI"><img src="images/portrait.jpg" alt="Aryan Swaroop"></div>
+      <div class="about-photo" data-cur="HI"><img loading="lazy" src="images/portrait.jpg" alt="Aryan Swaroop"></div>
       <div>
         <div class="kicker">About</div>
         <h2 style="margin-bottom:22px;">Who I am</h2>

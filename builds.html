@@ -19,8 +19,9 @@
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="manifest" href="/site.webmanifest">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preload" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600&display=swap"></noscript>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -67,41 +68,41 @@
   <div class="wrap">
     <div class="work-grid work-grid-3">
       <div class="work-card" data-cur="VIEW">
-        <div class="work-visual"><img src="images/build-selixo.jpg" alt="Selixo"></div>
+        <div class="work-visual"><img fetchpriority="high" src="images/build-selixo.jpg" alt="Selixo"></div>
         <h3>Selixo</h3>
         <p>Wedding photography SaaS — client galleries, image-selection workflow, admin dashboard.</p>
         <div class="tag-row"><span class="tag">Next.js</span><span class="tag">Supabase</span></div>
         <a class="teaser-link" href="https://selectly-web-olive.vercel.app/" target="_blank" data-cur="GO" style="display:inline-block; margin-top:10px;">View Live →</a>
       </div>
       <div class="work-card" data-cur="VIEW">
-        <div class="work-visual"><img src="images/build-albumflow.jpg" alt="AlbumFlow"></div>
+        <div class="work-visual"><img loading="lazy" src="images/build-albumflow.jpg" alt="AlbumFlow"></div>
         <h3>AlbumFlow</h3>
         <p>Photographer SaaS — core storage/API architecture, resolved a production-critical security issue.</p>
         <div class="tag-row"><span class="tag">Next.js</span><span class="tag">Supabase</span></div>
         <a class="teaser-link" href="https://albumflow-seven.vercel.app/" target="_blank" data-cur="GO" style="display:inline-block; margin-top:10px;">View Live →</a>
       </div>
       <div class="work-card" data-cur="VIEW">
-        <div class="work-visual"><img src="images/build-striv.jpg" alt="Striv"></div>
+        <div class="work-visual"><img loading="lazy" src="images/build-striv.jpg" alt="Striv"></div>
         <h3>Striv</h3>
         <p>Fitness progress-tracking PWA with real training and body-composition data models.</p>
         <div class="tag-row"><span class="tag">React</span></div>
         <a class="teaser-link" href="https://workout-tracker-virid-kappa.vercel.app/" target="_blank" data-cur="GO" style="display:inline-block; margin-top:10px;">View Live →</a>
       </div>
       <div class="work-card" data-cur="VIEW">
-        <div class="work-visual"><img src="images/build-foundations.jpg" alt="Foundations"></div>
+        <div class="work-visual"><img loading="lazy" src="images/build-foundations.jpg" alt="Foundations"></div>
         <h3>Foundations</h3>
         <p>Interactive workout guide eBook — science-based nutrition, training, and recovery, built as a structured web app.</p>
         <div class="tag-row"><span class="tag">Next.js</span></div>
         <a class="teaser-link" href="https://aryan-guide.vercel.app/" target="_blank" data-cur="GO" style="display:inline-block; margin-top:10px;">View Live →</a>
       </div>
       <div class="work-card" data-cur="VIEW">
-        <div class="work-visual"><img src="images/build-imageoptimizer.jpg" alt="Property Image Optimizer"></div>
+        <div class="work-visual"><img loading="lazy" src="images/build-imageoptimizer.jpg" alt="Property Image Optimizer"></div>
         <h3>Property Image Optimizer</h3>
         <p>Browser-only tool for real estate teams — bulk compression, resizing, and watermarking, no server required.</p>
         <div class="tag-row"><span class="tag">Canvas API</span></div>
       </div>
       <div class="work-card" data-cur="VIEW">
-        <div class="work-visual"><img src="images/build-weekend.jpg" alt="Where to Go This Weekend"></div>
+        <div class="work-visual"><img loading="lazy" src="images/build-weekend.jpg" alt="Where to Go This Weekend"></div>
         <h3>Where to Go This Weekend</h3>
         <p>Bangalore spot-finder — 549 curated places, filter by mood or category, spin for a random pick.</p>
         <div class="tag-row"><span class="tag">Next.js</span></div>
