@@ -9,7 +9,6 @@ function checkAuth(req) {
 }
 
 function parseMultipart(buffer, boundary) {
-  const parts = [];
   const sep = Buffer.from('--' + boundary);
   let pos = buffer.indexOf(sep) + sep.length + 2;
   while (true) {
@@ -22,10 +21,9 @@ function parseMultipart(buffer, boundary) {
     const body = raw.slice(hdrEnd + 4);
     const fn = hdr.match(/filename="([^"]+)"/);
     if (!fn) { pos = next + sep.length + 2; continue; }
-    parts.push({ filename: fn[1], body });
-    pos = next + sep.length + 2;
+    return { filename: fn[1], body };
   }
-  return parts;
+  return null;
 }
 
 module.exports = async function handler(req, res) {
@@ -43,11 +41,10 @@ module.exports = async function handler(req, res) {
     const chunks = [];
     for await (const c of req) chunks.push(c);
     const buf = Buffer.concat(chunks);
-    const files = parseMultipart(buf, bm[1]);
-    if (!files.length) return res.status(400).json({ error: 'No file' });
+    const file = parseMultipart(buf, bm[1]);
+    if (!file) return res.status(400).json({ error: 'No file' });
 
-    const file = files[0];
-    const { put } = require('@vercel/blob');
+    const { put } = await import('@vercel/blob');
     const result = await put('Aryan_Swaroop_Resume.pdf', file.body, {
       access: 'public',
       contentType: 'application/pdf',

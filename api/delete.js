@@ -1,4 +1,3 @@
-const { list, del } = require('@vercel/blob');
 const crypto = require('crypto');
 
 const ADMIN_HASH = '82580f067c62f6655090f7e49f349c685e1588d189e50118b437d6a830d72dbb';
@@ -13,10 +12,9 @@ module.exports = async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Authorization, Content-Type');
-
   if (req.method === 'OPTIONS') return res.status(200).end();
-  if (req.method !== 'POST') return res.status(405).json({ success: false, error: 'Method not allowed' });
-  if (!checkAuth(req)) return res.status(401).json({ success: false, error: 'Unauthorized' });
+  if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
+  if (!checkAuth(req)) return res.status(401).json({ error: 'Unauthorized' });
 
   try {
     const body = await new Promise((resolve) => {
@@ -26,23 +24,22 @@ module.exports = async function handler(req, res) {
     });
 
     const name = body.name;
-    if (!name) return res.status(400).json({ success: false, error: 'No name provided' });
+    if (!name) return res.status(400).json({ error: 'No name' });
 
     const safe = name.replace(/[^a-zA-Z0-9._-]/g, '');
     const targetPath = 'images/' + safe;
 
+    const { list, del } = await import('@vercel/blob');
     const { blobs } = await list({ prefix: 'images/' });
     const match = blobs.find(b => b.pathname === targetPath);
 
-    if (!match) {
-      return res.status(404).json({ success: false, error: 'File not found in blob storage' });
-    }
+    if (!match) return res.status(404).json({ error: 'Not found' });
 
     await del(match.url);
     console.log('[DELETE]', safe);
     return res.status(200).json({ success: true });
   } catch (err) {
-    console.error('[DELETE ERROR]', err);
-    return res.status(500).json({ success: false, error: err.message });
+    console.error('[DELETE ERR]', err.message);
+    return res.status(500).json({ error: err.message });
   }
 };
