@@ -24,13 +24,13 @@ export class Game {
     });
   }
   start() { requestAnimationFrame(t=>this.loop(t)); }
-  restart() { this.mode='play'; this.running=true; this.player.reset(); this.obstacles.length=0; this.particles.length=0; this.background.reset(); this.score.reset(); this.nextObstacle=750; this.runIn=0; this.flash=10; }
+  restart() { this.mode='play'; this.running=true; this.player.reset(); this.obstacles.length=0; this.particles.length=0; this.background.reset(); this.score.reset(); this.nextObstacle=750; this.runIn=0; this.flash=10; this.sound.startMusic(); }
   loop(now) { if(this._paused) return; const dt=Math.min(2.2,(now-this.last||16.67)/16.67); this.last=now; this.update(dt); this.render(); requestAnimationFrame(t=>this.loop(t)); }
   update(dt) {
     if (this.mode==='intro') {
       this.intro.update(dt); this.ground.update(1.1,dt); this.clouds.forEach(c=>c.update(dt));
       if (this.intro.instructing) {
-        if (this.intro.instructDone) { this.mode='play'; this.runIn=0; this.flash=12; }
+        if (this.intro.instructDone) { this.mode='play'; this.runIn=0; this.flash=12; this.sound.startMusic(); }
         return;
       }
       if (this.input.consumeJump() && this.intro.ready) { this.intro.instructing = true; this.intro.instructTime = 0; return; }
@@ -49,7 +49,7 @@ export class Game {
     this.nextObstacle-=speed*dt; this.nextCloud-=dt*3;
     if(this.nextObstacle<=0) { this.obstacles.push(new Obstacle(1030,290)); this.nextObstacle=rand(Math.max(300,590-speed*18),Math.max(535,920-speed*15)); }
     if(this.nextCloud<=0 && this.clouds.length<3) { this.clouds.push(new Cloud(1030)); this.nextCloud=rand(450,750); }
-    if(this.obstacles.some(o=>this.collides(this.player.hitbox,o.hitbox))) { this.running=false; this.player.dead=true; this.shake=16; this.sound.play('over'); }
+    if(this.obstacles.some(o=>this.collides(this.player.hitbox,o.hitbox))) { this.running=false; this.player.dead=true; this.shake=16; this.sound.play('over'); this.sound.stopMusic(); }
   }
   collides(a,b) { return a.x<b.x+b.w && a.x+a.w>b.x && a.y<b.y+b.h && a.y+a.h>b.y; }
   tone() { return ['#ffffff','#fdfcf9','#faf8f2','#f6f3ee'][Math.floor(this.score.value/250)%4]; }
