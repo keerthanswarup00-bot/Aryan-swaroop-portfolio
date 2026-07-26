@@ -369,7 +369,7 @@ section{content-visibility:auto; contain-intrinsic-size:0 600px;}
 /* About page — hero */
 .about-hero{background:var(--ink); color:var(--paper); min-height:100vh; display:flex; align-items:center; justify-content:center; padding:100px 40px 80px; position:relative;}
 .about-hero-readmore{position:absolute; bottom:40px; left:40px; font-size:12px; letter-spacing:.06em; color:rgba(255,255,255,.45); text-transform:lowercase;}
-.about-hero-inner{max-width:900px; text-align:center;}
+.about-hero-inner{max-width:1100px; text-align:center;}
 .about-hero-inner p{font-family:var(--serif); font-weight:500; font-size:clamp(24px,4.5vw,44px); line-height:1.35; letter-spacing:-.01em;}
 
 /* About page — story */
