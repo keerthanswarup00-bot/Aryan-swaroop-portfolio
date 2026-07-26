@@ -1,3 +1,39 @@
+// Intro flash sequence
+(function(){
+  var overlay=document.getElementById('intro-overlay');
+  var text=document.getElementById('intro-text');
+  if(!overlay||!text||sessionStorage.getItem('introSeen')||window.matchMedia('(prefers-reduced-motion:reduce)').matches){
+    if(overlay)overlay.remove();
+    return;
+  }
+  var words=['Branding','Designer','3D Walkthrough','Developer','Marketing','Motion Design'];
+  var wi=0;
+  text.textContent='Aryan Swaroop';
+  text.style.opacity='1';
+  setTimeout(function(){
+    text.style.opacity='0';
+    setTimeout(function(){
+      text.classList.add('flash');
+      flashNext();
+    },200);
+  },1000);
+  function flashNext(){
+    if(wi>=words.length){
+      sessionStorage.setItem('introSeen','1');
+      overlay.classList.add('done');
+      setTimeout(function(){overlay.remove();},250);
+      return;
+    }
+    text.textContent=words[wi];
+    text.style.opacity='1';
+    setTimeout(function(){
+      text.style.opacity='0';
+      wi++;
+      setTimeout(flashNext,20);
+    },140);
+  }
+})();
+
 // Reduced motion check
 var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 

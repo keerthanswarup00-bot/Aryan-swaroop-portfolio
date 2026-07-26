@@ -285,3 +285,9 @@ footer .btn-ghost{border-color:#444; color:var(--paper);}
 /* Content visibility for below-fold sections */
 section{content-visibility:auto; contain-intrinsic-size:0 600px;}
 @media(max-width:700px){section{contain-intrinsic-size:0 400px;}}
+
+/* Intro flash sequence */
+.intro-overlay{position:fixed; inset:0; z-index:99999; background:#0E0E0F; display:flex; align-items:center; justify-content:center; transition:opacity .2s ease;}
+.intro-overlay.done{opacity:0; pointer-events:none;}
+.intro-text{color:#fff; font-family:var(--serif); font-weight:500; font-size:clamp(28px,6vw,56px); text-align:center; opacity:0; transition:opacity .8s ease-in;}
+.intro-text.flash{transition:none;}
