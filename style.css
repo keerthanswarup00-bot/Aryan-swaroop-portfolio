@@ -45,6 +45,11 @@ a{color:inherit; text-decoration:none;}
 .hamburger.open span:first-child{transform:translateY(3.25px) rotate(45deg);}
 .hamburger.open span:last-child{transform:translateY(-3.25px) rotate(-45deg);}
 
+/* desktop navlinks */
+.navlinks{display:none; align-items:center; gap:28px;}
+.navlinks a{font-size:14px; color:var(--ink); text-decoration:none; font-weight:500; white-space:nowrap; transition:color .2s;}
+.navlinks a:hover{color:var(--accent);}
+
 /* scroll progress bar */
 .scroll-track{width:100%; height:2px; background:var(--line);}
 .scroll-bar{height:100%; width:0%; background:var(--ink); transition:width .1s linear;}
@@ -55,7 +60,8 @@ a{color:inherit; text-decoration:none;}
 .nav-overlay a{font-family:var(--serif); font-size:clamp(32px,6vw,48px); font-weight:500; color:var(--paper); transition:opacity .2s;}
 .nav-overlay a:hover{opacity:.6;}
 .overlay-close{position:absolute; top:20px; right:28px; background:none; border:0; color:var(--paper); font-size:36px; cursor:pointer; line-height:1; padding:8px;}
-@media(max-width:700px){.header-row{padding:12px 20px;}}
+@media(max-width:700px){.header-row{padding:12px 20px;} .navlinks{display:none;} .hamburger{display:flex;}}
+@media(min-width:701px){.navlinks{display:flex;} .hamburger{display:none;}}
 
 /* status badge */
 .status-badge{display:flex; align-items:center; gap:8px; font-family:var(--sans); font-size:13px; font-weight:600; color:var(--accent); white-space:nowrap;}
