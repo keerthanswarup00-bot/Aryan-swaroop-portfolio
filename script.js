@@ -59,9 +59,24 @@ if (!prefersReducedMotion) {
 var cur = document.getElementById('cur');
 if (cur && !prefersReducedMotion) {
   var curSpan = cur.querySelector('span');
+  function isDarkBg(el) {
+    while (el && el !== document.body) {
+      var bg = getComputedStyle(el).backgroundColor;
+      if (bg && bg !== 'rgba(0, 0, 0, 0)' && bg !== 'transparent') {
+        var m = bg.match(/\d+/g);
+        if (m && ((parseInt(m[0]) + parseInt(m[1]) + parseInt(m[2])) / 3) < 80) return true;
+        return false;
+      }
+      el = el.parentElement;
+    }
+    return false;
+  }
   window.addEventListener('mousemove', function (e) {
     cur.style.left = e.clientX + 'px';
     cur.style.top = e.clientY + 'px';
+    var under = document.elementFromPoint(e.clientX, e.clientY);
+    if (under && isDarkBg(under)) cur.classList.add('dark');
+    else cur.classList.remove('dark');
   }, { passive: true });
   document.querySelectorAll('[data-cur]').forEach(function (el) {
     el.addEventListener('mouseenter', function () {
