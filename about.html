@@ -74,13 +74,52 @@
   </div>
   <div class="scroll-track"><div class="scroll-bar" id="scrollBar"></div></div>
 </nav>
-<div class="nav-overlay" id="navOverlay">
-  <button class="overlay-close" id="overlayClose" aria-label="Close menu">×</button>
-  <a href="/real-estate">Real Estate</a>
-  <a href="/lifestyle">Lifestyle</a>
-  <a href="/builds">Builds</a>
-  <a href="/tools">Tools</a>
-  <a href="/about">About Me</a>
+<div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+  <div class="mobile-menu-inner">
+    <div class="mobile-top">
+      <div class="mobile-profile">
+        <img src="images/portrait.jpg" alt="Aryan Swaroop" class="mobile-avatar">
+        <div class="mobile-identity">
+          <span class="mobile-name">Aryan Swaroop</span>
+          <span class="mobile-subtitle">Brand Designer<br>Creative Developer</span>
+          <span class="mobile-status"><span class="status-ping"></span>Open for work</span>
+        </div>
+      </div>
+      <button class="mobile-close" id="mobileClose" aria-label="Close menu">&times;</button>
+    </div>
+    <nav class="mobile-nav">
+      <a href="/" class="mobile-nav-link">Home</a>
+      <a href="/about" class="mobile-nav-link">Design</a>
+      <a href="/about" class="mobile-nav-link">About</a>
+      <a href="#contact" class="mobile-nav-link mobile-nav-contact">Contact</a>
+    </nav>
+    <div class="mobile-section">
+      <h4 class="mobile-section-heading">Featured Work</h4>
+      <a href="/real-estate" class="mobile-project-row">
+        <div class="mobile-project-thumb"><img src="images/paavani-cards.jpg" alt="" loading="lazy" decoding="async"></div>
+        <div class="mobile-project-info"><span class="mobile-project-title">Real Estate</span><span class="mobile-project-sub">5 Projects</span></div>
+        <span class="mobile-project-arrow">&rarr;</span>
+      </a>
+      <a href="/lifestyle" class="mobile-project-row">
+        <div class="mobile-project-thumb"><img src="images/brahmi-pourshot.jpg" alt="" loading="lazy" decoding="async"></div>
+        <div class="mobile-project-info"><span class="mobile-project-title">Lifestyle</span><span class="mobile-project-sub">3 Projects</span></div>
+        <span class="mobile-project-arrow">&rarr;</span>
+      </a>
+      <a href="/builds" class="mobile-project-row">
+        <div class="mobile-project-thumb"><img src="images/build-selixo.jpg" alt="" loading="lazy" decoding="async"></div>
+        <div class="mobile-project-info"><span class="mobile-project-title">Builds</span><span class="mobile-project-sub">5 Projects</span></div>
+        <span class="mobile-project-arrow">&rarr;</span>
+      </a>
+    </div>
+    <div class="mobile-section">
+      <h4 class="mobile-section-heading">Explore</h4>
+      <a href="/tools" class="mobile-explore-link">Tools <span>&rarr;</span></a>
+      <a href="Aryan_Swaroop_Resume.pdf" download class="mobile-explore-link">Resume <span>&nearr;</span></a>
+    </div>
+    <div class="mobile-footer">
+      <p>Designed &amp; Developed<br>by Aryan Swaroop<br>&copy; 2026</p>
+    </div>
+  </div>
 </div>
 
 <section class="about-hero">
