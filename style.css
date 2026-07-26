@@ -68,7 +68,7 @@ a{color:inherit; text-decoration:none;}
 
 /* mega left */
 .mega-left{flex:1; display:flex; flex-direction:column; gap:0;}
-.mega-heading{font-size:22px; font-weight:600; text-transform:none; letter-spacing:0; color:#fff; margin-bottom:22px; padding:0 12px;}
+.mega-heading{font-size:28px; font-weight:600; text-transform:none; letter-spacing:0; color:#fff; margin-bottom:10px; padding:0 12px;}
 .mega-project{display:flex; align-items:center; gap:18px; padding:10px 12px; border-radius:14px; text-decoration:none; color:#fff; transition:background .25s ease, transform .25s ease, opacity .25s ease; cursor:pointer;}
 .mega-project:hover,.mega-project.active{background:rgba(255,255,255,.06);}
 .mega-project:hover{transform:translateX(4px);}
