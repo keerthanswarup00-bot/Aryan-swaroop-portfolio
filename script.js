@@ -72,25 +72,41 @@ if (cur && !prefersReducedMotion) {
   });
 }
 
-// Hamburger menu
+// Hamburger menu + overlay close
 var hamburger = document.getElementById('hamburger');
 var navOverlay = document.getElementById('navOverlay');
+var overlayClose = document.getElementById('overlayClose');
 if (hamburger && navOverlay) {
   hamburger.addEventListener('click', function () {
     var open = hamburger.classList.toggle('open');
     navOverlay.classList.toggle('open');
     hamburger.setAttribute('aria-expanded', open);
   });
+  function closeNav() {
+    hamburger.classList.remove('open');
+    navOverlay.classList.remove('open');
+    hamburger.setAttribute('aria-expanded', 'false');
+  }
+  if (overlayClose) overlayClose.addEventListener('click', closeNav);
   navOverlay.querySelectorAll('a').forEach(function (a) {
-    a.addEventListener('click', function () {
-      hamburger.classList.remove('open');
-      navOverlay.classList.remove('open');
-      hamburger.setAttribute('aria-expanded', 'false');
-    });
+    a.addEventListener('click', closeNav);
   });
 }
 
-// Typewriter cycle for "Open to Work" badge
+// Scroll progress bar
+(function(){
+  var bar=document.getElementById('scrollBar');
+  if(!bar)return;
+  function update(){
+    var doc=document.documentElement;
+    var pct=doc.scrollHeight>doc.clientHeight?(doc.scrollTop/(doc.scrollHeight-doc.clientHeight))*100:0;
+    bar.style.width=pct+'%';
+  }
+  window.addEventListener('scroll',update,{passive:true});
+  update();
+})();
+
+// Typewriter cycle for "Open to Work" badge (desktop header)
 function typeCycle(el, words) {
   var wIndex = 0, cIndex = 0, deleting = false;
   function tick() {

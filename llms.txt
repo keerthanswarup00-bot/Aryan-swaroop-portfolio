@@ -11,6 +11,7 @@ Currently open to full-time Creative Lead / Brand Designer roles at agencies or 
 - [Lifestyle](https://www.aryanswaroop.com/lifestyle): Sastry's by Brahmi (coffee packaging), Isha V (security & facility management) — full identity systems
 - [Builds](https://www.aryanswaroop.com/builds): Selixo, AlbumFlow, Striv, Foundations — web products designed and shipped in React, Next.js, and Supabase
 - [Tools](https://www.aryanswaroop.com/tools): Skills, 3D visualization capability, and downloadable resume
+- [About](https://www.aryanswaroop.com/about): Background, journey, and full resume with experience and skills
 
 ## Contact
 
