@@ -109,6 +109,18 @@ if (hamburger && navOverlay) {
   update();
 })();
 
+// Mega dropdown — mobile toggle + escape/click-outside
+(function(){
+  var dd=document.getElementById('designDropdown');
+  if(!dd)return;
+  var trigger=dd.querySelector('.nav-dropdown-trigger');
+  trigger.addEventListener('click',function(e){
+    if(window.innerWidth<=700){e.preventDefault();dd.classList.toggle('open');trigger.setAttribute('aria-expanded',dd.classList.contains('open'));}
+  });
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')dd.classList.remove('open');});
+  document.addEventListener('click',function(e){if(!dd.contains(e.target))dd.classList.remove('open');});
+})();
+
 // Typewriter cycle for "Open to Work" badge (desktop header)
 function typeCycle(el, words) {
   var wIndex = 0, cIndex = 0, deleting = false;
