@@ -30,6 +30,7 @@ a{color:inherit; text-decoration:none;}
 .site-header{position:fixed; top:0; left:0; width:100%; z-index:500; background:rgba(250,250,248,.9); -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px);}
 .header-row{display:flex; align-items:center; justify-content:space-between; padding:12px 40px; max-width:1240px; margin:0 auto;}
 .header-left{display:flex; align-items:center; gap:12px; flex-shrink:0;}
+.header-right{display:flex; align-items:center; gap:16px; flex-shrink:0;}
 .header-avatar{width:44px; height:44px; border-radius:50%; object-fit:cover; flex-shrink:0;}
 .header-identity{display:flex; flex-direction:column; gap:1px;}
 .header-name{font-family:var(--serif); font-weight:500; font-size:15px; color:var(--ink); line-height:1.2; white-space:nowrap;}
@@ -50,6 +51,12 @@ a{color:inherit; text-decoration:none;}
 .navlinks a{font-size:14px; color:var(--ink); text-decoration:none; font-weight:500; white-space:nowrap; transition:color .2s;}
 .navlinks a:hover{color:var(--accent);}
 
+/* resume button */
+.resume-btn{display:inline-flex; align-items:center; gap:4px; font-size:14px; font-weight:500; color:var(--ink); text-decoration:none; border:1px solid var(--ink); border-radius:999px; padding:8px 18px; white-space:nowrap; transition:background .2s, color .2s;}
+.resume-btn:hover{background:var(--ink); color:var(--paper);}
+.resume-btn:hover .resume-arrow{color:var(--accent);}
+.resume-arrow{font-size:15px; transition:color .2s;}
+
 /* scroll progress bar */
 .scroll-track{width:100%; height:2px; background:var(--line);}
 .scroll-bar{height:100%; width:0%; background:var(--ink); transition:width .1s linear;}
@@ -60,7 +67,7 @@ a{color:inherit; text-decoration:none;}
 .nav-overlay a{font-family:var(--serif); font-size:clamp(32px,6vw,48px); font-weight:500; color:var(--paper); transition:opacity .2s;}
 .nav-overlay a:hover{opacity:.6;}
 .overlay-close{position:absolute; top:20px; right:28px; background:none; border:0; color:var(--paper); font-size:36px; cursor:pointer; line-height:1; padding:8px;}
-@media(max-width:700px){.header-row{padding:12px 20px;} .navlinks{display:none;} .hamburger{display:flex;}}
+@media(max-width:700px){.header-row{padding:12px 20px;} .navlinks{display:none;} .hamburger{display:flex;} .resume-btn{display:none;}}
 @media(min-width:701px){.navlinks{display:flex;} .hamburger{display:none;}}
 
 /* status badge */
