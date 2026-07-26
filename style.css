@@ -1,3 +1,6 @@
+/* disable double-tap zoom + image drag */
+html{touch-action:manipulation;}
+img{-webkit-user-drag:none; user-select:none;}
 :root{
   --paper:#FAFAF8;
   --ink:#0E0E0F;
