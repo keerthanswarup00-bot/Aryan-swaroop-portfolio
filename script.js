@@ -74,7 +74,9 @@ if (cur && !prefersReducedMotion) {
   window.addEventListener('mousemove', function (e) {
     cur.style.left = e.clientX + 'px';
     cur.style.top = e.clientY + 'px';
+    cur.style.display = 'none';
     var under = document.elementFromPoint(e.clientX, e.clientY);
+    cur.style.display = '';
     if (under && isDarkBg(under)) cur.classList.add('dark');
     else cur.classList.remove('dark');
   }, { passive: true });
