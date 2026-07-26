@@ -215,7 +215,7 @@ h2{font-family:var(--serif); font-weight:500; font-size:clamp(26px,4.2vw,46px); 
   font-size:10.5px; color:#8a8a8a; text-align:center;}
 .feature .gallery-tile{background:repeating-linear-gradient(135deg,#232323,#232323 12px,#1a1a1a 12px,#1a1a1a 13px); border:1px solid #333; color:#8a8a8a;}
 @media(max-width:760px){.gallery-strip{grid-template-columns:repeat(2,1fr); gap:10px;}}
-@media(max-width:420px){.gallery-strip{grid-template-columns:1fr 1fr; gap:8px;}}
+@media(max-width:420px){.gallery-strip{grid-template-columns:1fr; gap:10px;}}
 
 /* Devaiah gallery — contained, no gaps */
 .devaiah-gallery{margin-top:34px; max-width:1240px; margin-left:auto; margin-right:auto; padding:0 40px; display:flex; flex-direction:column; gap:12px;}
