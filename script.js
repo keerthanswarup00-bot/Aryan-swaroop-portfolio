@@ -195,6 +195,8 @@ fetch('/api/manifest').then(function(r){return r.json();}).then(function(manifes
     });
   }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
   targets.forEach(function(el) { observer.observe(el); });
+  var aboutReveals = document.querySelectorAll('.about-story .reveal');
+  aboutReveals.forEach(function(el) { observer.observe(el); });
 })();
 
 // Copy email
