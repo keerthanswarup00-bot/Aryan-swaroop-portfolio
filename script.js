@@ -172,10 +172,9 @@ if (cur && !prefersReducedMotion) {
   var menu=dd.querySelector('.mega-menu');
   var closeTimer=null;
   function openMenu(){clearTimeout(closeTimer);dd.classList.add('open');trigger.setAttribute('aria-expanded','true');}
-  function closeMenu(){closeTimer=setTimeout(function(){dd.classList.remove('open');trigger.setAttribute('aria-expanded','false');},200);}
+  function closeMenu(){closeTimer=setTimeout(function(){dd.classList.remove('open');trigger.setAttribute('aria-expanded','false');},250);}
   function cancelClose(){clearTimeout(closeTimer);}
   trigger.addEventListener('mouseenter',function(){if(window.innerWidth>700)openMenu();});
-  dd.addEventListener('mouseenter',function(){if(window.innerWidth>700)cancelClose();});
   trigger.addEventListener('mouseleave',function(){if(window.innerWidth>700)closeMenu();});
   menu.addEventListener('mouseenter',function(){if(window.innerWidth>700)cancelClose();});
   menu.addEventListener('mouseleave',function(){if(window.innerWidth>700)closeMenu();});
