@@ -85,6 +85,7 @@ a{color:inherit; text-decoration:none;}
 .mega-preview-card{position:relative; display:block; border-radius:14px; overflow:hidden; border:1px solid rgba(255,255,255,.08); text-decoration:none; color:#fff; height:148px; background:#161616; transition:background .25s ease, border-color .25s ease;}
 .mega-preview-card::after{content:''; position:absolute; inset:0; background:rgba(255,255,255,.05); pointer-events:none; z-index:1; border-radius:inherit;}
 .mega-preview-card:hover{background:rgba(255,255,255,.1); border-color:rgba(255,255,255,.15);}
+.mega-preview-card:hover img{transform:translateY(-4px) !important; transition:transform .3s cubic-bezier(.22,1,.36,1) !important;}
 .mega-preview-card:hover .mega-preview-text{color:#fff;}
 .mega-preview-card img{position:absolute; left:0; top:0; height:110%; width:80%; object-fit:cover; display:block; pointer-events:none; transform:translateY(20px); opacity:0; transition:transform .4s cubic-bezier(.22,1,.36,1), opacity .4s cubic-bezier(.22,1,.36,1);}
 .nav-dropdown.open .mega-preview-card img{transform:translateY(0); opacity:1; transition:transform .5s cubic-bezier(.22,1,.36,1) .3s, opacity .5s cubic-bezier(.22,1,.36,1) .3s;}
