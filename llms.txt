@@ -76,3 +76,4 @@ All work showcased is © Aryan Swaroop unless otherwise noted. Project work is d
 - [Builds](https://www.aryanswaroop.com/builds): Web products designed and built
 - [Tools](https://www.aryanswaroop.com/tools): Skills and capabilities
 - [Playground](https://www.aryanswaroop.com/playground): Experiments and behind-the-scenes work
+- [Changelog](https://www.aryanswaroop.com/changelog): Update history and site changes
