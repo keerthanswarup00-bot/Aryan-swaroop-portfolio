@@ -177,7 +177,6 @@ if (cur && !prefersReducedMotion) {
   trigger.addEventListener('mouseenter',function(){if(window.innerWidth>700)openMenu();});
   dd.addEventListener('mouseenter',function(){if(window.innerWidth>700)cancelClose();});
   trigger.addEventListener('mouseleave',function(){if(window.innerWidth>700)closeMenu();});
-  dd.addEventListener('mouseleave',function(){if(window.innerWidth>700)closeMenu();});
   menu.addEventListener('mouseenter',function(){if(window.innerWidth>700)cancelClose();});
   menu.addEventListener('mouseleave',function(){if(window.innerWidth>700)closeMenu();});
   trigger.addEventListener('click',function(e){
