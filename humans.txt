@@ -1,0 +1,24 @@
+# aryanswaroop.com
+
+> Built and maintained by Aryan Swaroop.
+
+## Who
+
+Aryan Swaroop — Brand Designer & Creative Lead based in Bengaluru, India.
+
+## What
+
+Portfolio website showcasing brand identity, packaging, 3D visualization, web products, and creative direction work.
+
+## Stack
+
+- Static HTML/CSS/JavaScript
+- Fraunces + Inter (Google Fonts)
+- Custom endless runner game (Canvas API, Web Audio API)
+- Deployed on Vercel
+
+## Contact
+
+Email: aryanswaroop.0@gmail.com
+LinkedIn: https://linkedin.com/in/aryanswaroop
+Behance: https://behance.net/Aryan-swaroop

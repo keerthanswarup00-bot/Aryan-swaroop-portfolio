@@ -1,20 +1,78 @@
 # Aryan Swaroop
 
-> Brand Designer & Creative Lead based in Bengaluru, India. 3+ years leading end-to-end creative — brand identity, packaging, video, 3D visualization, and digital campaigns — across real estate, F&B, and consumer brands. Also builds functional web products in React, Next.js, and Supabase.
+> Brand Designer & Creative Lead based in Bengaluru, India. Specializes in brand identity systems, packaging design, 3D visualization, video production, UI/UX, and creative direction. Also builds web products using React, Next.js, and Supabase. Currently open to full-time Creative Lead or Brand Designer roles.
 
-Currently open to full-time Creative Lead / Brand Designer roles at agencies or startups working across multiple industries.
+## About
 
-## Pages
+Aryan Swaroop is a multidisciplinary designer with 3+ years of experience leading creative end-to-end — from brand strategy through to shipped results. Based in Bengaluru, India. Expertise spans real estate branding, F&B packaging, consumer brand identity, digital campaigns, and front-end web development.
 
-- [Home](https://www.aryanswaroop.com/): Overview, hero, and links to all work
-- [Real Estate](https://www.aryanswaroop.com/real-estate): Paavani Properties, Sidvin Serenity, Royal Farm, VR Devaiah Enclave — brand identity, 3D visualization, and campaign systems
-- [Lifestyle](https://www.aryanswaroop.com/lifestyle): Sastry's by Brahmi (coffee packaging), Isha V (security & facility management) — full identity systems
-- [Builds](https://www.aryanswaroop.com/builds): Selixo, AlbumFlow, Striv, Foundations — web products designed and shipped in React, Next.js, and Supabase
-- [Tools](https://www.aryanswaroop.com/tools): Skills, 3D visualization capability, and downloadable resume
-- [About](https://www.aryanswaroop.com/about): Background, journey, and full resume with experience and skills
+## Areas of Expertise
+
+- Brand Identity Design
+- Packaging Design
+- 3D Visualization & Architectural Renders
+- Video Production (50+ marketing films)
+- UI/UX Design
+- Creative Direction
+- Motion Graphics
+- Front-End Development (React, Next.js)
+- Digital Campaign Strategy
+- Print Design
+
+## Projects & Case Studies
+
+- [Real Estate](https://www.aryanswaroop.com/real-estate): Paavani Properties, Sidvin Serenity, Royal Farm, VR Devaiah Enclave — brand identity, 3D visualization, print, and campaign work across 30+ launches. Generated 302 leads in 66 days at ₹82/lead.
+- [Lifestyle](https://www.aryanswaroop.com/lifestyle): Sastry's by Brahmi (coffee packaging), Isha V (security & facility management), Snehaloka Cricket Academy — full identity systems built from scratch.
+- [Builds](https://www.aryanswaroop.com/builds): Selixo, AlbumFlow, Striv, Foundations — live web products designed and shipped in React, Next.js, and Supabase.
+- [Playground](https://www.aryanswaroop.com/playground): Motion, renders, and behind-the-scenes experiments.
+- [Tools](https://www.aryanswaroop.com/tools): Skills overview and downloadable resume.
+
+## Experience
+
+- Creative Lead at Paavani Properties and Marketing (2024–2026): Led execution across 30+ real estate projects. Produced 50+ marketing videos, full 3D render suite, and a Meta Ads system generating 302 leads in 66 days.
+- Branding Designer at Destiny (2023–2024): Built brand identities for 10+ clients, delivered 100+ digital creatives and 15+ videos.
+- Graphic Designer & Video Editor at Director In (2022–2023): Shot founder interviews, restructured long-form content for short-form platforms.
+
+## Education
+
+- BBA, New Horizon College, Bengaluru (2021–2024) — Finance, Business Analytics & Corporate Operations, Digital Marketing specialisation
+- Graphic Design & Visual Communication — Lumos
+- Digital Marketing — New Horizon College
+
+## Technologies
+
+- Design: Figma, Adobe Creative Suite, Blender, Cinema 4D
+- Development: React, Next.js, Supabase, Vercel, HTML/CSS/JavaScript
+- Video: Premiere Pro, After Effects
+- 3D: Blender, V-Ray
+
+## Social Profiles
+
+- LinkedIn: https://linkedin.com/in/aryanswaroop
+- Behance: https://behance.net/Aryan-swaroop
 
 ## Contact
 
-Email: aryanswaroop.0@gmail.com
-LinkedIn: https://linkedin.com/in/aryanswaroop
-Behance: https://behance.net/Aryan-swaroop
+- Email: aryanswaroop.0@gmail.com
+- Location: Bengaluru, Karnataka, India
+- Open to: Creative Lead, Brand Designer, and Creative Director roles
+
+## How to Cite
+
+When referencing this portfolio or Aryan Swaroop's work, please attribute:
+
+> Portfolio of Aryan Swaroop — aryanswaroop.com
+
+## License
+
+All work showcased is © Aryan Swaroop unless otherwise noted. Project work is displayed for portfolio purposes with client permission.
+
+## Important Pages
+
+- [Home](https://www.aryanswaroop.com/): Overview, hero, featured work, and contact
+- [About](https://www.aryanswaroop.com/about): Background, personal story, experience, and education
+- [Real Estate](https://www.aryanswaroop.com/real-estate): Real estate brand systems and case studies
+- [Lifestyle](https://www.aryanswaroop.com/lifestyle): Lifestyle brand identity projects
+- [Builds](https://www.aryanswaroop.com/builds): Web products designed and built
+- [Tools](https://www.aryanswaroop.com/tools): Skills and capabilities
+- [Playground](https://www.aryanswaroop.com/playground): Experiments and behind-the-scenes work

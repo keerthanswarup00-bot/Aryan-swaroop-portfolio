@@ -1,38 +1,66 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://www.aryanswaroop.com/</loc>
-    <lastmod>2026-07-25</lastmod>
+    <lastmod>2026-07-27</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://www.aryanswaroop.com/images/portrait.jpg</image:loc>
+      <image:title>Aryan Swaroop — Brand Designer &amp; Creative Lead</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://www.aryanswaroop.com/real-estate</loc>
-    <lastmod>2026-07-25</lastmod>
+    <lastmod>2026-07-27</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://www.aryanswaroop.com/images/paavani-main-gate.jpg</image:loc>
+      <image:title>Paavani Properties — Real Estate Brand Identity</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://www.aryanswaroop.com/lifestyle</loc>
-    <lastmod>2026-07-25</lastmod>
+    <lastmod>2026-07-27</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://www.aryanswaroop.com/images/brahmi-pourshot.jpg</image:loc>
+      <image:title>Sastry's by Brahmi — Lifestyle Brand Identity</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://www.aryanswaroop.com/builds</loc>
-    <lastmod>2026-07-25</lastmod>
+    <lastmod>2026-07-27</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://www.aryanswaroop.com/images/build-selixo.jpg</image:loc>
+      <image:title>Selixo — Web Product Build</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://www.aryanswaroop.com/tools</loc>
-    <lastmod>2026-07-25</lastmod>
-    <priority>0.8</priority>
+    <lastmod>2026-07-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.aryanswaroop.com/about</loc>
     <lastmod>2026-07-27</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://www.aryanswaroop.com/images/portrait.jpg</image:loc>
+      <image:title>Aryan Swaroop — About</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://www.aryanswaroop.com/playground</loc>
     <lastmod>2026-07-27</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 </urlset>

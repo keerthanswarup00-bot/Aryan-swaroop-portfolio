@@ -1,19 +1,28 @@
 {
-  "name": "Aryan Swaroop",
-  "short_name": "Aryan",
+  "name": "Aryan Swaroop — Brand Designer & Creative Lead",
+  "short_name": "Aryan Swaroop",
+  "description": "Portfolio of Aryan Swaroop, a multidisciplinary brand designer creating premium branding, UI/UX, web experiences, and AI-powered digital products.",
   "icons": [
     {
-      "src": "/android-chrome-192x192.png",
-      "sizes": "192x192",
+      "src": "/favicon-32x32.png",
+      "sizes": "32x32",
       "type": "image/png"
     },
     {
-      "src": "/android-chrome-512x512.png",
-      "sizes": "512x512",
+      "src": "/favicon-16x16.png",
+      "sizes": "16x16",
+      "type": "image/png"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
       "type": "image/png"
     }
   ],
-  "theme_color": "#ffffff",
-  "background_color": "#ffffff",
-  "display": "standalone"
+  "start_url": "/",
+  "theme_color": "#FAFAF8",
+  "background_color": "#FAFAF8",
+  "display": "standalone",
+  "lang": "en",
+  "scope": "/"
 }

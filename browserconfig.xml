@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<browserconfig>
+  <msapplication>
+    <tile>
+      <square150x150logo src="/mstile-150x150.png"/>
+      <TileColor>#FAFAF8</TileColor>
+    </tile>
+    <browserconfig>
+      <msapplication name="Aryan Swaroop" shortcut_url="https://www.aryanswaroop.com" />
+    </browserconfig>
+  </msapplication>
+</browserconfig>
