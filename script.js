@@ -11,7 +11,7 @@
   text.textContent='Aryan Swaroop';
   text.style.opacity='1';
   text.style.transition='opacity 1.2s ease-in';
-  requestAnimationFrame(function(){text.style.opacity='1';});
+  setTimeout(function(){text.style.opacity='1';},50);
   setTimeout(function(){
     text.style.transition='opacity 0.6s ease-out';
     text.style.opacity='0';
@@ -246,17 +246,6 @@ document.querySelectorAll('.stat-num').forEach(function (el) {
   }, { threshold: 0.3 });
   obs.observe(el);
 });
-
-// Blob manifest — remap images uploaded via admin
-fetch('/api/manifest').then(function(r){return r.json();}).then(function(manifest){
-  if(!manifest || typeof manifest!=='object') return;
-  document.querySelectorAll('img').forEach(function(img){
-    var src=img.getAttribute('src');
-    if(!src) return;
-    var name=src.replace(/^.*[\\/]/,'').split('?')[0];
-    if(manifest[name]) img.src=manifest[name];
-  });
-}).catch(function(){});
 
 // Scroll reveal — section headers (skip hero elements)
 (function(){

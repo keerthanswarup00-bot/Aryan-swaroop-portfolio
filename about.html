@@ -30,7 +30,7 @@
 
 <div id="cur"><span></span></div>
 
-<nav class="site-header">
+<nav class="site-header" aria-label="Site"
   <div class="header-row">
     <div class="header-left">
       <img src="images/nav-avatar.png" alt="Aryan Swaroop" class="header-avatar">
@@ -39,7 +39,7 @@
         <span class="header-status"><span class="status-ping"></span>Open to work</span>
       </div>
     </div>
-    <nav class="navlinks">
+    <nav class="navlinks" aria-label="Primary"
       <a href="/">Home</a>
       <div class="nav-dropdown" id="designDropdown">
         <button class="nav-dropdown-trigger" aria-expanded="false" aria-haspopup="true">Design <span class="dropdown-arrow">&#9662;</span></button>
@@ -69,7 +69,7 @@
     </nav>
     <div class="header-right">
       <a href="Aryan_Swaroop_Resume.pdf" download class="resume-btn">Resume</a>
-      <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false" aria-controls="navOverlay"><span></span><span></span></button>
+      <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false" aria-controls="mobileMenu"><span></span><span></span></button>
     </div>
   </div>
   <div class="scroll-track"><div class="scroll-bar" id="scrollBar"></div></div>
@@ -144,7 +144,7 @@
       <p>A client at my first job asked me to make a logo that "looked expensive but not try-hard." I spent a week on it, iterated 40 times, and delivered something they actually cried over. That was the turn — I realised the problem was never the logo, it was making someone feel something specific every time they saw it. That became the obsession.</p>
     </div>
 
-    <div class="about-story-image re reveal">
+    <div class="about-story-image reveal">
       <img src="images/paavani-cards.jpg" alt="Brand work" loading="lazy" decoding="async">
     </div>
 
@@ -236,15 +236,35 @@
     <div class="kicker">Get in touch</div>
     <h2>Let's talk<br><em style="font-style:italic;">about the role.</em></h2>
     <div class="contact-row">
-      <a class="btn btn-solid" href="mailto:aryanswaroop.0@gmail.com">Email Me</a>
-      <a class="btn btn-ghost" href="Aryan_Swaroop_Resume.pdf" download>Resume</a>
+      <a class="btn btn-solid" href="mailto:aryanswaroop.0@gmail.com" data-cur="SEND">Email Me</a>
+      <a class="btn btn-ghost" href="Aryan_Swaroop_Resume.pdf" download data-cur="GET">Resume</a>
     </div>
-    <button class="copy-email" data-email="aryanswaroop.0@gmail.com">
+    <button class="copy-email" data-email="aryanswaroop.0@gmail.com" data-cur="COPY">
       aryanswaroop.0@gmail.com <span class="copy-icon">⧉</span>
     </button>
     <p class="currently-line">Currently: open to Creative Lead roles in Bengaluru.</p>
   </div>
 </footer>
+
+<div class="game-section">
+  <div class="wrap">
+    <div class="run-game">
+      <p class="run-caption run-caption--desktop">Click to start · Spacebar to jump</p>
+      <p class="run-caption run-caption--mobile">Tap to start · Tap to jump</p>
+      <div class="game-shell">
+        <canvas id="game" width="1000" height="350" aria-label="Auto Run endless runner"></canvas>
+        <button id="mute" aria-label="Mute sound" title="Mute sound">&#9835;</button>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>&copy; Aryan Swaroop, Bengaluru</span>
+      <div style="display:flex; gap:22px;">
+        <a href="https://linkedin.com/in/aryanswaroop" target="_blank" rel="noopener noreferrer" data-cur="GO">LinkedIn</a>
+        <a href="https://behance.net/Aryan-swaroop" target="_blank" rel="noopener noreferrer" data-cur="GO">Behance</a>
+      </div>
+    </div>
+  </div>
+</div>
 
 <script src="script.js"></script>
 </body>

@@ -39,6 +39,8 @@ document.addEventListener('DOMContentLoaded',function(){
   });
 
   function closeLightbox(){
+    var vid=lightboxContent.querySelector('video');
+    if(vid){vid.pause();vid.src='';}
     lightbox.classList.remove('open');
     document.body.classList.remove('pg-lightbox-open');
     lightboxContent.innerHTML = '';
