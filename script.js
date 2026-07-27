@@ -169,6 +169,7 @@ if (cur && !prefersReducedMotion) {
   var dd=document.getElementById('designDropdown');
   if(!dd)return;
   var trigger=dd.querySelector('.nav-dropdown-trigger');
+  var menu=dd.querySelector('.mega-menu');
   var closeTimer=null;
   function openMenu(){clearTimeout(closeTimer);dd.classList.add('open');trigger.setAttribute('aria-expanded','true');}
   function closeMenu(){closeTimer=setTimeout(function(){dd.classList.remove('open');trigger.setAttribute('aria-expanded','false');},200);}
@@ -177,6 +178,8 @@ if (cur && !prefersReducedMotion) {
   dd.addEventListener('mouseenter',function(){if(window.innerWidth>700)cancelClose();});
   trigger.addEventListener('mouseleave',function(){if(window.innerWidth>700)closeMenu();});
   dd.addEventListener('mouseleave',function(){if(window.innerWidth>700)closeMenu();});
+  menu.addEventListener('mouseenter',function(){if(window.innerWidth>700)cancelClose();});
+  menu.addEventListener('mouseleave',function(){if(window.innerWidth>700)closeMenu();});
   trigger.addEventListener('click',function(e){
     if(window.innerWidth<=700){e.preventDefault();dd.classList.toggle('open');trigger.setAttribute('aria-expanded',dd.classList.contains('open'));}
     else{if(dd.classList.contains('open'))closeMenu();else openMenu();}
