@@ -318,7 +318,17 @@ if(window.matchMedia('(min-width:1024px)').matches && document.querySelector('.h
   if(!line1 || !line2) return;
 
   line1.textContent = TEXT_1;
-  line2.textContent = TEXT_2;
+
+  var line2Chars = [];
+  var l2text = TEXT_2;
+  line2.innerHTML = '';
+  for(var ci = 0; ci < l2text.length; ci++){
+    var sp = document.createElement('span');
+    sp.className = 'l2-char';
+    sp.textContent = l2text[ci] === ' ' ? '\u00A0' : l2text[ci];
+    line2.appendChild(sp);
+    line2Chars.push(sp);
+  }
 
   var enabled = false;
   var blocked = false;
@@ -423,7 +433,36 @@ if(window.matchMedia('(min-width:1024px)').matches && document.querySelector('.h
     el.style.opacity = '0';
     setTimeout(function(){
       if(el.parentNode) el.parentNode.removeChild(el);
+      checkCharOverlaps();
     }, removeMs + 50);
+  }
+
+  function checkCharOverlaps(){
+    var trailLayer = document.getElementById('cursorTrailLayer');
+    if(!trailLayer || !line2Chars || !line2Chars.length) return;
+    var images = trailLayer.querySelectorAll('.hero-reveal-image');
+    var trails = [];
+    for(var i = 0; i < images.length; i++){
+      trails.push(images[i].getBoundingClientRect());
+    }
+    for(var c = 0; c < line2Chars.length; c++){
+      var cr = line2Chars[c].getBoundingClientRect();
+      if(cr.width === 0) continue;
+      var overlap = false;
+      for(var i = 0; i < trails.length; i++){
+        if(trails[i].right > cr.left && trails[i].left < cr.right && trails[i].bottom > cr.top && trails[i].top < cr.bottom){
+          overlap = true;
+          break;
+        }
+      }
+      if(overlap){
+        line2Chars[c].style.color = '#fff';
+        line2Chars[c].style.mixBlendMode = 'difference';
+      } else {
+        line2Chars[c].style.color = '';
+        line2Chars[c].style.mixBlendMode = '';
+      }
+    }
   }
 
   function removeOldest(){
@@ -455,6 +494,8 @@ if(window.matchMedia('(min-width:1024px)').matches && document.querySelector('.h
       if(e.clientY < rect.top || e.clientY > rect.bottom || e.clientX < rect.left || e.clientX > rect.right) return;
     }
     var x = e.clientX, y = e.clientY;
+
+    checkCharOverlaps();
 
     clearTimeout(stopTimer);
     stopTimer = setTimeout(function(){
