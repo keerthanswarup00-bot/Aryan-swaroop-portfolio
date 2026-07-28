@@ -460,13 +460,13 @@ body.pg-lightbox-open{overflow:hidden;}
   transform: translateY(20px);
   transition: opacity 700ms ease-out, transform 700ms ease-out;
   position: relative;
-  z-index: 2;
 }
 .hero-line.visible {
   opacity: 1;
   transform: translateY(0);
 }
 @media(min-width:641px){#hero-line-1{margin-bottom:1.5rem;}}
+#hero-line-2{position:relative;z-index:2;}
 
 @media(max-width:640px){.hero-line{color:#fff;} .hero-section{background:var(--ink);} .stat-num{color:#fff;} .stat-label{color:rgba(255,255,255,.55);}}
 
