@@ -457,7 +457,7 @@ if(window.matchMedia('(min-width:1024px)').matches && document.querySelector('.h
         }
       }
       if(overlap){
-        line2Chars[c].style.color = '';
+        line2Chars[c].style.color = '#fff';
         line2Chars[c].style.opacity = '';
       } else {
         line2Chars[c].style.color = '#FAFAF8';
@@ -647,7 +647,7 @@ document.addEventListener("DOMContentLoaded", function(){
     var rect = section.getBoundingClientRect();
     var vh = window.innerHeight;
 
-    var triggerTop = vh * 0.9 - rect.height;
+    var triggerTop = vh * 0.9;
     var scrolledPast = triggerTop - rect.top;
     var totalDist = vh * 0.3;
     var progress = Math.min(Math.max(scrolledPast / totalDist, 0), 1);
