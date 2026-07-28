@@ -17,9 +17,9 @@
   var idx=0;
   var scrollY=0;
 
-  function collect(){
+  function collectWithin(scope){
     sources=[]; alts=[];
-    var tiles=document.querySelectorAll('.feature-visual, .gallery-tile, .work-visual, .idea-tile, .devaiah-row img');
+    var tiles=scope.querySelectorAll('.feature-visual, .gallery-tile, .work-visual, .idea-tile, .devaiah-row img');
     tiles.forEach(function(tile){
       if(tile.tagName==='IMG'){
         sources.push(tile.src);
@@ -71,36 +71,28 @@
     if(e.key==='ArrowRight')go(1);
   });
 
-  // Preload adjacent
   img.addEventListener('load',function(){
     if(sources.length<=1) return;
-    var next=new Image(); next.src=sources[(idx+1)%sources.length];
-    var prev=new Image(); prev.src=sources[(idx-1+sources.length)%sources.length];
+    var n=new Image(); n.src=sources[(idx+1)%sources.length];
+    var p=new Image(); p.src=sources[(idx-1+sources.length)%sources.length];
   });
 
-  // Observe new tiles added after DOMContentLoaded
-  collect();
-
-  // Re-collect and bind click on every tile
+  // Click handler for tiles — scoped to parent <section>
   document.addEventListener('click',function(e){
+    if(overlay.classList.contains('open')) return;
     var tile=e.target.closest('.feature-visual, .gallery-tile, .work-visual, .idea-tile');
-    if(!tile) return;
-    // Ignore clicks on links inside tiles
+    if(!tile) {
+      // Devaiah images are direct <img> children
+      if(e.target.tagName==='IMG' && e.target.closest('.devaiah-row')){
+        tile=e.target;
+      } else return;
+    }
     if(e.target.closest('a')) return;
-    collect();
-    var im=tile.querySelector('img');
+    var scope=tile.closest('section') || document;
+    collectWithin(scope);
+    var im=tile.tagName==='IMG'?tile:tile.querySelector('img');
     var src=im?im.src:'';
     var i=sources.indexOf(src);
-    if(i>=0) open(i);
-  });
-
-  // Devaiah images are direct children — handle separately
-  document.addEventListener('click',function(e){
-    if(e.target.tagName!=='IMG') return;
-    var row=e.target.closest('.devaiah-row');
-    if(!row) return;
-    collect();
-    var i=sources.indexOf(e.target.src);
     if(i>=0) open(i);
   });
 })();

@@ -254,13 +254,13 @@ document.querySelectorAll('.copy-email').forEach(function(btn) {
 });
 
 // Desktop-only home page image click navigation
-if(window.matchMedia('(min-width:1024px)').matches){
-  var featureImg=document.querySelector('.feature-visual');
+if(window.matchMedia('(min-width:1024px)').matches && document.querySelector('.hero-v3')){
+  var featureImg=document.querySelector('#brahmi .feature-visual');
   if(featureImg && !featureImg.closest('a')){
     featureImg.style.cursor='pointer';
     featureImg.addEventListener('click',function(){window.location.href='/lifestyle';});
   }
-  var aboutImg=document.querySelector('.about-photo');
+  var aboutImg=document.querySelector('#about .about-photo');
   if(aboutImg && !aboutImg.closest('a')){
     aboutImg.style.cursor='pointer';
     aboutImg.addEventListener('click',function(){window.location.href='/about';});
