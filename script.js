@@ -457,12 +457,8 @@ if(window.matchMedia('(min-width:1024px)').matches && document.querySelector('.h
         }
       }
       if(overlap){
-        line2Chars[c].style.color = '#fff';
-        line2Chars[c].style.mixBlendMode = 'difference';
         line2Chars[c].style.opacity = '';
       } else {
-        line2Chars[c].style.color = '#000';
-        line2Chars[c].style.mixBlendMode = '';
         line2Chars[c].style.opacity = '0.6';
       }
     }
