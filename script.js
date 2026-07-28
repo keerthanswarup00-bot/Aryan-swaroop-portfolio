@@ -222,31 +222,6 @@ if (!prefersReducedMotion) {
   });
 }
 
-// Rolling number animation for stats
-document.querySelectorAll('.stat-num').forEach(function (el) {
-  var target = parseInt(el.getAttribute('data-target'), 10);
-  var suffix = el.getAttribute('data-suffix') || '';
-  if (prefersReducedMotion) {
-    el.textContent = target + suffix;
-    return;
-  }
-  var duration = 2000;
-  var startTime = null;
-  function animate(ts) {
-    if (!startTime) startTime = ts;
-    var progress = Math.min((ts - startTime) / duration, 1);
-    var eased = 1 - Math.pow(1 - progress, 3);
-    var current = Math.round(eased * target);
-    el.textContent = current + suffix;
-    if (progress < 1) requestAnimationFrame(animate);
-    else el.textContent = target + suffix;
-  }
-  var obs = new IntersectionObserver(function (entries) {
-    if (entries[0].isIntersecting) { startTime = null; requestAnimationFrame(animate); obs.disconnect(); }
-  }, { threshold: 0.3 });
-  obs.observe(el);
-});
-
 // Scroll reveal — section headers (skip hero elements)
 (function(){
   if (prefersReducedMotion) return;
