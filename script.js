@@ -649,9 +649,21 @@ document.addEventListener("DOMContentLoaded", function(){
     var rect = section.getBoundingClientRect();
     var vh = window.innerHeight;
 
-    var progress = Math.min(Math.max(1 - rect.bottom / vh, 0), 1);
+    // 0.7 = 70% down from top = 30% up from bottom — starts early,
+    // while the section is still low on screen.
+    var triggerStart = vh * 0.7;
 
-    var revealCount = Math.min(Math.ceil(progress * wordEls.length), wordEls.length);
+    // Roughly where the reveal should finish — not strict, just needs
+    // to land somewhere reasonable as the section scrolls further up.
+    var triggerEnd = vh * 0.35;
+
+    var startPoint = triggerStart;
+    var endPoint = triggerEnd - rect.height;
+
+    var raw = (startPoint - rect.top) / (startPoint - endPoint);
+    var progress = Math.min(Math.max(raw, 0), 1);
+
+    var revealCount = Math.floor(progress * wordEls.length);
 
     for(var i = 0; i < wordEls.length; i++){
       wordEls[i].style.opacity = i < revealCount ? "1" : "0.25";
