@@ -458,10 +458,12 @@ if(window.matchMedia('(min-width:1024px)').matches && document.querySelector('.h
       }
       if(overlap){
         line2Chars[c].style.color = '#fff';
+        line2Chars[c].style.mixBlendMode = 'difference';
         line2Chars[c].style.opacity = '';
       } else {
-        line2Chars[c].style.color = '#FAFAF8';
-        line2Chars[c].style.opacity = '0.3';
+        line2Chars[c].style.color = '#000';
+        line2Chars[c].style.mixBlendMode = '';
+        line2Chars[c].style.opacity = '0.6';
       }
     }
   }
@@ -647,10 +649,8 @@ document.addEventListener("DOMContentLoaded", function(){
     var rect = section.getBoundingClientRect();
     var vh = window.innerHeight;
 
-    var triggerTop = vh * 0.9;
-    var scrolledPast = triggerTop - rect.top;
-    var totalDist = vh * 0.3;
-    var progress = Math.min(Math.max(scrolledPast / totalDist, 0), 1);
+    var raw = 1 - rect.bottom / vh - 0.1;
+    var progress = Math.min(Math.max(raw / 0.9, 0), 1);
 
     var revealCount = Math.min(Math.ceil(progress * wordEls.length), wordEls.length);
 
