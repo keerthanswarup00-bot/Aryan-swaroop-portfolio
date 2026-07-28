@@ -267,7 +267,7 @@ document.querySelectorAll('.copy-email').forEach(function(btn) {
 });
 
 // Desktop-only home page image click navigation
-if(window.matchMedia('(min-width:1024px)').matches && document.querySelector('.hero-section')){
+if(window.matchMedia('(min-width:1024px)').matches && document.querySelector('.hero-sandwich')){
   var featureImg=document.querySelector('#brahmi .feature-visual');
   if(featureImg && !featureImg.closest('a')){
     featureImg.style.cursor='pointer';
@@ -320,72 +320,66 @@ if(window.matchMedia('(min-width:1024px)').matches && document.querySelector('.h
     line2.classList.add('visible');
   }
 
-  // ── Cursor reveal images (behind text, z-index 1) ──
-  var heroSection = document.querySelector('.hero-section');
-  var isDesktop = window.innerWidth >= 1024;
-  var revealEnabled = false;
-  var revealBlocked = false;
+  // ── Cursor trail (sandwich) ──
+  var heroSandwich = document.getElementById('heroSandwich');
+  var trailLayer = document.getElementById('cursorTrailLayer');
+  var trailEnabled = heroSandwich && trailLayer && window.innerWidth >= 1024;
+  var trailBlocked = false;
   var lastSpawn = 0;
-  var activeImgs = [];
+  var TRAIL_IMAGES = [
+    'images/paavani-topview.jpg',
+    'images/sidvin-signage.jpg',
+    'images/brahmi-pourshot.jpg',
+    'images/paavani-main-gate.jpg',
+    'images/devaiah-row2-left.jpg'
+  ];
 
-  function rand(min, max){ return Math.random() * (max - min) + min; }
+  function onTrailMove(e){
+    if(!trailEnabled || trailBlocked) return;
+    if(!heroSandwich) return;
+    var rect = heroSandwich.getBoundingClientRect();
+    if(e.clientY < rect.top || e.clientY > rect.bottom || e.clientX < rect.left || e.clientX > rect.right) return;
 
-  function spawnReveal(cx, cy){
-    if(activeImgs.length >= 8){
-      var old = activeImgs.shift();
-      if(old.parentNode) old.parentNode.removeChild(old);
-    }
-
-    var size = 170;
-    var el = document.createElement('img');
-    el.src = IMAGES[Math.floor(Math.random() * IMAGES.length)];
-    el.draggable = false;
-    el.alt = '';
-    el.style.cssText = 'position:fixed;z-index:1;pointer-events:none;width:'+size+'px;height:auto;border-radius:6px;box-shadow:0 8px 24px rgba(0,0,0,0.15);left:'+(cx-size/2)+'px;top:'+(cy-size/2)+'px;opacity:0;transform:scale(0.85);transition:opacity 0.25s ease,transform 0.8s ease;';
-    document.body.appendChild(el);
-    activeImgs.push(el);
-
-    requestAnimationFrame(function(){ el.style.opacity = '1'; el.style.transform = 'scale(1)'; });
-
-    var life = rand(800, 1200);
-    setTimeout(function(){ el.style.opacity = '0'; el.style.transform = 'scale(0.7)'; }, life * 0.4);
-    setTimeout(function(){ if(el.parentNode) el.parentNode.removeChild(el); }, life);
-  }
-
-  function onRevealMove(e){
-    if(!revealEnabled || revealBlocked) return;
-    var now = Date.now();
+    var now = performance.now();
     if(now - lastSpawn < 120) return;
     lastSpawn = now;
-    if(heroSection){
-      var r = heroSection.getBoundingClientRect();
-      if(e.clientY < r.top || e.clientY > r.bottom || e.clientX < r.left || e.clientX > r.right) return;
-    }
-    spawnReveal(e.clientX, e.clientY);
+
+    var x = e.clientX - rect.left;
+    var y = e.clientY - rect.top;
+
+    var img = document.createElement('img');
+    img.className = 'trail-image';
+    img.src = TRAIL_IMAGES[Math.floor(Math.random() * TRAIL_IMAGES.length)];
+    img.draggable = false;
+    img.alt = '';
+    img.style.left = x + 'px';
+    img.style.top = y + 'px';
+    trailLayer.appendChild(img);
+
+    requestAnimationFrame(function(){ img.classList.add('show'); });
+
+    setTimeout(function(){ img.classList.add('fade-out'); }, 800 * 0.4);
+    setTimeout(function(){ if(img.parentNode) img.parentNode.removeChild(img); }, 800);
   }
 
-  function enableReveal(){
-    if(revealEnabled) return;
-    revealEnabled = true;
-    window.addEventListener('mousemove', onRevealMove, { passive: true });
+  function enableTrail(){
+    if(!trailEnabled) return;
+    heroSandwich.addEventListener('mousemove', onTrailMove, { passive: true });
   }
 
-  function disableReveal(){
-    revealEnabled = false;
-    window.removeEventListener('mousemove', onRevealMove);
-    activeImgs.forEach(function(el){ if(el.parentNode) el.parentNode.removeChild(el); });
-    activeImgs = [];
+  function disableTrail(){
+    heroSandwich.removeEventListener('mousemove', onTrailMove);
   }
 
-  window.addEventListener('revealblock', function(){ revealBlocked = true; disableReveal(); });
-  window.addEventListener('revealunblock', function(){ revealBlocked = false; if(revealEnabled) enableReveal(); });
+  window.addEventListener('revealblock', function(){ trailBlocked = true; disableTrail(); });
+  window.addEventListener('revealunblock', function(){ trailBlocked = false; if(trailEnabled) enableTrail(); });
 
   // ── Wait for intro to finish ──
   function startAnimation(){
     fadeInText();
     window.dispatchEvent(new CustomEvent('hero:ready'));
     setTimeout(function(){
-      if(isDesktop && heroSection) enableReveal();
+      enableTrail();
     }, 1000);
   }
 
@@ -432,7 +426,7 @@ if(window.matchMedia('(min-width:1024px)').matches && document.querySelector('.h
 // ── Dark nav when hero in view (mobile) ──
 (function(){
   var header=document.querySelector('.site-header');
-  var hero=document.querySelector('.hero-section');
+  var hero=document.querySelector('.hero-sandwich');
   if(!header||!hero)return;
   var mq=window.matchMedia('(max-width:640px)');
   function updateNav(){
