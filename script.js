@@ -283,18 +283,7 @@ if(window.matchMedia('(min-width:1024px)').matches && document.querySelector('.h
     'images/brahmi-tumbler.jpg',
     'images/brahmi-spices.jpg',
     'images/brahmi-doorway.jpg',
-    'images/paavani-cards.jpg',
-    'images/paavani-plots.jpg',
-    'images/paavani-family-1.jpg',
-    'images/paavani-family-2.jpg',
-    'images/paavani-topview.jpg',
-    'images/paavani-main-gate.jpg',
-    'images/ishav-maintenance.jpg',
-    'images/snehaloka-clubhouse.jpg',
-    'images/snehaloka-aerial.jpg',
-    'images/sidvin-brochure.jpg',
-    'images/build-preview.png',
-    'images/build-albumflow.jpg'
+    'images/snehaloka-aerial.jpg'
   ];
 
   var MAX_VISIBLE = 6;
