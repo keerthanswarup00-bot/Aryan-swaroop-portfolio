@@ -388,11 +388,19 @@ if(window.matchMedia('(min-width:1024px)').matches && document.querySelector('.h
     });
 
     active.push(el);
+
+    // Auto-fade after a short life
+    var lifeMs = rand(800, 1200);
+    el._fadeTimer = setTimeout(function(){
+      removeImage(el);
+    }, lifeMs);
   }
 
-  function removeOldest(){
-    var el = active.shift();
-    if(!el) return;
+  function removeImage(el){
+    if(el._removing) return;
+    el._removing = true;
+    clearTimeout(el._fadeTimer);
+
     var removeMs = rand(600, 800);
     var img = el.querySelector('img');
     if(img){
@@ -401,12 +409,23 @@ if(window.matchMedia('(min-width:1024px)').matches && document.querySelector('.h
       img.style.transform = 'scale(0.2)';
     }
     setTimeout(function(){
+      var idx = active.indexOf(el);
+      if(idx !== -1) active.splice(idx, 1);
       if(el.parentNode) el.parentNode.removeChild(el);
     }, removeMs + 50);
   }
 
+  function removeOldest(){
+    var el = active[0];
+    if(!el) return;
+    removeImage(el);
+  }
+
   function fadeOutAll(){
-    while(active.length) removeOldest();
+    while(active.length){
+      var el = active[0];
+      removeImage(el);
+    }
   }
 
   // ── Mouse (accumulated distance tracking) ──
@@ -418,7 +437,7 @@ if(window.matchMedia('(min-width:1024px)').matches && document.querySelector('.h
     stopTimer = setTimeout(function(){
       fadeOutAll();
       accDist = 0;
-    }, 2000);
+    }, 500);
 
     var prevX = lastX, prevY = lastY;
     var dist = Math.sqrt(Math.pow(x-prevX,2)+Math.pow(y-prevY,2));
