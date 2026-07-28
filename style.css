@@ -447,6 +447,7 @@ body.pg-lightbox-open{overflow:hidden;}
   .lb-prev{left:1.5rem;}
   .lb-next{right:1.5rem;}
   body.lb-open{overflow:hidden;}
+  body.lb-open .site-header{display:none;}
   .feature-visual,.gallery-tile,.work-visual,.idea-tile,.devaiah-row img{cursor:pointer;}
 }
 @media(min-width:1024px) and (prefers-reduced-motion:reduce){.lb-img{transition:none;}}
