@@ -458,8 +458,10 @@ if(window.matchMedia('(min-width:1024px)').matches && document.querySelector('.h
       }
       if(overlap){
         line2Chars[c].style.color = '';
+        line2Chars[c].style.opacity = '';
       } else {
         line2Chars[c].style.color = '#E9E9E7';
+        line2Chars[c].style.opacity = '0.3';
       }
     }
   }
