@@ -430,6 +430,10 @@ if(window.matchMedia('(min-width:1024px)').matches && document.querySelector('.h
   // ── Mouse (accumulated distance tracking) ──
   function onMove(e){
     if(!enabled || !isDesktop) return;
+    if(heroSection){
+      var rect = heroSection.getBoundingClientRect();
+      if(e.clientY < rect.top || e.clientY > rect.bottom || e.clientX < rect.left || e.clientX > rect.right) return;
+    }
     var x = e.clientX, y = e.clientY;
 
     clearTimeout(stopTimer);
