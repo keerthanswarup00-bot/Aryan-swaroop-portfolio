@@ -297,12 +297,12 @@ if(window.matchMedia('(min-width:1024px)').matches && document.querySelector('.h
     'images/build-albumflow.jpg'
   ];
 
-  var MAX_VISIBLE = 5;
-  var SPAWN_MIN = 120;
-  var SPAWN_MAX = 180;
-  var SIZES = [160, 200, 240];
-  var ROTATIONS = [-4, -2, 0, 2, 4];
-  var BEHIND = 30;
+  var MAX_VISIBLE = 6;
+  var SPAWN_MIN = 60;
+  var SPAWN_MAX = 100;
+  var SIZES = [140, 180, 220];
+  var ROTATIONS = [-3, -1, 0, 1, 3];
+  var BEHIND = 15;
   var DESKTOP = 1024;
 
   // Preload
@@ -351,7 +351,7 @@ if(window.matchMedia('(min-width:1024px)').matches && document.querySelector('.h
     var rot = ROTATIONS[Math.floor(Math.random()*ROTATIONS.length)];
     var appearMs = rand(250, 350);
 
-    // Behind the movement direction + random jitter
+    // Behind the movement direction + slight jitter
     var dx = cx - mx, dy = cy - my;
     var mDist = Math.sqrt(dx*dx + dy*dy);
     var offX = 0, offY = 0;
@@ -359,8 +359,8 @@ if(window.matchMedia('(min-width:1024px)').matches && document.querySelector('.h
       offX = -(dx/mDist) * BEHIND;
       offY = -(dy/mDist) * BEHIND;
     }
-    offX += (rand(20, 40)) * (Math.random() > 0.5 ? 1 : -1);
-    offY += (rand(20, 40)) * (Math.random() > 0.5 ? 1 : -1);
+    offX += (rand(5, 15)) * (Math.random() > 0.5 ? 1 : -1);
+    offY += (rand(5, 15)) * (Math.random() > 0.5 ? 1 : -1);
 
     var el = document.createElement('div');
     el.className = 'hero-reveal-image';
@@ -368,19 +368,18 @@ if(window.matchMedia('(min-width:1024px)').matches && document.querySelector('.h
     el.style.top = (cy + offY - size/2) + 'px';
     el.style.width = size + 'px';
     el.style.zIndex = 9990 + active.length;
-    el.style.transform = 'translate3d(0,0,0) scale(0.95) rotate(' + rot + 'deg)';
+    el.style.transform = 'translate3d(0,0,0) scale(0.6) rotate(' + rot + 'deg)';
 
     var elImg = document.createElement('img');
     elImg.src = IMAGES[idx];
     elImg.draggable = false;
     elImg.alt = '';
     elImg.style.opacity = '0';
-    elImg.style.transition = 'opacity ' + appearMs + 'ms ease-out, transform ' + appearMs + 'ms ease-out';
+    elImg.style.transition = 'opacity ' + appearMs + 'ms ease-out, transform ' + appearMs + 'ms cubic-bezier(.34,1.56,.64,1)';
 
     el.appendChild(elImg);
     document.body.appendChild(el);
 
-    // Force style recalc so the initial 0 is painted before transition
     requestAnimationFrame(function(){
       requestAnimationFrame(function(){
         elImg.style.opacity = '1';
@@ -394,12 +393,12 @@ if(window.matchMedia('(min-width:1024px)').matches && document.querySelector('.h
   function removeOldest(){
     var el = active.shift();
     if(!el) return;
-    var removeMs = rand(500, 700);
+    var removeMs = rand(600, 800);
     var img = el.querySelector('img');
     if(img){
-      img.style.transition = 'opacity ' + removeMs + 'ms ease-out, transform ' + removeMs + 'ms ease-out';
+      img.style.transition = 'opacity ' + removeMs + 'ms ease-out, transform ' + removeMs + 'ms cubic-bezier(.5,0,.5,1)';
       img.style.opacity = '0';
-      img.style.transform = 'scale(0.98)';
+      img.style.transform = 'scale(0.2)';
     }
     setTimeout(function(){
       if(el.parentNode) el.parentNode.removeChild(el);
