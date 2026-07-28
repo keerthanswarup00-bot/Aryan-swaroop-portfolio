@@ -498,7 +498,8 @@ body.pg-lightbox-open{overflow:hidden;}
 }
 .srt-paragraph {
   font-size: clamp(1.4rem, 3vw, 2rem);
-  line-height: 1.6;
+  line-height: 1.75;
+  letter-spacing: -0.005em;
   font-weight: 400;
   color: #111111;
 }

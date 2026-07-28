@@ -588,7 +588,7 @@ document.addEventListener("DOMContentLoaded", function(){
   var paragraphEl = document.getElementById("srtParagraph");
   if(!section || !paragraphEl) return;
 
-  var fullText = "Brand identity and creative systems for real estate, F&B, and consumer brands — designed, and often built into working product, by one person. For Paavani Properties, that meant building the Meta Ads and creative system behind 302 qualified leads in 66 days, and leading creative across 30+ launches — identity, print, video, and 3D.";
+  var fullText = "Brand identity and creative systems for real estate, F&B, and consumer brands. Designed, and often built into working product, by one person. For Paavani Properties, that meant building the Meta Ads and creative system behind 302 qualified leads in 66 days, and leading creative across 30+ launches spanning identity, print, video, and 3D.";
 
   var words = fullText.split(" ");
   paragraphEl.innerHTML = words.map(function(w){ return '<span class="srt-word">' + w + '</span>'; }).join(" ");
@@ -599,9 +599,11 @@ document.addEventListener("DOMContentLoaded", function(){
     var rect = section.getBoundingClientRect();
     var vh = window.innerHeight;
 
-    var start = vh;
-    var end = vh * 0.4 - rect.height;
-    var raw = (rect.top - start) / (end - start);
+    var triggerStart = vh * 0.3;
+    var triggerEnd = vh * 0.5;
+    var startPoint = triggerStart;
+    var endPoint = triggerEnd - rect.height;
+    var raw = (startPoint - rect.top) / (startPoint - endPoint);
     var progress = Math.min(Math.max(raw, 0), 1);
 
     var revealCount = Math.floor(progress * wordEls.length);
