@@ -557,7 +557,9 @@ if(window.matchMedia('(min-width:1024px)').matches && document.querySelector('.h
   var observer = new IntersectionObserver(function(entries){
     entries.forEach(function(entry){
       if(entry.isIntersecting){
-        entry.target.querySelectorAll('.stat-count').forEach(animateCount);
+        setTimeout(function(){
+          entry.target.querySelectorAll('.stat-count').forEach(animateCount);
+        }, 1500);
         observer.unobserve(entry.target);
       }
     });
