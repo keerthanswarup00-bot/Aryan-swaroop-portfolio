@@ -395,7 +395,6 @@ if(window.matchMedia('(min-width:1024px)').matches && document.querySelector('.h
       requestAnimationFrame(function(){
         elImg.style.opacity = '1';
         elImg.style.transform = 'scale(1)';
-        updateLine2Blend();
       });
     });
 
@@ -424,31 +423,7 @@ if(window.matchMedia('(min-width:1024px)').matches && document.querySelector('.h
     el.style.opacity = '0';
     setTimeout(function(){
       if(el.parentNode) el.parentNode.removeChild(el);
-      updateLine2Blend();
     }, removeMs + 50);
-  }
-
-  function updateLine2Blend(){
-    if(!line2) return;
-    var trailLayer = document.getElementById('cursorTrailLayer');
-    if(!trailLayer) return;
-    var l2r = line2.getBoundingClientRect();
-    var images = trailLayer.querySelectorAll('.hero-reveal-image');
-    var hasOverlap = false;
-    for(var i = 0; i < images.length; i++){
-      var r = images[i].getBoundingClientRect();
-      if(r.right > l2r.left && r.left < l2r.right && r.bottom > l2r.top && r.top < l2r.bottom){
-        hasOverlap = true;
-        break;
-      }
-    }
-    if(hasOverlap){
-      line2.style.color = '#fff';
-      line2.style.mixBlendMode = 'difference';
-    } else {
-      line2.style.color = '';
-      line2.style.mixBlendMode = '';
-    }
   }
 
   function removeOldest(){
