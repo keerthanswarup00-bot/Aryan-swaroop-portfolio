@@ -645,16 +645,12 @@ document.addEventListener("DOMContentLoaded", function(){
     var rect = section.getBoundingClientRect();
     var vh = window.innerHeight;
 
-    // 0.7 = 70% down from top = 30% up from bottom — starts early,
-    // while the section is still low on screen.
-    var triggerStart = vh * 0.7;
+    // Reveal starts when section's top hits this point and finishes
+    // when section's bottom hits the same point.
+    var triggerPoint = vh * 0.7;
 
-    // Roughly where the reveal should finish — not strict, just needs
-    // to land somewhere reasonable as the section scrolls further up.
-    var triggerEnd = vh * 0.35;
-
-    var startPoint = triggerStart;
-    var endPoint = triggerEnd - rect.height;
+    var startPoint = triggerPoint;
+    var endPoint = triggerPoint - rect.height;
 
     var raw = (startPoint - rect.top) / (startPoint - endPoint);
     var progress = Math.min(Math.max(raw, 0), 1);
