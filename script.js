@@ -517,10 +517,10 @@ if(window.matchMedia('(min-width:1024px)').matches && document.querySelector('.h
   // ── Wait for intro to finish ──
   function startAnimation(){
     fadeInText();
+    window.dispatchEvent(new CustomEvent('hero:ready'));
     setTimeout(function(){
       animFinished = true;
       checkHeroActive();
-      window.dispatchEvent(new CustomEvent('hero:ready'));
     }, 1000);
   }
 
