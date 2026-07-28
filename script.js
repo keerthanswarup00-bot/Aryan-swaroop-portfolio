@@ -457,11 +457,11 @@ if(window.matchMedia('(min-width:1024px)').matches && document.querySelector('.h
         }
       }
       if(overlap){
-        line2Chars[c].style.color = '#fff';
-        line2Chars[c].style.mixBlendMode = 'difference';
-      } else {
         line2Chars[c].style.color = '';
-        line2Chars[c].style.mixBlendMode = '';
+        line2Chars[c].style.opacity = '';
+      } else {
+        line2Chars[c].style.color = '#FAFAF8';
+        line2Chars[c].style.opacity = '0.3';
       }
     }
   }
@@ -647,8 +647,8 @@ document.addEventListener("DOMContentLoaded", function(){
     var rect = section.getBoundingClientRect();
     var vh = window.innerHeight;
 
-    var triggerLine = vh * 0.1;
-    var scrolledPast = triggerLine - rect.top;
+    var triggerTop = vh * 0.9 - rect.height;
+    var scrolledPast = triggerTop - rect.top;
     var totalDist = vh * 0.3;
     var progress = Math.min(Math.max(scrolledPast / totalDist, 0), 1);
 
