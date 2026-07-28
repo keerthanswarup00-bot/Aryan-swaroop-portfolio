@@ -520,6 +520,7 @@ if(window.matchMedia('(min-width:1024px)').matches && document.querySelector('.h
     setTimeout(function(){
       animFinished = true;
       checkHeroActive();
+      window.dispatchEvent(new CustomEvent('hero:ready'));
     }, 1000);
   }
 
@@ -554,16 +555,10 @@ if(window.matchMedia('(min-width:1024px)').matches && document.querySelector('.h
     }
     requestAnimationFrame(tick);
   }
-  var observer = new IntersectionObserver(function(entries){
-    entries.forEach(function(entry){
-      if(entry.isIntersecting){
-        entry.target.querySelectorAll('.stat-count').forEach(animateCount);
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0 });
-  var stats = document.querySelector('.hero-stats-v3');
-  if(stats) observer.observe(stats);
+  function startRolling(){
+    counters.forEach(animateCount);
+  }
+  window.addEventListener('hero:ready', startRolling, { once: true });
 })();
 
 // Disable right-click on images + prevent drag
