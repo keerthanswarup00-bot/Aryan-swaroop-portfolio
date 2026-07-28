@@ -253,6 +253,20 @@ document.querySelectorAll('.copy-email').forEach(function(btn) {
   });
 });
 
+// Desktop-only home page image click navigation
+if(window.matchMedia('(min-width:1024px)').matches){
+  var featureImg=document.querySelector('.feature-visual');
+  if(featureImg && !featureImg.closest('a')){
+    featureImg.style.cursor='pointer';
+    featureImg.addEventListener('click',function(){window.location.href='/lifestyle';});
+  }
+  var aboutImg=document.querySelector('.about-photo');
+  if(aboutImg && !aboutImg.closest('a')){
+    aboutImg.style.cursor='pointer';
+    aboutImg.addEventListener('click',function(){window.location.href='/about';});
+  }
+}
+
 // Disable right-click on images + prevent drag
 document.addEventListener('contextmenu',function(e){if(e.target.tagName==='IMG')e.preventDefault();});
 document.addEventListener('dragstart',function(e){if(e.target.tagName==='IMG')e.preventDefault();});
