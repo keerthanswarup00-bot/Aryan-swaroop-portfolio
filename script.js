@@ -289,7 +289,7 @@ if(window.matchMedia('(min-width:1024px)').matches && document.querySelector('.h
   var MAX_VISIBLE = 6;
   var SPAWN_MIN = 60;
   var SPAWN_MAX = 100;
-  var SIZES = [140, 180, 220];
+  var IMG_SIZE = 170;
   var ROTATIONS = [-3, -1, 0, 1, 3];
   var BEHIND = 15;
   var DESKTOP = 1024;
@@ -336,7 +336,7 @@ if(window.matchMedia('(min-width:1024px)').matches && document.querySelector('.h
     }
 
     var idx = getImageIdx();
-    var size = SIZES[Math.floor(Math.random()*SIZES.length)];
+    var size = IMG_SIZE;
     var rot = ROTATIONS[Math.floor(Math.random()*ROTATIONS.length)];
     var appearMs = rand(250, 350);
 
