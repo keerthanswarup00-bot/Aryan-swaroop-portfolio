@@ -267,7 +267,7 @@ document.querySelectorAll('.copy-email').forEach(function(btn) {
 });
 
 // Desktop-only home page image click navigation
-if(window.matchMedia('(min-width:1024px)').matches && document.querySelector('.hero-section')){
+if(window.matchMedia('(min-width:1024px)').matches && document.querySelector('.hero-v3')){
   var featureImg=document.querySelector('#brahmi .feature-visual');
   if(featureImg && !featureImg.closest('a')){
     featureImg.style.cursor='pointer';
@@ -307,12 +307,27 @@ if(window.matchMedia('(min-width:1024px)').matches && document.querySelector('.h
   var BEHIND = 15;
   var DESKTOP = 1024;
 
+  // Preload
+  IMAGES.forEach(function(src){ var i=new Image(); i.src=src; });
+
+  // State
+  var heroSection = document.querySelector('.hero-section');
   var line1 = document.getElementById('hero-line-1');
   var line2 = document.getElementById('hero-line-2');
+  var animFinished = false;
   if(!line1 || !line2) return;
 
   line1.textContent = TEXT_1;
   line2.textContent = TEXT_2;
+
+  var enabled = false;
+  var blocked = false;
+  var active = [];
+  var lastIdx = -1;
+  var lastX = 0, lastY = 0;
+  var accDist = 0;
+  var stopTimer = null;
+  var isDesktop = window.innerWidth >= DESKTOP;
 
   // ── Text fade-in ──
   function fadeInText(){
@@ -320,72 +335,191 @@ if(window.matchMedia('(min-width:1024px)').matches && document.querySelector('.h
     line2.classList.add('visible');
   }
 
-  // ── Cursor reveal images (behind text, z-index 1) ──
-  var heroSection = document.querySelector('.hero-section');
-  var isDesktop = window.innerWidth >= 1024;
-  var revealEnabled = false;
-  var revealBlocked = false;
-  var lastSpawn = 0;
-  var activeImgs = [];
+  // ── Image lifecycle ──
+  function rand(min, max){ return Math.random()*(max-min)+min; }
 
-  function rand(min, max){ return Math.random() * (max - min) + min; }
-
-  function spawnReveal(cx, cy){
-    if(activeImgs.length >= 8){
-      var old = activeImgs.shift();
-      if(old.parentNode) old.parentNode.removeChild(old);
-    }
-
-    var size = 170;
-    var el = document.createElement('img');
-    el.src = IMAGES[Math.floor(Math.random() * IMAGES.length)];
-    el.draggable = false;
-    el.alt = '';
-    el.style.cssText = 'position:fixed;z-index:1;pointer-events:none;width:'+size+'px;height:auto;border-radius:6px;box-shadow:0 8px 24px rgba(0,0,0,0.15);left:'+(cx-size/2)+'px;top:'+(cy-size/2)+'px;opacity:0;transform:scale(0.85);transition:opacity 0.25s ease,transform 0.8s ease;';
-    document.body.appendChild(el);
-    activeImgs.push(el);
-
-    requestAnimationFrame(function(){ el.style.opacity = '1'; el.style.transform = 'scale(1)'; });
-
-    var life = rand(800, 1200);
-    setTimeout(function(){ el.style.opacity = '0'; el.style.transform = 'scale(0.7)'; }, life * 0.4);
-    setTimeout(function(){ if(el.parentNode) el.parentNode.removeChild(el); }, life);
+  function getImageIdx(){
+    var idx;
+    do { idx = Math.floor(Math.random()*IMAGES.length); }
+    while(idx === lastIdx && IMAGES.length > 1);
+    lastIdx = idx;
+    return idx;
   }
 
-  function onRevealMove(e){
-    if(!revealEnabled || revealBlocked) return;
-    var now = Date.now();
-    if(now - lastSpawn < 120) return;
-    lastSpawn = now;
-    if(heroSection){
-      var r = heroSection.getBoundingClientRect();
-      if(e.clientY < r.top || e.clientY > r.bottom || e.clientX < r.left || e.clientX > r.right) return;
+  function spawnAt(cx, cy, mx, my){
+    if(active.length >= MAX_VISIBLE){
+      removeOldest();
     }
-    spawnReveal(e.clientX, e.clientY);
+
+    var idx = getImageIdx();
+    var size = IMG_SIZE;
+    var rot = ROTATIONS[Math.floor(Math.random()*ROTATIONS.length)];
+    var appearMs = rand(250, 350);
+
+    // Behind the movement direction + slight jitter
+    var dx = cx - mx, dy = cy - my;
+    var mDist = Math.sqrt(dx*dx + dy*dy);
+    var offX = 0, offY = 0;
+    if(mDist > 0){
+      offX = -(dx/mDist) * BEHIND;
+      offY = -(dy/mDist) * BEHIND;
+    }
+    offX += (rand(5, 15)) * (Math.random() > 0.5 ? 1 : -1);
+    offY += (rand(5, 15)) * (Math.random() > 0.5 ? 1 : -1);
+
+    var el = document.createElement('div');
+    el.className = 'hero-reveal-image';
+    el.style.left = (cx + offX - size/2) + 'px';
+    el.style.top = (cy + offY - size/2) + 'px';
+    el.style.width = size + 'px';
+    el.style.zIndex = 1;
+    el.style.transform = 'translate3d(0,0,0) scale(0.6) rotate(' + rot + 'deg)';
+
+    var elImg = document.createElement('img');
+    elImg.src = IMAGES[idx];
+    elImg.draggable = false;
+    elImg.alt = '';
+    elImg.style.opacity = '0';
+    elImg.style.transition = 'opacity ' + appearMs + 'ms ease-out, transform ' + appearMs + 'ms cubic-bezier(.34,1.56,.64,1)';
+
+    el.appendChild(elImg);
+    document.body.appendChild(el);
+
+    requestAnimationFrame(function(){
+      requestAnimationFrame(function(){
+        elImg.style.opacity = '1';
+        elImg.style.transform = 'scale(1)';
+      });
+    });
+
+    active.push(el);
+
+    // Auto-fade after a short life
+    var lifeMs = rand(800, 1200);
+    el._fadeTimer = setTimeout(function(){
+      removeImage(el);
+    }, lifeMs);
+  }
+
+  function removeImage(el){
+    if(el._removing) return;
+    el._removing = true;
+    clearTimeout(el._fadeTimer);
+
+    var removeMs = rand(600, 800);
+    var img = el.querySelector('img');
+    if(img){
+      img.style.transition = 'opacity ' + removeMs + 'ms ease-out, transform ' + removeMs + 'ms cubic-bezier(.5,0,.5,1)';
+      img.style.opacity = '0';
+      img.style.transform = 'scale(0.2)';
+    }
+    el.style.transition = 'opacity ' + removeMs + 'ms ease-out';
+    el.style.opacity = '0';
+    setTimeout(function(){
+      if(el.parentNode) el.parentNode.removeChild(el);
+    }, removeMs + 50);
+  }
+
+  function removeOldest(){
+    if(!active.length) return;
+    removeImage(active.shift());
+  }
+
+  function fadeOutAll(){
+    var copy = active.splice(0, active.length);
+    copy.forEach(removeImage);
+  }
+
+  function fadeOutTrail(){
+    if(!active.length) return;
+    accDist = 0;
+    var items = active.splice(0, active.length);
+    items.forEach(function(el, i){
+      setTimeout(function(){
+        removeImage(el);
+      }, i * 150);
+    });
+  }
+
+  // ── Mouse (accumulated distance tracking) ──
+  function onMove(e){
+    if(!enabled || !isDesktop || blocked) return;
+    if(heroSection){
+      var rect = heroSection.getBoundingClientRect();
+      if(e.clientY < rect.top || e.clientY > rect.bottom || e.clientX < rect.left || e.clientX > rect.right) return;
+    }
+    var x = e.clientX, y = e.clientY;
+
+    clearTimeout(stopTimer);
+    stopTimer = setTimeout(function(){
+      fadeOutTrail();
+    }, 500);
+
+    var prevX = lastX, prevY = lastY;
+    var dist = Math.sqrt(Math.pow(x-prevX,2)+Math.pow(y-prevY,2));
+    lastX = x;
+    lastY = y;
+    accDist += dist;
+    var threshold = rand(SPAWN_MIN, SPAWN_MAX);
+    if(accDist < threshold) return;
+
+    spawnAt(x, y, prevX, prevY);
+    accDist = 0;
   }
 
   function enableReveal(){
-    if(revealEnabled) return;
-    revealEnabled = true;
-    window.addEventListener('mousemove', onRevealMove, { passive: true });
+    if(enabled) return;
+    enabled = true;
+    window.addEventListener('mousemove', onMove, { passive: true });
   }
 
   function disableReveal(){
-    revealEnabled = false;
-    window.removeEventListener('mousemove', onRevealMove);
-    activeImgs.forEach(function(el){ if(el.parentNode) el.parentNode.removeChild(el); });
-    activeImgs = [];
+    enabled = false;
+    window.removeEventListener('mousemove', onMove);
+    fadeOutAll();
+    clearTimeout(stopTimer);
   }
 
-  window.addEventListener('revealblock', function(){ revealBlocked = true; disableReveal(); });
-  window.addEventListener('revealunblock', function(){ revealBlocked = false; if(revealEnabled) enableReveal(); });
+  function checkHeroActive(){
+    if(!animFinished || !heroSection) return;
+    var rect = heroSection.getBoundingClientRect();
+    var isHeroVisible = rect.bottom > 0;
+    if(isHeroVisible && !enabled && isDesktop){
+      enableReveal();
+    } else if(!isHeroVisible && enabled){
+      disableReveal();
+    }
+  }
+
+  window.addEventListener('revealblock', function(){
+    blocked = true;
+    fadeOutAll();
+    clearTimeout(stopTimer);
+  });
+  window.addEventListener('revealunblock', function(){
+    blocked = false;
+    checkHeroActive();
+  });
+
+  window.addEventListener('scroll', checkHeroActive, { passive: true });
+
+  window.addEventListener('resize', function(){
+    var was = isDesktop;
+    isDesktop = window.innerWidth >= DESKTOP;
+    if(was && !isDesktop){
+      disableReveal();
+    } else if(!was && isDesktop){
+      checkHeroActive();
+    }
+  });
 
   // ── Wait for intro to finish ──
   function startAnimation(){
     fadeInText();
     window.dispatchEvent(new CustomEvent('hero:ready'));
     setTimeout(function(){
-      if(isDesktop && heroSection) enableReveal();
+      animFinished = true;
+      checkHeroActive();
     }, 1000);
   }
 
@@ -454,7 +588,7 @@ document.addEventListener("DOMContentLoaded", function(){
   var paragraphEl = document.getElementById("srtParagraph");
   if(!section || !paragraphEl) return;
 
-  var fullText = "Brand identity and creative systems for real estate, F&B, and consumer brands. Designed, and often built into working product, by one person. For Paavani Properties, that meant building the Meta Ads and creative system behind 302 qualified leads in 66 days, and leading creative across 30+ launches spanning identity, print, video, and 3D.";
+  var fullText = "Brand identity and creative systems for real estate, F&B, and consumer brands — designed, and often built into working product, by one person. For Paavani Properties, that meant building the Meta Ads and creative system behind 302 qualified leads in 66 days, and leading creative across 30+ launches — identity, print, video, and 3D.";
 
   var words = fullText.split(" ");
   paragraphEl.innerHTML = words.map(function(w){ return '<span class="srt-word">' + w + '</span>'; }).join(" ");
@@ -465,11 +599,9 @@ document.addEventListener("DOMContentLoaded", function(){
     var rect = section.getBoundingClientRect();
     var vh = window.innerHeight;
 
-    var triggerStart = vh * 0.3;
-    var triggerEnd = vh * 0.5;
-    var startPoint = triggerStart;
-    var endPoint = triggerEnd - rect.height;
-    var raw = (startPoint - rect.top) / (startPoint - endPoint);
+    var start = vh;
+    var end = vh * 0.4 - rect.height;
+    var raw = (rect.top - start) / (end - start);
     var progress = Math.min(Math.max(raw, 0), 1);
 
     var revealCount = Math.floor(progress * wordEls.length);
