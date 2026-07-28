@@ -457,13 +457,10 @@ if(window.matchMedia('(min-width:1024px)').matches && document.querySelector('.h
         }
       }
       if(overlap){
-        line2Chars[c].style.color = '#fff';
-        line2Chars[c].style.mixBlendMode = 'difference';
+        line2Chars[c].style.color = '';
         line2Chars[c].style.opacity = '';
       } else {
-        line2Chars[c].style.color = '';
-        line2Chars[c].style.mixBlendMode = '';
-        line2Chars[c].style.opacity = '';
+        line2Chars[c].style.color = '#FAFAF8';
       }
     }
   }
@@ -649,15 +646,12 @@ document.addEventListener("DOMContentLoaded", function(){
     var rect = section.getBoundingClientRect();
     var vh = window.innerHeight;
 
-    var startAt = vh * 0.3;
-    var endAt = vh * 0.5 - rect.height;
-    var scrollDist = startAt - endAt;
-    if(scrollDist <= 0) scrollDist = vh * 0.2;
-    var scrolled = startAt - rect.top;
-    var raw = scrolled / scrollDist;
-    var progress = Math.min(Math.max(raw, 0), 1);
+    var triggerLine = vh * 0.3;
+    var scrolledPast = triggerLine - rect.top;
+    var totalDist = vh * 0.3;
+    var progress = Math.min(Math.max(scrolledPast / totalDist, 0), 1);
 
-    var revealCount = Math.floor(progress * wordEls.length);
+    var revealCount = Math.min(Math.ceil(progress * wordEls.length), wordEls.length);
 
     for(var i = 0; i < wordEls.length; i++){
       wordEls[i].style.opacity = i < revealCount ? "1" : "0.25";
