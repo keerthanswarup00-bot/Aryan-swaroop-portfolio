@@ -271,8 +271,8 @@ if(window.matchMedia('(min-width:1024px)').matches && document.querySelector('.h
 (function(){
   if(prefersReducedMotion) return;
 
-  var TEXT_1 = 'Designing brands with purpose.';
-  var TEXT_2 = 'Building experiences that people remember.';
+  var TEXT_1 = 'Not another portfolio.';
+  var TEXT_2 = 'Just my best work.';
 
   var IMAGES = [
     'images/brahmi-pourshot.jpg',
