@@ -649,8 +649,7 @@ document.addEventListener("DOMContentLoaded", function(){
     var rect = section.getBoundingClientRect();
     var vh = window.innerHeight;
 
-    var raw = 1 - rect.bottom / vh - 0.1;
-    var progress = Math.min(Math.max(raw / 0.9, 0), 1);
+    var progress = Math.min(Math.max(1 - rect.bottom / vh, 0), 1);
 
     var revealCount = Math.min(Math.ceil(progress * wordEls.length), wordEls.length);
 
