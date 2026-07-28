@@ -372,7 +372,16 @@ if(window.matchMedia('(min-width:1024px)').matches && document.querySelector('.h
     el.style.left = (cx + offX - size/2) + 'px';
     el.style.top = (cy + offY - size/2) + 'px';
     el.style.width = size + 'px';
-    el.style.zIndex = 9990 + active.length;
+    // Behind line 2 if overlapping, otherwise above line 1
+    var behindLine2 = false;
+    if(line2){
+      var l2r = line2.getBoundingClientRect();
+      var imgCx = cx + offX, imgCy = cy + offY;
+      if(imgCx >= l2r.left && imgCx <= l2r.right && imgCy >= l2r.top && imgCy <= l2r.bottom){
+        behindLine2 = true;
+      }
+    }
+    el.style.zIndex = behindLine2 ? 1 : 9999;
     el.style.transform = 'translate3d(0,0,0) scale(0.6) rotate(' + rot + 'deg)';
 
     var elImg = document.createElement('img');
