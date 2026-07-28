@@ -562,5 +562,21 @@ if(window.matchMedia('(min-width:1024px)').matches && document.querySelector('.h
 })();
 
 // Disable right-click on images + prevent drag
+// ── Dark nav when hero in view (mobile) ──
+(function(){
+  var header=document.querySelector('.site-header');
+  var hero=document.querySelector('.hero-section');
+  if(!header||!hero)return;
+  var mq=window.matchMedia('(max-width:640px)');
+  function updateNav(){
+    if(!mq.matches){header.classList.remove('nav-dark');return;}
+    var rect=hero.getBoundingClientRect();
+    header.classList.toggle('nav-dark',rect.bottom>0);
+  }
+  updateNav();
+  mq.addEventListener('change',updateNav);
+  window.addEventListener('scroll',updateNav,{passive:true});
+})();
+
 document.addEventListener('contextmenu',function(e){if(e.target.tagName==='IMG')e.preventDefault();});
 document.addEventListener('dragstart',function(e){if(e.target.tagName==='IMG')e.preventDefault();});
