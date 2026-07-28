@@ -443,6 +443,7 @@ if(window.matchMedia('(min-width:1024px)').matches && document.querySelector('.h
     var images = trailLayer.querySelectorAll('.hero-reveal-image');
     var trails = [];
     for(var i = 0; i < images.length; i++){
+      if(images[i]._removing) continue;
       trails.push(images[i].getBoundingClientRect());
     }
     for(var c = 0; c < line2Chars.length; c++){

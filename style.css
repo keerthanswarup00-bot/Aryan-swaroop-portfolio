@@ -505,3 +505,7 @@ body.pg-lightbox-open{overflow:hidden;}
   transition: opacity 0.15s linear;
 }
 
+.l2-char {
+  display: inline-block;
+}
+
