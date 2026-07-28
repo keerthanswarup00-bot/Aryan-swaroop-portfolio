@@ -4,19 +4,30 @@
   "description": "Portfolio of Aryan Swaroop, a multidisciplinary brand designer creating premium branding, UI/UX, web experiences, and AI-powered digital products.",
   "icons": [
     {
-      "src": "/favicon-32x32.png",
-      "sizes": "32x32",
-      "type": "image/png"
-    },
-    {
-      "src": "/favicon-16x16.png",
+      "src": "/favicon-16x16.png?v=2",
       "sizes": "16x16",
       "type": "image/png"
     },
     {
-      "src": "/apple-touch-icon.png",
+      "src": "/favicon-32x32.png?v=2",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "/apple-touch-icon.png?v=2",
       "sizes": "180x180",
       "type": "image/png"
+    },
+    {
+      "src": "/android-chrome-192x192.png?v=2",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/android-chrome-512x512.png?v=2",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
     }
   ],
   "start_url": "/",
