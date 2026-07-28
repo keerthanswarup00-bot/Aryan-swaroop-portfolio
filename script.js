@@ -171,19 +171,33 @@ if (cur && !prefersReducedMotion) {
   var trigger=dd.querySelector('.nav-dropdown-trigger');
   var menu=dd.querySelector('.mega-menu');
   var closeTimer=null;
-  function openMenu(){clearTimeout(closeTimer);dd.classList.add('open');trigger.setAttribute('aria-expanded','true');}
-  function closeMenu(){closeTimer=setTimeout(function(){dd.classList.remove('open');trigger.setAttribute('aria-expanded','false');},250);}
+  function blockReveal(){window.dispatchEvent(new CustomEvent('revealblock'));}
+  function unblockReveal(){window.dispatchEvent(new CustomEvent('revealunblock'));}
+  function openMenu(){clearTimeout(closeTimer);dd.classList.add('open');trigger.setAttribute('aria-expanded','true');blockReveal();}
+  function closeMenu(){closeTimer=setTimeout(function(){dd.classList.remove('open');trigger.setAttribute('aria-expanded','false');unblockReveal();},250);}
   function cancelClose(){clearTimeout(closeTimer);}
   trigger.addEventListener('mouseenter',function(){if(window.innerWidth>700)openMenu();});
   trigger.addEventListener('mouseleave',function(){if(window.innerWidth>700)closeMenu();});
   menu.addEventListener('mouseenter',function(){if(window.innerWidth>700)cancelClose();});
   menu.addEventListener('mouseleave',function(){if(window.innerWidth>700)closeMenu();});
   trigger.addEventListener('click',function(e){
-    if(window.innerWidth<=700){e.preventDefault();dd.classList.toggle('open');trigger.setAttribute('aria-expanded',dd.classList.contains('open'));}
+    if(window.innerWidth<=700){e.preventDefault();dd.classList.toggle('open');trigger.setAttribute('aria-expanded',dd.classList.contains('open'));if(dd.classList.contains('open'))blockReveal();else unblockReveal();}
     else{if(dd.classList.contains('open'))closeMenu();else openMenu();}
   });
   document.addEventListener('keydown',function(e){if(e.key==='Escape')dd.classList.remove('open');});
-  document.addEventListener('click',function(e){if(!dd.contains(e.target))dd.classList.remove('open');});
+  document.addEventListener('click',function(e){if(!dd.contains(e.target) && dd.classList.contains('open')){dd.classList.remove('open');trigger.setAttribute('aria-expanded','false');unblockReveal();}});
+})();
+
+// Block cursor reveal on nav hover
+(function(){
+  var header=document.querySelector('.site-header');
+  if(!header)return;
+  header.addEventListener('mouseenter',function(){window.dispatchEvent(new CustomEvent('revealblock'));});
+  header.addEventListener('mouseleave',function(){
+    var dd=document.getElementById('designDropdown');
+    if(!dd || !dd.classList.contains('open'))
+      window.dispatchEvent(new CustomEvent('revealunblock'));
+  });
 })();
 
 // Typewriter cycle for "Open to Work" badge (desktop header)
@@ -308,6 +322,7 @@ if(window.matchMedia('(min-width:1024px)').matches && document.querySelector('.h
   line2.textContent = TEXT_2;
 
   var enabled = false;
+  var blocked = false;
   var active = [];
   var lastIdx = -1;
   var lastX = 0, lastY = 0;
@@ -429,7 +444,7 @@ if(window.matchMedia('(min-width:1024px)').matches && document.querySelector('.h
 
   // ── Mouse (accumulated distance tracking) ──
   function onMove(e){
-    if(!enabled || !isDesktop) return;
+    if(!enabled || !isDesktop || blocked) return;
     if(heroSection){
       var rect = heroSection.getBoundingClientRect();
       if(e.clientY < rect.top || e.clientY > rect.bottom || e.clientX < rect.left || e.clientX > rect.right) return;
@@ -476,6 +491,16 @@ if(window.matchMedia('(min-width:1024px)').matches && document.querySelector('.h
       disableReveal();
     }
   }
+
+  window.addEventListener('revealblock', function(){
+    blocked = true;
+    fadeOutAll();
+    clearTimeout(stopTimer);
+  });
+  window.addEventListener('revealunblock', function(){
+    blocked = false;
+    checkHeroActive();
+  });
 
   window.addEventListener('scroll', checkHeroActive, { passive: true });
 
