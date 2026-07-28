@@ -221,7 +221,7 @@ h2{font-family:var(--serif); font-weight:500; font-size:clamp(26px,4.2vw,46px); 
 }
 
 /* gallery strip (Paavani 3D renders etc) */
-.gallery-strip{display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-top:28px;}
+.gallery-strip{display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:28px;}
 .gallery-tile{aspect-ratio:4/3; background:repeating-linear-gradient(135deg,#EFEDE6,#EFEDE6 12px,#E2DFD6 12px,#E2DFD6 13px);
   border:1px solid #2b2b2b; border-radius:3px; display:flex; align-items:center; justify-content:center;
   font-size:10.5px; color:#8a8a8a; text-align:center;}
