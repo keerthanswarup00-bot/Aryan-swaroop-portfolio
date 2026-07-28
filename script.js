@@ -41,7 +41,7 @@
 var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 // Page transition — fade in on load, fade out on nav
-document.body.classList.add('loaded');
+if(document.body) document.body.classList.add('loaded');
 if (!prefersReducedMotion) {
   document.querySelectorAll('a[href^="/"]').forEach(function (a) {
     a.addEventListener('click', function (e) {
@@ -58,7 +58,7 @@ if (!prefersReducedMotion) {
 // Custom cursor
 var cur = document.getElementById('cur');
 if (cur && !prefersReducedMotion) {
-  var curSpan = cur.querySelector('span');
+  var curSpan = cur.querySelector('span') || {};
   function isDarkBg(el) {
     while (el && el !== document.body) {
       var bg = getComputedStyle(el).backgroundColor;
@@ -209,7 +209,6 @@ function typeCycle(el, words) {
       cIndex++;
       el.textContent = word.slice(0, cIndex);
       if (cIndex === word.length) {
-        deleting = false;
         return setTimeout(function () { deleting = true; tick(); }, 3000);
       }
       setTimeout(tick, 55);
@@ -527,14 +526,16 @@ if(window.matchMedia('(min-width:1024px)').matches && document.querySelector('.h
   if(!document.getElementById('intro-overlay')){
     startAnimation();
   } else {
+    var started=false;
     var obs = new MutationObserver(function(){
-      if(!document.getElementById('intro-overlay')){
+      if(!document.getElementById('intro-overlay') && !started){
+        started=true;
         obs.disconnect();
         startAnimation();
       }
     });
     obs.observe(document.body, { childList: true });
-    setTimeout(startAnimation, 5200);
+    setTimeout(function(){if(!started){started=true; startAnimation();}}, 5200);
   }
 })();
 
