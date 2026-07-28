@@ -1,10 +1,18 @@
 # Aryan Swaroop
 
-> Brand Designer & Creative Lead based in Bengaluru, India. Specializes in brand identity systems, packaging design, 3D visualization, video production, UI/UX, and creative direction. Also builds web products using React, Next.js, and Supabase. Currently open to full-time Creative Lead or Brand Designer roles.
+> Brand Designer & Creative Lead based in Bengaluru, India. Specializes in brand identity systems, packaging design, 3D visualization, video production, UI/UX, and creative direction. Also builds web products using React, Next.js, and Supabase. Currently open to full-time Creative Lead or Brand Designer roles. The portfolio tagline: "Not another portfolio. Just my best work."
 
 ## About
 
-Aryan Swaroop is a multidisciplinary designer with 2.5+ years of experience leading creative end-to-end — from brand strategy through to shipped results. Based in Bengaluru, India. Expertise spans real estate branding, F&B packaging, consumer brand identity, digital campaigns, and front-end web development.
+Aryan Swaroop is a multidisciplinary designer with 2.5+ years of experience leading creative end-to-end — from brand strategy through to shipped results. Based in Bengaluru, India. Expertise spans real estate branding, F&B packaging, consumer brand identity, digital campaigns, and front-end web development. The portfolio features 9 portrait cursor-reveal images, refined hero stats (302+ Qualified Leads, 30+ Projects Led, 50+ Films Produced), and an endless-runner game on the 404 page.
+
+### Quick Facts
+
+- Location: Bengaluru, Karnataka, India
+- Experience: 2.5+ years
+- Open to: Creative Lead, Brand Designer, Creative Director roles
+- Email: aryanswaroop.0@gmail.com
+- Portfolio: https://www.aryanswaroop.com
 
 ## Areas of Expertise
 
@@ -77,3 +85,4 @@ All work showcased is © Aryan Swaroop unless otherwise noted. Project work is d
 - [Tools](https://www.aryanswaroop.com/tools): Skills and capabilities
 - [Playground](https://www.aryanswaroop.com/playground): Experiments and behind-the-scenes work
 - [Changelog](https://www.aryanswaroop.com/changelog): Update history and site changes
+- [404 / Game](https://www.aryanswaroop.com/404): Endless-runner game page for lost visitors

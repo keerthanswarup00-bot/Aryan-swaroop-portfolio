@@ -298,8 +298,10 @@ if(window.matchMedia('(min-width:1024px)').matches && document.querySelector('.h
   IMAGES.forEach(function(src){ var i=new Image(); i.src=src; });
 
   // State
+  var heroSection = document.querySelector('.hero-section');
   var line1 = document.getElementById('hero-line-1');
   var line2 = document.getElementById('hero-line-2');
+  var animFinished = false;
   if(!line1 || !line2) return;
 
   line1.textContent = TEXT_1;
@@ -460,16 +462,36 @@ if(window.matchMedia('(min-width:1024px)').matches && document.querySelector('.h
     clearTimeout(stopTimer);
   }
 
+  function checkHeroActive(){
+    if(!animFinished || !heroSection) return;
+    var rect = heroSection.getBoundingClientRect();
+    var isHeroVisible = rect.bottom > 0;
+    if(isHeroVisible && !enabled && isDesktop){
+      enableReveal();
+    } else if(!isHeroVisible && enabled){
+      disableReveal();
+    }
+  }
+
+  window.addEventListener('scroll', checkHeroActive, { passive: true });
+
   window.addEventListener('resize', function(){
     var was = isDesktop;
     isDesktop = window.innerWidth >= DESKTOP;
-    if(was && !isDesktop) disableReveal();
+    if(was && !isDesktop){
+      disableReveal();
+    } else if(!was && isDesktop){
+      checkHeroActive();
+    }
   });
 
   // ── Wait for intro to finish ──
   function startAnimation(){
     fadeInText();
-    setTimeout(function(){ if(isDesktop) enableReveal(); }, 1000);
+    setTimeout(function(){
+      animFinished = true;
+      checkHeroActive();
+    }, 1000);
   }
 
   if(!document.getElementById('intro-overlay')){

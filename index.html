@@ -43,6 +43,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600&display=swap"></noscript>
+<link rel="prefetch" href="/about" as="document">
+<link rel="prefetch" href="/real-estate" as="document">
 <link rel="stylesheet" href="style.css">
 <script type="application/ld+json">
 {
@@ -54,10 +56,10 @@
       "name": "Aryan Swaroop",
       "alternateName": "Keerthan Swarup",
       "jobTitle": "Brand Designer & Creative Lead",
+      "description": "Multidisciplinary brand designer and creative lead based in Bengaluru, India. Specializes in brand identity systems, packaging design, 3D visualization, video production, UI/UX, and creative direction. Open to full-time Creative Lead and Brand Designer roles.",
       "url": "https://www.aryanswaroop.com/",
       "image": "https://www.aryanswaroop.com/images/portrait.jpg",
       "email": "mailto:aryanswaroop.0@gmail.com",
-      "telephone": "",
       "address": {
         "@type": "PostalAddress",
         "addressLocality": "Bengaluru",
@@ -68,9 +70,14 @@
         "@type": "Country",
         "name": "India"
       },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://www.aryanswaroop.com/"
+      },
       "sameAs": [
         "https://linkedin.com/in/aryanswaroop",
-        "https://behance.net/Aryan-swaroop"
+        "https://behance.net/Aryan-swaroop",
+        "https://github.com/aryanswaroop"
       ],
       "knowsAbout": [
         "Brand Identity Design",
@@ -150,7 +157,7 @@
       ],
       "speakable": {
         "@type": "SpeakableSpecification",
-        "cssSelector": [".ai-summary", ".hero-h", ".hero-sub"]
+        "cssSelector": [".ai-summary", ".hero-line"]
       },
       "interactionStatistic": [
         {
@@ -357,15 +364,16 @@
 </div>
 
 <main id="main-content">
-<section class="hero-v3">
-  <p class="hero-line" id="hero-line-1">Not another portfolio.</p>
-  <p class="hero-line" id="hero-line-2">Just my best work.</p>
-</section>
-
-<section class="hero-stats-v3">
-  <div><span class="stat-num">302+</span><span class="stat-label">Qualified Leads</span></div>
-  <div><span class="stat-num">30+</span><span class="stat-label">Projects Led</span></div>
-  <div><span class="stat-num">50+</span><span class="stat-label">Films Produced</span></div>
+<section class="hero-section">
+  <div class="hero-v3">
+    <h1 class="hero-line" id="hero-line-1">Not another portfolio.</h1>
+    <h1 class="hero-line" id="hero-line-2">Just my best work.</h1>
+  </div>
+  <div class="hero-stats-v3">
+    <div><span class="stat-num">302+</span><span class="stat-label">Qualified Leads</span></div>
+    <div><span class="stat-num">30+</span><span class="stat-label">Projects Led</span></div>
+    <div><span class="stat-num">50+</span><span class="stat-label">Films Produced</span></div>
+  </div>
 </section>
 
 <section id="brahmi" class="feature">
