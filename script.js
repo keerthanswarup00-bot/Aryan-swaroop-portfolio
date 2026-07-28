@@ -398,23 +398,18 @@ if(window.matchMedia('(min-width:1024px)').matches && document.querySelector('.h
       img.style.transform = 'scale(0.2)';
     }
     setTimeout(function(){
-      var idx = active.indexOf(el);
-      if(idx !== -1) active.splice(idx, 1);
       if(el.parentNode) el.parentNode.removeChild(el);
     }, removeMs + 50);
   }
 
   function removeOldest(){
-    var el = active[0];
-    if(!el) return;
-    removeImage(el);
+    if(!active.length) return;
+    removeImage(active.shift());
   }
 
   function fadeOutAll(){
-    while(active.length){
-      var el = active[0];
-      removeImage(el);
-    }
+    var copy = active.splice(0, active.length);
+    copy.forEach(removeImage);
   }
 
   // ── Mouse (accumulated distance tracking) ──
