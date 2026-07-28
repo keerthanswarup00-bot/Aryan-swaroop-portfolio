@@ -457,11 +457,9 @@ if(window.matchMedia('(min-width:1024px)').matches && document.querySelector('.h
         }
       }
       if(overlap){
-        line2Chars[c].style.color = '#fff';
-        line2Chars[c].style.mixBlendMode = 'difference';
-      } else {
         line2Chars[c].style.color = '';
-        line2Chars[c].style.mixBlendMode = '';
+      } else {
+        line2Chars[c].style.color = '#E9E9E7';
       }
     }
   }
@@ -647,11 +645,12 @@ document.addEventListener("DOMContentLoaded", function(){
     var rect = section.getBoundingClientRect();
     var vh = window.innerHeight;
 
-    var triggerStart = vh * 0.3;
-    var triggerEnd = vh * 0.5;
-    var startPoint = triggerStart;
-    var endPoint = triggerEnd - rect.height;
-    var raw = (startPoint - rect.top) / (startPoint - endPoint);
+    var startAt = vh * 0.3;
+    var endAt = vh * 0.5 - rect.height;
+    var scrollDist = startAt - endAt;
+    if(scrollDist <= 0) scrollDist = vh * 0.2;
+    var scrolled = startAt - rect.top;
+    var raw = scrolled / scrollDist;
     var progress = Math.min(Math.max(raw, 0), 1);
 
     var revealCount = Math.floor(progress * wordEls.length);
