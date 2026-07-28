@@ -397,6 +397,8 @@ if(window.matchMedia('(min-width:1024px)').matches && document.querySelector('.h
       img.style.opacity = '0';
       img.style.transform = 'scale(0.2)';
     }
+    el.style.transition = 'opacity ' + removeMs + 'ms ease-out';
+    el.style.opacity = '0';
     setTimeout(function(){
       if(el.parentNode) el.parentNode.removeChild(el);
     }, removeMs + 50);
@@ -412,6 +414,17 @@ if(window.matchMedia('(min-width:1024px)').matches && document.querySelector('.h
     copy.forEach(removeImage);
   }
 
+  function fadeOutTrail(){
+    if(!active.length) return;
+    accDist = 0;
+    var items = active.splice(0, active.length);
+    items.forEach(function(el, i){
+      setTimeout(function(){
+        removeImage(el);
+      }, i * 150);
+    });
+  }
+
   // ── Mouse (accumulated distance tracking) ──
   function onMove(e){
     if(!enabled || !isDesktop) return;
@@ -419,8 +432,7 @@ if(window.matchMedia('(min-width:1024px)').matches && document.querySelector('.h
 
     clearTimeout(stopTimer);
     stopTimer = setTimeout(function(){
-      fadeOutAll();
-      accDist = 0;
+      fadeOutTrail();
     }, 500);
 
     var prevX = lastX, prevY = lastY;
