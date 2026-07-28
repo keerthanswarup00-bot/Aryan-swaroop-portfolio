@@ -537,6 +537,35 @@ if(window.matchMedia('(min-width:1024px)').matches && document.querySelector('.h
   }
 })();
 
+// ── Number rolling for hero stats ──
+(function(){
+  var counters = document.querySelectorAll('.stat-count');
+  if(!counters.length) return;
+  function easeOutCubic(t){return 1-Math.pow(1-t,3);}
+  function animateCount(el){
+    var target = parseInt(el.getAttribute('data-target'), 10);
+    var duration = 1500;
+    var start = performance.now();
+    function tick(now){
+      var t = Math.min((now - start) / duration, 1);
+      var val = Math.round(easeOutCubic(t) * target);
+      el.textContent = val;
+      if(t < 1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
+  var observer = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(entry.isIntersecting){
+        entry.target.querySelectorAll('.stat-count').forEach(animateCount);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.5 });
+  var stats = document.querySelector('.hero-stats-v3');
+  if(stats) observer.observe(stats);
+})();
+
 // Disable right-click on images + prevent drag
 document.addEventListener('contextmenu',function(e){if(e.target.tagName==='IMG')e.preventDefault();});
 document.addEventListener('dragstart',function(e){if(e.target.tagName==='IMG')e.preventDefault();});
