@@ -267,7 +267,211 @@ if(window.matchMedia('(min-width:1024px)').matches && document.querySelector('.h
   }
 }
 
+// ── Hero text + cursor reveal ──
+(function(){
+  if(prefersReducedMotion) return;
+
+  var TEXT_1 = 'Designing brands with purpose.';
+  var TEXT_2 = 'Building experiences that people remember.';
+
+  var IMAGES = [
+    'images/brahmi-pourshot.jpg',
+    'images/brahmi-shelf.jpg',
+    'images/brahmi-label.jpg',
+    'images/brahmi-kolam.jpg',
+    'images/brahmi-courtyard.jpg',
+    'images/brahmi-tumbler.jpg',
+    'images/brahmi-spices.jpg',
+    'images/brahmi-doorway.jpg',
+    'images/paavani-cards.jpg',
+    'images/paavani-plots.jpg',
+    'images/paavani-family-1.jpg',
+    'images/paavani-family-2.jpg',
+    'images/paavani-topview.jpg',
+    'images/paavani-main-gate.jpg',
+    'images/ishav-maintenance.jpg',
+    'images/snehaloka-clubhouse.jpg',
+    'images/snehaloka-aerial.jpg',
+    'images/sidvin-brochure.jpg',
+    'images/build-preview.png',
+    'images/build-albumflow.jpg'
+  ];
+
+  var MAX_VISIBLE = 5;
+  var SPAWN_MIN = 120;
+  var SPAWN_MAX = 180;
+  var SIZES = [160, 200, 240];
+  var ROTATIONS = [-4, -2, 0, 2, 4];
+  var BEHIND = 30;
+  var DESKTOP = 1024;
+
+  // Preload
+  IMAGES.forEach(function(src){ var i=new Image(); i.src=src; });
+
+  // State
+  var line1 = document.getElementById('hero-line-1');
+  var line2 = document.getElementById('hero-line-2');
+  if(!line1 || !line2) return;
+
+  line1.textContent = TEXT_1;
+  line2.textContent = TEXT_2;
+
+  var enabled = false;
+  var active = [];
+  var lastIdx = -1;
+  var lastX = 0, lastY = 0;
+  var accDist = 0;
+  var stopTimer = null;
+  var isDesktop = window.innerWidth >= DESKTOP;
+
+  // ── Text fade-in ──
+  function fadeInText(){
+    line1.classList.add('visible');
+    line2.classList.add('visible');
+  }
+
+  // ── Image lifecycle ──
+  function rand(min, max){ return Math.random()*(max-min)+min; }
+
+  function getImageIdx(){
+    var idx;
+    do { idx = Math.floor(Math.random()*IMAGES.length); }
+    while(idx === lastIdx && IMAGES.length > 1);
+    lastIdx = idx;
+    return idx;
+  }
+
+  function spawnAt(cx, cy, mx, my){
+    if(active.length >= MAX_VISIBLE){
+      removeOldest();
+    }
+
+    var idx = getImageIdx();
+    var size = SIZES[Math.floor(Math.random()*SIZES.length)];
+    var rot = ROTATIONS[Math.floor(Math.random()*ROTATIONS.length)];
+    var appearMs = rand(250, 350);
+
+    // Behind the movement direction + random jitter
+    var dx = cx - mx, dy = cy - my;
+    var mDist = Math.sqrt(dx*dx + dy*dy);
+    var offX = 0, offY = 0;
+    if(mDist > 0){
+      offX = -(dx/mDist) * BEHIND;
+      offY = -(dy/mDist) * BEHIND;
+    }
+    offX += (rand(20, 40)) * (Math.random() > 0.5 ? 1 : -1);
+    offY += (rand(20, 40)) * (Math.random() > 0.5 ? 1 : -1);
+
+    var el = document.createElement('div');
+    el.className = 'hero-reveal-image';
+    el.style.left = (cx + offX - size/2) + 'px';
+    el.style.top = (cy + offY - size/2) + 'px';
+    el.style.width = size + 'px';
+    el.style.zIndex = 9990 + active.length;
+    el.style.transform = 'translate3d(0,0,0) scale(0.95) rotate(' + rot + 'deg)';
+
+    var elImg = document.createElement('img');
+    elImg.src = IMAGES[idx];
+    elImg.draggable = false;
+    elImg.alt = '';
+    elImg.style.opacity = '0';
+    elImg.style.transition = 'opacity ' + appearMs + 'ms ease-out, transform ' + appearMs + 'ms ease-out';
+
+    el.appendChild(elImg);
+    document.body.appendChild(el);
+
+    // Force style recalc so the initial 0 is painted before transition
+    requestAnimationFrame(function(){
+      requestAnimationFrame(function(){
+        elImg.style.opacity = '1';
+        elImg.style.transform = 'scale(1)';
+      });
+    });
+
+    active.push(el);
+  }
+
+  function removeOldest(){
+    var el = active.shift();
+    if(!el) return;
+    var removeMs = rand(500, 700);
+    var img = el.querySelector('img');
+    if(img){
+      img.style.transition = 'opacity ' + removeMs + 'ms ease-out, transform ' + removeMs + 'ms ease-out';
+      img.style.opacity = '0';
+      img.style.transform = 'scale(0.98)';
+    }
+    setTimeout(function(){
+      if(el.parentNode) el.parentNode.removeChild(el);
+    }, removeMs + 50);
+  }
+
+  function fadeOutAll(){
+    while(active.length) removeOldest();
+  }
+
+  // ── Mouse (accumulated distance tracking) ──
+  function onMove(e){
+    if(!enabled || !isDesktop) return;
+    var x = e.clientX, y = e.clientY;
+
+    clearTimeout(stopTimer);
+    stopTimer = setTimeout(function(){
+      fadeOutAll();
+      accDist = 0;
+    }, 2000);
+
+    var prevX = lastX, prevY = lastY;
+    var dist = Math.sqrt(Math.pow(x-prevX,2)+Math.pow(y-prevY,2));
+    lastX = x;
+    lastY = y;
+    accDist += dist;
+    var threshold = rand(SPAWN_MIN, SPAWN_MAX);
+    if(accDist < threshold) return;
+
+    spawnAt(x, y, prevX, prevY);
+    accDist = 0;
+  }
+
+  function enableReveal(){
+    if(enabled) return;
+    enabled = true;
+    window.addEventListener('mousemove', onMove, { passive: true });
+  }
+
+  function disableReveal(){
+    enabled = false;
+    window.removeEventListener('mousemove', onMove);
+    fadeOutAll();
+    clearTimeout(stopTimer);
+  }
+
+  window.addEventListener('resize', function(){
+    var was = isDesktop;
+    isDesktop = window.innerWidth >= DESKTOP;
+    if(was && !isDesktop) disableReveal();
+  });
+
+  // ── Wait for intro to finish ──
+  function startAnimation(){
+    fadeInText();
+    setTimeout(function(){ if(isDesktop) enableReveal(); }, 1000);
+  }
+
+  if(!document.getElementById('intro-overlay')){
+    startAnimation();
+  } else {
+    var obs = new MutationObserver(function(){
+      if(!document.getElementById('intro-overlay')){
+        obs.disconnect();
+        startAnimation();
+      }
+    });
+    obs.observe(document.body, { childList: true });
+    setTimeout(startAnimation, 5200);
+  }
+})();
+
 // Disable right-click on images + prevent drag
 document.addEventListener('contextmenu',function(e){if(e.target.tagName==='IMG')e.preventDefault();});
 document.addEventListener('dragstart',function(e){if(e.target.tagName==='IMG')e.preventDefault();});
-
