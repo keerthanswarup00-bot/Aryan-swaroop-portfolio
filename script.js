@@ -372,7 +372,7 @@ if(window.matchMedia('(min-width:1024px)').matches && document.querySelector('.h
     el.style.left = (cx + offX - size/2) + 'px';
     el.style.top = (cy + offY - size/2) + 'px';
     el.style.width = size + 'px';
-    el.style.zIndex = 9990 + active.length;
+    el.style.zIndex = 1;
     el.style.transform = 'translate3d(0,0,0) scale(0.6) rotate(' + rot + 'deg)';
 
     var elImg = document.createElement('img');
@@ -447,11 +447,6 @@ if(window.matchMedia('(min-width:1024px)').matches && document.querySelector('.h
     if(heroSection){
       var rect = heroSection.getBoundingClientRect();
       if(e.clientY < rect.top || e.clientY > rect.bottom || e.clientX < rect.left || e.clientX > rect.right) return;
-    }
-    // Don't spawn images over line 2
-    if(line2){
-      var l2r = line2.getBoundingClientRect();
-      if(e.clientX >= l2r.left && e.clientX <= l2r.right && e.clientY >= l2r.top && e.clientY <= l2r.bottom) return;
     }
     var x = e.clientX, y = e.clientY;
 
@@ -586,3 +581,37 @@ if(window.matchMedia('(min-width:1024px)').matches && document.querySelector('.h
 
 document.addEventListener('contextmenu',function(e){if(e.target.tagName==='IMG')e.preventDefault();});
 document.addEventListener('dragstart',function(e){if(e.target.tagName==='IMG')e.preventDefault();});
+
+// Scroll-reveal text (credibility section)
+document.addEventListener("DOMContentLoaded", function(){
+  var section = document.getElementById("credibilityReveal");
+  var paragraphEl = document.getElementById("srtParagraph");
+  if(!section || !paragraphEl) return;
+
+  var fullText = "Brand identity and creative systems for real estate, F&B, and consumer brands — designed, and often built into working product, by one person. For Paavani Properties, that meant building the Meta Ads and creative system behind 302 qualified leads in 66 days, and leading creative across 30+ launches — identity, print, video, and 3D.";
+
+  var words = fullText.split(" ");
+  paragraphEl.innerHTML = words.map(function(w){ return '<span class="srt-word">' + w + '</span>'; }).join(" ");
+
+  var wordEls = paragraphEl.querySelectorAll(".srt-word");
+
+  function updateReveal(){
+    var rect = section.getBoundingClientRect();
+    var vh = window.innerHeight;
+
+    var start = vh;
+    var end = vh * 0.4 - rect.height;
+    var raw = (rect.top - start) / (end - start);
+    var progress = Math.min(Math.max(raw, 0), 1);
+
+    var revealCount = Math.floor(progress * wordEls.length);
+
+    for(var i = 0; i < wordEls.length; i++){
+      wordEls[i].style.opacity = i < revealCount ? "1" : "0.25";
+    }
+  }
+
+  window.addEventListener("scroll", updateReveal, { passive: true });
+  window.addEventListener("resize", updateReveal);
+  updateReveal();
+});

@@ -459,6 +459,8 @@ body.pg-lightbox-open{overflow:hidden;}
   opacity: 0;
   transform: translateY(20px);
   transition: opacity 700ms ease-out, transform 700ms ease-out;
+  position: relative;
+  z-index: 2;
 }
 .hero-line.visible {
   opacity: 1;
@@ -486,5 +488,22 @@ body.pg-lightbox-open{overflow:hidden;}
 }
 @media(max-width:1023px){
   .hero-reveal-image{display:none !important;}
+}
+
+/* Scroll-reveal text (credibility section) */
+.scroll-reveal-text {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 8rem 1.5rem;
+}
+.srt-paragraph {
+  font-size: clamp(1.4rem, 3vw, 2rem);
+  line-height: 1.6;
+  font-weight: 400;
+  color: #111111;
+}
+.srt-word {
+  opacity: 0.25;
+  transition: opacity 0.15s linear;
 }
 
