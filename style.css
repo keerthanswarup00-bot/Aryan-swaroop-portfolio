@@ -466,13 +466,12 @@ body.pg-lightbox-open{overflow:hidden;}
   transform: translateY(0);
 }
 @media(min-width:641px){#hero-line-1{margin-bottom:1.5rem;}}
-#hero-line-2{position:relative;z-index:2;}
 
 @media(max-width:640px){.hero-line{color:#fff;} .hero-section{background:var(--ink);} .stat-num{color:#fff;} .stat-label{color:rgba(255,255,255,.55);}}
 
 /* Cursor reveal images */
 .hero-reveal-image {
-  position: fixed;
+  position: absolute;
   pointer-events: none;
   border-radius: 4px;
   overflow: hidden;
@@ -486,9 +485,7 @@ body.pg-lightbox-open{overflow:hidden;}
   height: auto;
   border-radius: 4px;
 }
-@media(max-width:1023px){
-  .hero-reveal-image{display:none !important;}
-}
+@media(max-width:1023px){.hero-reveal-image{display:none !important;}}
 
 /* Scroll-reveal text (credibility section) */
 .scroll-reveal-text {

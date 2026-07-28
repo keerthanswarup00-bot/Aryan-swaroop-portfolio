@@ -351,6 +351,10 @@ if(window.matchMedia('(min-width:1024px)').matches && document.querySelector('.h
       removeOldest();
     }
 
+    var trailLayer = document.getElementById('cursorTrailLayer');
+    if(!trailLayer) return;
+    var trailRect = trailLayer.getBoundingClientRect();
+
     var idx = getImageIdx();
     var size = IMG_SIZE;
     var rot = ROTATIONS[Math.floor(Math.random()*ROTATIONS.length)];
@@ -367,12 +371,14 @@ if(window.matchMedia('(min-width:1024px)').matches && document.querySelector('.h
     offX += (rand(5, 15)) * (Math.random() > 0.5 ? 1 : -1);
     offY += (rand(5, 15)) * (Math.random() > 0.5 ? 1 : -1);
 
+    var relX = cx - trailRect.left + offX;
+    var relY = cy - trailRect.top + offY;
+
     var el = document.createElement('div');
     el.className = 'hero-reveal-image';
-    el.style.left = (cx + offX - size/2) + 'px';
-    el.style.top = (cy + offY - size/2) + 'px';
+    el.style.left = (relX - size/2) + 'px';
+    el.style.top = (relY - size/2) + 'px';
     el.style.width = size + 'px';
-    el.style.zIndex = 1;
     el.style.transform = 'translate3d(0,0,0) scale(0.6) rotate(' + rot + 'deg)';
 
     var elImg = document.createElement('img');
@@ -383,7 +389,7 @@ if(window.matchMedia('(min-width:1024px)').matches && document.querySelector('.h
     elImg.style.transition = 'opacity ' + appearMs + 'ms ease-out, transform ' + appearMs + 'ms cubic-bezier(.34,1.56,.64,1)';
 
     el.appendChild(elImg);
-    document.body.appendChild(el);
+    trailLayer.appendChild(el);
 
     requestAnimationFrame(function(){
       requestAnimationFrame(function(){
