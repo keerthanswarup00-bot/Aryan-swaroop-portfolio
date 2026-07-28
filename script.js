@@ -557,13 +557,11 @@ if(window.matchMedia('(min-width:1024px)').matches && document.querySelector('.h
   var observer = new IntersectionObserver(function(entries){
     entries.forEach(function(entry){
       if(entry.isIntersecting){
-        setTimeout(function(){
-          entry.target.querySelectorAll('.stat-count').forEach(animateCount);
-        }, 1500);
+        entry.target.querySelectorAll('.stat-count').forEach(animateCount);
         observer.unobserve(entry.target);
       }
     });
-  }, { threshold: 0.5 });
+  }, { threshold: 0 });
   var stats = document.querySelector('.hero-stats-v3');
   if(stats) observer.observe(stats);
 })();
