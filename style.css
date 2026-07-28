@@ -380,6 +380,7 @@ section{content-visibility:auto; contain-intrinsic-size:0 600px;}
 .about-hero-readmore{position:absolute; bottom:40px; left:40px; font-size:12px; letter-spacing:.06em; color:rgba(255,255,255,.45); text-transform:lowercase;}
 .about-hero-inner{max-width:1300px; text-align:center;}
 .about-hero-inner p{font-family:var(--serif); font-weight:500; font-size:clamp(24px,4.5vw,44px); line-height:1.35; letter-spacing:-.01em;}
+.about-hero-inner p br{display:none;}
 
 /* About page — story */
 .about-story{background:var(--paper); color:var(--ink); padding:80px 40px;}
