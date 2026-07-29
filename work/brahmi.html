@@ -43,7 +43,9 @@
 <link rel="stylesheet" href="/style.css">
   <link rel="stylesheet" href="/css/case-study.css">
   <link rel="stylesheet" href="/css/case-study-dark.css">
-  <link rel="stylesheet" href="/css/premium-flipbook.css">
+  <link rel="stylesheet" href="/dflip/css/dflip.min.css">
+<link rel="stylesheet" href="/dflip/css/themify-icons.min.css">
+<link rel="stylesheet" href="/css/premium-flipbook.css">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -286,34 +288,10 @@
       </div>
 
       <div class="premium-flipbook-stage">
-        <div class="premium-turn-stage">
-          <div class="premium-turn-container">
-            <div class="premium-turn-inner">
-              <div id="flipbook" role="application" aria-label="Brahmi Brand Book flipbook"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="premium-ui-header">
-        <div class="premium-ui-header-left">
-          <span class="premium-ui-header-title">Brand Book</span>
-          <span class="premium-ui-header-subtitle">Interactive Brand Guidelines</span>
-        </div>
-        <div class="premium-ui-header-right">
-          <button class="premium-ui-pill premium-ui-btn-prev" aria-label="Previous page">&larr;</button>
-          <button class="premium-ui-pill premium-ui-btn-next" aria-label="Next page">&rarr;</button>
-        </div>
-      </div>
-
-      <div class="premium-ui-bottom">
-        <div class="premium-ui-pagination">
-          <span class="premium-ui-pagenum" role="status" aria-live="polite">1 / 44</span>
-        </div>
-        <div class="premium-ui-progress-wrap">
-          <div class="premium-ui-progress-track">
-            <div class="premium-ui-progress-fill"></div>
-          </div>
+        <div class="_df_book" id="flipbook-brahmi"
+             height="500"
+             webgl="true"
+             backgroundcolor="#052935">
         </div>
       </div>
     </div>
@@ -347,13 +325,23 @@
 </footer>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<script src="../js/turn.js"></script>
+<script src="/dflip/js/dflip.min.js"></script>
+
+<script>
+var TOTAL_PAGES = 44;
+var option_flipbook_brahmi = {
+  source: Array.from({ length: TOTAL_PAGES }, function (_, i) {
+    var n = i + 1;
+    return '/images/brahmi/page-' + (n < 10 ? '0' + n : '' + n) + '.jpg';
+  }),
+  webgl: true
+};
+</script>
 
 <script src="../script.js"></script>
 <script src="../lightbox.js"></script>
 <script src="../js/reveal-on-scroll.js"></script>
 <script src="../js/blend-selector.js"></script>
-<script src="../js/premium-flipbook.js"></script>
 
 </body>
 </html>

@@ -22,9 +22,6 @@
   transform: translateY(0);
 }
 
-/* ============================================================
-   LOADING SKELETON
-   ============================================================ */
 .premium-skeleton {
   position: absolute;
   inset: 0;
@@ -60,9 +57,6 @@
   100% { background-position: -200% 0; }
 }
 
-/* ============================================================
-   STAGE
-   ============================================================ */
 .premium-flipbook-stage {
   position: absolute;
   inset: 0;
@@ -71,211 +65,55 @@
   justify-content: center;
 }
 
-/* ============================================================
-   TURN.JS CONTAINERS
-   ============================================================ */
-.premium-turn-stage {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.premium-turn-container {
-  position: relative;
-  width: 85%;
-  max-width: 960px;
-  perspective: 2500px;
-  perspective-origin: 50% 40%;
-  transform-style: preserve-3d;
-  transform: rotateX(6deg) rotateZ(-1.5deg);
-  will-change: transform;
-}
-
-.premium-turn-inner {
-  position: relative;
+.premium-flipbook-stage ._df_book {
   width: 100%;
   height: 100%;
 }
 
-#flipbook {
+.premium-flipbook-stage .df-book-page {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  background: transparent !important;
+}
+
+.premium-flipbook-stage .df-page-wrapper {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  background: transparent !important;
+}
+
+.premium-flipbook-stage .df-page-content {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  background: transparent !important;
+}
+
+.premium-flipbook-stage .df-page-front,
+.premium-flipbook-stage .df-page-back {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  background: transparent !important;
+}
+
+.premium-flipbook-stage .df-page-front img,
+.premium-flipbook-stage .df-page-back img {
   width: 100%;
   height: 100%;
+  object-fit: contain;
 }
 
-@keyframes bookBreathe {
-  0%, 100% { transform: rotateX(6deg) rotateZ(-1.5deg) translateY(0); }
-  50% { transform: rotateX(6deg) rotateZ(-1.2deg) translateY(3px); }
-}
-
-.premium-turn-container.idle {
-  animation: bookBreathe 6s ease-in-out infinite;
-}
-
-/* Turn.js page styling */
-#flipbook .page {
-  background-size: cover !important;
-  background-repeat: no-repeat !important;
-  background-position: center !important;
-  width: 100%;
-  height: 100%;
-}
-
-#flipbook .hard {
-  background-size: contain !important;
-}
-
-
-
-/* ============================================================
-   HEADER UI
-   ============================================================ */
-.premium-ui-header {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  padding: 16px 20px;
-  z-index: 60;
-  pointer-events: none;
-}
-
-.premium-ui-header > * {
-  pointer-events: auto;
-}
-
-.premium-ui-header-left {
-  display: flex;
-  flex-direction: column;
-  gap: 1px;
-}
-
-.premium-ui-header-title {
-  color: rgba(255,255,255,0.85);
-  font-size: 15px;
-  font-weight: 500;
-  letter-spacing: 0.2px;
-}
-
-.premium-ui-header-subtitle {
-  color: rgba(255,255,255,0.35);
-  font-size: 10px;
-  font-weight: 400;
-  letter-spacing: 0.3px;
-}
-
-.premium-ui-header-right {
-  display: flex;
-  gap: 5px;
-  align-items: center;
-}
-
-.premium-ui-pill {
-  background: none;
-  border: none;
-  color: rgba(255,255,255,0.5);
-  padding: 6px 10px;
-  border-radius: 0;
-  font-size: 18px;
-  font-weight: 400;
-  cursor: pointer;
-  transition: color 0.2s ease;
-  font-family: inherit;
-  letter-spacing: 0;
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  gap: 0;
-  white-space: nowrap;
-  line-height: 1;
-}
-
-.premium-ui-pill:hover {
-  color: rgba(255,255,255,0.9);
-}
-
-.premium-ui-pill:active {
-  transform: scale(0.92);
-}
-
-.premium-ui-pill:disabled {
-  opacity: 0.15;
-  cursor: default;
-  pointer-events: none;
-}
-
-.premium-ui-pill:focus-visible {
-  outline: 1px solid rgba(255,255,255,0.15);
-  outline-offset: 2px;
-}
-
-/* ============================================================
-   BOTTOM UI
-   ============================================================ */
-.premium-ui-bottom {
-  position: absolute;
-  bottom: 14px;
-  left: 20px;
-  right: 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  z-index: 60;
-  pointer-events: none;
-}
-
-.premium-ui-bottom > * {
-  pointer-events: auto;
-}
-
-.premium-ui-pagination {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.premium-ui-pagenum {
-  color: rgba(255,255,255,0.45);
-  font-size: 12px;
-  font-weight: 500;
-  font-variant-numeric: tabular-nums;
-  letter-spacing: 0.3px;
-  min-width: 70px;
-  text-align: left;
-}
-
-.premium-ui-progress-wrap {
-  flex: 1;
-  max-width: 220px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.premium-ui-progress-track {
-  flex: 1;
-  height: 2px;
-  background: rgba(255,255,255,0.08);
-  border-radius: 2px;
-  position: relative;
-  overflow: visible;
-}
-
-.premium-ui-progress-fill {
-  height: 100%;
-  background: rgba(255,255,255,0.3);
-  border-radius: 2px;
-  transition: width 0.45s cubic-bezier(.22,.61,.36,1);
-  position: relative;
-}
-
-/* ============================================================
-   RESPONSIVE
-   ============================================================ */
 @media (max-width: 1024px) {
   .cs-flipbook {
     width: calc(100% + 2rem);
@@ -293,83 +131,12 @@
     padding-bottom: 58%;
     border-radius: 14px;
   }
-
-  .premium-turn-container {
-    width: 92%;
-    max-width: 600px;
-    transform: rotateX(4deg) rotateZ(-1deg);
-  }
-
-  .premium-ui-header {
-    padding: 12px 14px;
-  }
-
-  .premium-ui-header-title {
-    font-size: 13px;
-  }
-
-  .premium-ui-header-subtitle {
-    font-size: 10px;
-  }
-
-  .premium-ui-pill {
-    padding: 4px 8px;
-    font-size: 16px;
-  }
-
-  .premium-ui-bottom {
-    bottom: 10px;
-    left: 14px;
-    right: 14px;
-  }
-
-  .premium-ui-progress-wrap {
-    max-width: 160px;
-  }
-
-  .premium-ui-pagenum {
-    font-size: 11px;
-    min-width: 60px;
-  }
 }
 
 @media (max-width: 640px) {
   .premium-flipbook-wrapper {
     padding-bottom: 75%;
     border-radius: 10px;
-  }
-
-  .premium-turn-container {
-    width: 96%;
-    max-width: 360px;
-    transform: rotateX(2deg) rotateZ(-0.5deg);
-  }
-
-  .premium-ui-header {
-    padding: 10px 12px;
-  }
-
-  .premium-ui-header-title {
-    font-size: 11px;
-  }
-
-  .premium-ui-header-subtitle {
-    display: none;
-  }
-
-  .premium-ui-pill {
-    padding: 3px 6px;
-    font-size: 14px;
-  }
-
-  .premium-ui-bottom {
-    flex-direction: column;
-    gap: 5px;
-    bottom: 8px;
-  }
-
-  .premium-ui-progress-wrap {
-    max-width: 140px;
   }
 }
 
@@ -378,28 +145,8 @@
     padding-bottom: 80%;
     border-radius: 8px;
   }
-
-  .premium-turn-container {
-    max-width: 280px;
-  }
-
-  .premium-ui-header-right {
-    gap: 3px;
-  }
-
-  .premium-ui-pill {
-    padding: 2px 5px;
-    font-size: 12px;
-  }
-
-  .premium-ui-progress-wrap {
-    max-width: 100px;
-  }
 }
 
-/* ============================================================
-   REDUCED MOTION
-   ============================================================ */
 @media (prefers-reduced-motion: reduce) {
   .premium-flipbook-wrapper {
     opacity: 1;
@@ -407,20 +154,8 @@
     transition: none;
   }
 
-  .premium-turn-container.idle {
-    animation: none;
-  }
-
   .premium-skeleton-inner {
     animation: none;
     background: rgba(255,255,255,0.04);
-  }
-
-  .premium-flipbook-wrapper {
-    transition: none;
-  }
-
-  .premium-ui-progress-fill {
-    transition: none;
   }
 }
