@@ -512,5 +512,6 @@ body.pg-lightbox-open{overflow:hidden;}
 }
 
 .hero-char{display:inline-block; color:var(--hero-text); transition:color .2s ease; will-change:color;}
-.hero-char.inverted,.hero-char.hovered{color:var(--hero-invert);}
+.hero-char.inverted{color:#fff; mix-blend-mode:difference;}
+.hero-char.hovered{color:var(--hero-invert);}
 
