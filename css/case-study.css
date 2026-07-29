@@ -196,53 +196,8 @@
   transform: translate(-50%, -50%) rotate(45deg) scale(0.6) translateY(20px);
 }
 
-/* Blend selector */
 .blend-selector {
   margin-bottom: 3rem;
-}
-.blend-display {
-  border-radius: 8px;
-  overflow: hidden;
-  margin-bottom: 1rem;
-  position: relative;
-}
-.blend-frame {
-  display: none;
-}
-.blend-frame.blend-frame-active {
-  display: block;
-  animation: blendFadeIn 0.25s ease;
-}
-@keyframes blendFadeIn {
-  from { opacity: 0; }
-  to   { opacity: 1; }
-}
-.blend-frame picture,
-.blend-frame img {
-  width: 100%;
-  display: block;
-}
-.blend-options {
-  display: flex;
-  gap: 0.75rem;
-  justify-content: center;
-}
-.blend-btn {
-  font-size: 0.85rem;
-  font-weight: 500;
-  padding: 0.5rem 1.1rem;
-  border-radius: 999px;
-  border: 1px solid #C99A4B;
-  background: transparent;
-  color: #0F3B3E;
-  cursor: pointer;
-  transition: background 0.2s, color 0.2s;
-  font-family: inherit;
-}
-.blend-btn.active,
-.blend-btn:hover {
-  background: #C99A4B;
-  color: #FFFFFF;
 }
 
 @media (max-width: 768px) {

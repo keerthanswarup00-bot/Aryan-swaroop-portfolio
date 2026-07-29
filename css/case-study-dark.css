@@ -1,0 +1,128 @@
+.case-study.cs-dark {
+  background: #000000;
+  color: #F5F5F5;
+}
+.cs-dark .cs-title {
+  color: #FFFFFF;
+  font-weight: 400;
+  font-size: clamp(2.25rem, 5vw, 3.5rem);
+  margin-bottom: 1rem;
+}
+.cs-dark .cs-subtitle {
+  color: #B3B3B3;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  max-width: 55ch;
+}
+.cs-dark .cs-overview {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem 1.5rem;
+  padding: 1.25rem 0;
+  border-top: 1px solid #2A2A2A;
+  border-bottom: 1px solid #2A2A2A;
+  margin-bottom: 3rem;
+}
+.cs-dark .cs-overview > div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+.cs-dark .cs-label {
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #C41E3A;
+}
+.cs-dark .cs-value {
+  font-size: 0.95rem;
+  color: #F5F5F5;
+}
+.cs-dark .cs-block {
+  margin-bottom: 3rem;
+}
+.cs-dark .cs-block-label {
+  font-size: 0.75rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #C41E3A;
+  margin-bottom: 0.9rem;
+}
+.cs-dark .cs-block-text {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: #E0E0E0;
+  max-width: 65ch;
+}
+.cs-interleave-image {
+  margin: 0 0 3rem;
+}
+.cs-interleave-image img {
+  width: 100%;
+  border-radius: 10px;
+  display: block;
+}
+.cs-dark .cs-next-link {
+  color: #F5F5F5;
+  border-bottom: 1px solid #F5F5F5;
+}
+.cs-dark .cs-next-link:hover {
+  color: #C41E3A;
+  border-bottom-color: #C41E3A;
+}
+
+/* Blend selector — dark theme */
+.cs-dark .blend-display {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  max-width: 360px;
+  margin: 1.5rem auto 1.5rem;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #111111;
+}
+.blend-photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+.blend-photo.active {
+  opacity: 1;
+}
+.blend-options {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+}
+.blend-btn {
+  font-size: 0.85rem;
+  font-weight: 500;
+  padding: 0.5rem 1.1rem;
+  border-radius: 999px;
+  border: 1px solid #C41E3A;
+  background: transparent;
+  color: #F5F5F5;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  font-family: inherit;
+}
+.blend-btn.active,
+.blend-btn:hover {
+  background: #C41E3A;
+  color: #FFFFFF;
+}
+
+/* Reveal-on-scroll */
+.reveal-block {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+.reveal-block.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
