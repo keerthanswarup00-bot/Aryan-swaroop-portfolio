@@ -1,92 +1,107 @@
 (function(){
   var totalPages = 44;
-  var currentPage = 1;
-  var isFlipping = false;
-  var perPage = 2;
+  var curPage = 1;
+  var flipping = false;
 
-  var el = document.querySelector('.flipbook');
-  if (!el) return;
+  var root = document.querySelector('.flipbook');
+  if (!root) return;
+  var viewport = root.querySelector('.flipbook-viewport');
+  var prevBtn = root.querySelector('.flipbook-prev');
+  var nextBtn = root.querySelector('.flipbook-next');
+  var pageNum = root.querySelector('.flipbook-page-num');
 
-  var viewport = el.querySelector('.flipbook-viewport');
-  var leftPage = el.querySelector('.flipbook-page-left');
-  var rightPage = el.querySelector('.flipbook-page-right');
-  var prevBtn = el.querySelector('.flipbook-prev');
-  var nextBtn = el.querySelector('.flipbook-next');
-  var pageNum = el.querySelector('.flipbook-page-num');
+  function pageUrl(n) {
+    return '/images/brahmi/page-' + (n < 10 ? '0' : '') + n + '.jpg';
+  }
 
-  function pageUrl(num) {
-    var n = num < 10 ? '0' + num : '' + num;
-    return '/images/brahmi/page-' + n + '.jpg';
+  function setPage(el, n, side) {
+    if (!el) return;
+    if (n >= 1 && n <= totalPages) {
+      el.style.backgroundImage = 'url(' + pageUrl(n) + ')';
+      el.style.display = '';
+    } else {
+      el.style.backgroundImage = 'none';
+      el.style.display = 'none';
+    }
+    var w = el.querySelector('.' + side) || el;
+    w.style.backgroundImage = el.style.backgroundImage;
+  }
+
+  function getOrMake(layer) {
+    var el = viewport.querySelector('.flipbook-sheet-' + layer);
+    if (!el) {
+      el = document.createElement('div');
+      el.className = 'flipbook-sheet flipbook-sheet-' + layer;
+      el.innerHTML = '<div class="flipbook-page flipbook-page-left"></div><div class="flipbook-page flipbook-page-right"></div>';
+      viewport.appendChild(el);
+    }
+    return el;
   }
 
   function render() {
-    var leftNum = currentPage;
-    var rightNum = currentPage + 1;
-    leftPage.style.backgroundImage = 'url(' + pageUrl(leftNum) + ')';
-    if (rightNum <= totalPages) {
-      rightPage.style.backgroundImage = 'url(' + pageUrl(rightNum) + ')';
-      rightPage.style.display = '';
-    } else {
-      rightPage.style.backgroundImage = 'none';
-      rightPage.style.display = 'none';
-    }
-    if (pageNum) {
-      pageNum.textContent = leftNum + '–' + Math.min(rightNum, totalPages) + ' / ' + totalPages;
-    }
-    if (prevBtn) prevBtn.disabled = currentPage <= 1;
-    if (nextBtn) nextBtn.disabled = currentPage + perPage >= totalPages;
+    var cur = getOrMake('current');
+    var nxt = getOrMake('next');
+    var leftCur = cur.children[0];
+    var rightCur = cur.children[1];
+    var leftNxt = nxt.children[0];
+    var rightNxt = nxt.children[1];
+
+    setPage(leftCur, curPage, 'flipbook-page-left');
+    setPage(rightCur, curPage + 1, 'flipbook-page-right');
+    setPage(leftNxt, curPage + 2, 'flipbook-page-left');
+    setPage(rightNxt, curPage + 3, 'flipbook-page-right');
+
+    pageNum.textContent = curPage + '\u2013' + Math.min(curPage + 1, totalPages) + ' / ' + totalPages;
+    prevBtn.disabled = curPage <= 1;
+    nextBtn.disabled = curPage + 2 >= totalPages;
   }
 
   function flipForward() {
-    if (isFlipping) return;
-    if (currentPage + perPage >= totalPages) return;
-    isFlipping = true;
-    var nextPage = currentPage + 2;
-    var flipEl = rightPage;
-    flipEl.style.backgroundImage = 'url(' + pageUrl(currentPage + 1) + ')';
-    flipEl.style.zIndex = 10;
-    flipEl.classList.add('flipped');
-    currentPage = nextPage;
-    setTimeout(function(){
-      flipEl.classList.remove('flipped');
-      flipEl.style.zIndex = '';
-      render();
-      isFlipping = false;
-    }, 600);
+    if (flipping || curPage + 2 >= totalPages) return;
+    flipping = true;
+
+    var cur = viewport.querySelector('.flipbook-sheet-current');
+    var nxt = viewport.querySelector('.flipbook-sheet-next');
+
+    var flipEl = document.createElement('div');
+    flipEl.className = 'flipbook-flip flipbook-flip-forward';
+    flipEl.style.backgroundImage = 'url(' + pageUrl(curPage + 1) + ')';
+    viewport.appendChild(flipEl);
+
+    curPage += 2;
+    render();
+
+    flipEl.addEventListener('animationend', function(){
+      flipEl.remove();
+      flipping = false;
+    }, {once: true});
   }
 
   function flipBackward() {
-    if (isFlipping) return;
-    if (currentPage <= 1) return;
-    isFlipping = true;
-    var prevPage = currentPage - 2;
-    var flipEl = leftPage;
-    var leftNum = prevPage;
-    var rightNum = prevPage + 1;
-    leftPage.style.backgroundImage = 'url(' + pageUrl(leftNum) + ')';
-    rightPage.style.backgroundImage = 'url(' + pageUrl(rightNum) + ')';
-    flipEl.style.zIndex = 10;
-    flipEl.classList.add('flipped');
-    currentPage = prevPage;
-    setTimeout(function(){
-      flipEl.classList.remove('flipped');
-      flipEl.style.zIndex = '';
-      render();
-      isFlipping = false;
-    }, 600);
+    if (flipping || curPage <= 1) return;
+    flipping = true;
+
+    var flipEl = document.createElement('div');
+    flipEl.className = 'flipbook-flip flipbook-flip-backward';
+    flipEl.style.backgroundImage = 'url(' + pageUrl(curPage - 1) + ')';
+    viewport.appendChild(flipEl);
+
+    curPage -= 2;
+    render();
+
+    flipEl.addEventListener('animationend', function(){
+      flipEl.remove();
+      flipping = false;
+    }, {once: true});
   }
 
-  if (nextBtn) nextBtn.addEventListener('click', flipForward);
-  if (prevBtn) prevBtn.addEventListener('click', flipBackward);
+  nextBtn.addEventListener('click', flipForward);
+  prevBtn.addEventListener('click', flipBackward);
   viewport.addEventListener('click', function(e){
-    if (isFlipping) return;
-    var rect = viewport.getBoundingClientRect();
-    var x = e.clientX - rect.left;
-    if (x > rect.width / 2) {
-      flipForward();
-    } else {
-      flipBackward();
-    }
+    if (flipping) return;
+    var r = viewport.getBoundingClientRect();
+    if ((e.clientX - r.left) > r.width / 2) flipForward();
+    else flipBackward();
   });
 
   render();

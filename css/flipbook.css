@@ -12,15 +12,45 @@
   position: relative;
   width: 100%;
   aspect-ratio: 307 / 173;
+  overflow: hidden;
+  border-radius: 6px;
 }
 
-.flipbook-shelf {
+.flipbook-sheet {
   position: absolute;
   inset: 0;
   display: flex;
 }
 
+.flipbook-sheet-next {
+  z-index: 1;
+}
+
+.flipbook-sheet-current {
+  z-index: 2;
+}
+
+.flipbook-sheet-flip {
+  z-index: 3;
+  pointer-events: none;
+}
+
 .flipbook-page {
+  width: 50%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+}
+
+.flipbook-page-left {
+  border-right: 1px solid rgba(255,255,255,0.06);
+}
+
+.flipbook-page-right {
+  border-left: 1px solid rgba(255,255,255,0.06);
+}
+
+.flipbook-flip {
   position: absolute;
   width: 50%;
   height: 100%;
@@ -29,39 +59,34 @@
   background-position: center;
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
-  transform-style: preserve-3d;
-  -webkit-transform-style: preserve-3d;
-  cursor: pointer;
+  z-index: 3;
+  pointer-events: none;
 }
 
-.flipbook-page-left {
-  left: 0;
-  border-right: 1px solid rgba(255,255,255,0.08);
-  transform-origin: right center;
-}
-
-.flipbook-page-right {
+.flipbook-flip-forward {
   left: 50%;
-  border-left: 1px solid rgba(255,255,255,0.08);
   transform-origin: left center;
+  animation: pgFlipForward 0.6s ease-in-out forwards;
 }
 
-.flipbook-page-right.flipped {
-  animation: flipForward 0.6s ease-in-out forwards;
+.flipbook-flip-backward {
+  left: 0;
+  transform-origin: right center;
+  animation: pgFlipBackward 0.6s ease-in-out forwards;
 }
 
-.flipbook-page-left.flipped {
-  animation: flipBackward 0.6s ease-in-out forwards;
+@keyframes pgFlipForward {
+  0% { transform: rotateY(0deg); }
+  49% { transform: rotateY(-89deg); }
+  50% { transform: rotateY(-90deg) scaleX(-1); }
+  100% { transform: rotateY(-180deg); }
 }
 
-@keyframes flipForward {
-  0% { transform: rotateY(0deg); z-index: 10; }
-  100% { transform: rotateY(-180deg); z-index: 10; }
-}
-
-@keyframes flipBackward {
-  0% { transform: rotateY(0deg); z-index: 10; }
-  100% { transform: rotateY(180deg); z-index: 10; }
+@keyframes pgFlipBackward {
+  0% { transform: rotateY(0deg); }
+  49% { transform: rotateY(89deg); }
+  50% { transform: rotateY(90deg) scaleX(-1); }
+  100% { transform: rotateY(180deg); }
 }
 
 .flipbook-nav {
@@ -101,17 +126,6 @@
   color: rgba(245,245,245,0.5);
   font-size: 13px;
   font-family: 'Inter', sans-serif;
-  min-width: 60px;
+  min-width: 80px;
   text-align: center;
-}
-
-.flipbook-gutter {
-  position: absolute;
-  left: 50%;
-  top: 0;
-  width: 1px;
-  height: 100%;
-  background: rgba(255,255,255,0.06);
-  transform: translateX(-50%);
-  pointer-events: none;
 }
