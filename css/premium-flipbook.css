@@ -72,43 +72,25 @@
 
 .premium-flipbook-stage ._df_book {
   width: 100%;
-  height: 100%;
 }
 
 .premium-flipbook-stage .df-book-page {
-  border: none !important;
-  outline: none !important;
   box-shadow: none !important;
-  margin: 0 !important;
-  padding: 0 !important;
   background: transparent !important;
 }
 
 .premium-flipbook-stage .df-page-wrapper {
-  border: none !important;
-  outline: none !important;
   box-shadow: none !important;
-  margin: 0 !important;
-  padding: 0 !important;
   background: transparent !important;
 }
 
 .premium-flipbook-stage .df-page-content {
-  border: none !important;
-  outline: none !important;
-  box-shadow: none !important;
-  margin: 0 !important;
-  padding: 0 !important;
   background: transparent !important;
 }
 
 .premium-flipbook-stage .df-page-front,
 .premium-flipbook-stage .df-page-back {
-  border: none !important;
-  outline: none !important;
   box-shadow: none !important;
-  margin: 0 !important;
-  padding: 0 !important;
   background: transparent !important;
 }
 
