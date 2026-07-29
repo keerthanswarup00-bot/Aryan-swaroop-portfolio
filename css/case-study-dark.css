@@ -1,5 +1,36 @@
-.case-study.cs-dark {
+.page-dark {
   background: #000000;
+}
+.page-dark .site-header {
+  background: rgba(0, 0, 0, 0.85);
+}
+.page-dark .site-header a,
+.page-dark .site-header .header-name,
+.page-dark .site-header .header-status {
+  color: #F5F5F5;
+}
+.page-dark .navlinks a,
+.page-dark .nav-dropdown-trigger {
+  color: #F5F5F5;
+}
+.page-dark .resume-btn {
+  border-color: #F5F5F5;
+  color: #F5F5F5;
+}
+.page-dark .hamburger span {
+  background: #F5F5F5;
+}
+.page-dark .mega-menu {
+  background: #111111;
+}
+.page-dark .mobile-menu {
+  background: #000000;
+}
+.page-dark .mobile-menu a {
+  color: #F5F5F5;
+}
+
+.case-study.cs-dark {
   color: #F5F5F5;
 }
 .cs-dark .cs-title {
