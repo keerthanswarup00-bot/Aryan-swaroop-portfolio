@@ -115,7 +115,7 @@
   function createRevealEl(side, pageNum) {
     var el = document.createElement('div');
     el.className = 'premium-page-reveal';
-    el.style.cssText = 'position:absolute;top:0;width:50%;height:100%;z-index:4;background-size:cover;background-position:center;background-color:#F7F5EF';
+    el.style.cssText = 'position:absolute;top:0;width:50%;height:100%;z-index:4;background-size:contain;background-repeat:no-repeat;background-position:center;background-color:#F7F5EF';
     el.style.backgroundImage = 'url(' + pageUrl(pageNum) + ')';
     if (side === 'left') {
       el.style.left = '0';
