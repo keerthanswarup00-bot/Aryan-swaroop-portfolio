@@ -88,6 +88,16 @@
 .cs-interleave-image {
   margin: 0 0 3rem;
 }
+.cs-image-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin: 0 0 3rem;
+}
+.cs-image-row img {
+  width: 100%;
+  display: block;
+}
 .cs-interleave-image img {
   width: 100%;
   display: block;
