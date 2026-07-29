@@ -156,6 +156,16 @@
   color: #FFFFFF;
 }
 
+.cs-flipbook {
+  margin: 0 0 3rem;
+}
+.flip-book-container {
+  width: 100%;
+  aspect-ratio: 307 / 173;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
 /* Reveal-on-scroll */
 .reveal-block {
   opacity: 0;
