@@ -130,76 +130,6 @@
 
 
 /* ============================================================
-   COVERS
-   ============================================================ */
-.premium-cover-front,
-.premium-cover-back {
-  position: absolute;
-  top: 0;
-  height: 100%;
-  z-index: 40;
-  pointer-events: auto;
-  cursor: pointer;
-  transform-style: preserve-3d;
-}
-
-.premium-cover-front {
-  left: 0;
-  width: 50%;
-}
-
-.premium-cover-back {
-  left: 50%;
-  width: 50%;
-}
-
-.premium-cover-inner {
-  width: 100%;
-  height: 100%;
-  background-size: cover;
-  background-position: center;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-  will-change: transform;
-}
-
-.premium-cover-front .premium-cover-inner {
-  border-radius: 2px 0 0 2px;
-  box-shadow:
-    2px 0 12px rgba(0,0,0,0.25),
-    inset 0 0 30px rgba(0,0,0,0.1);
-}
-
-.premium-cover-back .premium-cover-inner {
-  border-radius: 0 2px 2px 0;
-  box-shadow:
-    -2px 0 12px rgba(0,0,0,0.25),
-    inset 0 0 30px rgba(0,0,0,0.1);
-}
-
-.premium-cover.open {
-  pointer-events: none;
-}
-
-.premium-cover.open .premium-cover-inner {
-  transition: transform 1.2s cubic-bezier(.22,.61,.36,1) 0.15s;
-}
-
-.premium-cover-front.open .premium-cover-inner {
-  transform: rotateY(-160deg);
-  transform-origin: right center;
-}
-
-.premium-cover-back.open .premium-cover-inner {
-  transform: rotateY(160deg);
-  transform-origin: left center;
-}
-
-.premium-cover.hidden {
-  display: none;
-}
-
-/* ============================================================
    HEADER UI
    ============================================================ */
 .premium-ui-header {
@@ -480,10 +410,6 @@
 
   .premium-turn-container.idle {
     animation: none;
-  }
-
-  .premium-cover.open .premium-cover-inner {
-    transition-duration: 0.01ms;
   }
 
   .premium-skeleton-inner {

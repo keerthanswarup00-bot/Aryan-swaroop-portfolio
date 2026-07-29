@@ -5,8 +5,6 @@
   var root = document.querySelector('.premium-flipbook-wrapper');
   if (!root) return;
 
-  var coverFront = root.querySelector('.premium-cover-front');
-  var coverBack = root.querySelector('.premium-cover-back');
   var prevBtn = root.querySelector('.premium-ui-btn-prev');
   var nextBtn = root.querySelector('.premium-ui-btn-next');
   var pageNumEl = root.querySelector('.premium-ui-pagenum');
@@ -14,8 +12,6 @@
   var skeleton = root.querySelector('.premium-skeleton');
   var turnContainer = root.querySelector('.premium-turn-container');
   var $flipbook = $('#flipbook');
-
-  var bookOpen = false;
 
   function padPage(n) {
     return n < 10 ? '0' + n : '' + n;
@@ -49,21 +45,10 @@
   function updateUI(page) {
     var displayNum = Math.min(page, TOTAL_PAGES);
     if (pageNumEl) pageNumEl.textContent = displayNum + ' / ' + TOTAL_PAGES;
-    if (prevBtn) prevBtn.disabled = page <= 2;
+    if (prevBtn) prevBtn.disabled = page <= 1;
     if (nextBtn) nextBtn.disabled = page >= TOTAL_PAGES;
     if (progressFill)
       progressFill.style.width = (page / TOTAL_PAGES) * 100 + '%';
-  }
-
-  function openBook() {
-    if (bookOpen) return;
-    bookOpen = true;
-    coverFront.classList.add('open');
-    if (coverBack) coverBack.classList.add('open');
-    setTimeout(function () {
-      coverFront.classList.add('hidden');
-      if (coverBack) coverBack.classList.add('hidden');
-    }, 1400);
   }
 
   function init() {
@@ -85,9 +70,10 @@
     $flipbook.turn({
       width: turnContainer.clientWidth,
       height: turnContainer.clientHeight,
-      page: 2,
+      page: 1,
       display: 'double',
       acceleration: true,
+      autoCenter: true,
       duration: 750,
       gradients: true,
       when: {
@@ -97,7 +83,7 @@
       }
     });
 
-    updateUI(2);
+    updateUI(1);
 
     preloadAll().then(function () {
       if (skeleton) skeleton.classList.add('hidden');
@@ -107,29 +93,17 @@
 
   init();
 
-  if (coverFront) coverFront.addEventListener('click', openBook);
-  if (coverBack) coverBack.addEventListener('click', openBook);
-
   if (prevBtn)
     prevBtn.addEventListener('click', function () {
-      if (bookOpen) $flipbook.turn('previous');
-      else openBook();
+      $flipbook.turn('previous');
     });
 
   if (nextBtn)
     nextBtn.addEventListener('click', function () {
-      if (bookOpen) $flipbook.turn('next');
-      else openBook();
+      $flipbook.turn('next');
     });
 
   document.addEventListener('keydown', function (e) {
-    if (!bookOpen) {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        openBook();
-      }
-      return;
-    }
     switch (e.key) {
       case 'ArrowRight':
       case 'ArrowDown':
