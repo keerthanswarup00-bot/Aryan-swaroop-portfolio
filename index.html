@@ -264,6 +264,8 @@
   ]
 }
 </script>
+<link rel="preload" as="image" href="/images/brahmi-pourshot.avif" type="image/avif" fetchpriority="high">
+<link rel="preload" as="image" href="/images/brahmi-pourshot.webp" type="image/webp" fetchpriority="high">
 </head>
 <body>
 <a href="#main-content" class="skip-to-content">Skip to main content</a>
@@ -276,7 +278,11 @@
 <header class="site-header" aria-label="Site">
   <div class="header-row">
     <a href="/" class="header-left">
-      <img src="images/nav-avatar.png" alt="Aryan Swaroop" class="header-avatar" width="44" height="44">
+      <picture>
+  <source srcset="images/nav-avatar-400.avif 400w, images/nav-avatar-800.avif 800w" sizes="44px" type="image/avif">
+  <source srcset="images/nav-avatar-400.webp 400w, images/nav-avatar-800.webp 800w" sizes="44px" type="image/webp">
+  <img src="images/nav-avatar.png" alt="Aryan Swaroop" class="header-avatar" width="44" height="44" loading="lazy" decoding="async">
+</picture>
       <div class="header-identity">
         <span class="header-name">Aryan Swaroop</span>
         <span class="header-status"><span class="status-ping"></span>Open to work</span>
@@ -290,21 +296,41 @@
           <div class="mega-left">
             <h4 class="mega-heading">Featured Work</h4>
             <a href="/real-estate" class="mega-project" data-project="real-estate">
-              <div class="mega-thumb"><img src="images/mega-re-2.png" alt="Real estate brand identity thumbnail" width="800" height="800" loading="lazy" decoding="async"></div>
+              <div class="mega-thumb"><picture>
+  <source srcset="images/mega-re-2.avif" type="image/avif">
+  <source srcset="images/mega-re-2.webp" type="image/webp">
+  <img src="images/mega-re-2.png" alt="Real estate brand identity thumbnail" width="800" height="800" loading="lazy" decoding="async">
+</picture></div>
               <div class="mega-info"><span class="mega-title">Real Estate</span><span class="mega-duration">5 min</span></div>
             </a>
             <a href="/lifestyle" class="mega-project" data-project="lifestyle">
-              <div class="mega-thumb"><img src="images/mega-lifestyle-2.png" alt="Lifestyle brand identity thumbnail" width="800" height="800" loading="lazy" decoding="async"></div>
+              <div class="mega-thumb"><picture>
+  <source srcset="images/mega-lifestyle-2.avif" type="image/avif">
+  <source srcset="images/mega-lifestyle-2.webp" type="image/webp">
+  <img src="images/mega-lifestyle-2.png" alt="Lifestyle brand identity thumbnail" width="800" height="800" loading="lazy" decoding="async">
+</picture></div>
               <div class="mega-info"><span class="mega-title">Lifestyle</span><span class="mega-duration">5 min</span></div>
             </a>
             <a href="/tools" class="mega-project" data-project="tools">
-              <div class="mega-thumb"><img src="images/mega-builds-2.png" alt="Web product builds thumbnail" width="800" height="800" loading="lazy" decoding="async"></div>
+              <div class="mega-thumb"><picture>
+  <source srcset="images/mega-builds-2.avif" type="image/avif">
+  <source srcset="images/mega-builds-2.webp" type="image/webp">
+  <img src="images/mega-builds-2.png" alt="Web product builds thumbnail" width="800" height="800" loading="lazy" decoding="async">
+</picture></div>
               <div class="mega-info"><span class="mega-title">Tools</span><span class="mega-duration">2 min</span></div>
             </a>
           </div>
           <div class="mega-right">
-            <a href="/playground" class="mega-preview-card"><img src="images/playground-preview.png" alt="Playground — motion and renders preview" width="600" height="251" loading="lazy" decoding="async"><span class="mega-preview-text">Playground &rarr;</span></a>
-            <a href="/builds" class="mega-preview-card"><img src="images/build-preview.png" alt="Build — web products preview" width="600" height="251" loading="lazy" decoding="async"><span class="mega-preview-text">Build &rarr;</span></a>
+            <a href="/playground" class="mega-preview-card"><picture>
+  <source srcset="images/playground-preview.avif" type="image/avif">
+  <source srcset="images/playground-preview.webp" type="image/webp">
+  <img src="images/playground-preview.png" alt="Playground — motion and renders preview" width="600" height="251" loading="lazy" decoding="async">
+</picture><span class="mega-preview-text">Playground &rarr;</span></a>
+            <a href="/builds" class="mega-preview-card"><picture>
+  <source srcset="images/build-preview.avif" type="image/avif">
+  <source srcset="images/build-preview.webp" type="image/webp">
+  <img src="images/build-preview.png" alt="Build — web products preview" width="600" height="251" loading="lazy" decoding="async">
+</picture><span class="mega-preview-text">Build &rarr;</span></a>
           </div>
         </div>
       </div>
@@ -321,7 +347,11 @@
   <div class="mobile-menu-inner">
     <div class="mobile-top">
       <a href="/" class="mobile-profile">
-        <img src="images/nav-avatar.png" alt="Aryan Swaroop" class="mobile-avatar" width="56" height="56">
+        <picture>
+  <source srcset="images/nav-avatar-400.avif 400w, images/nav-avatar-800.avif 800w" sizes="56px" type="image/avif">
+  <source srcset="images/nav-avatar-400.webp 400w, images/nav-avatar-800.webp 800w" sizes="56px" type="image/webp">
+  <img src="images/nav-avatar.png" alt="Aryan Swaroop" class="mobile-avatar" width="56" height="56" loading="lazy" decoding="async">
+</picture>
         <div class="mobile-identity">
           <span class="mobile-name">Aryan Swaroop</span>
           <span class="mobile-status"><span class="status-ping"></span>Open to work</span>
@@ -336,17 +366,29 @@
     <div class="mobile-section">
       <h4 class="mobile-section-heading">Featured Work</h4>
       <a href="/real-estate" class="mobile-project-row">
-        <div class="mobile-project-thumb"><img src="images/mega-re-2.png" alt="Real estate brand identity thumbnail" width="800" height="800" loading="lazy" decoding="async"></div>
+        <div class="mobile-project-thumb"><picture>
+  <source srcset="images/mega-re-2.avif" type="image/avif">
+  <source srcset="images/mega-re-2.webp" type="image/webp">
+  <img src="images/mega-re-2.png" alt="Real estate brand identity thumbnail" width="800" height="800" loading="lazy" decoding="async">
+</picture></div>
         <div class="mobile-project-info"><span class="mobile-project-title">Real Estate</span><span class="mobile-project-sub">5 min</span></div>
         <span class="mobile-project-arrow">&rarr;</span>
       </a>
       <a href="/lifestyle" class="mobile-project-row">
-        <div class="mobile-project-thumb"><img src="images/mega-lifestyle-2.png" alt="Lifestyle brand identity thumbnail" width="800" height="800" loading="lazy" decoding="async"></div>
+        <div class="mobile-project-thumb"><picture>
+  <source srcset="images/mega-lifestyle-2.avif" type="image/avif">
+  <source srcset="images/mega-lifestyle-2.webp" type="image/webp">
+  <img src="images/mega-lifestyle-2.png" alt="Lifestyle brand identity thumbnail" width="800" height="800" loading="lazy" decoding="async">
+</picture></div>
         <div class="mobile-project-info"><span class="mobile-project-title">Lifestyle</span><span class="mobile-project-sub">5 min</span></div>
         <span class="mobile-project-arrow">&rarr;</span>
       </a>
       <a href="/builds" class="mobile-project-row">
-        <div class="mobile-project-thumb"><img src="images/mega-builds-2.png" alt="Web product builds thumbnail" width="800" height="800" loading="lazy" decoding="async"></div>
+        <div class="mobile-project-thumb"><picture>
+  <source srcset="images/mega-builds-2.avif" type="image/avif">
+  <source srcset="images/mega-builds-2.webp" type="image/webp">
+  <img src="images/mega-builds-2.png" alt="Web product builds thumbnail" width="800" height="800" loading="lazy" decoding="async">
+</picture></div>
         <div class="mobile-project-info"><span class="mobile-project-title">Builds</span><span class="mobile-project-sub">2 min</span></div>
         <span class="mobile-project-arrow">&rarr;</span>
       </a>
@@ -387,7 +429,11 @@
     <div class="kicker">Featured Case Study</div>
     <h2>Sastry's <em style="font-style:italic;">by Brahmi</em></h2>
     <div class="feature-grid">
-      <div class="feature-visual" data-cur="TASTE"><img fetchpriority="high" src="images/brahmi-pourshot.jpg" width="800" height="1000" alt="Sastry's by Brahmi"></div>
+      <div class="feature-visual" data-cur="TASTE"><picture>
+  <source srcset="images/brahmi-pourshot.avif" type="image/avif">
+  <source srcset="images/brahmi-pourshot.webp" type="image/webp">
+  <img fetchpriority="high" loading="eager" src="images/brahmi-pourshot.jpg" width="800" height="1000" alt="Sastry's by Brahmi">
+</picture></div>
       <div class="feature-copy">
         <p>Brahmi needed a packaging system that could earn its place on a premium shelf without losing its authentic South Indian filter coffee roots. Most regional coffee brands felt either outdated in their presentation or stripped of the heritage that made them distinctive.</p>
         <p style="margin-top:12px;">I built the identity from the ground up to balance both worlds. Every design decision was made to celebrate tradition while presenting the brand with a refined, contemporary aesthetic that feels premium, memorable, and unmistakably rooted in its origin.</p>
@@ -397,7 +443,7 @@
           <div><span>Process</span><p>Positioning research → logo &amp; type system → packaging design → scalable SKU rollout</p></div>
           <div><span>Result</span><p>Brand system completed end-to-end, full SKU line ready for retail.</p></div>
         </div>
-        <a class="btn btn-ghost" style="border-color:#555;" href="/lifestyle" data-cur="VIEW">View full case study →</a>
+        <a class="btn btn-ghost" style="border-color:#555;" href="/work/brahmi.html" data-cur="VIEW">View full case study →</a>
       </div>
     </div>
   </div>
@@ -409,7 +455,11 @@
     <h2>Three ways I build brands</h2>
     <div class="teaser-grid">
       <a class="teaser-card" href="/real-estate" data-cur="VIEW">
-        <div class="teaser-visual"><img loading="lazy" decoding="async" src="images/paavani-main-gate.jpg" alt="Paavani Properties 3D render" width="800" height="600"></div>
+        <div class="teaser-visual"><picture>
+  <source srcset="images/paavani-main-gate.avif" type="image/avif">
+  <source srcset="images/paavani-main-gate.webp" type="image/webp">
+  <img loading="lazy" decoding="async" src="images/paavani-main-gate.jpg" alt="Paavani Properties 3D render" width="800" height="600">
+</picture></div>
         <div class="teaser-body">
           <h3>Real Estate</h3>
           <p>4 launches — identity, 3D, film, campaign. 302 leads in 66 days at ₹82 per lead.</p>
@@ -417,7 +467,11 @@
         </div>
       </a>
       <a class="teaser-card" href="/lifestyle" data-cur="VIEW">
-        <div class="teaser-visual"><img loading="lazy" decoding="async" src="images/brahmi-teaser.jpg" alt="Sastry's by Brahmi coffee packaging" width="800" height="600"></div>
+        <div class="teaser-visual"><picture>
+  <source srcset="images/brahmi-teaser.avif" type="image/avif">
+  <source srcset="images/brahmi-teaser.webp" type="image/webp">
+  <img loading="lazy" decoding="async" src="images/brahmi-teaser.jpg" alt="Sastry's by Brahmi coffee packaging" width="800" height="600">
+</picture></div>
         <div class="teaser-body">
           <h3>Lifestyle</h3>
           <p>Coffee, security & facility, and more — full identity systems end-to-end.</p>
@@ -425,7 +479,11 @@
         </div>
       </a>
       <a class="teaser-card" href="/builds" data-cur="VIEW">
-        <div class="teaser-visual"><img loading="lazy" decoding="async" src="images/build-home-teaser.jpg" alt="Web product builds portfolio" width="800" height="600"></div>
+        <div class="teaser-visual"><picture>
+  <source srcset="images/build-home-teaser.avif" type="image/avif">
+  <source srcset="images/build-home-teaser.webp" type="image/webp">
+  <img loading="lazy" decoding="async" src="images/build-home-teaser.jpg" alt="Web product builds portfolio" width="800" height="600">
+</picture></div>
         <div class="teaser-body">
           <h3>Builds</h3>
           <p>Web products I've designed and shipped in React, Next.js, and Supabase.</p>
@@ -439,7 +497,11 @@
 <section id="about" style="background:#F2F1EB;">
   <div class="wrap">
     <div class="about-grid">
-      <div class="about-photo" data-cur="HI"><img loading="lazy" decoding="async" src="images/portrait.jpg" alt="Aryan Swaroop — Brand Designer Creative Lead" width="600" height="800"></div>
+      <div class="about-photo" data-cur="HI"><picture>
+  <source srcset="images/portrait.avif" type="image/avif">
+  <source srcset="images/portrait.webp" type="image/webp">
+  <img loading="lazy" decoding="async" src="images/portrait.jpg" alt="Aryan Swaroop — Brand Designer Creative Lead" width="600" height="800">
+</picture></div>
       <div>
         <div class="kicker">About</div>
         <h2 style="margin-bottom:22px;">Who I am</h2>
