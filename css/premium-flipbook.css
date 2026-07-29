@@ -22,52 +22,12 @@
   transform: translateY(0);
 }
 
-.premium-skeleton {
-  position: absolute;
-  inset: 0;
-  z-index: 80;
-  background: #052935;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: opacity 0.5s ease;
-}
-
-.premium-skeleton.hidden {
-  opacity: 0;
-  pointer-events: none;
-}
-
-.premium-skeleton-inner {
-  width: 62%;
-  aspect-ratio: 307 / 173;
-  background: linear-gradient(
-    110deg,
-    rgba(255,255,255,0.02) 30%,
-    rgba(255,255,255,0.06) 50%,
-    rgba(255,255,255,0.02) 70%
-  );
-  background-size: 200% 100%;
-  border-radius: 4px;
-  animation: skeletonShimmer 1.8s ease-in-out infinite;
-}
-
-@keyframes skeletonShimmer {
-  0% { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
-}
-
-.premium-flipbook-wrapper {
-  caret-color: #fff;
-}
-
 .premium-flipbook-stage {
   position: absolute;
   inset: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='28' viewBox='0 0 24 28'%3E%3Cpath d='M1 1L16 16H10L14 24L8 26L4 18L1 21V1Z' fill='white' stroke='%23000' stroke-width='0.5'/%3E%3C/svg%3E") 2 2, auto;
 }
 
 .premium-flipbook-stage ._df_book {
@@ -139,10 +99,5 @@
     opacity: 1;
     transform: none;
     transition: none;
-  }
-
-  .premium-skeleton-inner {
-    animation: none;
-    background: rgba(255,255,255,0.04);
   }
 }
