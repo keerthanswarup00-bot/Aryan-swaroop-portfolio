@@ -249,7 +249,7 @@
   </section>
 
   <figure class="cs-interleave-image reveal-block">
-    <img src="/images/brahmi-courtyard.jpg" alt="Illustrated South Indian courtyard coffee ritual" loading="lazy">
+    <img src="/images/brahmi-courtyard.jpg" alt="Illustrated South Indian courtyard coffee ritual" width="2256" height="1000" loading="lazy">
   </figure>
 
   <section class="cs-block reveal-block">
@@ -258,7 +258,7 @@
   </section>
 
   <figure class="cs-interleave-image reveal-block">
-    <img src="/images/brahmi-pourshot.jpg" alt="Sastry's by Brahmi packaging with filter coffee being poured" loading="lazy">
+    <img src="/images/brahmi-pourshot.jpg" alt="Sastry's by Brahmi packaging with filter coffee being poured" width="800" height="1000" loading="lazy">
   </figure>
 
   <section class="cs-block reveal-block">
@@ -267,13 +267,13 @@
   </section>
 
   <figure class="cs-interleave-image reveal-block">
-    <img src="/images/brahmi-stickers.jpg" alt="Brahmi brochure and marketing collateral mockup" loading="lazy">
+    <img src="/images/brahmi-stickers.jpg" alt="Brahmi brochure and marketing collateral mockup" width="1051" height="599" loading="lazy">
   </figure>
 
   <div class="cs-image-row reveal-block">
-    <img src="/images/brahmi-packaging-1.jpg" alt="Brahmi packaging mockup front view" loading="lazy">
-    <img src="/images/brahmi-packaging-2.jpg" alt="Brahmi packaging mockup angled view" loading="lazy">
-    <img src="/images/brahmi-packaging-3.jpg" alt="Brahmi packaging detail shot" loading="lazy">
+    <img src="/images/brahmi-packaging-1.jpg" alt="Brahmi packaging mockup front view" width="800" height="1000" loading="lazy">
+    <img src="/images/brahmi-packaging-2.jpg" alt="Brahmi packaging mockup angled view" width="800" height="1000" loading="lazy">
+    <img src="/images/brahmi-packaging-3.jpg" alt="Brahmi packaging detail shot" width="800" height="1000" loading="lazy">
   </div>
 
   <section class="cs-block reveal-block">
@@ -373,9 +373,9 @@
     allControls: 'pageNumber',
     moreControls: '',
     controlsPosition: 'bottom',
-    onCreate: function () {
-    },
     onReady: function () {
+      var inp = document.getElementById('df_book_page_number');
+      if (inp) inp.readOnly = true;
     }
   };
 

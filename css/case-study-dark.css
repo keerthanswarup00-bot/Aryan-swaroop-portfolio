@@ -90,6 +90,11 @@
 .cs-interleave-image {
   margin: 0 0 3rem;
 }
+.cs-interleave-image img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
 .cs-image-row {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -98,10 +103,7 @@
 }
 .cs-image-row img {
   width: 100%;
-  display: block;
-}
-.cs-interleave-image img {
-  width: 100%;
+  height: auto;
   display: block;
 }
 .cs-dark .cs-next-link {
@@ -156,10 +158,6 @@
 .blend-btn:hover {
   background: #C41E3A;
   color: #FFFFFF;
-}
-
-.cs-flipbook {
-  margin: 0 0 3rem;
 }
 
 /* Reveal-on-scroll */
