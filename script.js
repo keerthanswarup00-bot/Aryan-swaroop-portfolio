@@ -260,15 +260,15 @@ if(prefersReducedMotion) return;
 var TEXT_1 = 'Not another portfolio.';
 var TEXT_2 = 'Just my best work.';
 var IMAGES = [
-'images/brahmi-pourshot.jpg',
-'images/brahmi-shelf.jpg',
-'images/brahmi-label.jpg',
-'images/brahmi-kolam.jpg',
-'images/brahmi-courtyard.jpg',
-'images/brahmi-tumbler.jpg',
-'images/brahmi-spices.jpg',
-'images/brahmi-doorway.jpg',
-'images/snehaloka-aerial.jpg'
+'/images/brahmi-pourshot.jpg',
+'/images/brahmi-shelf.jpg',
+'/images/brahmi-label.jpg',
+'/images/brahmi-kolam.jpg',
+'/images/brahmi-courtyard.jpg',
+'/images/brahmi-tumbler.jpg',
+'/images/brahmi-spices.jpg',
+'/images/brahmi-doorway.jpg',
+'/images/snehaloka-aerial.jpg'
 ];
 var MAX_VISIBLE = 6;
 var SPAWN_MIN = 60;
@@ -277,8 +277,8 @@ var IMG_SIZE = 170;
 var ROTATIONS = [-3, -1, 0, 1, 3];
 var BEHIND = 15;
 var DESKTOP = 1024;
-IMAGES.forEach(function(src){ var i=new Image(); i.src=src; });
 var heroSection = document.querySelector('.hero-section');
+if(heroSection) IMAGES.forEach(function(src){ var i=new Image(); i.src=src; });
 var line1 = document.getElementById('hero-line-1');
 var line2 = document.getElementById('hero-line-2');
 var animFinished = false;
