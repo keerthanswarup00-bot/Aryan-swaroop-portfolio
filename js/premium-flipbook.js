@@ -1,28 +1,25 @@
 (function(){
   var TOTAL_PAGES = 44;
-  var FLIP_DURATION = 800;
+  var FLIP_DURATION = 750;
   var PAGE_URL = '/images/brahmi/page-';
 
   var state = {
-    spreadIndex: 0,
+    leftPage: 2,
     isFlipping: false,
     bookOpen: false,
-    zoomed: false
+    zoomed: false,
+    drag: { active: false, startX: 0, startTime: 0 }
   };
 
   var root = document.querySelector('.premium-flipbook-wrapper');
   if (!root) return;
 
-  var stage = root.querySelector('.premium-flipbook-stage');
   var book = root.querySelector('.premium-book');
   var bookBody = root.querySelector('.premium-book-body');
+  var pageLeft = root.querySelector('.premium-page-left');
+  var pageRight = root.querySelector('.premium-page-right');
   var coverFront = root.querySelector('.premium-cover-front');
   var coverBack = root.querySelector('.premium-cover-back');
-  var spreadEl = root.querySelector('.premium-spread');
-  var leftPage = spreadEl.querySelector('.premium-page-left');
-  var rightPage = spreadEl.querySelector('.premium-page-right');
-  var stackLeft = root.querySelector('.premium-stack-left');
-  var stackRight = root.querySelector('.premium-stack-right');
   var prevBtn = root.querySelector('.premium-ui-prev');
   var nextBtn = root.querySelector('.premium-ui-next');
   var pageNumEl = root.querySelector('.premium-ui-pagenum');
@@ -30,17 +27,19 @@
   var fullscreenBtn = root.querySelector('.premium-ui-fullscreen');
   var zoomOverlay = root.querySelector('.premium-zoom-overlay');
   var zoomImg = zoomOverlay ? zoomOverlay.querySelector('img') : null;
-
-  var dragState = { active: false, startX: 0, currentX: 0 };
+  var stackLeft = root.querySelector('.premium-stack-left');
+  var stackRight = root.querySelector('.premium-stack-right');
 
   function pageUrl(n) {
+    if (n < 1 || n > TOTAL_PAGES) return '';
     var num = n < 10 ? '0' + n : '' + n;
     return PAGE_URL + num + '.jpg';
   }
 
-  function setBackground(el, n) {
-    if (n >= 1 && n <= TOTAL_PAGES) {
-      el.style.backgroundImage = 'url(' + pageUrl(n) + ')';
+  function setPage(el, n) {
+    var url = pageUrl(n);
+    if (url && n >= 1 && n <= TOTAL_PAGES) {
+      el.style.backgroundImage = 'url(' + url + ')';
       el.style.display = '';
     } else {
       el.style.backgroundImage = 'none';
@@ -49,119 +48,166 @@
   }
 
   function updateStacks() {
-    var turned = state.spreadIndex;
-    var remaining = TOTAL_PAGES - state.spreadIndex - 2;
+    var turned = Math.max(0, state.leftPage - 2);
+    var remaining = Math.max(0, TOTAL_PAGES - state.leftPage - 1);
+    if (!stackLeft || !stackRight) return;
+
+    var maxVisible = 8;
+    var leftCount = Math.min(turned, maxVisible);
+    var rightCount = Math.min(remaining, maxVisible);
+
     stackLeft.innerHTML = '';
     stackRight.innerHTML = '';
 
-    var maxVisible = 6;
-    var showLeft = Math.min(turned, maxVisible);
-    var showRight = Math.min(remaining, maxVisible);
-
-    for (var i = 0; i < showLeft; i++) {
-      var pg = document.createElement('div');
-      pg.className = 'premium-stack-page';
-      pg.style.transform = 'translateZ(' + (-i - 1) + 'px)';
-      pg.style.background = i === showLeft - 1 && turned > maxVisible ? 'rgba(70,60,45,0.15)' : '#F7F5EF';
-      stackLeft.appendChild(pg);
+    if (leftCount > 0) {
+      var lw = leftCount * 2.5 + 2;
+      stackLeft.style.width = Math.min(lw, 20) + 'px';
+      for (var i = 0; i < Math.min(leftCount, 4); i++) {
+        var d = document.createElement('div');
+        d.className = 'premium-stack-left-inner';
+        d.style.cssText = 'position:absolute;inset:0;opacity:' + (0.3 + i * 0.2) + ';transform:translateZ(' + (-i) + 'px)';
+        stackLeft.appendChild(d);
+      }
+    } else {
+      stackLeft.style.width = '0';
     }
-    stackLeft.style.width = Math.min(turned, maxVisible) * 3 + 'px';
 
-    for (var i = 0; i < showRight; i++) {
-      var pg = document.createElement('div');
-      pg.className = 'premium-stack-page';
-      pg.style.transform = 'translateZ(' + (-i - 1) + 'px)';
-      pg.style.background = i === showRight - 1 && remaining > maxVisible ? 'rgba(70,60,45,0.15)' : '#F7F5EF';
-      stackRight.appendChild(pg);
+    if (rightCount > 0) {
+      var rw = rightCount * 2.5 + 2;
+      stackRight.style.width = Math.min(rw, 20) + 'px';
+      for (var i = 0; i < Math.min(rightCount, 4); i++) {
+        var d = document.createElement('div');
+        d.className = 'premium-stack-right-inner';
+        d.style.cssText = 'position:absolute;inset:0;opacity:' + (0.3 + i * 0.2) + ';transform:translateZ(' + (-i) + 'px)';
+        stackRight.appendChild(d);
+      }
+    } else {
+      stackRight.style.width = '0';
     }
-    stackRight.style.width = Math.min(remaining, maxVisible) * 3 + 'px';
   }
 
   function updateUI() {
-    var pageNum = state.spreadIndex + 1;
-    if (pageNumEl) pageNumEl.textContent = pageNum + ' / ' + TOTAL_PAGES;
-    if (prevBtn) prevBtn.disabled = state.spreadIndex <= 0;
-    if (nextBtn) nextBtn.disabled = state.spreadIndex + 2 >= TOTAL_PAGES;
-    if (progressBar) progressBar.style.width = (pageNum / TOTAL_PAGES * 100) + '%';
+    var displayNum = Math.min(state.leftPage, TOTAL_PAGES);
+    if (pageNumEl) pageNumEl.textContent = displayNum + ' / ' + TOTAL_PAGES;
+    if (prevBtn) prevBtn.disabled = state.leftPage <= 2;
+    if (nextBtn) nextBtn.disabled = state.leftPage + 2 >= TOTAL_PAGES;
+    if (progressBar) progressBar.style.width = ((state.leftPage) / TOTAL_PAGES * 100) + '%';
   }
 
   function renderSpread() {
-    var leftNum = state.spreadIndex + 1;
-    var rightNum = state.spreadIndex + 2;
-    setBackground(leftPage, leftNum);
-    setBackground(rightPage, rightNum);
+    setPage(pageLeft, state.leftPage);
+    setPage(pageRight, state.leftPage + 1);
     updateStacks();
     updateUI();
   }
 
+  function createFlipEl(dir, frontNum, backNum) {
+    var el = document.createElement('div');
+    el.className = 'premium-flip ' + dir;
+    el.innerHTML =
+      '<div class="premium-flip-face premium-flip-front" style="background-image:url(' + pageUrl(frontNum) + ')"></div>' +
+      '<div class="premium-flip-face premium-flip-back" style="background-image:url(' + pageUrl(backNum) + ')"></div>' +
+      '<div class="premium-flip-shadow"></div>' +
+      '<div class="premium-flip-highlight"></div>';
+    return el;
+  }
+
+  function createRevealEl(side, pageNum) {
+    var el = document.createElement('div');
+    el.className = 'premium-page-reveal';
+    el.style.cssText = 'position:absolute;top:0;width:50%;height:100%;z-index:4;background-size:cover;background-position:center;background-color:#F7F5EF';
+    el.style.backgroundImage = 'url(' + pageUrl(pageNum) + ')';
+    if (side === 'left') {
+      el.style.left = '0';
+    } else {
+      el.style.left = '50%';
+    }
+    if (pageNum < 1 || pageNum > TOTAL_PAGES) {
+      el.style.display = 'none';
+    }
+    return el;
+  }
+
   function flipForward(animate) {
-    if (state.isFlipping || state.spreadIndex + 2 >= TOTAL_PAGES) return;
-    if (animate === undefined) animate = true;
+    if (state.isFlipping) return;
+    if (state.leftPage + 3 > TOTAL_PAGES) return;
     if (!state.bookOpen) { openBook(); return; }
     state.isFlipping = true;
+    book.classList.remove('idle');
 
-    var flipEl = document.createElement('div');
-    flipEl.className = 'premium-flip premium-flip-forward';
-    flipEl.innerHTML =
-      '<div class="premium-flip-face premium-flip-front" style="background-image:url(' + pageUrl(state.spreadIndex + 2) + ')"></div>' +
-      '<div class="premium-flip-face premium-flip-back" style="background-image:url(' + pageUrl(state.spreadIndex + 3) + ')"></div>' +
-      '<div class="premium-flip-shadow premium-flip-shadow-forward"></div>' +
-      '<div class="premium-flip-highlight"></div>';
-    bookBody.appendChild(flipEl);
+    var currentRight = state.leftPage + 1;
+    var nextLeft = currentRight + 1;
+    var nextRight = nextLeft + 1;
+
+    var flip = createFlipEl('forward', currentRight, nextLeft);
+    var reveal = createRevealEl('right', nextRight);
+
+    pageRight.style.display = 'none';
+    bookBody.appendChild(reveal);
+    bookBody.appendChild(flip);
 
     if (animate) {
-      flipEl.classList.add('animating-forward');
-      flipEl.addEventListener('animationend', function done(){
-        flipEl.removeEventListener('animationend', done);
-        finishFlipForward();
+      flip.classList.add('animating-forward');
+      flip.addEventListener('animationend', function done(){
+        flip.removeEventListener('animationend', done);
+        finishForward(flip, reveal);
       });
     } else {
-      flipEl.style.transform = 'rotateY(-180deg)';
-      setTimeout(finishFlipForward, 50);
+      flip.style.transform = 'rotateY(-180deg)';
+      flip.style.transition = 'none';
+      setTimeout(function(){ finishForward(flip, reveal); }, 30);
     }
   }
 
-  function finishFlipForward() {
-    var flipEl = bookBody.querySelector('.premium-flip-forward');
-    if (flipEl) flipEl.remove();
-    state.spreadIndex += 2;
+  function finishForward(flip, reveal) {
+    flip.remove();
+    reveal.remove();
+    pageRight.style.display = '';
+    state.leftPage += 2;
     renderSpread();
     state.isFlipping = false;
+    if (!state.drag.active) book.classList.add('idle');
   }
 
   function flipBackward(animate) {
-    if (state.isFlipping || state.spreadIndex <= 0) return;
-    if (animate === undefined) animate = true;
+    if (state.isFlipping) return;
+    if (state.leftPage - 2 < 1) return;
     if (!state.bookOpen) { openBook(); return; }
     state.isFlipping = true;
+    book.classList.remove('idle');
 
-    var flipEl = document.createElement('div');
-    flipEl.className = 'premium-flip premium-flip-backward';
-    flipEl.innerHTML =
-      '<div class="premium-flip-face premium-flip-front" style="background-image:url(' + pageUrl(state.spreadIndex + 1) + ')"></div>' +
-      '<div class="premium-flip-face premium-flip-back" style="background-image:url(' + pageUrl(state.spreadIndex) + ')"></div>' +
-      '<div class="premium-flip-shadow premium-flip-shadow-backward"></div>' +
-      '<div class="premium-flip-highlight"></div>';
-    bookBody.appendChild(flipEl);
+    var currentLeft = state.leftPage;
+    var prevRight = currentLeft - 1;
+    var prevLeft = prevRight - 1;
+
+    var flip = createFlipEl('backward', currentLeft, prevRight);
+    var reveal = createRevealEl('left', prevLeft);
+
+    pageLeft.style.display = 'none';
+    bookBody.appendChild(reveal);
+    bookBody.appendChild(flip);
 
     if (animate) {
-      flipEl.classList.add('animating-backward');
-      flipEl.addEventListener('animationend', function done(){
-        flipEl.removeEventListener('animationend', done);
-        finishFlipBackward();
+      flip.classList.add('animating-backward');
+      flip.addEventListener('animationend', function done(){
+        flip.removeEventListener('animationend', done);
+        finishBackward(flip, reveal);
       });
     } else {
-      flipEl.style.transform = 'rotateY(180deg)';
-      setTimeout(finishFlipBackward, 50);
+      flip.style.transform = 'rotateY(180deg)';
+      flip.style.transition = 'none';
+      setTimeout(function(){ finishBackward(flip, reveal); }, 30);
     }
   }
 
-  function finishFlipBackward() {
-    var flipEl = bookBody.querySelector('.premium-flip-backward');
-    if (flipEl) flipEl.remove();
-    state.spreadIndex -= 2;
+  function finishBackward(flip, reveal) {
+    flip.remove();
+    reveal.remove();
+    pageLeft.style.display = '';
+    state.leftPage -= 2;
     renderSpread();
     state.isFlipping = false;
+    if (!state.drag.active) book.classList.add('idle');
   }
 
   function openBook() {
@@ -172,8 +218,10 @@
     setTimeout(function(){
       coverFront.style.display = 'none';
       coverBack.style.display = 'none';
+      state.leftPage = 2;
+      renderSpread();
       book.classList.add('idle');
-    }, 1200);
+    }, 1100);
   }
 
   function closeBook() {
@@ -183,20 +231,19 @@
     coverBack.classList.remove('open');
     state.bookOpen = false;
     book.classList.remove('idle');
-    state.spreadIndex = 0;
+    state.leftPage = 2;
     renderSpread();
   }
 
   function goToPage(n) {
     if (state.isFlipping) return;
-    var target = Math.max(0, Math.min(TOTAL_PAGES - 2, Math.floor((n - 1) / 2) * 2));
-    var diff = target - state.spreadIndex;
+    var target = Math.max(1, Math.min(TOTAL_PAGES - 1, n));
+    target = target % 2 === 0 ? target : target - 1;
+    var diff = target - state.leftPage;
     if (diff === 0) return;
     if (!state.bookOpen) { openBook(); return; }
-
-    var absDiff = Math.abs(diff);
     var dir = diff > 0 ? 1 : -1;
-    flipSequence(dir, absDiff);
+    flipSequence(dir, Math.abs(diff) / 2);
   }
 
   function flipSequence(dir, count) {
@@ -207,26 +254,16 @@
 
   function handleDragStart(x) {
     if (state.isFlipping || state.zoomed) return;
-    dragState.active = true;
-    dragState.startX = x;
-    dragState.currentX = x;
+    state.drag.active = true;
+    state.drag.startX = x;
+    state.drag.startTime = Date.now();
     book.classList.remove('idle');
   }
 
-  function handleDragMove(x) {
-    if (!dragState.active) return;
-    dragState.currentX = x;
-  }
-
   function handleDragEnd() {
-    if (!dragState.active) return;
-    dragState.active = false;
-    var dx = dragState.currentX - dragState.startX;
-    if (Math.abs(dx) > 40) {
-      if (dx < 0) flipForward(true);
-      else flipBackward(true);
-    }
-    if (!state.isFlipping) book.classList.add('idle');
+    if (!state.drag.active) return;
+    state.drag.active = false;
+    book.classList.add('idle');
   }
 
   function handleClick(e) {
@@ -235,8 +272,15 @@
     var rect = bookBody.getBoundingClientRect();
     var x = e.clientX - rect.left;
     var relX = x / rect.width;
-    if (relX > 0.55) flipForward(true);
-    else if (relX < 0.45) flipBackward(true);
+    if (relX > 0.55) {
+      if (state.leftPage + 3 > TOTAL_PAGES) {
+        closeBook();
+      } else {
+        flipForward(true);
+      }
+    } else if (relX < 0.45) {
+      flipBackward(true);
+    }
   }
 
   function handleDoubleClick(e) {
@@ -244,7 +288,7 @@
     var rect = bookBody.getBoundingClientRect();
     var x = e.clientX - rect.left;
     var relX = x / rect.width;
-    var page = relX < 0.5 ? state.spreadIndex + 1 : state.spreadIndex + 2;
+    var page = relX < 0.5 ? state.leftPage : state.leftPage + 1;
     if (page < 1 || page > TOTAL_PAGES) return;
     showZoom(page);
   }
@@ -265,55 +309,91 @@
   }
 
   function toggleFullscreen() {
-    if (!document.fullscreenElement) {
-      document.documentElement.requestFullscreen();
+    if (!document.fullscreenElement && !document.webkitFullscreenElement) {
+      var el = document.documentElement;
+      if (el.requestFullscreen) el.requestFullscreen();
+      else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
     } else {
-      document.exitFullscreen();
+      if (document.exitFullscreen) document.exitFullscreen();
+      else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
     }
   }
 
-  // Mouse events
+  pageLeft.style.display = 'none';
+  pageRight.style.display = 'none';
+
+  coverFront.addEventListener('click', openBook);
+
   bookBody.addEventListener('mousedown', function(e){
     if (e.target.closest('.premium-cover')) return;
-    handleDragStart(e.clientX);
+    state.drag.startX = e.clientX;
+    state.drag.active = true;
   });
+
   document.addEventListener('mousemove', function(e){
-    if (dragState.active) handleDragMove(e.clientX);
+    if (!state.drag.active || state.isFlipping) return;
+    state.drag.currentX = e.clientX;
   });
-  document.addEventListener('mouseup', function(){
-    if (dragState.active) handleDragEnd();
+
+  document.addEventListener('mouseup', function(e){
+    if (!state.drag.active) return;
+    state.drag.active = false;
+    var dx = e.clientX - state.drag.startX;
+    if (Math.abs(dx) > 40) {
+      state.drag.didSwipe = true;
+      if (dx < 0) flipForward(true);
+      else flipBackward(true);
+    } else {
+      state.drag.didSwipe = false;
+    }
   });
+
   bookBody.addEventListener('click', function(e){
-    if (dragState.active) { dragState.active = false; return; }
+    if (e.target.closest('.premium-cover')) return;
+    if (state.drag.didSwipe) { state.drag.didSwipe = false; return; }
     handleClick(e);
   });
+
   bookBody.addEventListener('dblclick', handleDoubleClick);
 
-  // Touch events
   bookBody.addEventListener('touchstart', function(e){
     if (e.target.closest('.premium-cover')) return;
     var t = e.touches[0];
-    handleDragStart(t.clientX);
+    state.drag.startX = t.clientX;
+    state.drag.active = true;
   }, {passive: true});
+
   bookBody.addEventListener('touchmove', function(e){
-    var t = e.touches[0];
-    handleDragMove(t.clientX);
-  }, {passive: true});
-  bookBody.addEventListener('touchend', function(){
-    handleDragEnd();
+    if (!state.drag.active || state.isFlipping) return;
+    state.drag.currentX = e.touches[0].clientX;
   }, {passive: true});
 
-  // Cover clicks
-  coverFront.addEventListener('click', openBook);
-  coverBack.addEventListener('click', function(){
-    if (state.bookOpen && state.spreadIndex + 2 >= TOTAL_PAGES) closeBook();
-  });
+  bookBody.addEventListener('touchend', function(e){
+    if (!state.drag.active) return;
+    state.drag.active = false;
+    var t = e.changedTouches[0];
+    var dx = t.clientX - state.drag.startX;
+    if (Math.abs(dx) > 30) {
+      state.drag.didSwipe = true;
+      if (dx < 0) flipForward(true);
+      else flipBackward(true);
+    } else {
+      state.drag.didSwipe = false;
+    }
+    if (!state.drag.didSwipe) {
+      handleClick({ clientX: t.clientX });
+    } else {
+      state.drag.didSwipe = false;
+    }
+  }, {passive: true});
 
-  // Navigation buttons
+  bookBody.addEventListener('touchcancel', function(){
+    state.drag.active = false;
+  }, {passive: true});
+
   if (prevBtn) prevBtn.addEventListener('click', function(){ flipBackward(true); });
   if (nextBtn) nextBtn.addEventListener('click', function(){ flipForward(true); });
 
-  // Keyboard
   document.addEventListener('keydown', function(e){
     if (state.zoomed) {
       if (e.key === 'Escape') hideZoom();
@@ -324,31 +404,27 @@
       case 'ArrowLeft': case 'ArrowUp': e.preventDefault(); flipBackward(true); break;
       case 'Home': e.preventDefault(); goToPage(1); break;
       case 'End': e.preventDefault(); goToPage(TOTAL_PAGES); break;
-      case 'f': case 'F': toggleFullscreen(); break;
+      case 'f': case 'F': e.preventDefault(); toggleFullscreen(); break;
     }
   });
 
-  // Fullscreen button
   if (fullscreenBtn) fullscreenBtn.addEventListener('click', toggleFullscreen);
 
-  // Zoom overlay close
   if (zoomOverlay) zoomOverlay.addEventListener('click', hideZoom);
 
-  // Handle fullscreen change
-  document.addEventListener('fullscreenchange', function(){
-    if (fullscreenBtn) fullscreenBtn.textContent = document.fullscreenElement ? 'Exit' : 'Fullscreen';
-  });
+  document.addEventListener('fullscreenchange', updateFullscreenBtn);
+  document.addEventListener('webkitfullscreenchange', updateFullscreenBtn);
 
-  document.addEventListener('webkitfullscreenchange', function(){
-    if (fullscreenBtn) fullscreenBtn.textContent = document.webkitFullscreenElement ? 'Exit' : 'Fullscreen';
-  });
-
-  // Resize
-  window.addEventListener('resize', function(){
-    if (state.zoomed) {
-      // zoom overlay handles this naturally
-    }
-  });
+  function updateFullscreenBtn() {
+    if (!fullscreenBtn) return;
+    fullscreenBtn.textContent =
+      document.fullscreenElement || document.webkitFullscreenElement ? 'Exit' : 'Fullscreen';
+  }
 
   renderSpread();
+
+  setTimeout(function(){
+    pageLeft.style.display = '';
+    pageRight.style.display = '';
+  }, 100);
 })();
