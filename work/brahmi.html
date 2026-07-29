@@ -43,6 +43,7 @@
 <link rel="stylesheet" href="/style.css">
   <link rel="stylesheet" href="/css/case-study.css">
   <link rel="stylesheet" href="/css/case-study-dark.css">
+  <link rel="stylesheet" href="/css/flipbook.css">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -293,7 +294,18 @@
   </section>
 
   <div class="cs-flipbook reveal-block">
-    <div class="flip-book-container" src="/pdfs/brahmi-brand.pdf"></div>
+    <div class="flipbook">
+      <div class="flipbook-viewport">
+        <div class="flipbook-gutter"></div>
+        <div class="flipbook-page flipbook-page-left"></div>
+        <div class="flipbook-page flipbook-page-right"></div>
+      </div>
+      <div class="flipbook-nav">
+        <button class="flipbook-nav-btn flipbook-prev">&#8592;</button>
+        <span class="flipbook-page-num"></span>
+        <button class="flipbook-nav-btn flipbook-next">&#8594;</button>
+      </div>
+    </div>
   </div>
 
   <nav class="cs-next reveal-block">
@@ -327,18 +339,7 @@
 <script src="../lightbox.js"></script>
 <script src="../js/reveal-on-scroll.js"></script>
 <script src="../js/blend-selector.js"></script>
-
-<script src="../js/jquery.min.js"></script>
-<script src="../js/three.min.js"></script>
-<script src="../js/pdf.min.js"></script>
-
-<script>
-  window.PDFJS_LOCALE = {
-    pdfJsWorker: '../js/pdf.worker.js',
-    pdfJsCMapUrl: '../cmaps'
-  };
-</script>
-<script src="../js/3dflipbook.min.js"></script>
+<script src="../js/flipbook.js"></script>
 
 </body>
 </html>
