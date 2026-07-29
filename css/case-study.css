@@ -18,13 +18,13 @@
 .cs-header {
   position: relative;
   overflow: hidden;
-  margin-bottom: 3.5rem;
+  margin-bottom: 3rem;
 }
 .case-study.theme-brahmi .cs-header {
   background-color: var(--cs-header-bg);
   color: var(--cs-header-text);
   padding: 6rem 2rem 4rem;
-  margin: -8rem -1.5rem 3.5rem;
+  margin: -8rem -1.5rem 3rem;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'%3E%3Cg fill='none' stroke='%23F5F1E8' stroke-opacity='0.08' stroke-width='1'%3E%3Cpath d='M30 0 L60 30 L30 60 L0 30 Z'/%3E%3Ccircle cx='30' cy='30' r='14'/%3E%3C/g%3E%3C/svg%3E");
   background-repeat: repeat;
 }
@@ -51,11 +51,11 @@
 .cs-overview {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 1.5rem;
-  padding: 2rem 0;
+  gap: 0.75rem 1.5rem;
+  padding: 1.25rem 0;
   border-top: 1px solid #e5e5e5;
   border-bottom: 1px solid #e5e5e5;
-  margin-bottom: 3.5rem;
+  margin-bottom: 3rem;
 }
 .cs-overview > div {
   display: flex;
@@ -94,7 +94,7 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 1rem;
-  margin-bottom: 3.5rem;
+  margin-bottom: 3rem;
 }
 .cs-gallery picture {
   display: block;
@@ -198,7 +198,7 @@
 
 /* Blend selector */
 .blend-selector {
-  margin-bottom: 3.5rem;
+  margin-bottom: 3rem;
 }
 .blend-display {
   border-radius: 8px;
