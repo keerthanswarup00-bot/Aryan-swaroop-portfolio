@@ -204,11 +204,23 @@
   border-radius: 8px;
   overflow: hidden;
   margin-bottom: 1rem;
+  position: relative;
 }
-.blend-display img {
+.blend-frame {
+  display: none;
+}
+.blend-frame.blend-frame-active {
+  display: block;
+  animation: blendFadeIn 0.25s ease;
+}
+@keyframes blendFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+.blend-frame picture,
+.blend-frame img {
   width: 100%;
   display: block;
-  transition: opacity 0.25s ease;
 }
 .blend-options {
   display: flex;

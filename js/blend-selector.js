@@ -1,21 +1,23 @@
 (function () {
   "use strict";
   var buttons = document.querySelectorAll(".blend-btn");
-  var display = document.getElementById("blendImage");
-  if (!buttons.length || !display) return;
+  var frames = document.querySelectorAll(".blend-frame");
+  if (!buttons.length || !frames.length) return;
 
   buttons.forEach(function (btn) {
     btn.addEventListener("click", function () {
+      var blend = btn.dataset.blend;
       buttons.forEach(function (b) {
         b.classList.remove("active");
       });
       btn.classList.add("active");
-      display.style.opacity = "0";
-      setTimeout(function () {
-        display.src = btn.dataset.img;
-        display.alt = "Sastry's by Brahmi \u2014 " + btn.dataset.label;
-        display.style.opacity = "1";
-      }, 200);
+      frames.forEach(function (f) {
+        if (f.dataset.blend === blend) {
+          f.classList.add("blend-frame-active");
+        } else {
+          f.classList.remove("blend-frame-active");
+        }
+      });
     });
   });
 })();

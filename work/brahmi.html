@@ -282,16 +282,32 @@
 
   <section class="blend-selector">
     <div class="blend-display">
-      <picture>
-        <source srcset="../images/brahmi-pourshot.avif" type="image/avif">
-        <source srcset="../images/brahmi-pourshot.webp" type="image/webp">
-        <img id="blendImage" src="../images/brahmi-pourshot.jpg" alt="Sastry's by Brahmi — 80% Coffee, 20% Chicory" width="800" height="1000" loading="lazy">
-      </picture>
+      <div class="blend-frame" data-blend="7030">
+        <picture>
+          <source srcset="../images/brahmi-pour.avif" type="image/avif">
+          <source srcset="../images/brahmi-pour.webp" type="image/webp">
+          <img src="../images/brahmi-pour.jpg" alt="Sastry's by Brahmi — 70% Coffee, 30% Chicory" width="800" height="1000" loading="lazy" decoding="async">
+        </picture>
+      </div>
+      <div class="blend-frame blend-frame-active" data-blend="8020">
+        <picture>
+          <source srcset="../images/brahmi-pourshot.avif" type="image/avif">
+          <source srcset="../images/brahmi-pourshot.webp" type="image/webp">
+          <img src="../images/brahmi-pourshot.jpg" alt="Sastry's by Brahmi — 80% Coffee, 20% Chicory" width="800" height="1000" loading="lazy" decoding="async">
+        </picture>
+      </div>
+      <div class="blend-frame" data-blend="9010">
+        <picture>
+          <source srcset="../images/brahmi-tumbler.avif" type="image/avif">
+          <source srcset="../images/brahmi-tumbler.webp" type="image/webp">
+          <img src="../images/brahmi-tumbler.jpg" alt="Sastry's by Brahmi — 90% Coffee, 10% Chicory" width="800" height="1000" loading="lazy" decoding="async">
+        </picture>
+      </div>
     </div>
     <div class="blend-options">
-      <button class="blend-btn" data-img="../images/brahmi-pourshot.jpg" data-label="70% Coffee, 30% Chicory">70/30</button>
-      <button class="blend-btn active" data-img="../images/brahmi-pourshot.jpg" data-label="80% Coffee, 20% Chicory">80/20</button>
-      <button class="blend-btn" data-img="../images/brahmi-pourshot.jpg" data-label="90% Coffee, 10% Chicory">90/10</button>
+      <button class="blend-btn" data-blend="7030">70/30</button>
+      <button class="blend-btn active" data-blend="8020">80/20</button>
+      <button class="blend-btn" data-blend="9010">90/10</button>
     </div>
   </section>
 
