@@ -9,8 +9,6 @@
   var coverBack = root.querySelector('.premium-cover-back');
   var prevBtn = root.querySelector('.premium-ui-btn-prev');
   var nextBtn = root.querySelector('.premium-ui-btn-next');
-  var fullscreenBtn = root.querySelector('.premium-ui-btn-fullscreen');
-  var fsCloseBtn = root.querySelector('.premium-fs-close-btn');
   var pageNumEl = root.querySelector('.premium-ui-pagenum');
   var progressFill = root.querySelector('.premium-ui-progress-fill');
   var skeleton = root.querySelector('.premium-skeleton');
@@ -18,7 +16,6 @@
   var $flipbook = $('#flipbook');
 
   var bookOpen = false;
-  var fullscreen = false;
 
   function padPage(n) {
     return n < 10 ? '0' + n : '' + n;
@@ -67,30 +64,6 @@
       coverFront.classList.add('hidden');
       if (coverBack) coverBack.classList.add('hidden');
     }, 1400);
-  }
-
-  function toggleFullscreen() {
-    var parent = root.parentElement;
-    if (fullscreen) {
-      root.classList.remove('is-fullscreen');
-      fullscreen = false;
-      document.body.style.overflow = '';
-      if (parent) parent.style.minHeight = '';
-      setTimeout(function () {
-        sizeBook();
-        $flipbook.turn('resize');
-      }, 300);
-    } else {
-      if (parent)
-        parent.style.minHeight = root.getBoundingClientRect().height + 'px';
-      root.classList.add('is-fullscreen');
-      fullscreen = true;
-      document.body.style.overflow = 'hidden';
-      setTimeout(function () {
-        sizeBook();
-        $flipbook.turn('resize');
-      }, 300);
-    }
   }
 
   function init() {
@@ -149,10 +122,6 @@
       else openBook();
     });
 
-  if (fullscreenBtn)
-    fullscreenBtn.addEventListener('click', toggleFullscreen);
-  if (fsCloseBtn) fsCloseBtn.addEventListener('click', toggleFullscreen);
-
   document.addEventListener('keydown', function (e) {
     if (!bookOpen) {
       if (e.key === 'Enter' || e.key === ' ') {
@@ -180,14 +149,6 @@
         e.preventDefault();
         $flipbook.turn('page', TOTAL_PAGES);
         break;
-      case 'f':
-      case 'F':
-        e.preventDefault();
-        toggleFullscreen();
-        break;
-      case 'Escape':
-        if (fullscreen) toggleFullscreen();
-        break;
     }
   });
 
@@ -195,7 +156,6 @@
   $(window).resize(function () {
     clearTimeout(resizeTimer);
     resizeTimer = setTimeout(function () {
-      if (fullscreen) return;
       sizeBook();
       try { $flipbook.turn('resize'); } catch (e) {}
     }, 150);
