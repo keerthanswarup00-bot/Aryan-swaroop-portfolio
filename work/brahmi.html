@@ -284,8 +284,7 @@
   <div class="cs-flipbook">
     <div class="premium-flipbook-wrapper">
       <div class="premium-flipbook-stage">
-        <div class="_df_book" id="flipbook_brahmi"
-             webgl="true">
+        <div class="_df_book" id="flipbook_brahmi" df-parsed="true">
         </div>
       </div>
     </div>
@@ -322,14 +321,79 @@
 <script src="/dflip/js/dflip.min.js"></script>
 
 <script>
-var TOTAL_PAGES = 44;
-var option_flipbook_brahmi = {
-  source: Array.from({ length: TOTAL_PAGES }, function (_, i) {
-    var n = i + 1;
-    return '/images/brahmi/page-' + (n < 10 ? '0' + n : '' + n) + '.jpg';
-  }),
-  webgl: true
-};
+(function () {
+  var TOTAL_PAGES = 44;
+  var wrapper = document.querySelector('.premium-flipbook-wrapper');
+  if (!wrapper) return;
+
+  function pad(n) {
+    return n < 10 ? '0' + n : '' + n;
+  }
+
+  var source = [];
+  for (var i = 1; i <= TOTAL_PAGES; i++) {
+    source.push('/images/brahmi/page-' + pad(i) + '.jpg');
+  }
+
+  function revealWrapper() {
+    wrapper.classList.add('visible');
+  }
+
+  function hasWebGL() {
+    try {
+      var canvas = document.createElement('canvas');
+      return !!(canvas.getContext('webgl') || canvas.getContext('experimental-webgl'));
+    } catch (e) {
+      return false;
+    }
+  }
+
+  var options = {
+    source: source,
+    webgl: hasWebGL(),
+    height: '100%',
+    duration: 800,
+    hard: 'none',
+    enableDownload: false,
+    soundEnable: true,
+    transparent: false,
+    backgroundColor: '#052935',
+    direction: 1,
+    onCreate: function () {
+    },
+    onReady: function () {
+    }
+  };
+
+  var flipbookEl = document.getElementById('flipbook_brahmi');
+  if (!flipbookEl) return;
+
+  var revealObserver = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.08 });
+
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    revealWrapper();
+  } else if ('IntersectionObserver' in window) {
+    revealObserver.observe(wrapper);
+  } else {
+    revealWrapper();
+  }
+
+  $(document).ready(function () {
+    try {
+      window.flipbook_brahmi = $('#flipbook_brahmi').flipBook(source, options);
+    } catch (e) {
+      console.error('Flipbook init failed:', e);
+      revealWrapper();
+    }
+  });
+})();
 </script>
 
 <script src="../script.js"></script>
