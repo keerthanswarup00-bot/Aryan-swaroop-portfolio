@@ -1,14 +1,75 @@
+/* ============================================================
+   PREMIUM FLIPBOOK — Brand Book Showcase
+   Complete 3D flipbook with premium visual design
+   ============================================================ */
+
+.cs-flipbook {
+  width: calc(100% + 5rem);
+  margin: 0 -2.5rem 3.5rem;
+}
+
 .premium-flipbook-wrapper {
   position: relative;
   width: 100%;
   height: 0;
-  padding-bottom: 56.33%;
+  padding-bottom: 65%;
   background: #052935;
-  border-radius: 8px;
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,0.06);
+  box-shadow: 0 25px 80px rgba(0,0,0,0.35);
   overflow: hidden;
   font-family: 'Inter', system-ui, sans-serif;
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s ease-out, transform 0.7s ease-out;
 }
 
+.premium-flipbook-wrapper.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ============================================================
+   LOADING SKELETON
+   ============================================================ */
+.premium-skeleton {
+  position: absolute;
+  inset: 0;
+  z-index: 80;
+  background: #052935;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.5s ease;
+}
+
+.premium-skeleton.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.premium-skeleton-inner {
+  width: 62%;
+  aspect-ratio: 307 / 173;
+  background: linear-gradient(
+    110deg,
+    rgba(255,255,255,0.02) 30%,
+    rgba(255,255,255,0.06) 50%,
+    rgba(255,255,255,0.02) 70%
+  );
+  background-size: 200% 100%;
+  border-radius: 4px;
+  animation: skeletonShimmer 1.8s ease-in-out infinite;
+}
+
+@keyframes skeletonShimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* ============================================================
+   STAGE
+   ============================================================ */
 .premium-flipbook-stage {
   position: absolute;
   inset: 0;
@@ -19,44 +80,62 @@
   perspective-origin: 50% 40%;
 }
 
+/* ============================================================
+   BOOK
+   ============================================================ */
 .premium-book {
   position: relative;
   transform-style: preserve-3d;
-  transform: rotateX(8deg) rotateZ(-2deg);
-  width: 80%;
+  transform: rotateX(6deg) rotateZ(-1.5deg);
+  width: 85%;
   aspect-ratio: 307 / 173;
-  max-width: 820px;
+  max-width: 960px;
   will-change: transform;
 }
 
 @keyframes bookBreathe {
-  0%, 100% { transform: rotateX(8deg) rotateZ(-2deg) translateY(0); }
-  50% { transform: rotateX(8deg) rotateZ(-1.6deg) translateY(2px); }
+  0%, 100% { transform: rotateX(6deg) rotateZ(-1.5deg) translateY(0); }
+  50% { transform: rotateX(6deg) rotateZ(-1.2deg) translateY(3px); }
 }
 
 .premium-book.idle {
-  animation: bookBreathe 8s ease-in-out infinite;
+  animation: bookBreathe 6s ease-in-out infinite;
 }
 
-.premium-book-shadow {
+.premium-book.hover {
+  filter: drop-shadow(0 12px 40px rgba(0,0,0,0.3));
+}
+
+/* ============================================================
+   BOOK REFLECTION
+   ============================================================ */
+.premium-book-reflection {
   position: absolute;
-  bottom: -8%;
-  left: 5%;
-  width: 90%;
-  height: 25%;
-  background: radial-gradient(ellipse at center, rgba(0,0,0,0.3) 0%, transparent 70%);
-  filter: blur(25px);
+  top: 80%;
+  left: 6%;
+  width: 88%;
+  height: 20%;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, transparent 100%);
+  filter: blur(24px);
   pointer-events: none;
   z-index: 0;
+  opacity: 0.5;
 }
 
+/* ============================================================
+   BOOK BODY
+   ============================================================ */
 .premium-book-body {
   position: relative;
   width: 100%;
   height: 100%;
   transform-style: preserve-3d;
+  cursor: pointer;
 }
 
+/* ============================================================
+   SPINE
+   ============================================================ */
 .premium-spine {
   position: absolute;
   left: 50%;
@@ -64,7 +143,14 @@
   width: 28px;
   height: 100%;
   transform: translateX(-50%) translateZ(6px);
-  background: linear-gradient(to right, #1a1a1a, #2a2a2a 20%, #333 50%, #2a2a2a 80%, #1a1a1a);
+  background: linear-gradient(
+    to right,
+    #1a1a1a 0%,
+    #2a2a2a 20%,
+    #333 50%,
+    #2a2a2a 80%,
+    #1a1a1a 100%
+  );
   border-radius: 3px;
   z-index: 30;
   pointer-events: none;
@@ -78,10 +164,18 @@
   width: 55%;
   height: 84%;
   transform: translateX(-50%);
-  background: linear-gradient(to bottom, transparent 0%, rgba(255,255,255,0.04) 50%, transparent 100%);
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(255,255,255,0.04) 50%,
+    transparent 100%
+  );
   border-radius: 2px;
 }
 
+/* ============================================================
+   PAGES
+   ============================================================ */
 .premium-page {
   position: absolute;
   top: 0;
@@ -107,6 +201,13 @@
   border-radius: 0 2px 2px 0;
 }
 
+.premium-page-hidden {
+  display: none;
+}
+
+/* ============================================================
+   STACK (page depth indicators)
+   ============================================================ */
 .premium-stack-left,
 .premium-stack-right {
   position: absolute;
@@ -116,28 +217,22 @@
   pointer-events: none;
   background: #EDE8DF;
   border-radius: 1px;
+  transition: width 0.4s ease;
 }
 
 .premium-stack-left {
   right: 100%;
-  width: 6px;
-  box-shadow: inset -1px 0 2px rgba(0,0,0,0.06);
+  width: 0;
 }
 
 .premium-stack-right {
   left: 100%;
-  width: 6px;
-  box-shadow: inset 1px 0 2px rgba(0,0,0,0.06);
+  width: 0;
 }
 
-.premium-stack-left-inner,
-.premium-stack-right-inner {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to bottom, #EDE8DF 0%, #E0D9CC 100%);
-  border-radius: 1px;
-}
-
+/* ============================================================
+   FLIP ELEMENTS
+   ============================================================ */
 .premium-flip {
   position: absolute;
   top: 0;
@@ -179,29 +274,67 @@
   z-index: 1;
 }
 
+/* Page edge (thickness) */
+.premium-flip-edge {
+  position: absolute;
+  top: 0;
+  width: 4px;
+  height: 100%;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.premium-flip.forward .premium-flip-edge {
+  left: 0;
+  background: linear-gradient(to right, #E8E2D7, #F0EBE2);
+}
+
+.premium-flip.backward .premium-flip-edge {
+  right: 0;
+  background: linear-gradient(to left, #E8E2D7, #F0EBE2);
+}
+
+/* Flip shadow */
 .premium-flip-shadow {
   position: absolute;
   inset: 0;
   pointer-events: none;
-  z-index: 3;
+  z-index: 4;
 }
 
 .premium-flip.forward .premium-flip-shadow {
-  background: linear-gradient(to left, rgba(0,0,0,0.18) 0%, transparent 50%);
+  background: linear-gradient(to left, rgba(0,0,0,0.15) 2%, transparent 40%);
 }
 
 .premium-flip.backward .premium-flip-shadow {
-  background: linear-gradient(to right, rgba(0,0,0,0.18) 0%, transparent 50%);
+  background: linear-gradient(to right, rgba(0,0,0,0.15) 2%, transparent 40%);
 }
 
+/* Flip highlight */
 .premium-flip-highlight {
   position: absolute;
   inset: 0;
   pointer-events: none;
-  z-index: 4;
+  z-index: 5;
   background: linear-gradient(135deg, rgba(255,255,255,0.06) 0%, transparent 50%);
 }
 
+/* Reveal element (emerging page behind flip) */
+.premium-page-reveal {
+  position: absolute;
+  top: 0;
+  width: 50%;
+  height: 100%;
+  z-index: 4;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: #F7F5EF;
+}
+
+/* ============================================================
+   FLIP ANIMATIONS
+   ============================================================ */
 @keyframes flipForward {
   0% { transform: rotateY(0deg); }
   100% { transform: rotateY(-180deg); }
@@ -220,64 +353,53 @@
   animation: flipBackward 0.75s cubic-bezier(.22,.61,.36,1) forwards;
 }
 
-.premium-cover {
+/* ============================================================
+   COVERS
+   ============================================================ */
+.premium-cover-front,
+.premium-cover-back {
   position: absolute;
-  inset: 0;
+  top: 0;
+  height: 100%;
   z-index: 40;
-  pointer-events: none;
+  pointer-events: auto;
+  cursor: pointer;
   transform-style: preserve-3d;
 }
 
 .premium-cover-front {
-  position: absolute;
   left: -4px;
   width: calc(50% + 4px);
-  height: 100%;
-  top: 0;
-  z-index: 40;
-  pointer-events: auto;
-  cursor: pointer;
-  transform-style: preserve-3d;
-}
-
-.premium-cover-front-inner {
-  width: 100%;
-  height: 100%;
-  background-size: cover;
-  background-position: center;
-  border-radius: 2px 0 0 2px;
-  box-shadow:
-    2px 0 8px rgba(0,0,0,0.2),
-    inset 0 0 30px rgba(0,0,0,0.1);
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-  will-change: transform;
 }
 
 .premium-cover-back {
-  position: absolute;
   right: -4px;
   width: calc(50% + 4px);
-  height: 100%;
-  top: 0;
-  z-index: 40;
-  pointer-events: auto;
-  cursor: pointer;
-  transform-style: preserve-3d;
 }
 
+.premium-cover-front-inner,
 .premium-cover-back-inner {
   width: 100%;
   height: 100%;
   background-size: cover;
   background-position: center;
-  border-radius: 0 2px 2px 0;
-  box-shadow:
-    -2px 0 8px rgba(0,0,0,0.2),
-    inset 0 0 30px rgba(0,0,0,0.1);
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
   will-change: transform;
+}
+
+.premium-cover-front-inner {
+  border-radius: 2px 0 0 2px;
+  box-shadow:
+    2px 0 12px rgba(0,0,0,0.25),
+    inset 0 0 30px rgba(0,0,0,0.1);
+}
+
+.premium-cover-back-inner {
+  border-radius: 0 2px 2px 0;
+  box-shadow:
+    -2px 0 12px rgba(0,0,0,0.25),
+    inset 0 0 30px rgba(0,0,0,0.1);
 }
 
 .premium-cover.open {
@@ -296,64 +418,110 @@
   transition: transform 1s cubic-bezier(.22,.61,.36,1) 0.15s;
 }
 
-.premium-ui-top {
+.premium-cover.hidden {
+  display: none;
+}
+
+/* ============================================================
+   HEADER UI
+   ============================================================ */
+.premium-ui-header {
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  padding: 10px 14px;
+  align-items: flex-start;
+  padding: 16px 20px;
   z-index: 60;
   pointer-events: none;
 }
 
-.premium-ui-top > * {
+.premium-ui-header > * {
   pointer-events: auto;
 }
 
-.premium-ui-title {
-  color: rgba(255,255,255,0.6);
-  font-size: 12px;
+.premium-ui-header-left {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.premium-ui-header-title {
+  color: rgba(255,255,255,0.85);
+  font-size: 15px;
   font-weight: 500;
+  letter-spacing: 0.2px;
+}
+
+.premium-ui-header-subtitle {
+  color: rgba(255,255,255,0.35);
+  font-size: 10px;
+  font-weight: 400;
   letter-spacing: 0.3px;
 }
 
-.premium-ui-actions {
+.premium-ui-header-right {
   display: flex;
-  gap: 6px;
+  gap: 5px;
+  align-items: center;
 }
 
-.premium-ui-btn {
-  background: rgba(255,255,255,0.05);
+/* Ghost pill buttons */
+.premium-ui-pill {
+  background: rgba(255,255,255,0.04);
   border: 1px solid rgba(255,255,255,0.08);
-  color: rgba(255,255,255,0.6);
-  padding: 3px 8px;
-  border-radius: 4px;
+  color: rgba(255,255,255,0.55);
+  padding: 5px 12px;
+  border-radius: 20px;
   font-size: 11px;
+  font-weight: 500;
   cursor: pointer;
-  transition: background 0.2s, color 0.2s;
+  transition: all 0.2s ease;
   font-family: inherit;
+  letter-spacing: 0.2px;
   text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  white-space: nowrap;
+  line-height: 1;
 }
 
-.premium-ui-btn:hover {
+.premium-ui-pill:hover {
   background: rgba(255,255,255,0.1);
   color: rgba(255,255,255,0.85);
+  border-color: rgba(255,255,255,0.15);
 }
 
+.premium-ui-pill:active {
+  transform: scale(0.96);
+}
+
+.premium-ui-pill:disabled {
+  opacity: 0.2;
+  cursor: default;
+  pointer-events: none;
+}
+
+.premium-ui-pill:focus-visible {
+  outline: 2px solid rgba(255,255,255,0.3);
+  outline-offset: 2px;
+}
+
+/* ============================================================
+   BOTTOM UI
+   ============================================================ */
 .premium-ui-bottom {
   position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  bottom: 14px;
+  left: 20px;
+  right: 20px;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  padding: 8px 14px;
   z-index: 60;
-  gap: 10px;
   pointer-events: none;
 }
 
@@ -361,73 +529,151 @@
   pointer-events: auto;
 }
 
-.premium-ui-nav {
+.premium-ui-pagination {
   display: flex;
   align-items: center;
-  gap: 8px;
-  background: rgba(255,255,255,0.05);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255,255,255,0.06);
-  border-radius: 6px;
-  padding: 3px 6px;
+  gap: 10px;
 }
 
-.premium-ui-nav-btn {
-  background: none;
-  border: none;
-  color: rgba(255,255,255,0.5);
-  width: 24px;
-  height: 24px;
-  border-radius: 3px;
+.premium-ui-pagenum {
+  color: rgba(255,255,255,0.45);
+  font-size: 12px;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.3px;
+  min-width: 70px;
+  text-align: left;
+}
+
+/* Premium progress bar */
+.premium-ui-progress-wrap {
+  flex: 1;
+  max-width: 220px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.premium-ui-progress-track {
+  flex: 1;
+  height: 2px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 2px;
+  position: relative;
+  overflow: visible;
+}
+
+.premium-ui-progress-fill {
+  height: 100%;
+  background: rgba(255,255,255,0.3);
+  border-radius: 2px;
+  transition: width 0.45s cubic-bezier(.22,.61,.36,1);
+  position: relative;
+}
+
+.premium-ui-progress-fill::after {
+  content: '';
+  position: absolute;
+  right: -5px;
+  top: -4px;
+  width: 10px;
+  height: 10px;
+  background: rgba(255,255,255,0.5);
+  border-radius: 50%;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.premium-ui-progress-wrap:hover .premium-ui-progress-fill::after {
+  opacity: 1;
+}
+
+/* ============================================================
+   FULLSCREEN CLOSE BUTTON
+   ============================================================ */
+.premium-fs-close-btn {
+  display: none;
+  position: fixed;
+  top: 24px;
+  right: 28px;
+  z-index: 1010;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: rgba(255,255,255,0.6);
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  font-size: 20px;
   cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  font-family: inherit;
+  line-height: 1;
+}
+
+.premium-fs-close-btn:hover {
+  background: rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.9);
+}
+
+/* ============================================================
+   FULLSCREEN MODE
+   ============================================================ */
+.premium-flipbook-wrapper.is-fullscreen {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  padding-bottom: 0;
+  z-index: 1000;
+  border-radius: 0;
+  border: none;
+  box-shadow: none;
+  background: rgba(5,41,53,0.97);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  opacity: 1;
+  transform: none;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 13px;
-  transition: background 0.15s, color 0.15s;
 }
 
-.premium-ui-nav-btn:hover {
-  background: rgba(255,255,255,0.08);
-  color: rgba(255,255,255,0.85);
+.premium-flipbook-wrapper.is-fullscreen .premium-flipbook-stage {
+  position: relative;
+  inset: auto;
+  width: 90vw;
+  max-width: 1200px;
 }
 
-.premium-ui-nav-btn:disabled {
-  opacity: 0.2;
-  cursor: default;
+.premium-flipbook-wrapper.is-fullscreen .premium-book {
+  width: 100%;
+  max-width: 1100px;
+  transform: rotateX(3deg) rotateZ(-1deg);
 }
 
-.premium-ui-nav-pagenum {
-  color: rgba(255,255,255,0.5);
-  font-size: 11px;
-  font-weight: 500;
-  min-width: 44px;
-  text-align: center;
-  font-variant-numeric: tabular-nums;
+.premium-flipbook-wrapper.is-fullscreen .premium-book-reflection {
+  display: none;
 }
 
-.premium-ui-progress {
-  flex: 1;
-  max-width: 160px;
-  height: 2px;
-  background: rgba(255,255,255,0.06);
-  border-radius: 1px;
-  overflow: hidden;
+.premium-flipbook-wrapper.is-fullscreen .premium-ui-header,
+.premium-flipbook-wrapper.is-fullscreen .premium-ui-bottom {
+  display: none;
 }
 
-.premium-ui-progress-bar {
-  height: 100%;
-  background: rgba(255,255,255,0.25);
-  border-radius: 1px;
-  transition: width 0.4s ease;
+.premium-flipbook-wrapper.is-fullscreen .premium-fs-close-btn {
+  display: flex;
 }
 
+/* ============================================================
+   ZOOM OVERLAY
+   ============================================================ */
 .premium-zoom-overlay {
   position: absolute;
   inset: 0;
   z-index: 100;
-  background: rgba(5,41,53,0.95);
+  background: rgba(5,41,53,0.96);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -443,27 +689,195 @@
 }
 
 .premium-zoom-overlay img {
-  max-width: 90vw;
-  max-height: 90vh;
+  max-width: 92vw;
+  max-height: 92vh;
   object-fit: contain;
-  border-radius: 4px;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  border-radius: 6px;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.5);
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 1024px) {
+  .cs-flipbook {
+    width: calc(100% + 2rem);
+    margin: 0 -1rem 3rem;
+  }
 }
 
 @media (max-width: 768px) {
+  .cs-flipbook {
+    width: 100%;
+    margin: 0 0 2.5rem;
+  }
+
+  .premium-flipbook-wrapper {
+    padding-bottom: 58%;
+    border-radius: 14px;
+  }
+
   .premium-book {
-    width: 95%;
+    width: 92%;
+    max-width: 600px;
     transform: rotateX(4deg) rotateZ(-1deg);
   }
-  .premium-ui-title { font-size: 10px; }
-  .premium-ui-nav-btn { width: 22px; height: 22px; font-size: 11px; }
-  .premium-spine { width: 20px; }
+
+  .premium-ui-header {
+    padding: 12px 14px;
+  }
+
+  .premium-ui-header-title {
+    font-size: 13px;
+  }
+
+  .premium-ui-header-subtitle {
+    font-size: 10px;
+  }
+
+  .premium-ui-pill {
+    padding: 4px 10px;
+    font-size: 10px;
+  }
+
+  .premium-ui-pill-label {
+    display: none;
+  }
+
+  .premium-spine {
+    width: 22px;
+  }
+
+  .premium-ui-bottom {
+    bottom: 10px;
+    left: 14px;
+    right: 14px;
+  }
+
+  .premium-ui-progress-wrap {
+    max-width: 160px;
+  }
+
+  .premium-ui-pagenum {
+    font-size: 11px;
+    min-width: 60px;
+  }
 }
 
+@media (max-width: 640px) {
+  .premium-flipbook-wrapper {
+    padding-bottom: 75%;
+    border-radius: 10px;
+  }
+
+  .premium-book {
+    width: 96%;
+    max-width: 360px;
+    transform: rotateX(2deg) rotateZ(-0.5deg);
+  }
+
+  .premium-ui-header {
+    padding: 10px 12px;
+  }
+
+  .premium-ui-header-title {
+    font-size: 11px;
+  }
+
+  .premium-ui-header-subtitle {
+    display: none;
+  }
+
+  .premium-ui-pill {
+    padding: 3px 8px;
+    font-size: 9px;
+  }
+
+  .premium-ui-pill-label {
+    display: none;
+  }
+
+  .premium-spine {
+    width: 18px;
+  }
+
+  .premium-ui-bottom {
+    flex-direction: column;
+    gap: 5px;
+    bottom: 8px;
+  }
+
+  .premium-ui-progress-wrap {
+    max-width: 140px;
+  }
+
+  .premium-flipbook-wrapper.is-fullscreen .premium-flipbook-stage {
+    width: 98vw;
+  }
+
+  .premium-flipbook-wrapper.is-fullscreen .premium-book {
+    width: 100%;
+  }
+}
+
+@media (max-width: 420px) {
+  .premium-flipbook-wrapper {
+    padding-bottom: 80%;
+    border-radius: 8px;
+  }
+
+  .premium-book {
+    max-width: 280px;
+  }
+
+  .premium-ui-header-right {
+    gap: 3px;
+  }
+
+  .premium-ui-pill {
+    padding: 2px 6px;
+    font-size: 8px;
+  }
+
+  .premium-ui-progress-wrap {
+    max-width: 100px;
+  }
+}
+
+/* ============================================================
+   REDUCED MOTION
+   ============================================================ */
 @media (prefers-reduced-motion: reduce) {
-  .premium-book.idle { animation: none; }
-  .premium-cover.open .premium-cover-front-inner { transition-duration: 0.01ms; }
-  .premium-cover.open .premium-cover-back-inner { transition-duration: 0.01ms; }
-  .premium-flip.animating-forward { animation-duration: 0.01ms; }
-  .premium-flip.animating-backward { animation-duration: 0.01ms; }
+  .premium-flipbook-wrapper {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .premium-book.idle {
+    animation: none;
+  }
+
+  .premium-cover.open .premium-cover-front-inner,
+  .premium-cover.open .premium-cover-back-inner {
+    transition-duration: 0.01ms;
+  }
+
+  .premium-flip.animating-forward,
+  .premium-flip.animating-backward {
+    animation-duration: 0.01ms;
+  }
+
+  .premium-skeleton-inner {
+    animation: none;
+    background: rgba(255,255,255,0.04);
+  }
+
+  .premium-flipbook-wrapper {
+    transition: none;
+  }
+
+  .premium-ui-progress-fill {
+    transition: none;
+  }
 }

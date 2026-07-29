@@ -268,20 +268,6 @@
     <img src="/images/brahmi-stickers.jpg" alt="Brahmi brochure and marketing collateral mockup" loading="lazy">
   </figure>
 
-  <section class="cs-block reveal-block">
-    <h2 class="cs-block-label">The Blend Range</h2>
-    <div class="blend-display">
-      <img class="blend-photo active" src="/images/brahmi-blend-70-30.png" alt="Sastry's by Brahmi — 70% Coffee, 30% Chicory">
-      <img class="blend-photo" src="/images/brahmi-blend-80-20.png" alt="Sastry's by Brahmi — 80% Coffee, 20% Chicory">
-      <img class="blend-photo" src="/images/brahmi-blend-90-10.png" alt="Sastry's by Brahmi — 90% Coffee, 10% Chicory">
-    </div>
-    <div class="blend-options">
-      <button class="blend-btn active" data-index="0">70/30</button>
-      <button class="blend-btn" data-index="1">80/20</button>
-      <button class="blend-btn" data-index="2">90/10</button>
-    </div>
-  </section>
-
   <div class="cs-image-row reveal-block">
     <img src="/images/brahmi-packaging-1.jpg" alt="Brahmi packaging mockup front view" loading="lazy">
     <img src="/images/brahmi-packaging-2.jpg" alt="Brahmi packaging mockup angled view" loading="lazy">
@@ -293,20 +279,22 @@
     <p class="cs-block-text">A packaging system built to stand apart on a shelf crowded with international coffee brands, while staying recognizably rooted in South Indian coffee culture — designed to extend across future products without a redesign.</p>
   </section>
 
-  <div class="cs-flipbook reveal-block">
+  <div class="cs-flipbook">
     <div class="premium-flipbook-wrapper">
+      <div class="premium-skeleton">
+        <div class="premium-skeleton-inner"></div>
+      </div>
+
+      <div class="premium-book-reflection"></div>
+
       <div class="premium-flipbook-stage">
-        <div class="premium-book-shadow"></div>
         <div class="premium-book" role="application" aria-label="Brahmi Brand Book flipbook">
           <div class="premium-book-body">
             <div class="premium-spine"></div>
-
             <div class="premium-stack-left"></div>
             <div class="premium-stack-right"></div>
-
             <div class="premium-page premium-page-left"></div>
             <div class="premium-page premium-page-right"></div>
-
             <div class="premium-cover premium-cover-front">
               <div class="premium-cover-front-inner" style="background-image:url(/images/brahmi/page-01.jpg)"></div>
             </div>
@@ -317,24 +305,30 @@
         </div>
       </div>
 
-      <div class="premium-ui-top">
-        <span class="premium-ui-title">Brahmi Brand Book</span>
-        <div class="premium-ui-actions">
-          <button class="premium-ui-btn premium-ui-fullscreen" aria-label="Toggle fullscreen">Fullscreen</button>
-          <a class="premium-ui-btn" href="/pdfs/brahmi-brand.pdf" download aria-label="Download PDF">Download PDF</a>
+      <div class="premium-ui-header">
+        <div class="premium-ui-header-left">
+          <span class="premium-ui-header-title">Brand Book</span>
+          <span class="premium-ui-header-subtitle">Interactive Brand Guidelines</span>
+        </div>
+        <div class="premium-ui-header-right">
+          <button class="premium-ui-pill premium-ui-btn-prev" aria-label="Previous page">&larr; <span class="premium-ui-pill-label">Prev</span></button>
+          <button class="premium-ui-pill premium-ui-btn-next" aria-label="Next page"><span class="premium-ui-pill-label">Next</span> &rarr;</button>
+          <button class="premium-ui-pill premium-ui-btn-fullscreen" aria-label="Toggle fullscreen">&#x26F0;</button>
         </div>
       </div>
 
       <div class="premium-ui-bottom">
-        <div class="premium-ui-nav">
-          <button class="premium-ui-nav-btn premium-ui-prev" aria-label="Previous page" disabled>&#8592;</button>
-          <span class="premium-ui-pagenum" role="status" aria-live="polite"></span>
-          <button class="premium-ui-nav-btn premium-ui-next" aria-label="Next page">&#8594;</button>
+        <div class="premium-ui-pagination">
+          <span class="premium-ui-pagenum" role="status" aria-live="polite">2 / 44</span>
         </div>
-        <div class="premium-ui-progress" aria-hidden="true">
-          <div class="premium-ui-progress-bar"></div>
+        <div class="premium-ui-progress-wrap">
+          <div class="premium-ui-progress-track">
+            <div class="premium-ui-progress-fill"></div>
+          </div>
         </div>
       </div>
+
+      <button class="premium-fs-close-btn" aria-label="Close fullscreen">&times;</button>
 
       <div class="premium-zoom-overlay" role="dialog" aria-label="Zoomed page view">
         <img src="" alt="">
