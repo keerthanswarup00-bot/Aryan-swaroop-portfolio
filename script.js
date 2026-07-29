@@ -317,18 +317,20 @@ if(window.matchMedia('(min-width:1024px)').matches && document.querySelector('.h
   var animFinished = false;
   if(!line1 || !line2) return;
 
-  line1.textContent = TEXT_1;
-
-  var line2Chars = [];
-  var l2text = TEXT_2;
-  line2.innerHTML = '';
-  for(var ci = 0; ci < l2text.length; ci++){
-    var sp = document.createElement('span');
-    sp.className = 'l2-char';
-    sp.textContent = l2text[ci] === ' ' ? '\u00A0' : l2text[ci];
-    line2.appendChild(sp);
-    line2Chars.push(sp);
+  function splitIntoChars(el, text){
+    el.innerHTML = '';
+    var chars = [];
+    for(var ci = 0; ci < text.length; ci++){
+      var sp = document.createElement('span');
+      sp.className = 'hero-char';
+      sp.textContent = text[ci] === ' ' ? '\u00A0' : text[ci];
+      el.appendChild(sp);
+      chars.push(sp);
+    }
+    return chars;
   }
+  splitIntoChars(line1, TEXT_1);
+  var line2Chars = splitIntoChars(line2, TEXT_2);
 
   var enabled = false;
   var blocked = false;
@@ -433,11 +435,86 @@ if(window.matchMedia('(min-width:1024px)').matches && document.querySelector('.h
     el.style.opacity = '0';
     setTimeout(function(){
       if(el.parentNode) el.parentNode.removeChild(el);
-      checkCharOverlaps();
     }, removeMs + 50);
   }
 
-  function checkCharOverlaps(){}
+  // ── RAF-based overlap detection ──
+  var charRects = [];
+  var overlapState = [];
+  var overlapRAF = null;
+  var needsRectUpdate = true;
+
+  function updateCharRects(){
+    charRects = [];
+    for(var c = 0; c < line2Chars.length; c++){
+      charRects.push(line2Chars[c].getBoundingClientRect());
+    }
+    overlapState = new Array(line2Chars.length);
+  }
+
+  function checkOverlaps(){
+    var trailLayer = document.getElementById('cursorTrailLayer');
+    if(!trailLayer || !line2Chars.length){ overlapRAF = requestAnimationFrame(checkOverlaps); return; }
+
+    var images = trailLayer.querySelectorAll('.hero-reveal-image');
+    var trails = [];
+    for(var i = 0; i < images.length; i++){
+      if(images[i]._removing) continue;
+      trails.push(images[i].getBoundingClientRect());
+    }
+
+    if(needsRectUpdate || charRects.length !== line2Chars.length){
+      updateCharRects();
+      needsRectUpdate = false;
+    }
+
+    for(var c = 0; c < line2Chars.length; c++){
+      var cr = charRects[c];
+      if(!cr || cr.width === 0) continue;
+      var overlapping = false;
+      for(var i = 0; i < trails.length; i++){
+        if(trails[i].right > cr.left && trails[i].left < cr.right && trails[i].bottom > cr.top && trails[i].top < cr.bottom){
+          overlapping = true;
+          break;
+        }
+      }
+      if(overlapping !== overlapState[c]){
+        overlapState[c] = overlapping;
+        line2Chars[c].classList.toggle('inverted', overlapping);
+      }
+    }
+    overlapRAF = requestAnimationFrame(checkOverlaps);
+  }
+
+  function startOverlapLoop(){
+    needsRectUpdate = true;
+    if(overlapRAF) cancelAnimationFrame(overlapRAF);
+    overlapRAF = requestAnimationFrame(checkOverlaps);
+  }
+
+  function stopOverlapLoop(){
+    if(overlapRAF){ cancelAnimationFrame(overlapRAF); overlapRAF = null; }
+    for(var c = 0; c < line2Chars.length; c++){
+      line2Chars[c].classList.remove('inverted');
+      overlapState[c] = false;
+    }
+  }
+
+  // ── Hover stagger ──
+  var hoverTimers = [];
+
+  function staggerHover(enter){
+    hoverTimers.forEach(function(t){ clearTimeout(t); });
+    hoverTimers = [];
+    var delay = enter ? 12 : 15;
+    line2Chars.forEach(function(ch, i){
+      var t = setTimeout(function(){ ch.classList.toggle('hovered', enter); }, i * delay);
+      hoverTimers.push(t);
+    });
+  }
+
+  line2.addEventListener('mouseenter', function(){ staggerHover(true); });
+  line2.addEventListener('mouseleave', function(){ staggerHover(false); });
 
   function removeOldest(){
     if(!active.length) return;
@@ -469,8 +546,6 @@ if(window.matchMedia('(min-width:1024px)').matches && document.querySelector('.h
     }
     var x = e.clientX, y = e.clientY;
 
-    checkCharOverlaps();
-
     clearTimeout(stopTimer);
     stopTimer = setTimeout(function(){
       fadeOutTrail();
@@ -492,6 +567,7 @@ if(window.matchMedia('(min-width:1024px)').matches && document.querySelector('.h
     if(enabled) return;
     enabled = true;
     window.addEventListener('mousemove', onMove, { passive: true });
+    startOverlapLoop();
   }
 
   function disableReveal(){
@@ -499,6 +575,7 @@ if(window.matchMedia('(min-width:1024px)').matches && document.querySelector('.h
     window.removeEventListener('mousemove', onMove);
     fadeOutAll();
     clearTimeout(stopTimer);
+    stopOverlapLoop();
   }
 
   function checkHeroActive(){
@@ -525,6 +602,7 @@ if(window.matchMedia('(min-width:1024px)').matches && document.querySelector('.h
   window.addEventListener('scroll', checkHeroActive, { passive: true });
 
   window.addEventListener('resize', function(){
+    needsRectUpdate = true;
     var was = isDesktop;
     isDesktop = window.innerWidth >= DESKTOP;
     if(was && !isDesktop){
