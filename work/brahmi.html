@@ -293,9 +293,7 @@
   </section>
 
   <div class="cs-flipbook reveal-block">
-    <div class="flip-book-container">
-      <embed src="/pdfs/brahmi-brand.pdf" type="application/pdf" width="100%" height="100%">
-    </div>
+    <div class="flip-book-container" src="/pdfs/brahmi-brand.pdf"></div>
   </div>
 
   <nav class="cs-next reveal-block">
@@ -329,6 +327,18 @@
 <script src="../lightbox.js"></script>
 <script src="../js/reveal-on-scroll.js"></script>
 <script src="../js/blend-selector.js"></script>
+
+<script src="../js/jquery.min.js"></script>
+<script src="../js/three.min.js"></script>
+<script src="../js/pdf.min.js"></script>
+
+<script>
+  window.PDFJS_LOCALE = {
+    pdfJsWorker: '../js/pdf.worker.js',
+    pdfJsCMapUrl: '../cmaps'
+  };
+</script>
+<script src="../js/3dflipbook.min.js"></script>
 
 </body>
 </html>
