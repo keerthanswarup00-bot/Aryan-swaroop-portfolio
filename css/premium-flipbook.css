@@ -1,8 +1,3 @@
-/* ============================================================
-   PREMIUM FLIPBOOK — Brand Book Showcase
-   Complete 3D flipbook with premium visual design
-   ============================================================ */
-
 .cs-flipbook {
   width: calc(100% + 5rem);
   margin: 0 -2.5rem 3.5rem;
@@ -76,21 +71,39 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  perspective: 2500px;
-  perspective-origin: 50% 40%;
 }
 
 /* ============================================================
-   BOOK
+   TURN.JS CONTAINERS
    ============================================================ */
-.premium-book {
+.premium-turn-stage {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.premium-turn-container {
   position: relative;
+  width: 85%;
+  max-width: 960px;
+  perspective: 2500px;
+  perspective-origin: 50% 40%;
   transform-style: preserve-3d;
   transform: rotateX(6deg) rotateZ(-1.5deg);
-  width: 85%;
-  aspect-ratio: 307 / 173;
-  max-width: 960px;
   will-change: transform;
+}
+
+.premium-turn-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+#flipbook {
+  width: 100%;
+  height: 100%;
 }
 
 @keyframes bookBreathe {
@@ -98,12 +111,22 @@
   50% { transform: rotateX(6deg) rotateZ(-1.2deg) translateY(3px); }
 }
 
-.premium-book.idle {
+.premium-turn-container.idle {
   animation: bookBreathe 6s ease-in-out infinite;
 }
 
-.premium-book.hover {
-  filter: drop-shadow(0 12px 40px rgba(0,0,0,0.3));
+/* Turn.js page styling */
+#flipbook .page {
+  background-size: contain !important;
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+  background-color: #F7F5EF !important;
+  width: 100%;
+  height: 100%;
+}
+
+#flipbook .hard {
+  background-size: cover !important;
 }
 
 /* ============================================================
@@ -123,237 +146,6 @@
 }
 
 /* ============================================================
-   BOOK BODY
-   ============================================================ */
-.premium-book-body {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  transform-style: preserve-3d;
-  cursor: pointer;
-}
-
-/* ============================================================
-   SPINE
-   ============================================================ */
-.premium-spine {
-  position: absolute;
-  left: 50%;
-  top: 0;
-  width: 28px;
-  height: 100%;
-  transform: translateX(-50%) translateZ(6px);
-  background: linear-gradient(
-    to right,
-    #1a1a1a 0%,
-    #2a2a2a 20%,
-    #333 50%,
-    #2a2a2a 80%,
-    #1a1a1a 100%
-  );
-  border-radius: 3px;
-  z-index: 30;
-  pointer-events: none;
-}
-
-.premium-spine::after {
-  content: '';
-  position: absolute;
-  left: 50%;
-  top: 8%;
-  width: 55%;
-  height: 84%;
-  transform: translateX(-50%);
-  background: linear-gradient(
-    to bottom,
-    transparent 0%,
-    rgba(255,255,255,0.04) 50%,
-    transparent 100%
-  );
-  border-radius: 2px;
-}
-
-/* ============================================================
-   PAGES
-   ============================================================ */
-.premium-page {
-  position: absolute;
-  top: 0;
-  width: 50%;
-  height: 100%;
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-color: #F7F5EF;
-  z-index: 5;
-  will-change: transform;
-}
-
-.premium-page-left {
-  left: 0;
-  border-right: 1px solid rgba(0,0,0,0.06);
-  border-radius: 2px 0 0 2px;
-}
-
-.premium-page-right {
-  left: 50%;
-  border-left: 1px solid rgba(0,0,0,0.06);
-  border-radius: 0 2px 2px 0;
-}
-
-.premium-page-hidden {
-  display: none;
-}
-
-/* ============================================================
-   STACK (page depth indicators)
-   ============================================================ */
-.premium-stack-left,
-.premium-stack-right {
-  position: absolute;
-  top: 2px;
-  height: calc(100% - 4px);
-  z-index: 3;
-  pointer-events: none;
-  background: #EDE8DF;
-  border-radius: 1px;
-  transition: width 0.4s ease;
-}
-
-.premium-stack-left {
-  right: 100%;
-  width: 0;
-}
-
-.premium-stack-right {
-  left: 100%;
-  width: 0;
-}
-
-/* ============================================================
-   FLIP ELEMENTS
-   ============================================================ */
-.premium-flip {
-  position: absolute;
-  top: 0;
-  width: 50%;
-  height: 100%;
-  transform-style: preserve-3d;
-  z-index: 20;
-  pointer-events: none;
-}
-
-.premium-flip.forward {
-  left: 50%;
-  transform-origin: left center;
-}
-
-.premium-flip.backward {
-  left: 0;
-  transform-origin: right center;
-}
-
-.premium-flip-face {
-  position: absolute;
-  inset: 0;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-color: #F7F5EF;
-  will-change: transform;
-}
-
-.premium-flip-front {
-  z-index: 2;
-}
-
-.premium-flip-back {
-  transform: rotateY(180deg);
-  z-index: 1;
-}
-
-/* Page edge (thickness) */
-.premium-flip-edge {
-  position: absolute;
-  top: 0;
-  width: 4px;
-  height: 100%;
-  z-index: 3;
-  pointer-events: none;
-}
-
-.premium-flip.forward .premium-flip-edge {
-  left: 0;
-  background: linear-gradient(to right, #E8E2D7, #F0EBE2);
-}
-
-.premium-flip.backward .premium-flip-edge {
-  right: 0;
-  background: linear-gradient(to left, #E8E2D7, #F0EBE2);
-}
-
-/* Flip shadow */
-.premium-flip-shadow {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 4;
-}
-
-.premium-flip.forward .premium-flip-shadow {
-  background: linear-gradient(to left, rgba(0,0,0,0.15) 2%, transparent 40%);
-}
-
-.premium-flip.backward .premium-flip-shadow {
-  background: linear-gradient(to right, rgba(0,0,0,0.15) 2%, transparent 40%);
-}
-
-/* Flip highlight */
-.premium-flip-highlight {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 5;
-  background: linear-gradient(135deg, rgba(255,255,255,0.06) 0%, transparent 50%);
-}
-
-/* Reveal element (emerging page behind flip) */
-.premium-page-reveal {
-  position: absolute;
-  top: 0;
-  width: 50%;
-  height: 100%;
-  z-index: 4;
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-color: #F7F5EF;
-}
-
-/* ============================================================
-   FLIP ANIMATIONS
-   ============================================================ */
-@keyframes flipForward {
-  0% { transform: rotateY(0deg); }
-  100% { transform: rotateY(-180deg); }
-}
-
-@keyframes flipBackward {
-  0% { transform: rotateY(0deg); }
-  100% { transform: rotateY(180deg); }
-}
-
-.premium-flip.animating-forward {
-  animation: flipForward 0.75s cubic-bezier(.22,.61,.36,1) forwards;
-}
-
-.premium-flip.animating-backward {
-  animation: flipBackward 0.75s cubic-bezier(.22,.61,.36,1) forwards;
-}
-
-/* ============================================================
    COVERS
    ============================================================ */
 .premium-cover-front,
@@ -368,17 +160,16 @@
 }
 
 .premium-cover-front {
-  left: -4px;
-  width: calc(50% + 4px);
+  left: 0;
+  width: 50%;
 }
 
 .premium-cover-back {
-  right: -4px;
-  width: calc(50% + 4px);
+  left: 50%;
+  width: 50%;
 }
 
-.premium-cover-front-inner,
-.premium-cover-back-inner {
+.premium-cover-inner {
   width: 100%;
   height: 100%;
   background-size: cover;
@@ -388,14 +179,14 @@
   will-change: transform;
 }
 
-.premium-cover-front-inner {
+.premium-cover-front .premium-cover-inner {
   border-radius: 2px 0 0 2px;
   box-shadow:
     2px 0 12px rgba(0,0,0,0.25),
     inset 0 0 30px rgba(0,0,0,0.1);
 }
 
-.premium-cover-back-inner {
+.premium-cover-back .premium-cover-inner {
   border-radius: 0 2px 2px 0;
   box-shadow:
     -2px 0 12px rgba(0,0,0,0.25),
@@ -406,16 +197,18 @@
   pointer-events: none;
 }
 
-.premium-cover.open .premium-cover-front-inner {
-  transform: rotateY(-160deg);
-  transform-origin: right center;
-  transition: transform 1s cubic-bezier(.22,.61,.36,1) 0.15s;
+.premium-cover.open .premium-cover-inner {
+  transition: transform 1.2s cubic-bezier(.22,.61,.36,1) 0.15s;
 }
 
-.premium-cover.open .premium-cover-back-inner {
+.premium-cover-front.open .premium-cover-inner {
+  transform: rotateY(-160deg);
+  transform-origin: right center;
+}
+
+.premium-cover-back.open .premium-cover-inner {
   transform: rotateY(160deg);
   transform-origin: left center;
-  transition: transform 1s cubic-bezier(.22,.61,.36,1) 0.15s;
 }
 
 .premium-cover.hidden {
@@ -468,7 +261,6 @@
   align-items: center;
 }
 
-/* Ghost pill buttons */
 .premium-ui-pill {
   background: rgba(255,255,255,0.04);
   border: 1px solid rgba(255,255,255,0.08);
@@ -545,7 +337,6 @@
   text-align: left;
 }
 
-/* Premium progress bar */
 .premium-ui-progress-wrap {
   flex: 1;
   max-width: 220px;
@@ -647,7 +438,7 @@
   max-width: 1200px;
 }
 
-.premium-flipbook-wrapper.is-fullscreen .premium-book {
+.premium-flipbook-wrapper.is-fullscreen .premium-turn-container {
   width: 100%;
   max-width: 1100px;
   transform: rotateX(3deg) rotateZ(-1deg);
@@ -717,7 +508,7 @@
     border-radius: 14px;
   }
 
-  .premium-book {
+  .premium-turn-container {
     width: 92%;
     max-width: 600px;
     transform: rotateX(4deg) rotateZ(-1deg);
@@ -744,10 +535,6 @@
     display: none;
   }
 
-  .premium-spine {
-    width: 22px;
-  }
-
   .premium-ui-bottom {
     bottom: 10px;
     left: 14px;
@@ -770,7 +557,7 @@
     border-radius: 10px;
   }
 
-  .premium-book {
+  .premium-turn-container {
     width: 96%;
     max-width: 360px;
     transform: rotateX(2deg) rotateZ(-0.5deg);
@@ -797,10 +584,6 @@
     display: none;
   }
 
-  .premium-spine {
-    width: 18px;
-  }
-
   .premium-ui-bottom {
     flex-direction: column;
     gap: 5px;
@@ -815,7 +598,7 @@
     width: 98vw;
   }
 
-  .premium-flipbook-wrapper.is-fullscreen .premium-book {
+  .premium-flipbook-wrapper.is-fullscreen .premium-turn-container {
     width: 100%;
   }
 }
@@ -826,7 +609,7 @@
     border-radius: 8px;
   }
 
-  .premium-book {
+  .premium-turn-container {
     max-width: 280px;
   }
 
@@ -854,18 +637,12 @@
     transition: none;
   }
 
-  .premium-book.idle {
+  .premium-turn-container.idle {
     animation: none;
   }
 
-  .premium-cover.open .premium-cover-front-inner,
-  .premium-cover.open .premium-cover-back-inner {
+  .premium-cover.open .premium-cover-inner {
     transition-duration: 0.01ms;
-  }
-
-  .premium-flip.animating-forward,
-  .premium-flip.animating-backward {
-    animation-duration: 0.01ms;
   }
 
   .premium-skeleton-inner {

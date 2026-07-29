@@ -288,18 +288,16 @@
       <div class="premium-book-reflection"></div>
 
       <div class="premium-flipbook-stage">
-        <div class="premium-book" role="application" aria-label="Brahmi Brand Book flipbook">
-          <div class="premium-book-body">
-            <div class="premium-spine"></div>
-            <div class="premium-stack-left"></div>
-            <div class="premium-stack-right"></div>
-            <div class="premium-page premium-page-left"></div>
-            <div class="premium-page premium-page-right"></div>
-            <div class="premium-cover premium-cover-front">
-              <div class="premium-cover-front-inner" style="background-image:url(/images/brahmi/page-01.jpg)"></div>
-            </div>
-            <div class="premium-cover premium-cover-back">
-              <div class="premium-cover-back-inner" style="background-image:url(/images/brahmi/page-44.jpg)"></div>
+        <div class="premium-turn-stage">
+          <div class="premium-turn-container">
+            <div class="premium-turn-inner">
+              <div id="flipbook" role="application" aria-label="Brahmi Brand Book flipbook"></div>
+              <div class="premium-cover premium-cover-front">
+                <div class="premium-cover-inner" style="background-image:url(/images/brahmi/page-01.jpg)"></div>
+              </div>
+              <div class="premium-cover premium-cover-back">
+                <div class="premium-cover-inner" style="background-image:url(/images/brahmi/page-44.jpg)"></div>
+              </div>
             </div>
           </div>
         </div>
@@ -362,6 +360,9 @@
     </div>
   </div>
 </footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/turn.js/3/turn.min.js"></script>
 
 <script src="../script.js"></script>
 <script src="../lightbox.js"></script>
