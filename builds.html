@@ -90,6 +90,8 @@
   ]
 }
 </script>
+<link rel="preload" as="image" href="/images/build-selixo.avif" type="image/avif" fetchpriority="high">
+  <link rel="preload" as="image" href="/images/build-selixo.webp" type="image/webp" fetchpriority="high">
 </head>
 <body>
 <a href="#main-content" class="skip-to-content">Skip to main content</a>
@@ -102,7 +104,11 @@
 <header class="site-header" aria-label="Site">
   <div class="header-row">
     <a href="/" class="header-left">
-      <img src="images/nav-avatar.png" alt="Aryan Swaroop" class="header-avatar" width="44" height="44">
+      <picture>
+          <source srcset="images/nav-avatar-400.avif 400w, images/nav-avatar-800.avif 800w" type="image/avif" sizes="44px">
+          <source srcset="images/nav-avatar-400.webp 400w, images/nav-avatar-800.webp 800w" type="image/webp" sizes="44px">
+          <img src="images/nav-avatar-400.jpg" srcset="images/nav-avatar-400.jpg 400w, images/nav-avatar-800.jpg 800w" sizes="44px" alt="Aryan Swaroop" class="header-avatar" width="44" height="44" loading="lazy" decoding="async">
+        </picture>
       <div class="header-identity">
         <span class="header-name">Aryan Swaroop</span>
         <span class="header-status"><span class="status-ping"></span>Open to work</span>
@@ -115,22 +121,48 @@
         <div class="mega-menu">
           <div class="mega-left">
             <h4 class="mega-heading">Featured Work</h4>
-            <a href="/real-estate" class="mega-project" data-project="real-estate">
-              <div class="mega-thumb"><img src="images/mega-re-2.png" alt="Real estate brand identity thumbnail" width="800" height="800" loading="lazy" decoding="async"></div>
+<a href="/real-estate" class="mega-project" data-project="real-estate">
+                <div class="mega-thumb">
+                  <picture>
+                    <source srcset="images/mega-re-2.avif" type="image/avif">
+                    <source srcset="images/mega-re-2.webp" type="image/webp">
+                    <img src="images/mega-re-2.png" alt="Real estate brand identity thumbnail" width="800" height="800" loading="lazy" decoding="async">
+                  </picture>
+                </div>
               <div class="mega-info"><span class="mega-title">Real Estate</span><span class="mega-duration">5 min</span></div>
             </a>
-            <a href="/lifestyle" class="mega-project" data-project="lifestyle">
-              <div class="mega-thumb"><img src="images/mega-lifestyle-2.png" alt="Lifestyle brand identity thumbnail" width="800" height="800" loading="lazy" decoding="async"></div>
+<a href="/lifestyle" class="mega-project" data-project="lifestyle">
+                <div class="mega-thumb">
+                  <picture>
+                    <source srcset="images/mega-lifestyle-2.avif" type="image/avif">
+                    <source srcset="images/mega-lifestyle-2.webp" type="image/webp">
+                    <img src="images/mega-lifestyle-2.png" alt="Lifestyle brand identity thumbnail" width="800" height="800" loading="lazy" decoding="async">
+                  </picture>
+                </div>
               <div class="mega-info"><span class="mega-title">Lifestyle</span><span class="mega-duration">5 min</span></div>
             </a>
-            <a href="/tools" class="mega-project" data-project="tools">
-              <div class="mega-thumb"><img src="images/mega-builds-2.png" alt="Web product builds thumbnail" width="800" height="800" loading="lazy" decoding="async"></div>
+<a href="/tools" class="mega-project" data-project="tools">
+                <div class="mega-thumb">
+                  <picture>
+                    <source srcset="images/mega-builds-2.avif" type="image/avif">
+                    <source srcset="images/mega-builds-2.webp" type="image/webp">
+                    <img src="images/mega-builds-2.png" alt="Web product builds thumbnail" width="800" height="800" loading="lazy" decoding="async">
+                  </picture>
+                </div>
               <div class="mega-info"><span class="mega-title">Tools</span><span class="mega-duration">2 min</span></div>
             </a>
           </div>
           <div class="mega-right">
-            <a href="/playground" class="mega-preview-card"><img src="images/playground-preview.png" alt="Playground — motion and renders preview" width="600" height="251" loading="lazy" decoding="async"><span class="mega-preview-text">Playground &rarr;</span></a>
-            <a href="/builds" class="mega-preview-card"><img src="images/build-preview.png" alt="Build — web products preview" width="600" height="251" loading="lazy" decoding="async"><span class="mega-preview-text">Build &rarr;</span></a>
+            <a href="/playground" class="mega-preview-card"><picture>
+                            <source srcset="images/playground-preview.avif" type="image/avif">
+                            <source srcset="images/playground-preview.webp" type="image/webp">
+                            <img src="images/playground-preview.png" alt="Playground — motion and renders preview" width="600" height="251" loading="lazy" decoding="async">
+                          </picture><span class="mega-preview-text">Playground &rarr;</span></a>
+            <a href="/builds" class="mega-preview-card"><picture>
+                            <source srcset="images/build-preview.avif" type="image/avif">
+                            <source srcset="images/build-preview.webp" type="image/webp">
+                            <img src="images/build-preview.png" alt="Build — web products preview" width="600" height="251" loading="lazy" decoding="async">
+                          </picture><span class="mega-preview-text">Build &rarr;</span></a>
           </div>
         </div>
       </div>
@@ -147,7 +179,11 @@
   <div class="mobile-menu-inner">
     <div class="mobile-top">
       <a href="/" class="mobile-profile">
-        <img src="images/nav-avatar.png" alt="Aryan Swaroop" class="mobile-avatar" width="56" height="56">
+        <picture>
+          <source srcset="images/nav-avatar-400.avif 400w, images/nav-avatar-800.avif 800w" type="image/avif" sizes="56px">
+          <source srcset="images/nav-avatar-400.webp 400w, images/nav-avatar-800.webp 800w" type="image/webp" sizes="56px">
+          <img src="images/nav-avatar-400.jpg" srcset="images/nav-avatar-400.jpg 400w, images/nav-avatar-800.jpg 800w" sizes="56px" alt="Aryan Swaroop" class="mobile-avatar" width="56" height="56" loading="lazy" decoding="async">
+        </picture>
         <div class="mobile-identity">
           <span class="mobile-name">Aryan Swaroop</span>
           <span class="mobile-status"><span class="status-ping"></span>Open to work</span>
@@ -162,17 +198,35 @@
     <div class="mobile-section">
       <h4 class="mobile-section-heading">Featured Work</h4>
       <a href="/real-estate" class="mobile-project-row">
-        <div class="mobile-project-thumb"><img src="images/mega-re-2.png" alt="Real estate brand identity thumbnail" width="800" height="800" loading="lazy" decoding="async"></div>
+        <div class="mobile-project-thumb">
+          <picture>
+            <source srcset="images/mega-re-2.avif" type="image/avif">
+            <source srcset="images/mega-re-2.webp" type="image/webp">
+            <img src="images/mega-re-2.png" alt="Real estate brand identity thumbnail" width="800" height="800" loading="lazy" decoding="async">
+          </picture>
+        </div>
         <div class="mobile-project-info"><span class="mobile-project-title">Real Estate</span><span class="mobile-project-sub">5 min</span></div>
         <span class="mobile-project-arrow">&rarr;</span>
       </a>
       <a href="/lifestyle" class="mobile-project-row">
-        <div class="mobile-project-thumb"><img src="images/mega-lifestyle-2.png" alt="Lifestyle brand identity thumbnail" width="800" height="800" loading="lazy" decoding="async"></div>
+        <div class="mobile-project-thumb">
+          <picture>
+            <source srcset="images/mega-lifestyle-2.avif" type="image/avif">
+            <source srcset="images/mega-lifestyle-2.webp" type="image/webp">
+            <img src="images/mega-lifestyle-2.png" alt="Lifestyle brand identity thumbnail" width="800" height="800" loading="lazy" decoding="async">
+          </picture>
+        </div>
         <div class="mobile-project-info"><span class="mobile-project-title">Lifestyle</span><span class="mobile-project-sub">5 min</span></div>
         <span class="mobile-project-arrow">&rarr;</span>
       </a>
       <a href="/builds" class="mobile-project-row">
-        <div class="mobile-project-thumb"><img src="images/mega-builds-2.png" alt="Web product builds thumbnail" width="800" height="800" loading="lazy" decoding="async"></div>
+        <div class="mobile-project-thumb">
+          <picture>
+            <source srcset="images/mega-builds-2.avif" type="image/avif">
+            <source srcset="images/mega-builds-2.webp" type="image/webp">
+            <img src="images/mega-builds-2.png" alt="Web product builds thumbnail" width="800" height="800" loading="lazy" decoding="async">
+          </picture>
+        </div>
         <div class="mobile-project-info"><span class="mobile-project-title">Builds</span><span class="mobile-project-sub">2 min</span></div>
         <span class="mobile-project-arrow">&rarr;</span>
       </a>
@@ -200,41 +254,77 @@
   <div class="wrap">
     <div class="work-grid work-grid-3">
       <div class="work-card" data-cur="VIEW">
-        <div class="work-visual"><img fetchpriority="high" src="images/build-selixo.jpg" width="2880" height="1616" alt="Selixo — wedding photography SaaS dashboard"></div>
+        <div class="work-visual">
+          <picture>
+            <source srcset="images/build-selixo-400.avif 400w, images/build-selixo-800.avif 800w, images/build-selixo-1600.avif 1600w" type="image/avif" sizes="(max-width:640px) 100vw, (max-width:1024px) 50vw, 800px">
+            <source srcset="images/build-selixo-400.webp 400w, images/build-selixo-800.webp 800w, images/build-selixo-1600.webp 1600w" type="image/webp" sizes="(max-width:640px) 100vw, (max-width:1024px) 50vw, 800px">
+            <img fetchpriority="high" loading="eager" src="images/build-selixo.jpg" srcset="images/build-selixo-400.jpg 400w, images/build-selixo-800.jpg 800w, images/build-selixo-1600.jpg 1600w" sizes="(max-width:640px) 100vw, (max-width:1024px) 50vw, 800px" width="2880" height="1616" alt="Selixo — wedding photography SaaS dashboard">
+          </picture>
+        </div>
         <h3>Selixo</h3>
         <p>Wedding photography SaaS — client galleries, image-selection workflow, admin dashboard.</p>
         <div class="tag-row"><span class="tag">Next.js</span><span class="tag">Supabase</span></div>
         <a class="teaser-link" href="https://selectly-web-olive.vercel.app/" target="_blank" data-cur="GO" style="display:inline-block; margin-top:10px;">View Live →</a>
       </div>
       <div class="work-card" data-cur="VIEW">
-        <div class="work-visual"><img loading="lazy" decoding="async" src="images/build-albumflow.jpg" width="1200" height="672" alt="AlbumFlow — photographer SaaS application"></div>
+        <div class="work-visual">
+          <picture>
+            <source srcset="images/build-albumflow-400.avif 400w, images/build-albumflow-800.avif 800w" type="image/avif" sizes="(max-width:640px) 100vw, (max-width:1024px) 50vw, 800px">
+            <source srcset="images/build-albumflow-400.webp 400w, images/build-albumflow-800.webp 800w" type="image/webp" sizes="(max-width:640px) 100vw, (max-width:1024px) 50vw, 800px">
+            <img loading="lazy" decoding="async" src="images/build-albumflow.jpg" srcset="images/build-albumflow-400.jpg 400w, images/build-albumflow-800.jpg 800w" sizes="(max-width:640px) 100vw, (max-width:1024px) 50vw, 800px" width="1200" height="672" alt="AlbumFlow — photographer SaaS application">
+          </picture>
+        </div>
         <h3>AlbumFlow</h3>
         <p>Photographer SaaS — core storage/API architecture, resolved a production-critical security issue.</p>
         <div class="tag-row"><span class="tag">Next.js</span><span class="tag">Supabase</span></div>
         <a class="teaser-link" href="https://albumflow-seven.vercel.app/" target="_blank" data-cur="GO" style="display:inline-block; margin-top:10px;">View Live →</a>
       </div>
       <div class="work-card" data-cur="VIEW">
-        <div class="work-visual"><img loading="lazy" decoding="async" src="images/build-striv.jpg" width="2880" height="1612" alt="Striv — fitness progress tracking PWA"></div>
+        <div class="work-visual">
+          <picture>
+            <source srcset="images/build-striv-400.avif 400w, images/build-striv-800.avif 800w, images/build-striv-1600.avif 1600w" type="image/avif" sizes="(max-width:640px) 100vw, (max-width:1024px) 50vw, 800px">
+            <source srcset="images/build-striv-400.webp 400w, images/build-striv-800.webp 800w, images/build-striv-1600.webp 1600w" type="image/webp" sizes="(max-width:640px) 100vw, (max-width:1024px) 50vw, 800px">
+            <img loading="lazy" decoding="async" src="images/build-striv.jpg" srcset="images/build-striv-400.jpg 400w, images/build-striv-800.jpg 800w, images/build-striv-1600.jpg 1600w" sizes="(max-width:640px) 100vw, (max-width:1024px) 50vw, 800px" width="2880" height="1612" alt="Striv — fitness progress tracking PWA">
+          </picture>
+        </div>
         <h3>Striv</h3>
         <p>Fitness progress-tracking PWA with real training and body-composition data models.</p>
         <div class="tag-row"><span class="tag">React</span></div>
         <a class="teaser-link" href="https://workout-tracker-virid-kappa.vercel.app/" target="_blank" data-cur="GO" style="display:inline-block; margin-top:10px;">View Live →</a>
       </div>
       <div class="work-card" data-cur="VIEW">
-        <div class="work-visual"><img loading="lazy" decoding="async" src="images/build-foundations.jpg" width="2880" height="1614" alt="Foundations — interactive workout guide web app"></div>
+        <div class="work-visual">
+          <picture>
+            <source srcset="images/build-foundations-400.avif 400w, images/build-foundations-800.avif 800w, images/build-foundations-1600.avif 1600w" type="image/avif" sizes="(max-width:640px) 100vw, (max-width:1024px) 50vw, 800px">
+            <source srcset="images/build-foundations-400.webp 400w, images/build-foundations-800.webp 800w, images/build-foundations-1600.webp 1600w" type="image/webp" sizes="(max-width:640px) 100vw, (max-width:1024px) 50vw, 800px">
+            <img loading="lazy" decoding="async" src="images/build-foundations.jpg" srcset="images/build-foundations-400.jpg 400w, images/build-foundations-800.jpg 800w, images/build-foundations-1600.jpg 1600w" sizes="(max-width:640px) 100vw, (max-width:1024px) 50vw, 800px" width="2880" height="1614" alt="Foundations — interactive workout guide web app">
+          </picture>
+        </div>
         <h3>Foundations</h3>
         <p>Interactive workout guide eBook — science-based nutrition, training, and recovery, built as a structured web app.</p>
         <div class="tag-row"><span class="tag">Next.js</span></div>
         <a class="teaser-link" href="https://aryan-guide.vercel.app/" target="_blank" data-cur="GO" style="display:inline-block; margin-top:10px;">View Live →</a>
       </div>
       <div class="work-card" data-cur="VIEW">
-        <div class="work-visual"><img loading="lazy" decoding="async" src="images/build-imageoptimizer.jpg" width="1200" height="675" alt="Property Image Optimizer"></div>
+        <div class="work-visual">
+          <picture>
+            <source srcset="images/build-imageoptimizer-400.avif 400w, images/build-imageoptimizer-800.avif 800w" type="image/avif" sizes="(max-width:640px) 100vw, (max-width:1024px) 50vw, 800px">
+            <source srcset="images/build-imageoptimizer-400.webp 400w, images/build-imageoptimizer-800.webp 800w" type="image/webp" sizes="(max-width:640px) 100vw, (max-width:1024px) 50vw, 800px">
+            <img loading="lazy" decoding="async" src="images/build-imageoptimizer.jpg" srcset="images/build-imageoptimizer-400.jpg 400w, images/build-imageoptimizer-800.jpg 800w" sizes="(max-width:640px) 100vw, (max-width:1024px) 50vw, 800px" width="1200" height="675" alt="Property Image Optimizer">
+          </picture>
+        </div>
         <h3>Property Image Optimizer</h3>
         <p>Browser-only tool for real estate teams — bulk compression, resizing, and watermarking, no server required.</p>
         <div class="tag-row"><span class="tag">Canvas API</span></div>
       </div>
       <div class="work-card" data-cur="VIEW">
-        <div class="work-visual"><img loading="lazy" decoding="async" src="images/build-weekend.jpg" width="1200" height="672" alt="Where to Go This Weekend"></div>
+        <div class="work-visual">
+          <picture>
+            <source srcset="images/build-weekend-400.avif 400w, images/build-weekend-800.avif 800w" type="image/avif" sizes="(max-width:640px) 100vw, (max-width:1024px) 50vw, 800px">
+            <source srcset="images/build-weekend-400.webp 400w, images/build-weekend-800.webp 800w" type="image/webp" sizes="(max-width:640px) 100vw, (max-width:1024px) 50vw, 800px">
+            <img loading="lazy" decoding="async" src="images/build-weekend.jpg" srcset="images/build-weekend-400.jpg 400w, images/build-weekend-800.jpg 800w" sizes="(max-width:640px) 100vw, (max-width:1024px) 50vw, 800px" width="1200" height="672" alt="Where to Go This Weekend">
+          </picture>
+        </div>
         <h3>Where to Go This Weekend</h3>
         <p>Bangalore spot-finder — 549 curated places, filter by mood or category, spin for a random pick.</p>
         <div class="tag-row"><span class="tag">Next.js</span></div>

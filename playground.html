@@ -43,6 +43,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600&display=swap"></noscript>
+<link rel="preload" as="image" href="/images/pg-brahmi-courtyard.avif" type="image/avif" fetchpriority="high">
+<link rel="preload" as="image" href="/images/pg-brahmi-courtyard.webp" type="image/webp" fetchpriority="high">
 <link rel="stylesheet" href="style.css">
 <script type="application/ld+json">
 {
@@ -89,7 +91,7 @@
 <header class="site-header" aria-label="Site">
   <div class="header-row">
     <a href="/" class="header-left">
-      <img src="images/nav-avatar.png" alt="Aryan Swaroop" class="header-avatar" width="44" height="44">
+      <img src="images/nav-avatar.png" alt="Aryan Swaroop" class="header-avatar" width="44" height="44" srcset="images/nav-avatar-400.webp 400w, images/nav-avatar-800.webp 800w" sizes="44px">
       <div class="header-identity">
         <span class="header-name">Aryan Swaroop</span>
         <span class="header-status"><span class="status-ping"></span>Open to work</span>
@@ -134,7 +136,7 @@
   <div class="mobile-menu-inner">
     <div class="mobile-top">
       <a href="/" class="mobile-profile">
-        <img src="images/nav-avatar.png" alt="Aryan Swaroop" class="mobile-avatar" width="56" height="56">
+        <img src="images/nav-avatar.png" alt="Aryan Swaroop" class="mobile-avatar" width="56" height="56" srcset="images/nav-avatar-400.webp 400w, images/nav-avatar-800.webp 800w" sizes="56px">
         <div class="mobile-identity">
           <span class="mobile-name">Aryan Swaroop</span>
           <span class="mobile-status"><span class="status-ping"></span>Open to work</span>
@@ -184,67 +186,100 @@
 
   <section class="pg-grid" id="pgGrid">
     <button class="pg-item" data-type="video" aria-label="Play video" data-src="images/pg-video-01.m4v">
-      <video src="images/pg-video-01.m4v" muted loop playsinline preload="auto"></video>
+      <video src="images/pg-video-01.m4v" muted loop playsinline preload="auto" loading="lazy" width="800" height="1000"></video>
     </button>
     <button class="pg-item" data-type="image" aria-label="View image" data-src="images/pg-brahmi-courtyard.webp" width="800" height="1000">
-      <img src="images/pg-brahmi-courtyard.webp" width="800" height="1000" alt="Brahmi courtyard" loading="lazy" decoding="async">
+      <picture>
+        <source srcset="images/pg-brahmi-courtyard.avif" type="image/avif">
+        <img src="images/pg-brahmi-courtyard.webp" width="800" height="1000" alt="Brahmi courtyard" loading="eager" fetchpriority="high" decoding="async">
+      </picture>
     </button>
     <button class="pg-item" data-type="image" aria-label="View image" data-src="images/pg-02.webp" width="800" height="1000">
-      <img src="images/pg-02.webp" width="800" height="1000" alt="Playground render 2" loading="lazy" decoding="async">
+      <picture>
+        <source srcset="images/pg-02.avif" type="image/avif">
+        <img src="images/pg-02.webp" width="800" height="1000" alt="Playground render 2" loading="lazy" decoding="async">
+      </picture>
     </button>
     <button class="pg-item" data-type="image" aria-label="View image" data-src="images/pg-04.webp" width="800" height="1000">
-      <img src="images/pg-04.webp" width="800" height="1000" alt="Playground render 4" loading="lazy" decoding="async">
+      <picture>
+        <source srcset="images/pg-04.avif" type="image/avif">
+        <img src="images/pg-04.webp" width="800" height="1000" alt="Playground render 4" loading="lazy" decoding="async">
+      </picture>
     </button>
     <button class="pg-item" data-type="video" aria-label="Play video" data-src="images/pg-video-02.m4v">
-      <video src="images/pg-video-02.m4v" muted loop playsinline preload="auto"></video>
+      <video src="images/pg-video-02.m4v" muted loop playsinline preload="auto" loading="lazy" width="800" height="1000"></video>
     </button>
     <button class="pg-item" data-type="image" aria-label="View image" data-src="images/pg-brahmi-doorway.webp" width="800" height="1000">
-      <img src="images/pg-brahmi-doorway.webp" width="800" height="1000" alt="Brahmi doorway" loading="lazy" decoding="async">
+      <picture>
+        <source srcset="images/pg-brahmi-doorway.avif" type="image/avif">
+        <img src="images/pg-brahmi-doorway.webp" width="800" height="1000" alt="Brahmi doorway" loading="lazy" decoding="async">
+      </picture>
     </button>
     <button class="pg-item" data-type="video" aria-label="Play video" data-src="images/pg-video-03.m4v">
-      <video src="images/pg-video-03.m4v" muted loop playsinline preload="auto"></video>
+      <video src="images/pg-video-03.m4v" muted loop playsinline preload="auto" loading="lazy" width="800" height="1000"></video>
     </button>
     <button class="pg-item" data-type="image" aria-label="View image" data-src="images/pg-07.webp" width="800" height="1000">
-      <img src="images/pg-07.webp" width="800" height="1000" alt="Playground render 7" loading="lazy" decoding="async">
+      <picture>
+        <source srcset="images/pg-07.avif" type="image/avif">
+        <img src="images/pg-07.webp" width="800" height="1000" alt="Playground render 7" loading="lazy" decoding="async">
+      </picture>
     </button>
     <button class="pg-item" data-type="video" aria-label="Play video" data-src="images/pg-video-04.m4v">
-      <video src="images/pg-video-04.m4v" muted loop playsinline preload="auto"></video>
+      <video src="images/pg-video-04.m4v" muted loop playsinline preload="auto" loading="lazy" width="800" height="1000"></video>
     </button>
     <button class="pg-item" data-type="image" aria-label="View image" data-src="images/pg-05.webp" width="800" height="999">
-      <img src="images/pg-05.webp" width="800" height="999" alt="Playground render 5" loading="lazy" decoding="async">
+      <picture>
+        <source srcset="images/pg-05.avif" type="image/avif">
+        <img src="images/pg-05.webp" width="800" height="999" alt="Playground render 5" loading="lazy" decoding="async">
+      </picture>
     </button>
     <button class="pg-item" data-type="video" aria-label="Play video" data-src="images/pg-video-05.m4v">
-      <video src="images/pg-video-05.m4v" muted loop playsinline preload="auto"></video>
+      <video src="images/pg-video-05.m4v" muted loop playsinline preload="auto" loading="lazy" width="800" height="1000"></video>
     </button>
     <button class="pg-item" data-type="image" aria-label="View image" data-src="images/pg-01.webp" width="800" height="1000">
-      <img src="images/pg-01.webp" width="800" height="1000" alt="Playground render 1" loading="lazy" decoding="async">
+      <picture>
+        <source srcset="images/pg-01.avif" type="image/avif">
+        <img src="images/pg-01.webp" width="800" height="1000" alt="Playground render 1" loading="lazy" decoding="async">
+      </picture>
     </button>
     <button class="pg-item" data-type="video" aria-label="Play video" data-src="images/pg-video-06.m4v">
-      <video src="images/pg-video-06.m4v" muted loop playsinline preload="auto"></video>
+      <video src="images/pg-video-06.m4v" muted loop playsinline preload="auto" loading="lazy" width="800" height="1000"></video>
     </button>
     <button class="pg-item" data-type="image" aria-label="View image" data-src="images/pg-09.webp" width="800" height="1000">
-      <img src="images/pg-09.webp" width="800" height="1000" alt="Playground render 9" loading="lazy" decoding="async">
+      <picture>
+        <source srcset="images/pg-09.avif" type="image/avif">
+        <img src="images/pg-09.webp" width="800" height="1000" alt="Playground render 9" loading="lazy" decoding="async">
+      </picture>
     </button>
     <button class="pg-item" data-type="video" aria-label="Play video" data-src="images/pg-video-07.m4v">
-      <video src="images/pg-video-07.m4v" muted loop playsinline preload="auto"></video>
+      <video src="images/pg-video-07.m4v" muted loop playsinline preload="auto" loading="lazy" width="800" height="1000"></video>
     </button>
     <button class="pg-item" data-type="image" aria-label="View image" data-src="images/pg-06.webp" width="800" height="1000">
-      <img src="images/pg-06.webp" width="800" height="1000" alt="Playground render 6" loading="lazy" decoding="async">
+      <picture>
+        <source srcset="images/pg-06.avif" type="image/avif">
+        <img src="images/pg-06.webp" width="800" height="1000" alt="Playground render 6" loading="lazy" decoding="async">
+      </picture>
     </button>
     <button class="pg-item" data-type="video" aria-label="Play video" data-src="images/pg-video-08.m4v">
-      <video src="images/pg-video-08.m4v" muted loop playsinline preload="auto"></video>
+      <video src="images/pg-video-08.m4v" muted loop playsinline preload="auto" loading="lazy" width="800" height="1000"></video>
     </button>
     <button class="pg-item" data-type="image" aria-label="View image" data-src="images/pg-03.webp" width="800" height="1000">
-      <img src="images/pg-03.webp" width="800" height="1000" alt="Playground render 3" loading="lazy" decoding="async">
+      <picture>
+        <source srcset="images/pg-03.avif" type="image/avif">
+        <img src="images/pg-03.webp" width="800" height="1000" alt="Playground render 3" loading="lazy" decoding="async">
+      </picture>
     </button>
     <button class="pg-item" data-type="video" aria-label="Play video" data-src="images/pg-video-09.m4v">
-      <video src="images/pg-video-09.m4v" muted loop playsinline preload="auto"></video>
+      <video src="images/pg-video-09.m4v" muted loop playsinline preload="auto" loading="lazy" width="800" height="1000"></video>
     </button>
     <button class="pg-item" data-type="image" aria-label="View image" data-src="images/pg-08.webp" width="800" height="1000">
-      <img src="images/pg-08.webp" width="800" height="1000" alt="Playground render 8" loading="lazy" decoding="async">
+      <picture>
+        <source srcset="images/pg-08.avif" type="image/avif">
+        <img src="images/pg-08.webp" width="800" height="1000" alt="Playground render 8" loading="lazy" decoding="async">
+      </picture>
     </button>
     <button class="pg-item" data-type="video" aria-label="Play video" data-src="images/pg-video-10.m4v">
-      <video src="images/pg-video-10.m4v" muted loop playsinline preload="auto"></video>
+      <video src="images/pg-video-10.m4v" muted loop playsinline preload="auto" loading="lazy" width="800" height="1000"></video>
     </button>
   </section>
 
