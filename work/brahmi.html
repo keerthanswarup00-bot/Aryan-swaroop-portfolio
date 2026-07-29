@@ -43,7 +43,7 @@
 <link rel="stylesheet" href="/style.css">
   <link rel="stylesheet" href="/css/case-study.css">
   <link rel="stylesheet" href="/css/case-study-dark.css">
-  <link rel="stylesheet" href="/css/flipbook.css">
+  <link rel="stylesheet" href="/css/premium-flipbook.css">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -294,12 +294,52 @@
   </section>
 
   <div class="cs-flipbook reveal-block">
-    <div class="flipbook">
-      <div class="flipbook-viewport"></div>
-      <div class="flipbook-nav">
-        <button class="flipbook-nav-btn flipbook-prev">&#8592;</button>
-        <span class="flipbook-page-num"></span>
-        <button class="flipbook-nav-btn flipbook-next">&#8594;</button>
+    <div class="premium-flipbook-wrapper">
+      <div class="premium-flipbook-stage">
+        <div class="premium-book-shadow"></div>
+        <div class="premium-book" role="application" aria-label="Brahmi Brand Book flipbook">
+          <div class="premium-book-body">
+            <div class="premium-spine"></div>
+
+            <div class="premium-stack-left"></div>
+            <div class="premium-stack-right"></div>
+
+            <div class="premium-spread active">
+              <div class="premium-page premium-page-left"></div>
+              <div class="premium-page premium-page-right"></div>
+            </div>
+
+            <div class="premium-cover premium-cover-front">
+              <div class="premium-cover-front-inner" style="background-image:url(/images/brahmi/page-01.jpg)"></div>
+            </div>
+            <div class="premium-cover premium-cover-back">
+              <div class="premium-cover-back-inner" style="background-image:url(/images/brahmi/page-44.jpg)"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="premium-ui-top">
+        <span class="premium-ui-title">Brahmi Brand Book</span>
+        <div class="premium-ui-actions">
+          <button class="premium-ui-btn premium-ui-fullscreen" aria-label="Toggle fullscreen">Fullscreen</button>
+          <a class="premium-ui-btn" href="/pdfs/brahmi-brand.pdf" download aria-label="Download PDF">Download PDF</a>
+        </div>
+      </div>
+
+      <div class="premium-ui-bottom">
+        <div class="premium-ui-nav">
+          <button class="premium-ui-nav-btn premium-ui-prev" aria-label="Previous page" disabled>&#8592;</button>
+          <span class="premium-ui-pagenum" role="status" aria-live="polite"></span>
+          <button class="premium-ui-nav-btn premium-ui-next" aria-label="Next page">&#8594;</button>
+        </div>
+        <div class="premium-ui-progress" aria-hidden="true">
+          <div class="premium-ui-progress-bar"></div>
+        </div>
+      </div>
+
+      <div class="premium-zoom-overlay" role="dialog" aria-label="Zoomed page view">
+        <img src="" alt="">
       </div>
     </div>
   </div>
@@ -335,7 +375,7 @@
 <script src="../lightbox.js"></script>
 <script src="../js/reveal-on-scroll.js"></script>
 <script src="../js/blend-selector.js"></script>
-<script src="../js/flipbook.js"></script>
+<script src="../js/premium-flipbook.js"></script>
 
 </body>
 </html>
