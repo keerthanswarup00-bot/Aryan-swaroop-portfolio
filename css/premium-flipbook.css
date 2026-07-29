@@ -115,16 +115,15 @@
 
 /* Turn.js page styling */
 #flipbook .page {
-  background-size: contain !important;
+  background-size: cover !important;
   background-repeat: no-repeat !important;
   background-position: center !important;
-  background-color: #F7F5EF !important;
   width: 100%;
   height: 100%;
 }
 
 #flipbook .hard {
-  background-size: cover !important;
+  background-size: contain !important;
 }
 
 
