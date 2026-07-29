@@ -282,6 +282,10 @@
   </section>
 
   <div class="cs-flipbook">
+    <div class="cs-flipbook-heading">
+      <span class="cs-block-label">Brand Guidelines</span>
+      <p>Explore the complete 44-page identity system.</p>
+    </div>
     <div class="premium-flipbook-wrapper">
       <div class="premium-flipbook-stage">
         <div class="_df_book" id="flipbook_brahmi" df-parsed="true">
@@ -352,13 +356,23 @@
     source: source,
     webgl: hasWebGL(),
     height: '100%',
-    duration: 800,
+    duration: 500,
     hard: 'none',
     enableDownload: false,
     soundEnable: true,
-    transparent: false,
-    backgroundColor: '#052935',
+    transparent: true,
+    backgroundColor: 'transparent',
     direction: 1,
+    pageMode: 2,
+    webglShadow: true,
+    shadowOpacity: 0.2,
+    paddingTop: 10,
+    paddingBottom: 10,
+    paddingLeft: 15,
+    paddingRight: 15,
+    allControls: 'pageNumber',
+    moreControls: '',
+    controlsPosition: 'bottom',
     onCreate: function () {
     },
     onReady: function () {

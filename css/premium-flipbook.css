@@ -1,16 +1,49 @@
 .cs-flipbook {
-  width: calc(100% + 5rem);
-  margin: 0 -2.5rem 3.5rem;
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  margin-right: calc(-50vw + 50%);
+  padding: 4rem 1.5rem 5rem;
+  background: #050505;
+  position: relative;
+}
+
+.cs-flipbook-heading {
+  max-width: 760px;
+  margin: 0 auto 2.5rem;
+  padding: 0 1.5rem;
+  box-sizing: border-box;
+}
+
+.cs-flipbook-heading .cs-block-label {
+  display: block;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #999999;
+  margin-bottom: 0.5rem;
+}
+
+.cs-flipbook-heading p {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 0.95rem;
+  color: #999999;
+  line-height: 1.6;
+  margin: 0;
 }
 
 .premium-flipbook-wrapper {
   position: relative;
   width: 100%;
+  max-width: 1500px;
+  margin: 0 auto;
   height: 0;
-  padding-bottom: 65%;
-  background: #052935;
-  border-radius: 18px;
-  overflow: hidden;
+  min-height: 85vh;
+  max-height: 90vh;
+  background: #050505;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
+  overflow: visible;
   font-family: 'Inter', system-ui, sans-serif;
   opacity: 0;
   transform: translateY(24px);
@@ -33,39 +66,180 @@
 .premium-flipbook-stage ._df_book {
   width: 100%;
   height: 100%;
-  min-height: 400px;
+}
+
+@media (max-width: 1200px) {
+  .premium-flipbook-wrapper {
+    min-height: 70vh;
+    max-height: 80vh;
+  }
 }
 
 @media (max-width: 1024px) {
   .cs-flipbook {
-    width: calc(100% + 2rem);
-    margin: 0 -1rem 3rem;
+    padding: 3rem 1rem 4rem;
+  }
+  .premium-flipbook-wrapper {
+    min-height: 60vh;
+    max-height: 70vh;
   }
 }
 
 @media (max-width: 768px) {
   .cs-flipbook {
-    width: 100%;
-    margin: 0 0 2.5rem;
+    padding: 2.5rem 0 3.5rem;
   }
-
-  .premium-flipbook-wrapper {
-    padding-bottom: 58%;
-    border-radius: 14px;
+  .cs-flipbook-heading {
+    padding: 0 1rem;
+    margin-bottom: 2rem;
   }
-}
-
-@media (max-width: 640px) {
   .premium-flipbook-wrapper {
-    padding-bottom: 75%;
-    border-radius: 10px;
+    min-height: 50vh;
+    max-height: 60vh;
   }
 }
 
-@media (max-width: 420px) {
+@media (max-width: 480px) {
+  .cs-flipbook {
+    padding: 2rem 0 3rem;
+  }
+  .cs-flipbook-heading {
+    margin-bottom: 1.5rem;
+  }
   .premium-flipbook-wrapper {
-    padding-bottom: 80%;
-    border-radius: 8px;
+    min-height: 45vh;
+    max-height: 55vh;
+  }
+}
+
+.df-container > .df-ui-wrapper.df-ui-zoom {
+  display: none;
+}
+
+.df-container .df-ui-controls {
+  background: transparent;
+  height: 44px;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: auto;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.df-container .df-ui-wrapper {
+  background: transparent;
+  box-shadow: none;
+}
+
+.df-container > .df-ui-btn.df-ui-prev,
+.df-container > .df-ui-btn.df-ui-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  color: rgba(255, 255, 255, 0.3);
+  font-size: 22px;
+  line-height: 48px;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  transition: color 0.25s ease, background 0.25s ease;
+  background: transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.df-container > .df-ui-btn.df-ui-prev {
+  left: 16px;
+}
+
+.df-container > .df-ui-btn.df-ui-next {
+  right: 16px;
+}
+
+.df-container > .df-ui-btn.df-ui-prev:hover,
+.df-container > .df-ui-btn.df-ui-next:hover {
+  color: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.df-container .df-ui-btn {
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 15px;
+  line-height: 36px;
+  width: 36px;
+  height: 36px;
+  transition: color 0.2s ease;
+  background: transparent;
+}
+
+.df-container .df-ui-btn:hover {
+  color: rgba(255, 255, 255, 0.9);
+  background: transparent;
+}
+
+.df-container .df-ui-btn.df-active {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.df-container .df-ui-page {
+  background: transparent;
+  width: auto;
+  min-width: 70px;
+  padding: 0 6px;
+}
+
+.df-container .df-ui-page label {
+  position: relative;
+  height: auto;
+  width: auto;
+  display: inline-block;
+  top: auto;
+  padding: 0 4px;
+  line-height: 36px;
+  color: rgba(255, 255, 255, 0.35);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  cursor: default;
+  background: transparent;
+  z-index: auto;
+}
+
+.df-container .df-ui-page input {
+  display: inline-block;
+  width: 28px;
+  height: 22px;
+  padding: 0 2px;
+  margin: 0;
+  text-align: center;
+  font-size: 11px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.65);
+  background: rgba(255, 255, 255, 0.08);
+  border: none;
+  border-radius: 3px;
+  outline: none;
+  vertical-align: middle;
+}
+
+@media (max-width: 768px) {
+  .df-container > .df-ui-btn.df-ui-prev,
+  .df-container > .df-ui-btn.df-ui-next {
+    width: 40px;
+    height: 40px;
+    font-size: 18px;
+  }
+  .df-container > .df-ui-btn.df-ui-prev {
+    left: 8px;
+  }
+  .df-container > .df-ui-btn.df-ui-next {
+    right: 8px;
   }
 }
 
