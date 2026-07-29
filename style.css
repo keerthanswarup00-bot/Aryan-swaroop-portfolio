@@ -466,7 +466,7 @@ body.pg-lightbox-open{overflow:hidden;}
   transform: translateY(0);
 }
 @media(min-width:641px){#hero-line-1{margin-bottom:1.5rem;}}
-#hero-line-2:hover .l2-char{color:#ffffff; mix-blend-mode:difference;}
+.l2-char:hover{color:#ffffff; mix-blend-mode:difference;}
 
 @media(max-width:640px){.hero-line{color:#fff;} .hero-section{background:var(--ink);} .stat-num{color:#fff;} .stat-label{color:rgba(255,255,255,.55);}}
 

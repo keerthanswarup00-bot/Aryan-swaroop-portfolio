@@ -437,32 +437,7 @@ if(window.matchMedia('(min-width:1024px)').matches && document.querySelector('.h
     }, removeMs + 50);
   }
 
-  function checkCharOverlaps(){
-    var trailLayer = document.getElementById('cursorTrailLayer');
-    if(!trailLayer || !line2Chars || !line2Chars.length) return;
-    var images = trailLayer.querySelectorAll('.hero-reveal-image');
-    var trails = [];
-    for(var i = 0; i < images.length; i++){
-      if(images[i]._removing) continue;
-      trails.push(images[i].getBoundingClientRect());
-    }
-    for(var c = 0; c < line2Chars.length; c++){
-      var cr = line2Chars[c].getBoundingClientRect();
-      if(cr.width === 0) continue;
-      var overlap = false;
-      for(var i = 0; i < trails.length; i++){
-        if(trails[i].right > cr.left && trails[i].left < cr.right && trails[i].bottom > cr.top && trails[i].top < cr.bottom){
-          overlap = true;
-          break;
-        }
-      }
-      if(overlap){
-        line2Chars[c].style.opacity = '';
-      } else {
-        line2Chars[c].style.opacity = '0.6';
-      }
-    }
-  }
+  function checkCharOverlaps(){}
 
   function removeOldest(){
     if(!active.length) return;
