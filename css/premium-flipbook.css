@@ -57,12 +57,17 @@
   100% { background-position: -200% 0; }
 }
 
+.premium-flipbook-wrapper {
+  caret-color: #fff;
+}
+
 .premium-flipbook-stage {
   position: absolute;
   inset: 0;
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='28' viewBox='0 0 24 28'%3E%3Cpath d='M1 1L16 16H10L14 24L8 26L4 18L1 21V1Z' fill='white' stroke='%23000' stroke-width='0.5'/%3E%3C/svg%3E") 2 2, auto;
 }
 
 .premium-flipbook-stage ._df_book {
