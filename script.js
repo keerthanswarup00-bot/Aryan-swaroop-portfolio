@@ -143,10 +143,12 @@ if(diff>80&&menu.scrollTop<=0)closeMenu();
 (function(){
 var bar=document.getElementById('scrollBar');
 if(!bar)return;
+var header=document.querySelector('.site-header');
 function update(){
 var doc=document.documentElement;
 var pct=doc.scrollHeight>doc.clientHeight?(doc.scrollTop/(doc.scrollHeight-doc.clientHeight))*100:0;
 bar.style.width=pct+'%';
+if(header)header.classList.toggle('scrolling',pct>0.5&&pct<99.5);
 }
 window.addEventListener('scroll',update,{passive:true});
 update();
