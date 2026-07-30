@@ -260,8 +260,8 @@
   position: fixed;
   top: 0;
   left: 0;
-  width: 22px;
-  height: 26px;
+  width: 24px;
+  height: 28px;
   pointer-events: none;
   z-index: 9999;
   will-change: transform;
@@ -297,8 +297,8 @@
   position: fixed;
   top: 0;
   left: 0;
-  width: 22px;
-  height: 26px;
+  width: 24px;
+  height: 28px;
   pointer-events: none;
   z-index: 9998;
   will-change: transform, opacity;

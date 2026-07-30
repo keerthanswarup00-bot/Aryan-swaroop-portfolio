@@ -423,12 +423,12 @@
 <script>
 (function () {
   var BRAHMI_GOLD = '#C99A4B';
-  var ROAST_COLORS = ['#4A3520', '#8B6914', '#C4A265', '#7CB342'];
-  var ROAST_CREASE = ['rgba(0,0,0,0.35)', 'rgba(0,0,0,0.25)', 'rgba(0,0,0,0.18)', 'rgba(0,0,0,0.20)'];
-  var TRAIL_COUNT = 4;
-  var TRAIL_DELAYS = [50, 100, 150, 200];
-  var TRAIL_OPACITIES = [0.90, 0.70, 0.45, 0.20];
-  var TRAIL_SCALES = [0.95, 0.90, 0.80, 0.70];
+  var ROAST_COLORS = ['#5C3A1A', '#8B6B24', '#B8922B', '#C4A84C', '#7CB342'];
+  var ROAST_CREASE = ['rgba(0,0,0,0.25)', 'rgba(0,0,0,0.20)', 'rgba(0,0,0,0.15)', 'rgba(0,0,0,0.15)', 'rgba(0,0,0,0.18)'];
+  var TRAIL_COUNT = 5;
+  var TRAIL_DELAYS = [30, 60, 90, 120, 150];
+  var TRAIL_OPACITIES = [1.00, 0.95, 0.90, 0.82, 0.75];
+  var TRAIL_SCALES = [0.97, 0.93, 0.87, 0.80, 0.72];
 
   if (window.matchMedia('(hover: none) and (pointer: coarse)').matches) return;
   if (window.matchMedia('(max-width: 900px)').matches) return;
@@ -439,9 +439,11 @@
   var defaultCur = document.getElementById('cur');
   if (defaultCur) defaultCur.remove();
 
-  function beanSVG(fill, crease) {
-    return '<svg viewBox="0 0 22 26" xmlns="http://www.w3.org/2000/svg">' +
-      '<path d="M11 2C5 2 2 7 2 13s3 11 9 11 9-5 9-11S17 2 11 2z" fill="' + fill + '"/>' +
+  function beanSVG(fill, crease, outline) {
+    var body = '<path d="M11 2C5 2 2 7 2 13s3 11 9 11 9-5 9-11S17 2 11 2z" fill="' + fill + '"';
+    if (outline) body += ' stroke="' + outline + '" stroke-width="0.5"';
+    body += '/>';
+    return '<svg viewBox="0 0 22 26" xmlns="http://www.w3.org/2000/svg">' + body +
       '<path d="M11 4.5C7.5 4.5 5 8 5 13s2.5 8.5 6 8.5" stroke="' + crease + '" stroke-width="0.8" fill="none" stroke-linecap="round"/>' +
     '</svg>';
   }
@@ -456,7 +458,7 @@
     for (var i = 0; i < TRAIL_COUNT; i++) {
       var bean = document.createElement('div');
       bean.className = 'brahmi-trail-bean';
-      bean.innerHTML = beanSVG(ROAST_COLORS[i], ROAST_CREASE[i]);
+      bean.innerHTML = beanSVG(ROAST_COLORS[i], ROAST_CREASE[i], i === 0 ? BRAHMI_GOLD : null);
       document.body.appendChild(bean);
       trailBeans.push({
         el: bean,
@@ -524,7 +526,7 @@
       moveTimer = setTimeout(function () {
         isMoving = false;
         for (var i = 0; i < TRAIL_COUNT; i++) trailBeans[i].targetOpacity = 0;
-      }, 120);
+      }, 250);
     }
   }
   document.addEventListener('mousemove', onMouse, { passive: true });
@@ -554,9 +556,9 @@
           var bean = trailBeans[i];
           var past = pastPosition(TRAIL_DELAYS[i]);
           if (past) {
-            bean.x += (past.x - bean.x) * 0.25;
-            bean.y += (past.y - bean.y) * 0.25;
-            bean.currentOpacity += (bean.targetOpacity - bean.currentOpacity) * 0.15;
+            bean.x += (past.x - bean.x) * 0.2;
+            bean.y += (past.y - bean.y) * 0.2;
+            bean.currentOpacity += (bean.targetOpacity - bean.currentOpacity) * 0.18;
             if (bean.currentOpacity < 0.01) bean.currentOpacity = 0;
             bean.el.style.left = bean.x + 'px';
             bean.el.style.top = bean.y + 'px';
