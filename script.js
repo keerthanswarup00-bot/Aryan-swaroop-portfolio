@@ -64,14 +64,29 @@ el = el.parentElement;
 }
 return false;
 }
+function isOverMedia(el) {
+while (el && el !== document.body) {
+if (el.tagName === 'IMG' || el.tagName === 'VIDEO' || el.tagName === 'PICTURE' || el.tagName === 'CANVAS') return true;
+if (el.querySelector && el.querySelector(':scope > img, :scope > video, :scope > picture, :scope > canvas')) return true;
+el = el.parentElement;
+}
+return false;
+}
 window.addEventListener('mousemove', function (e) {
 cur.style.left = e.clientX + 'px';
 cur.style.top = e.clientY + 'px';
 cur.style.display = 'none';
 var under = document.elementFromPoint(e.clientX, e.clientY);
 cur.style.display = '';
-if (under && isDarkBg(under)) cur.classList.add('dark');
-else cur.classList.remove('dark');
+if (under) {
+if (isOverMedia(under)) {
+cur.classList.add('dark');
+} else if (isDarkBg(under)) {
+cur.classList.remove('dark');
+} else {
+cur.classList.add('dark');
+}
+}
 }, { passive: true });
 document.querySelectorAll('[data-cur]').forEach(function (el) {
 el.addEventListener('mouseenter', function () {
