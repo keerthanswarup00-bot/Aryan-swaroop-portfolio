@@ -384,17 +384,8 @@ setTimeout(function(){
 if(el.parentNode) el.parentNode.removeChild(el);
 }, removeMs + 50);
 }
-var charRects = [];
 var overlapState = [];
 var overlapRAF = null;
-var needsRectUpdate = true;
-function updateCharRects(){
-charRects = [];
-for(var c = 0; c < line2Chars.length; c++){
-charRects.push(line2Chars[c].getBoundingClientRect());
-}
-overlapState = new Array(line2Chars.length);
-}
 function checkOverlaps(){
 var trailLayer = document.getElementById('cursorTrailLayer');
 if(!trailLayer || !line2Chars.length){ overlapRAF = requestAnimationFrame(checkOverlaps); return; }
@@ -404,12 +395,8 @@ for(var i = 0; i < images.length; i++){
 if(images[i]._removing) continue;
 trails.push(images[i].getBoundingClientRect());
 }
-if(needsRectUpdate || charRects.length !== line2Chars.length){
-updateCharRects();
-needsRectUpdate = false;
-}
 for(var c = 0; c < line2Chars.length; c++){
-var cr = charRects[c];
+var cr = line2Chars[c].getBoundingClientRect();
 if(!cr || cr.width === 0) continue;
 var overlapping = false;
 for(var i = 0; i < trails.length; i++){
@@ -426,7 +413,6 @@ line2Chars[c].classList.toggle('inverted', overlapping);
 overlapRAF = requestAnimationFrame(checkOverlaps);
 }
 function startOverlapLoop(){
-needsRectUpdate = true;
 if(overlapRAF) cancelAnimationFrame(overlapRAF);
 overlapRAF = requestAnimationFrame(checkOverlaps);
 }
@@ -522,7 +508,6 @@ checkHeroActive();
 });
 window.addEventListener('scroll', checkHeroActive, { passive: true });
 window.addEventListener('resize', function(){
-needsRectUpdate = true;
 var was = isDesktop;
 isDesktop = window.innerWidth >= DESKTOP;
 if(was && !isDesktop){
