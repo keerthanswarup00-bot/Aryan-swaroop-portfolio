@@ -6,12 +6,21 @@
   .mobile-only { display: block !important; }
 }
 
+@media (max-width: 767px) {
+  .cs-flipbook {
+    padding: 1.5rem 0 3rem !important;
+  }
+  .cs-flipbook-heading {
+    margin-bottom: 24px !important;
+    padding: 0 16px !important;
+  }
+}
+
 .mobile-book {
-  position: relative;
   width: 100%;
-  max-width: 520px;
-  margin: 0 auto;
-  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .mobile-book-stage {
@@ -20,21 +29,21 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 28px 52px 0;
+  gap: 12px;
+  padding: 0;
   box-sizing: border-box;
 }
 
 .mobile-book-inner {
-  width: 100%;
-  aspect-ratio: 16 / 9;
+  flex: 0 1 auto;
+  width: 88%;
+  max-width: 340px;
   position: relative;
   overflow: visible;
 }
 
 .mobile-nav {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
+  flex: 0 0 auto;
   width: 36px;
   height: 52px;
   background: rgba(255, 255, 255, 0.06);
@@ -46,11 +55,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  border-radius: 8px;
   transition: background 0.2s ease, color 0.2s ease;
   -webkit-tap-highlight-color: transparent;
-  border-radius: 8px;
-  margin: 0;
   padding: 0;
+  margin: 0;
 }
 
 .mobile-nav:hover {
@@ -62,21 +71,13 @@
   background: rgba(255, 255, 255, 0.18);
 }
 
-.mobile-nav-prev {
-  left: 4px;
-}
-
-.mobile-nav-next {
-  right: 4px;
-}
-
 .mobile-book-footer {
-  padding: 20px 0 32px;
+  margin-top: 20px;
   text-align: center;
 }
 
 .mobile-page-indicator {
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 500;
   color: rgba(255, 255, 255, 0.35);
   font-family: 'Inter', system-ui, sans-serif;
@@ -86,7 +87,12 @@
 
 @media (max-width: 480px) {
   .mobile-book-stage {
-    padding: 24px 40px 0;
+    gap: 8px;
+  }
+
+  .mobile-book-inner {
+    width: 86%;
+    max-width: 300px;
   }
 
   .mobile-nav {
@@ -96,21 +102,23 @@
     border-radius: 6px;
   }
 
-  .mobile-nav-prev { left: 2px; }
-  .mobile-nav-next { right: 2px; }
-
   .mobile-book-footer {
-    padding: 16px 0 28px;
+    margin-top: 16px;
   }
 
   .mobile-page-indicator {
-    font-size: 11px;
+    font-size: 10px;
   }
 }
 
 @media (max-width: 380px) {
   .mobile-book-stage {
-    padding: 20px 36px 0;
+    gap: 6px;
+  }
+
+  .mobile-book-inner {
+    width: 84%;
+    max-width: 260px;
   }
 
   .mobile-nav {
@@ -119,10 +127,7 @@
     font-size: 15px;
   }
 
-  .mobile-nav-prev { left: 1px; }
-  .mobile-nav-next { right: 1px; }
-
   .mobile-book-footer {
-    padding: 14px 0 24px;
+    margin-top: 14px;
   }
 }
