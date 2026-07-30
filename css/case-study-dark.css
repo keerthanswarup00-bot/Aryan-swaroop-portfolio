@@ -22,7 +22,8 @@
 .page-dark .hamburger span {
   background: #F5F5F5;
 }
-.page-dark .mega-menu {
+.page-dark .mega-menu,
+.page-dark .mega-menu-case-studies {
   background: #111111;
 }
 .page-dark .mobile-menu {
