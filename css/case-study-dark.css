@@ -2,10 +2,6 @@
   background: #000000;
   caret-color: #fff;
 }
-html.brahmi-page, html.brahmi-page * { cursor: none !important; }
-html.brahmi-page input,
-html.brahmi-page textarea,
-html.brahmi-page [contenteditable] { cursor: text !important; }
 .page-dark, .page-dark * { cursor: none !important; }
 .page-dark .site-header {
   background: rgba(0, 0, 0, 0.85);
