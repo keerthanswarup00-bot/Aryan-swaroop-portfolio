@@ -423,30 +423,82 @@
 <script>
 (function () {
   var BRAHMI_GOLD = '#C99A4B';
+  var ROAST_COLORS = ['#4A3520', '#8B6914', '#C4A265', '#7CB342'];
+  var ROAST_CREASE = ['rgba(0,0,0,0.35)', 'rgba(0,0,0,0.25)', 'rgba(0,0,0,0.18)', 'rgba(0,0,0,0.20)'];
+  var TRAIL_COUNT = 4;
+  var TRAIL_DELAYS = [50, 100, 150, 200];
+  var TRAIL_OPACITIES = [0.90, 0.70, 0.45, 0.20];
+  var TRAIL_SCALES = [0.95, 0.90, 0.80, 0.70];
 
   if (window.matchMedia('(hover: none) and (pointer: coarse)').matches) return;
   if (window.matchMedia('(max-width: 900px)').matches) return;
   if ('ontouchstart' in window) return;
 
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
   var defaultCur = document.getElementById('cur');
   if (defaultCur) defaultCur.remove();
 
-  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function beanSVG(fill, crease) {
+    return '<svg viewBox="0 0 22 26" xmlns="http://www.w3.org/2000/svg">' +
+      '<path d="M11 2C5 2 2 7 2 13s3 11 9 11 9-5 9-11S17 2 11 2z" fill="' + fill + '"/>' +
+      '<path d="M11 4.5C7.5 4.5 5 8 5 13s2.5 8.5 6 8.5" stroke="' + crease + '" stroke-width="0.8" fill="none" stroke-linecap="round"/>' +
+    '</svg>';
+  }
 
   var cur = document.createElement('div');
   cur.id = 'brahmi-cur';
-  cur.innerHTML =
-    '<div id="brahmi-cur-inner">' +
-      '<svg viewBox="0 0 22 26" xmlns="http://www.w3.org/2000/svg">' +
-        '<path d="M11 2C5 2 2 7 2 13s3 11 9 11 9-5 9-11S17 2 11 2z" fill="' + BRAHMI_GOLD + '"/>' +
-        '<path d="M11 4.5C7.5 4.5 5 8 5 13s2.5 8.5 6 8.5" stroke="rgba(0,0,0,0.15)" stroke-width="0.8" fill="none" stroke-linecap="round"/>' +
-      '</svg>' +
-    '</div>';
+  cur.innerHTML = '<div id="brahmi-cur-inner">' + beanSVG(BRAHMI_GOLD, 'rgba(0,0,0,0.15)') + '</div>';
   document.body.appendChild(cur);
+
+  var trailBeans = [];
+  if (!reduced) {
+    for (var i = 0; i < TRAIL_COUNT; i++) {
+      var bean = document.createElement('div');
+      bean.className = 'brahmi-trail-bean';
+      bean.innerHTML = beanSVG(ROAST_COLORS[i], ROAST_CREASE[i]);
+      document.body.appendChild(bean);
+      trailBeans.push({
+        el: bean,
+        x: 0, y: 0,
+        scale: TRAIL_SCALES[i],
+        targetOpacity: 0,
+        currentOpacity: 0
+      });
+    }
+  }
 
   var targetX = 0, targetY = 0;
   var currentX = 0, currentY = 0;
   var hasMoved = false;
+  var isMoving = false;
+  var moveTimer = null;
+
+  var posHistory = [];
+  var MAX_HISTORY = 100;
+
+  function recordPosition(x, y) {
+    posHistory.push({ x: x, y: y, t: performance.now() });
+    if (posHistory.length > MAX_HISTORY) posHistory.shift();
+  }
+
+  function pastPosition(msAgo) {
+    if (posHistory.length < 2) return null;
+    var targetTime = performance.now() - msAgo;
+    var last = posHistory[posHistory.length - 1];
+    if (last.t <= targetTime) return last;
+    for (var i = posHistory.length - 1; i >= 0; i--) {
+      if (posHistory[i].t <= targetTime) {
+        if (i < posHistory.length - 1) {
+          var a = posHistory[i], b = posHistory[i + 1];
+          var frac = (targetTime - a.t) / (b.t - a.t);
+          return { x: a.x + (b.x - a.x) * frac, y: a.y + (b.y - a.y) * frac };
+        }
+        return posHistory[i];
+      }
+    }
+    return null;
+  }
 
   function onMouse(e) {
     targetX = e.clientX;
@@ -456,9 +508,29 @@
       currentX = targetX;
       currentY = targetY;
       cur.classList.add('visible');
+      if (!reduced) {
+        for (var i = 0; i < TRAIL_COUNT; i++) {
+          trailBeans[i].x = targetX;
+          trailBeans[i].y = targetY;
+        }
+      }
+    }
+    if (!reduced) {
+      clearTimeout(moveTimer);
+      if (!isMoving) {
+        isMoving = true;
+        for (var i = 0; i < TRAIL_COUNT; i++) trailBeans[i].targetOpacity = TRAIL_OPACITIES[i];
+      }
+      moveTimer = setTimeout(function () {
+        isMoving = false;
+        for (var i = 0; i < TRAIL_COUNT; i++) trailBeans[i].targetOpacity = 0;
+      }, 120);
     }
   }
   document.addEventListener('mousemove', onMouse, { passive: true });
+
+  document.addEventListener('mousedown', function () { cur.classList.add('clicking'); });
+  document.addEventListener('mouseup', function () { cur.classList.remove('clicking'); });
 
   function tick() {
     if (hasMoved) {
@@ -475,66 +547,32 @@
       }
       cur.style.left = currentX + 'px';
       cur.style.top = currentY + 'px';
+
+      if (!reduced) {
+        recordPosition(currentX, currentY);
+        for (var i = 0; i < TRAIL_COUNT; i++) {
+          var bean = trailBeans[i];
+          var past = pastPosition(TRAIL_DELAYS[i]);
+          if (past) {
+            bean.x += (past.x - bean.x) * 0.25;
+            bean.y += (past.y - bean.y) * 0.25;
+            bean.currentOpacity += (bean.targetOpacity - bean.currentOpacity) * 0.15;
+            if (bean.currentOpacity < 0.01) bean.currentOpacity = 0;
+            bean.el.style.left = bean.x + 'px';
+            bean.el.style.top = bean.y + 'px';
+            bean.el.style.transform = 'translate(-50%,-50%) scale(' + bean.scale + ')';
+            bean.el.style.opacity = bean.currentOpacity;
+          }
+        }
+      }
     }
     requestAnimationFrame(tick);
   }
   requestAnimationFrame(tick);
 
-  function matches(el, sel) {
-    return (el.matches || el.webkitMatchesSelector).call(el, sel);
-  }
-
-  var hoverSel = 'a, button, [data-cur], .resume-btn, .btn';
-
-  document.addEventListener('mouseover', function (e) {
-    var t = e.target;
-    while (t && t !== document.body) {
-      if (matches(t, hoverSel)) {
-        cur.classList.add('hover-scale');
-        return;
-      }
-      t = t.parentElement;
-    }
-  }, { passive: true });
-
-  document.addEventListener('mouseout', function (e) {
-    var rt = e.relatedTarget;
-    while (rt && rt !== document.body) {
-      if (matches(rt, hoverSel)) return;
-      rt = rt.parentElement;
-    }
-    var t = e.target;
-    while (t && t !== document.body) {
-      if (matches(t, hoverSel)) {
-        cur.classList.remove('hover-scale');
-        return;
-      }
-      t = t.parentElement;
-    }
-  }, { passive: true });
-
   document.documentElement.addEventListener('mouseleave', function () {
-    cur.classList.remove('hover-scale', 'hover-rotate', 'turning');
+    cur.classList.remove('clicking');
   }, { passive: true });
-
-  var flipStage = document.querySelector('.premium-flipbook-stage');
-  if (flipStage) {
-    flipStage.addEventListener('mouseenter', function () {
-      cur.classList.add('hover-rotate');
-    });
-    flipStage.addEventListener('mouseleave', function () {
-      cur.classList.remove('hover-rotate');
-    });
-
-    flipStage.addEventListener('mousedown', function () {
-      cur.classList.add('turning');
-      cur.classList.add('hover-rotate');
-    });
-
-    document.addEventListener('mouseup', function () {
-      cur.classList.remove('turning');
-    }, { passive: true });
-  }
 })();
 </script>
 
