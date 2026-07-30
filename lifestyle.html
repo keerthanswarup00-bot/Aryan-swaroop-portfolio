@@ -174,50 +174,45 @@
           </div>
           <div class="mega-cs-section">
             <h4 class="mega-cs-heading">Case Studies</h4>
-            <div class="mega-cs-list">
-              <a href="/work/brahmi" class="mega-cs-item">
-                <span class="mega-cs-thumb">
+            <div class="mega-cs-grid">
+              <a href="/work/brahmi" class="mega-cs-card">
+                <div class="mega-cs-card-img">
                   <picture>
                     <source srcset="images/brahmi-pourshot.avif" type="image/avif">
                     <source srcset="images/brahmi-pourshot.webp" type="image/webp">
-                    <img src="images/brahmi-pourshot.jpg" alt="Brahmi" width="144" height="180" loading="lazy" decoding="async">
+                    <img src="images/brahmi-pourshot.jpg" alt="Brahmi" width="800" height="1000" loading="lazy" decoding="async">
                   </picture>
-                </span>
-                <span class="mega-cs-info">
-                  <span class="mega-cs-title">Brahmi</span>
-                  <span class="mega-cs-sub">Brand Identity &amp; Packaging</span>
-                </span>
-                <span class="mega-cs-arrow">&rarr;</span>
+                </div>
+                <div class="mega-cs-card-info">
+                  <span class="mega-cs-card-title">Brahmi</span>
+                  <span class="mega-cs-card-sub">Brand Identity &amp; Packaging</span>
+                </div>
               </a>
-              <div class="mega-cs-divider"></div>
-              <a href="/real-estate#paavani" class="mega-cs-item">
-                <span class="mega-cs-thumb">
+              <a href="/real-estate#paavani" class="mega-cs-card">
+                <div class="mega-cs-card-img">
                   <picture>
                     <source srcset="images/paavani-cards.avif" type="image/avif">
                     <source srcset="images/paavani-cards.webp" type="image/webp">
                     <img src="images/paavani-cards.png" alt="Paavani Properties" width="800" height="640" loading="lazy" decoding="async">
                   </picture>
-                </span>
-                <span class="mega-cs-info">
-                  <span class="mega-cs-title">Paavani Properties</span>
-                  <span class="mega-cs-sub">Real Estate Branding</span>
-                </span>
-                <span class="mega-cs-arrow">&rarr;</span>
+                </div>
+                <div class="mega-cs-card-info">
+                  <span class="mega-cs-card-title">Paavani Properties</span>
+                  <span class="mega-cs-card-sub">Real Estate Branding</span>
+                </div>
               </a>
-              <div class="mega-cs-divider"></div>
-              <a href="/playground" class="mega-cs-item">
-                <span class="mega-cs-thumb">
+              <a href="/playground" class="mega-cs-card">
+                <div class="mega-cs-card-img">
                   <picture>
                     <source srcset="images/playground-preview.avif" type="image/avif">
                     <source srcset="images/playground-preview.webp" type="image/webp">
                     <img src="images/playground-preview.png" alt="Playground" width="600" height="251" loading="lazy" decoding="async">
                   </picture>
-                </span>
-                <span class="mega-cs-info">
-                  <span class="mega-cs-title">Playground</span>
-                  <span class="mega-cs-sub">Creative Experiments</span>
-                </span>
-                <span class="mega-cs-arrow">&rarr;</span>
+                </div>
+                <div class="mega-cs-card-info">
+                  <span class="mega-cs-card-title">Playground</span>
+                  <span class="mega-cs-card-sub">Creative Experiments</span>
+                </div>
               </a>
             </div>
           </div>
@@ -511,6 +506,16 @@
         <img loading="lazy" decoding="async" src="images/arvi-6.png" width="600" height="750" alt="Arvi Hospital">
       </div>
     </div>
+    <div class="kicker" style="margin-top:56px;">Before &amp; After — Collateral Redesign</div>
+    <div class="before-after-slider" role="img" aria-label="Before and after comparison of Arvi Hospital collateral redesign">
+      <div class="before-after-wrapper">
+        <div class="after-image" style="background-image: url('images/arvi-after.png');"></div>
+        <div class="before-image-wrapper" style="width: 50%;">
+          <div class="before-image" style="background-image: url('images/arvi-before.png');"></div>
+        </div>
+        <span class="handle draggable" role="slider" aria-valuenow="50" aria-label="Drag to compare before and after"></span>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -602,5 +607,6 @@
 
 <script src="script.js"></script>
 <script src="lightbox.js"></script>
+<script src="before-after.js"></script>
 </body>
 </html>
