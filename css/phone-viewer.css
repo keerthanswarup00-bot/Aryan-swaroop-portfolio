@@ -1,3 +1,11 @@
+.desktop-only { display: block; }
+.mobile-only { display: none; }
+
+@media (max-width: 767px) {
+  .desktop-only { display: none !important; }
+  .mobile-only { display: block !important; }
+}
+
 .phone-viewer {
   position: relative;
   width: min(92vw, 360px);
