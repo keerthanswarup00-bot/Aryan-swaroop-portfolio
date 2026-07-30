@@ -69,6 +69,40 @@
     object-fit: contain;
   }
 
+  .teaser-visual {
+    aspect-ratio: auto !important;
+  }
+  .teaser-visual img {
+    width: 100% !important;
+    height: auto !important;
+    object-fit: contain;
+  }
+
+  .about-photo {
+    aspect-ratio: auto !important;
+  }
+  .about-photo img {
+    width: 100% !important;
+    height: auto !important;
+    object-fit: contain;
+  }
+
+  .pg-item {
+    aspect-ratio: auto !important;
+  }
+  .pg-item img,
+  .pg-item video {
+    width: 100% !important;
+    height: auto !important;
+    object-fit: contain;
+  }
+
+  .cs-gallery img {
+    width: 100% !important;
+    height: auto !important;
+    object-fit: contain;
+  }
+
   .cs-interleave-image img,
   .cs-image-row img {
     width: 100% !important;
