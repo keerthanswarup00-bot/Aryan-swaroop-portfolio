@@ -23,7 +23,7 @@
               '<picture>' +
                 '<source srcset="/images/mega-lifestyle-2.avif" type="image/avif">' +
                 '<source srcset="/images/mega-lifestyle-2.webp" type="image/webp">' +
-                '<img src="images/mega-lifestyle-2.png" alt="Lifestyle brand identity thumbnail" width="800" height="800" loading="lazy" decoding="async">' +
+                '<img src="/images/mega-lifestyle-2.png" alt="Lifestyle brand identity thumbnail" width="800" height="800" loading="lazy" decoding="async">' +
               '</picture>' +
             '</div>' +
             '<div class="mega-info"><span class="mega-title">Lifestyle</span><span class="mega-duration">5 min</span></div>' +
@@ -33,7 +33,7 @@
               '<picture>' +
                 '<source srcset="/images/mega-builds-2.avif" type="image/avif">' +
                 '<source srcset="/images/mega-builds-2.webp" type="image/webp">' +
-                '<img src="images/mega-builds-2.png" alt="Web product builds thumbnail" width="800" height="800" loading="lazy" decoding="async">' +
+                '<img src="/images/mega-builds-2.png" alt="Web product builds thumbnail" width="800" height="800" loading="lazy" decoding="async">' +
               '</picture>' +
             '</div>' +
             '<div class="mega-info"><span class="mega-title">Tools</span><span class="mega-duration">2 min</span></div>' +
@@ -44,7 +44,7 @@
             '<picture>' +
               '<source srcset="/images/playground-preview.avif" type="image/avif">' +
               '<source srcset="/images/playground-preview.webp" type="image/webp">' +
-              '<img src="images/playground-preview.png" alt="Playground \u2014 motion and renders preview" width="600" height="251" loading="lazy" decoding="async">' +
+              '<img src="/images/playground-preview.png" alt="Playground \u2014 motion and renders preview" width="600" height="251" loading="lazy" decoding="async">' +
             '</picture>' +
             '<span class="mega-preview-text">Playground \u2192</span>' +
           '</a>' +
@@ -52,7 +52,7 @@
             '<picture>' +
               '<source srcset="/images/build-preview.avif" type="image/avif">' +
               '<source srcset="/images/build-preview.webp" type="image/webp">' +
-              '<img src="images/build-preview.png" alt="Build \u2014 web products preview" width="600" height="251" loading="lazy" decoding="async">' +
+              '<img src="/images/build-preview.png" alt="Build \u2014 web products preview" width="600" height="251" loading="lazy" decoding="async">' +
             '</picture>' +
             '<span class="mega-preview-text">Build \u2192</span>' +
           '</a>' +
@@ -67,7 +67,7 @@
               '<picture>' +
                 '<source srcset="/images/brahmi-pourshot.avif" type="image/avif">' +
                 '<source srcset="/images/brahmi-pourshot.webp" type="image/webp">' +
-                '<img src="images/brahmi-pourshot.jpg" alt="Brahmi" width="800" height="1000" loading="lazy" decoding="async">' +
+                '<img src="/images/brahmi-pourshot.jpg" alt="Brahmi" width="800" height="1000" loading="lazy" decoding="async">' +
               '</picture>' +
             '</div>' +
             '<div class="mega-cs-card-info">' +
@@ -80,7 +80,7 @@
               '<picture>' +
                 '<source srcset="/images/paavani-cards.avif" type="image/avif">' +
                 '<source srcset="/images/paavani-cards.webp" type="image/webp">' +
-                '<img src="images/paavani-cards.png" alt="Paavani Properties" width="800" height="640" loading="lazy" decoding="async">' +
+                '<img src="/images/paavani-cards.png" alt="Paavani Properties" width="800" height="640" loading="lazy" decoding="async">' +
               '</picture>' +
             '</div>' +
             '<div class="mega-cs-card-info">' +
@@ -93,7 +93,7 @@
               '<picture>' +
                 '<source srcset="/images/playground-preview.avif" type="image/avif">' +
                 '<source srcset="/images/playground-preview.webp" type="image/webp">' +
-                '<img src="images/playground-preview.png" alt="Playground" width="600" height="251" loading="lazy" decoding="async">' +
+                '<img src="/images/playground-preview.png" alt="Playground" width="600" height="251" loading="lazy" decoding="async">' +
               '</picture>' +
             '</div>' +
             '<div class="mega-cs-card-info">' +
