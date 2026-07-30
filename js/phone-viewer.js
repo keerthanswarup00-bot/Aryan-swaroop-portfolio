@@ -1,27 +1,28 @@
 (function () {
   if (window.innerWidth >= 768) return;
 
-  var TOTAL_PAGES = 44;
+  var CONTENT_PAGES = 42;
+  var TOTAL_IMAGES = 44;
 
   function pad(n) {
     return n < 10 ? '0' + n : '' + n;
   }
 
-  var flipbookEl = document.getElementById('flipbook');
-  if (!flipbookEl) return;
+  var container = document.getElementById('mobile-flipbook');
+  if (!container) return;
 
-  var createdPages = [];
+  var pages = [];
 
-  for (var i = 1; i <= TOTAL_PAGES; i++) {
+  for (var i = 1; i <= TOTAL_IMAGES; i++) {
     var page = document.createElement('div');
-    page.className = 'page';
     var img = document.createElement('img');
     img.src = '/images/brahmi/page-' + pad(i) + '.jpg';
     img.draggable = false;
-    img.style.cssText = 'width:100%;height:100%;display:block;object-fit:cover;pointer-events:none;';
+    img.alt = '';
+    img.style.cssText = 'width:100%;height:100%;display:block;object-fit:cover;pointer-events:none;-webkit-user-select:none;user-select:none;';
     page.appendChild(img);
-    flipbookEl.appendChild(page);
-    createdPages.push(page);
+    container.appendChild(page);
+    pages.push(page);
   }
 
   function initFlipbook() {
@@ -31,73 +32,66 @@
     }
 
     requestAnimationFrame(function () {
-      var book = new St.PageFlip(flipbookEl, {
+      var book = new St.PageFlip(container, {
         width: 1600,
         height: 900,
         size: 'stretch',
-        minWidth: 280,
+        minWidth: 200,
         maxWidth: 1600,
-        minHeight: 158,
+        minHeight: 113,
         maxHeight: 900,
         showCover: true,
         autoSize: false,
         usePortrait: false,
         mobileScrollSupport: false,
-        maxShadowOpacity: 0.25,
+        maxShadowOpacity: 0.3,
         drawShadow: true,
         flippingTime: 700,
         startPage: 0
       });
 
-      book.loadFromHTML(createdPages);
+      book.loadFromHTML(pages);
 
-      var indicator = document.querySelector('.page-indicator');
-      var prevBtn = document.querySelector('.nav.prev');
-      var nextBtn = document.querySelector('.nav.next');
-      var zoomIn = document.querySelector('.zoom-in');
-      var zoomOut = document.querySelector('.zoom-out');
+      var indicator = document.querySelector('.mobile-page-indicator');
+      var prevBtn = document.querySelector('.mobile-nav-prev');
+      var nextBtn = document.querySelector('.mobile-nav-next');
 
-      function updateCounter() {
+      function updateDisplay() {
         if (!indicator) return;
         var idx = book.getCurrentPageIndex();
-        var display = Math.min(Math.floor(idx / 2) + 1, TOTAL_PAGES);
-        indicator.textContent = display + ' / ' + TOTAL_PAGES;
+        var total = book.getPageCount();
+
+        if (idx <= 0) {
+          indicator.textContent = 'Cover';
+        } else if (idx >= total - 1) {
+          indicator.textContent = 'Back Cover';
+        } else {
+          indicator.textContent = idx + ' / ' + CONTENT_PAGES;
+        }
       }
 
-      book.on('flip', updateCounter);
+      book.on('flip', updateDisplay);
 
-      if (prevBtn) prevBtn.addEventListener('click', function () { book.flipPrev(); });
-      if (nextBtn) nextBtn.addEventListener('click', function () { book.flipNext(); });
+      if (prevBtn) {
+        prevBtn.addEventListener('click', function () { book.flipPrev(); });
+      }
+      if (nextBtn) {
+        nextBtn.addEventListener('click', function () { book.flipNext(); });
+      }
 
       document.addEventListener('keydown', function (e) {
         if (e.key === 'ArrowLeft') { e.preventDefault(); book.flipPrev(); }
         if (e.key === 'ArrowRight') { e.preventDefault(); book.flipNext(); }
       });
 
-      var zoomLevel = 1;
-      if (zoomIn) {
-        zoomIn.addEventListener('click', function () {
-          zoomLevel = Math.min(zoomLevel + 0.1, 2);
-          flipbookEl.style.transform = 'scale(' + zoomLevel + ')';
-        });
-      }
-      if (zoomOut) {
-        zoomOut.addEventListener('click', function () {
-          zoomLevel = Math.max(zoomLevel - 0.1, 0.5);
-          flipbookEl.style.transform = 'scale(' + zoomLevel + ')';
-        });
-      }
-
-      setTimeout(updateCounter, 500);
-      window.__phoneFlipbook = book;
+      setTimeout(updateDisplay, 300);
+      window.__mobileFlipbook = book;
     });
   }
 
   var script = document.createElement('script');
   script.src = 'https://unpkg.com/page-flip@2.0.7/dist/js/page-flip.browser.js';
   script.onload = initFlipbook;
-  script.onerror = function () {
-    console.warn('Failed to load page-flip from CDN');
-  };
+  script.onerror = function () {};
   document.head.appendChild(script);
 })();
