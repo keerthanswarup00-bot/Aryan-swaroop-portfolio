@@ -78,6 +78,16 @@
     </image:image>
   </url>
   <url>
+    <loc>https://www.aryanswaroop.com/work/brahmi</loc>
+    <lastmod>2026-07-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://www.aryanswaroop.com/images/brahmi-pourshot.jpg</image:loc>
+      <image:title>Sastry's by Brahmi — Brand Identity</image:title>
+    </image:image>
+  </url>
+  <url>
     <loc>https://www.aryanswaroop.com/404</loc>
     <lastmod>2026-07-28</lastmod>
     <changefreq>never</changefreq>

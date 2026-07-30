@@ -57,17 +57,12 @@ while (el && el !== document.body) {
 var bg = getComputedStyle(el).backgroundColor;
 if (bg && bg !== 'rgba(0, 0, 0, 0)' && bg !== 'transparent') {
 var m = bg.match(/\d+/g);
-if (m && ((parseInt(m[0]) + parseInt(m[1]) + parseInt(m[2])) / 3) < 80) return true;
-return false;
+if (m) {
+var lum = 0.2126 * parseInt(m[0]) + 0.7152 * parseInt(m[1]) + 0.0722 * parseInt(m[2]);
+if (lum < 70) return true;
+if (lum > 150) return false;
 }
-el = el.parentElement;
 }
-return false;
-}
-function isOverMedia(el) {
-while (el && el !== document.body) {
-if (el.tagName === 'IMG' || el.tagName === 'VIDEO' || el.tagName === 'PICTURE' || el.tagName === 'CANVAS') return true;
-if (el.querySelector && el.querySelector(':scope > img, :scope > video, :scope > picture, :scope > canvas')) return true;
 el = el.parentElement;
 }
 return false;
@@ -79,13 +74,8 @@ cur.style.display = 'none';
 var under = document.elementFromPoint(e.clientX, e.clientY);
 cur.style.display = '';
 if (under) {
-if (isOverMedia(under)) {
-cur.classList.add('dark');
-} else if (isDarkBg(under)) {
-cur.classList.remove('dark');
-} else {
-cur.classList.add('dark');
-}
+if (isDarkBg(under)) cur.classList.remove('dark');
+else cur.classList.add('dark');
 }
 }, { passive: true });
 document.querySelectorAll('[data-cur]').forEach(function (el) {

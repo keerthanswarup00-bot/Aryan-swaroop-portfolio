@@ -51,3 +51,4 @@ User-agent: Yandex
 Allow: /
 
 Sitemap: https://www.aryanswaroop.com/sitemap.xml
+Sitemap: https://www.aryanswaroop.com/sitemap-images.xml

@@ -90,12 +90,12 @@
       <image:caption>Signature pour shot for Sastry's by Brahmi South Indian filter coffee brand</image:caption>
     </image:image>
     <image:image>
-      <image:loc>https://www.aryanswaroop.com/images/brahmi-packaging.jpg</image:loc>
+      <image:loc>https://www.aryanswaroop.com/images/brahmi-packaging-1.jpg</image:loc>
       <image:title>Sastry's by Brahmi — Packaging Design</image:title>
       <image:caption>Premium packaging design for Sastry's by Brahmi coffee product line</image:caption>
     </image:image>
     <image:image>
-      <image:loc>https://www.aryanswaroop.com/images/brahmi-cards.jpg</image:loc>
+      <image:loc>https://www.aryanswaroop.com/images/brahmi-stickers.jpg</image:loc>
       <image:title>Sastry's by Brahmi — Brand Collateral</image:title>
       <image:caption>Business cards and collateral for Sastry's by Brahmi brand identity</image:caption>
     </image:image>
@@ -106,6 +106,54 @@
       <image:loc>https://www.aryanswaroop.com/images/build-selixo.jpg</image:loc>
       <image:title>Selixo — Web Application</image:title>
       <image:caption>Selixo web application designed and built by Aryan Swaroop in React and Supabase</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.aryanswaroop.com/work/brahmi</loc>
+    <image:image>
+      <image:loc>https://www.aryanswaroop.com/images/brahmi-pourshot.jpg</image:loc>
+      <image:title>Sastry's by Brahmi — Pour Shot</image:title>
+      <image:caption>Hero pour shot of Sastry's by Brahmi South Indian filter coffee</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.aryanswaroop.com/images/brahmi-packaging-1.jpg</image:loc>
+      <image:title>Sastry's by Brahmi — Gold Foil Label</image:title>
+      <image:caption>Premium gold foil label design for Sastry's by Brahmi coffee tins</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.aryanswaroop.com/images/brahmi-packaging-2.jpg</image:loc>
+      <image:title>Sastry's by Brahmi — Tin Box</image:title>
+      <image:caption>Custom tin box packaging for Sastry's by Brahmi filter coffee</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.aryanswaroop.com/images/brahmi-packaging-3.jpg</image:loc>
+      <image:title>Sastry's by Brahmi — Set</image:title>
+      <image:caption>Complete packaging set for Sastry's by Brahmi coffee product line</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.aryanswaroop.com/images/brahmi-stickers.jpg</image:loc>
+      <image:title>Sastry's by Brahmi — Stickers</image:title>
+      <image:caption>Branded sticker sheet for Sastry's by Brahmi brand identity</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.aryanswaroop.com/images/brahmi-label.jpg</image:loc>
+      <image:title>Sastry's by Brahmi — Close-up Label</image:title>
+      <image:caption>Close-up detail of Sastry's by Brahmi gold foil coffee label</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.aryanswaroop.com/images/brahmi-shelf.jpg</image:loc>
+      <image:title>Sastry's by Brahmi — Shelf Display</image:title>
+      <image:caption>Shelf display staging of Sastry's by Brahmi packaging design</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.aryanswaroop.com/images/brahmi-pour.jpg</image:loc>
+      <image:title>Sastry's by Brahmi — Pouring Coffee</image:title>
+      <image:caption>Action shot of Sastry's by Brahmi coffee being poured</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.aryanswaroop.com/images/brahmi-kolam.jpg</image:loc>
+      <image:title>Sastry's by Brahmi — Kolam Detail</image:title>
+      <image:caption>Traditional kolam pattern detail from Sastry's by Brahmi branding</image:caption>
     </image:image>
   </url>
   <url>
