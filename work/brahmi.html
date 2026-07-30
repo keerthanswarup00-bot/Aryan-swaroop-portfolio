@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="brahmi-page">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -437,9 +437,9 @@
   cur.id = 'brahmi-cur';
   cur.innerHTML =
     '<div id="brahmi-cur-inner">' +
-      '<svg viewBox="0 0 18 24" fill="none" xmlns="http://www.w3.org/2000/svg">' +
-        '<path d="M9 1.5C4.5 1.5 1.5 6 1.5 12s3 10.5 7.5 10.5 7.5-4.5 7.5-10.5S13.5 1.5 9 1.5z" stroke="' + BRAHMI_GOLD + '" stroke-width="1.4"/>' +
-        '<path d="M9 3.5C6.5 3.5 4.5 7.5 4.5 12s2 8.5 4.5 8.5" stroke="' + BRAHMI_GOLD + '" stroke-width="0.7" stroke-linecap="round"/>' +
+      '<svg viewBox="0 0 22 26" xmlns="http://www.w3.org/2000/svg">' +
+        '<path d="M11 2C5 2 2 7 2 13s3 11 9 11 9-5 9-11S17 2 11 2z" fill="' + BRAHMI_GOLD + '"/>' +
+        '<path d="M11 4.5C7.5 4.5 5 8 5 13s2.5 8.5 6 8.5" stroke="rgba(0,0,0,0.15)" stroke-width="0.8" fill="none" stroke-linecap="round"/>' +
       '</svg>' +
     '</div>';
   document.body.appendChild(cur);
@@ -463,8 +463,8 @@
   function tick() {
     if (hasMoved) {
       if (!reduced) {
-        currentX += (targetX - currentX) * 0.12;
-        currentY += (targetY - currentY) * 0.12;
+        currentX += (targetX - currentX) * 0.3;
+        currentY += (targetY - currentY) * 0.3;
         if (Math.abs(currentX - targetX) < 0.5 && Math.abs(currentY - targetY) < 0.5) {
           currentX = targetX;
           currentY = targetY;
