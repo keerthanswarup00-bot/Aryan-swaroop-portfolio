@@ -2,7 +2,7 @@
   var wrapper = document.querySelector('.before-after-wrapper');
   if (!wrapper) return;
   var handle = wrapper.querySelector('.handle');
-  var beforeWrap = wrapper.querySelector('.before-image-wrapper');
+  var beforeImage = wrapper.querySelector('.before-image');
 
   var pct = 50;
   var dragging = false;
@@ -12,7 +12,7 @@
     if (position > 100) position = 100;
     pct = position;
     handle.style.left = pct + '%';
-    beforeWrap.style.width = pct + '%';
+    beforeImage.style.clipPath = 'inset(0 ' + (100 - pct) + '% 0 0)';
     handle.setAttribute('aria-valuenow', Math.round(pct));
   }
 
@@ -58,7 +58,6 @@
       e.preventDefault();
       handle.focus();
       dragging = true;
-      var pos = getPct(e.touches[0].clientX);
     }, { passive: false });
     document.addEventListener('touchmove', function(e) {
       if (!dragging) return;
