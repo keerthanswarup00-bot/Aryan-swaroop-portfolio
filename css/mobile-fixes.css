@@ -1,0 +1,147 @@
+/* Mobile fixes — loaded after all other CSS */
+/* Only applies up to 768px; desktop remains untouched */
+
+@media (max-width: 768px) {
+
+  /* === 1. Prevent horizontal overflow === */
+  html, body {
+    overflow-x: hidden !important;
+    max-width: 100vw !important;
+  }
+
+  /* === 2. Image safety — never stretch, never overflow === */
+  img {
+    max-width: 100% !important;
+    height: auto !important;
+  }
+
+  .feature-visual {
+    aspect-ratio: auto !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .feature-visual img {
+    width: 100% !important;
+    height: auto !important;
+    object-fit: contain;
+  }
+
+  .gallery-tile {
+    aspect-ratio: auto !important;
+  }
+  .gallery-tile img {
+    width: 100% !important;
+    height: auto !important;
+    object-fit: contain;
+  }
+
+  .work-visual {
+    aspect-ratio: auto !important;
+  }
+  .work-visual img {
+    width: 100% !important;
+    height: auto !important;
+    object-fit: contain;
+  }
+
+  .idea-visual {
+    aspect-ratio: auto !important;
+  }
+  .idea-visual img {
+    width: 100% !important;
+    height: auto !important;
+    object-fit: contain;
+  }
+
+  .devaiah-row img {
+    width: 100% !important;
+    height: auto !important;
+    object-fit: contain;
+  }
+
+  .about-story-image {
+    aspect-ratio: auto !important;
+  }
+  .about-story-image img {
+    width: 100% !important;
+    height: auto !important;
+    object-fit: contain;
+  }
+
+  .cs-interleave-image img,
+  .cs-image-row img {
+    width: 100% !important;
+    height: auto !important;
+    object-fit: contain;
+  }
+
+  /* === 3. Increase horizontal breathing room === */
+  .wrap {
+    padding-left: 24px !important;
+    padding-right: 24px !important;
+  }
+
+  .about-hero {
+    padding-left: 24px !important;
+    padding-right: 24px !important;
+  }
+  .about-story {
+    padding-left: 24px !important;
+    padding-right: 24px !important;
+  }
+  .about-experience {
+    padding-left: 24px !important;
+    padding-right: 24px !important;
+  }
+  .devaiah-gallery {
+    padding-left: 24px !important;
+    padding-right: 24px !important;
+  }
+
+  /* === 4. About page hero fix === */
+  .about-hero {
+    min-height: auto !important;
+    padding-top: 100px !important;
+    padding-bottom: 60px !important;
+  }
+  .about-hero-inner {
+    max-width: 100% !important;
+  }
+  .about-hero-inner p {
+    max-width: 100% !important;
+    font-size: clamp(20px, 5.5vw, 24px) !important;
+    line-height: 1.3 !important;
+  }
+
+  /* === 5. Case study template padding === */
+  .case-study {
+    padding-left: 1.5rem !important;
+    padding-right: 1.5rem !important;
+  }
+  .case-study.theme-brahmi .cs-header {
+    margin-left: -1.5rem !important;
+    margin-right: -1.5rem !important;
+  }
+
+  /* === 6. Real estate card consistency === */
+  .work-card {
+    margin-bottom: 0 !important;
+  }
+  .work-grid-3 .work-card h3 {
+    font-size: 16px;
+  }
+
+  /* === 7. Footer === */
+  footer .wrap {
+    padding-left: 24px !important;
+    padding-right: 24px !important;
+  }
+
+  /* === 8. Game section === */
+  .game-section .wrap {
+    padding-left: 24px !important;
+    padding-right: 24px !important;
+  }
+
+}

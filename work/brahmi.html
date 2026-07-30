@@ -46,6 +46,7 @@
   <link rel="stylesheet" href="/dflip/css/dflip.min.css">
 <link rel="stylesheet" href="/dflip/css/themify-icons.min.css">
 <link rel="stylesheet" href="/css/premium-flipbook.css">
+<link rel="stylesheet" href="/css/mobile-fixes.css">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -414,6 +415,124 @@
 <script src="../lightbox.js"></script>
 <script src="../js/reveal-on-scroll.js"></script>
 <script src="../js/blend-selector.js"></script>
+
+<script>
+(function () {
+  var BRAHMI_GOLD = '#C99A4B';
+
+  if (window.matchMedia('(hover: none) and (pointer: coarse)').matches) return;
+  if (window.matchMedia('(max-width: 900px)').matches) return;
+  if ('ontouchstart' in window) return;
+
+  var defaultCur = document.getElementById('cur');
+  if (defaultCur) defaultCur.remove();
+
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  var cur = document.createElement('div');
+  cur.id = 'brahmi-cur';
+  cur.innerHTML =
+    '<div id="brahmi-cur-inner">' +
+      '<svg viewBox="0 0 18 24" fill="none" xmlns="http://www.w3.org/2000/svg">' +
+        '<path d="M9 1.5C4.5 1.5 1.5 6 1.5 12s3 10.5 7.5 10.5 7.5-4.5 7.5-10.5S13.5 1.5 9 1.5z" stroke="' + BRAHMI_GOLD + '" stroke-width="1.4"/>' +
+        '<path d="M9 3.5C6.5 3.5 4.5 7.5 4.5 12s2 8.5 4.5 8.5" stroke="' + BRAHMI_GOLD + '" stroke-width="0.7" stroke-linecap="round"/>' +
+      '</svg>' +
+    '</div>';
+  document.body.appendChild(cur);
+
+  var targetX = 0, targetY = 0;
+  var currentX = 0, currentY = 0;
+  var hasMoved = false;
+
+  function onMouse(e) {
+    targetX = e.clientX;
+    targetY = e.clientY;
+    if (!hasMoved) {
+      hasMoved = true;
+      currentX = targetX;
+      currentY = targetY;
+      cur.classList.add('visible');
+    }
+  }
+  document.addEventListener('mousemove', onMouse, { passive: true });
+
+  function tick() {
+    if (hasMoved) {
+      if (!reduced) {
+        currentX += (targetX - currentX) * 0.12;
+        currentY += (targetY - currentY) * 0.12;
+        if (Math.abs(currentX - targetX) < 0.5 && Math.abs(currentY - targetY) < 0.5) {
+          currentX = targetX;
+          currentY = targetY;
+        }
+      } else {
+        currentX = targetX;
+        currentY = targetY;
+      }
+      cur.style.left = currentX + 'px';
+      cur.style.top = currentY + 'px';
+    }
+    requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+
+  function matches(el, sel) {
+    return (el.matches || el.webkitMatchesSelector).call(el, sel);
+  }
+
+  var hoverSel = 'a, button, [data-cur], .resume-btn, .btn';
+
+  document.addEventListener('mouseover', function (e) {
+    var t = e.target;
+    while (t && t !== document.body) {
+      if (matches(t, hoverSel)) {
+        cur.classList.add('hover-scale');
+        return;
+      }
+      t = t.parentElement;
+    }
+  }, { passive: true });
+
+  document.addEventListener('mouseout', function (e) {
+    var rt = e.relatedTarget;
+    while (rt && rt !== document.body) {
+      if (matches(rt, hoverSel)) return;
+      rt = rt.parentElement;
+    }
+    var t = e.target;
+    while (t && t !== document.body) {
+      if (matches(t, hoverSel)) {
+        cur.classList.remove('hover-scale');
+        return;
+      }
+      t = t.parentElement;
+    }
+  }, { passive: true });
+
+  document.documentElement.addEventListener('mouseleave', function () {
+    cur.classList.remove('hover-scale', 'hover-rotate', 'turning');
+  }, { passive: true });
+
+  var flipStage = document.querySelector('.premium-flipbook-stage');
+  if (flipStage) {
+    flipStage.addEventListener('mouseenter', function () {
+      cur.classList.add('hover-rotate');
+    });
+    flipStage.addEventListener('mouseleave', function () {
+      cur.classList.remove('hover-rotate');
+    });
+
+    flipStage.addEventListener('mousedown', function () {
+      cur.classList.add('turning');
+      cur.classList.add('hover-rotate');
+    });
+
+    document.addEventListener('mouseup', function () {
+      cur.classList.remove('turning');
+    }, { passive: true });
+  }
+})();
+</script>
 
 </body>
 </html>
