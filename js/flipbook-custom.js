@@ -6,7 +6,7 @@
   var TOTAL_IMAGES = 44;
   var PAGE_W = 1280;
   var PAGE_H = 720;
-  var FLIP_MS = 450;
+  var FLIP_MS = 650;
   var SWIPE_DIST = 45;
 
   function pad(n) {
@@ -36,7 +36,9 @@
 
   var index = 0;
   var flipping = false;
-  var stackMax = 23;
+  var W = 0;
+  var H = 0;
+  var SLIVER = 16;
   var dim = { w: 0, h: 0 };
 
   var ARROW_SPACE = 42;
@@ -45,33 +47,46 @@
     var avail = holder ? holder.getBoundingClientRect().width : stage.getBoundingClientRect().width;
     var maxStage = Math.max(220, avail - 2 * ARROW_SPACE);
     var w = Math.round(Math.min(Math.max(maxStage * 0.92, 180), 360));
-    var s = Math.min(28, Math.max(14, Math.round(w * 0.07)));
-    if (w + s > maxStage) w = Math.max(160, maxStage - s);
     var h = Math.round(w * PAGE_H / PAGE_W);
-    return { w: w, s: s, h: h };
+    var s = Math.max(12, Math.min(20, Math.round(w * 0.05)));
+    return { w: w, h: h, s: s };
+  }
+
+  function isOpen(i) {
+    return i > 0 && i < TOTAL_IMAGES - 1;
+  }
+
+  function setPageGeometry(open) {
+    var left = open ? SLIVER : 0;
+    var w = open ? W - SLIVER : W;
+    page.style.left = left + 'px';
+    page.style.width = w + 'px';
+    stack.style.width = (open ? SLIVER : 0) + 'px';
+    stack.style.opacity = open ? '1' : '0';
+  }
+
+  function setFlipGeometry(open) {
+    flip.style.left = (open ? SLIVER : 0) + 'px';
+    flip.style.width = (open ? W - SLIVER : W) + 'px';
   }
 
   function applyState() {
-    var open = index > 0;
-    var stackW = open ? Math.min(stackMax, 3 + index * 0.55) : 0;
-    var pageLeft = open ? stackMax : stackMax / 2;
-    stack.style.width = stackW + 'px';
-    stack.style.opacity = open ? '1' : '0';
-    page.style.left = pageLeft + 'px';
-    flip.style.left = pageLeft + 'px';
+    var open = isOpen(index);
+    setPageGeometry(open);
+    setFlipGeometry(open);
     if (prevBtn) prevBtn.disabled = index <= 0;
     if (nextBtn) nextBtn.disabled = index >= TOTAL_IMAGES - 1;
   }
 
   function applySize() {
     var d = calcDim();
-    if (d.w === dim.w && d.s === stackMax && d.h === dim.h) return;
+    if (d.w === dim.w && d.h === dim.h) return;
     dim = { w: d.w, h: d.h };
-    stackMax = d.s;
-    stage.style.width = (d.w + stackMax) + 'px';
-    stage.style.height = d.h + 'px';
-    page.style.width = d.w + 'px';
-    flip.style.width = d.w + 'px';
+    W = d.w;
+    H = d.h;
+    SLIVER = d.s;
+    stage.style.width = W + 'px';
+    stage.style.height = H + 'px';
     applyState();
   }
 
@@ -87,6 +102,7 @@
 
   function finishFlip() {
     flip.classList.remove('active', 'turn-next', 'turn-prev', 'start');
+    stage.classList.remove('fb-custom--moving');
     flipping = false;
     applyState();
     preload();
@@ -118,6 +134,8 @@
     flipping = true;
     flipImg.src = pageUrl(index + 1);
     pageImg.src = pageUrl(index + 2);
+    stage.classList.add('fb-custom--moving');
+    setPageGeometry(isOpen(index + 1));
     flip.classList.remove('turn-next', 'turn-prev', 'start');
     flip.classList.add('active');
     void flip.offsetWidth;
@@ -137,6 +155,9 @@
     flipping = true;
     flipImg.src = pageUrl(index);
     pageImg.src = pageUrl(index);
+    stage.classList.add('fb-custom--moving');
+    setFlipGeometry(isOpen(index - 1));
+    setPageGeometry(isOpen(index - 1));
     flip.classList.remove('turn-next', 'turn-prev', 'start');
     flip.classList.add('active', 'turn-prev', 'start');
     void flip.offsetWidth;

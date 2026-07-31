@@ -186,7 +186,7 @@
       <h1 class="cs-hero-title">Paavani Properties</h1>
       <p class="cs-hero-subtitle">End-to-End Brand System</p>
     </div>
-    <div class="cs-hero-visual" data-image-reveal="VIEW">
+    <div class="cs-hero-visual cs-hero-visual--parallax" data-image-reveal="VIEW">
       <picture>
         <source srcset="../images/hero-paavani-main.avif" type="image/avif">
         <source srcset="../images/hero-paavani-main.webp" type="image/webp">
@@ -195,30 +195,90 @@
     </div>
   </header>
 
+  <!-- Results at a glance -->
+  <section class="cs-stats reveal-block" aria-label="Campaign results at a glance">
+    <div class="cs-stats-grid">
+      <div class="cs-stat reveal-child">
+        <span class="cs-stat-num" data-count="30" data-suffix="+">30+</span>
+        <span class="cs-stat-label">Launches on one system</span>
+      </div>
+      <div class="cs-stat reveal-child">
+        <span class="cs-stat-num" data-count="50">50</span>
+        <span class="cs-stat-label">Plots live in the plot finder</span>
+      </div>
+      <div class="cs-stat reveal-child">
+        <span class="cs-stat-num" data-count="302">302</span>
+        <span class="cs-stat-label">Qualified leads in 66 days</span>
+      </div>
+      <div class="cs-stat reveal-child">
+        <span class="cs-stat-num" data-prefix="&#8377;" data-count="82">₹82</span>
+        <span class="cs-stat-label">Average cost per lead</span>
+      </div>
+    </div>
+  </section>
+
   <!-- Brief -->
-  <section class="cs-block reveal-block">
+  <section class="cs-block reveal-block" id="cs-brief">
     <h2 class="cs-block-label">Brief</h2>
     <p class="cs-block-text">Paavani needed a single creative system that could scale across 30+ residential launches without every project looking like a different company. Each new campaign also had to work hard on its own — generate real leads — while still reinforcing trust in the parent brand every time someone saw it.</p>
   </section>
 
   <!-- The Problem -->
-  <section class="cs-block reveal-block">
+  <section class="cs-block reveal-block" id="cs-problem">
     <h2 class="cs-block-label">The Problem</h2>
     <p class="cs-block-text">Real estate buyers decide who to trust before they ever speak to a salesperson. Paavani had strong land and strong projects, but no consistent visual language tying them together — every launch was its own island, which meant every campaign started from zero instead of building on the last one.</p>
   </section>
 
   <!-- Process -->
-  <section class="cs-block reveal-block">
+  <section class="cs-block reveal-block" id="cs-process">
     <h2 class="cs-block-label">Process</h2>
     <p class="cs-block-text">I built one brand system and applied it everywhere: identity, print collateral, 3D renders, video, and the ad creative running the campaigns. Instead of treating each launch as a new design problem, every asset fed the same recognizable system — so campaign five looked unmistakably like the same company as campaign one, and the trust compounded instead of resetting.</p>
   </section>
 
-  <!-- Process Image Row -->
-  <div class="cs-image-row cs-image-row--4 reveal-block">
-    <div data-image-reveal="EXPLORE"><picture><img src="../images/process-01.jpg" alt="Process step 1" width="800" height="600" loading="lazy"></picture></div>
-    <div data-image-reveal="EXPLORE"><picture><img src="../images/process-02.jpg" alt="Process step 2" width="800" height="600" loading="lazy"></picture></div>
-    <div data-image-reveal="EXPLORE"><picture><img src="../images/process-03.jpg" alt="Process step 3" width="800" height="600" loading="lazy"></picture></div>
-    <div data-image-reveal="EXPLORE"><picture><img src="../images/process-04.jpg" alt="Process step 4" width="800" height="600" loading="lazy"></picture></div>
+  <!-- Process — stage diagram -->
+  <div class="cs-process reveal-block">
+    <ol class="cs-process-steps">
+      <li class="cs-process-step reveal-child">
+        <div class="cs-process-meta">
+          <span class="cs-process-num">01</span>
+          <h3 class="cs-process-title">Brand System</h3>
+        </div>
+        <div class="cs-process-media" data-image-reveal="STAGE 01">
+          <picture><img src="../images/process-01.jpg" alt="Paavani brand system foundation" width="800" height="600" loading="lazy" decoding="async"></picture>
+        </div>
+        <p class="cs-process-note">One identity that scales across every launch.</p>
+      </li>
+      <li class="cs-process-step reveal-child">
+        <div class="cs-process-meta">
+          <span class="cs-process-num">02</span>
+          <h3 class="cs-process-title">Collateral</h3>
+        </div>
+        <div class="cs-process-media" data-image-reveal="STAGE 02">
+          <picture><img src="../images/process-02.jpg" alt="Paavani print and digital collateral" width="800" height="600" loading="lazy" decoding="async"></picture>
+        </div>
+        <p class="cs-process-note">Print and digital assets from the same system.</p>
+      </li>
+      <li class="cs-process-step reveal-child">
+        <div class="cs-process-meta">
+          <span class="cs-process-num">03</span>
+          <h3 class="cs-process-title">3D Visualization</h3>
+        </div>
+        <div class="cs-process-media" data-image-reveal="STAGE 03">
+          <picture><img src="../images/process-03.jpg" alt="Paavani 3D exterior and landscape renders" width="800" height="600" loading="lazy" decoding="async"></picture>
+        </div>
+        <p class="cs-process-note">Renders that sell the land before it's built.</p>
+      </li>
+      <li class="cs-process-step reveal-child">
+        <div class="cs-process-meta">
+          <span class="cs-process-num">04</span>
+          <h3 class="cs-process-title">Campaign</h3>
+        </div>
+        <div class="cs-process-media" data-image-reveal="STAGE 04">
+          <picture><img src="../images/process-04.jpg" alt="Paavani Meta Ads campaign creative" width="800" height="600" loading="lazy" decoding="async"></picture>
+        </div>
+        <p class="cs-process-note">Performance creative that converts into leads.</p>
+      </li>
+    </ol>
   </div>
 
   <!-- Role / Scope / Process / Result labels -->
@@ -230,7 +290,7 @@
   </section>
 
   <!-- Result — standalone large stat treatment -->
-  <section class="cs-result reveal-block">
+  <section class="cs-result reveal-block" id="cs-result">
     <div class="cs-result-stat">
       <span class="cs-result-number">302</span>
       <span class="cs-result-unit">qualified leads</span>
@@ -239,38 +299,51 @@
   </section>
 
   <!-- Interactive — VR Devaiah Enclave -->
-  <section class="cs-interactive reveal-block">
+  <section class="cs-interactive reveal-block" id="cs-live">
     <h2 class="cs-block-label">Live — Plot Selection</h2>
     <p class="cs-block-text">The Paavani launches include VR Devaiah Enclave — an interactive plot-finder I designed and built end to end, with live availability across 50 plots by size and type. It's the same system running here, not a mockup.</p>
-    <div class="cs-interactive-embed" id="interactiveEmbed">
-      <iframe src="https://vr-devaiah-enclave.vercel.app/" title="VR Devaiah Enclave — Interactive Plot Finder" width="100%" height="100%" frameborder="0" allowfullscreen loading="lazy"></iframe>
+    <div class="cs-interactive-embed" id="interactiveEmbed" hidden>
+      <div class="cs-interactive-loading" id="interactiveLoading"><span></span> Loading plot finder&hellip;</div>
+      <iframe id="interactiveFrame" src="" title="VR Devaiah Enclave — Interactive Plot Finder" width="100%" height="100%" frameborder="0" allowfullscreen></iframe>
     </div>
-    <div class="cs-interactive-fallback" id="interactiveFallback" hidden>
-      <div data-image-reveal="LIVE">
+    <button type="button" class="cs-interactive-launch" id="interactiveLaunch" data-cur="LOAD">
+      <span class="cs-interactive-thumb" data-image-reveal="LIVE">
         <picture>
-          <source srcset="../images/devaiah-preview.avif" type="image/avif">
-          <source srcset="../images/devaiah-preview.webp" type="image/webp">
-          <img src="../images/devaiah-preview.jpg" alt="VR Devaiah Enclave preview" width="1200" height="675" loading="lazy">
+          <img src="../images/devaiah-preview.jpg" alt="VR Devaiah Enclave preview" width="1200" height="675" loading="lazy" decoding="async">
         </picture>
-      </div>
-      <a class="btn btn-solid" href="https://vr-devaiah-enclave.vercel.app/" target="_blank" rel="noopener noreferrer" style="display:inline-flex;margin-top:24px;" data-cur="GO">Explore the live tool &rarr;</a>
-    </div>
+      </span>
+      <span class="cs-interactive-cta">Load the live plot finder <span class="cs-arrow">&rarr;</span></span>
+    </button>
+    <p class="cs-interactive-note">Loads inside this page. If it's blocked, open the tool in a new tab: <a href="https://vr-devaiah-enclave.vercel.app/" target="_blank" rel="noopener noreferrer" data-cur="GO">vr-devaiah-enclave.vercel.app &nearr;</a></p>
   </section>
 
   <!-- Applied Everywhere -->
-  <section class="cs-applied reveal-block">
+  <section class="cs-applied reveal-block" id="cs-applied">
     <h2 class="cs-block-label">Applied Across the System</h2>
     <div class="cs-applied-grid">
-      <div data-image-reveal="VIEW"><picture><img src="../images/applied-logo.jpg" alt="Paavani logo application" width="800" height="800" loading="lazy"></picture></div>
-      <div data-image-reveal="VIEW"><picture><img src="../images/applied-print.jpg" alt="Paavani print collateral" width="800" height="800" loading="lazy"></picture></div>
-      <div data-image-reveal="VIEW"><picture><img src="../images/applied-3d.jpg" alt="Paavani 3D render" width="800" height="800" loading="lazy"></picture></div>
-      <div data-image-reveal="VIEW"><picture><img src="../images/applied-ad.jpg" alt="Paavani ad creative" width="800" height="800" loading="lazy"></picture></div>
+      <div class="reveal-child" data-image-reveal="IDENTITY"><picture><img src="../images/applied-logo.jpg" alt="Paavani logo application" width="800" height="800" loading="lazy" decoding="async"></picture></div>
+      <div class="reveal-child" data-image-reveal="PRINT"><picture><img src="../images/applied-print.jpg" alt="Paavani print collateral" width="800" height="800" loading="lazy" decoding="async"></picture></div>
+      <div class="reveal-child" data-image-reveal="3D"><picture><img src="../images/applied-3d.jpg" alt="Paavani 3D render" width="800" height="800" loading="lazy" decoding="async"></picture></div>
+      <div class="reveal-child" data-image-reveal="CAMPAIGN"><picture><img src="../images/applied-ad.jpg" alt="Paavani ad creative" width="800" height="800" loading="lazy" decoding="async"></picture></div>
     </div>
   </section>
 
+  <!-- Reading progress rail -->
+  <nav class="cs-progress" aria-label="Case study sections">
+    <div class="cs-progress-track"><span class="cs-progress-marker" id="csProgressMarker"></span></div>
+    <ol class="cs-progress-dots">
+      <li><a href="#cs-brief" data-section="cs-brief" aria-label="Go to Brief"><span></span></a></li>
+      <li><a href="#cs-problem" data-section="cs-problem" aria-label="Go to The Problem"><span></span></a></li>
+      <li><a href="#cs-process" data-section="cs-process" aria-label="Go to Process"><span></span></a></li>
+      <li><a href="#cs-result" data-section="cs-result" aria-label="Go to Result"><span></span></a></li>
+      <li><a href="#cs-live" data-section="cs-live" aria-label="Go to Live Plot Selection"><span></span></a></li>
+      <li><a href="#cs-applied" data-section="cs-applied" aria-label="Go to Applied Across the System"><span></span></a></li>
+    </ol>
+  </nav>
+
   <!-- Next Project Nav -->
   <nav class="cs-next reveal-block">
-    <a href="/lifestyle" class="cs-next-link">Next project: Sastry's by Brahmi &rarr;</a>
+    <a href="/lifestyle" class="cs-next-link">Next project: Sastry's by Brahmi <span class="cs-next-arrow">&rarr;</span></a>
   </nav>
 
 </main>
@@ -302,34 +375,6 @@
 <script src="../lightbox.js"></script>
 <script src="../js/image-cursor-reveal.js"></script>
 <script src="../js/reveal-on-scroll.js"></script>
-<script>
-(function () {
-  var embed = document.getElementById('interactiveEmbed');
-  var fallback = document.getElementById('interactiveFallback');
-  if (!embed) return;
-
-  var iframe = embed.querySelector('iframe');
-  if (!iframe) return;
-
-  var checkEmbed = setTimeout(function () {
-    var loaded = false;
-    try {
-      if (iframe.contentWindow && iframe.contentWindow.location) {
-        loaded = true;
-      }
-    } catch (e) {
-      loaded = false;
-    }
-    if (!loaded) {
-      embed.hidden = true;
-      fallback.hidden = false;
-    }
-  }, 3000);
-
-  iframe.addEventListener('load', function () {
-    clearTimeout(checkEmbed);
-  });
-})();
-</script>
+<script src="../js/paavani.js"></script>
 </body>
 </html>
