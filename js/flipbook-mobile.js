@@ -22,7 +22,6 @@
     page.style.cssText = 'width:100%;height:100%;overflow:hidden;';
     var img = document.createElement('img');
     img.src = '/images/brahmi/page-' + pad(i) + '.jpg';
-    img.loading = 'lazy';
     img.draggable = false;
     img.alt = '';
     img.style.cssText = 'width:100%;height:100%;display:block;object-fit:contain;pointer-events:none;user-select:none;-webkit-user-select:none;';
@@ -61,10 +60,13 @@
 
     lastBookW = dim.w;
 
+    container.style.width = dim.w + 'px';
+    container.style.height = dim.h + 'px';
+
     book = new St.PageFlip(container, {
       width: dim.w,
       height: dim.h,
-      size: 'fixed',
+      size: 'stretch',
       showCover: true,
       autoSize: false,
       usePortrait: false,
@@ -76,7 +78,6 @@
     });
 
     book.loadFromHTML(pageEls);
-
     window.__mobileFlipbook = book;
   }
 
