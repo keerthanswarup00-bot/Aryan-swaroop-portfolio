@@ -48,7 +48,7 @@
     var maxStage = Math.max(220, avail - 2 * ARROW_SPACE);
     var w = Math.round(Math.min(Math.max(maxStage * 0.92, 180), 360));
     var h = Math.round(w * PAGE_H / PAGE_W);
-    var s = Math.max(12, Math.min(20, Math.round(w * 0.05)));
+    var s = Math.max(20, Math.min(40, Math.round(w * 0.12)));
     return { w: w, h: h, s: s };
   }
 
