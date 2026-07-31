@@ -5,7 +5,7 @@
   --cs-header-text: #111111;
   max-width: 760px;
   margin: 0 auto;
-  padding: 8rem 1.5rem 6rem;
+  padding: calc(var(--nav-height,68px) + 5rem) 1.5rem 6rem;
 }
 
 /* Brahmi override — teal + brass, pulled from the actual packaging colors */
@@ -24,7 +24,7 @@
   background-color: var(--cs-header-bg);
   color: var(--cs-header-text);
   padding: 6rem 2rem 4rem;
-  margin: -8rem -1.5rem 3rem;
+  margin: calc(0rem - var(--nav-height,68px) - 5rem) -1.5rem 3rem;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'%3E%3Cg fill='none' stroke='%23F5F1E8' stroke-opacity='0.08' stroke-width='1'%3E%3Cpath d='M30 0 L60 30 L30 60 L0 30 Z'/%3E%3Ccircle cx='30' cy='30' r='14'/%3E%3C/g%3E%3C/svg%3E");
   background-repeat: repeat;
 }
@@ -201,11 +201,11 @@
 
 @media (max-width: 768px) {
   .case-study {
-    padding: 6rem 1rem 4rem;
+    padding: calc(var(--nav-height,68px) + 3rem) 1rem 4rem;
   }
   .case-study.theme-brahmi .cs-header {
     padding: 4rem 1.5rem 3rem;
-    margin: -6rem -1rem 3rem;
+    margin: calc(0rem - var(--nav-height,68px) - 3rem) -1rem 3rem;
   }
   .cs-overview {
     grid-template-columns: 1fr;

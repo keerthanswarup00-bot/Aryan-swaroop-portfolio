@@ -154,6 +154,7 @@ var doc=document.documentElement;
 var pct=doc.scrollHeight>doc.clientHeight?(doc.scrollTop/(doc.scrollHeight-doc.clientHeight))*100:0;
 bar.style.width=pct+'%';
 if(header)header.classList.toggle('scrolling',pct>0.5&&pct<99.5);
+if(header)header.classList.toggle('is-compact',doc.scrollTop>40);
 }
 window.addEventListener('scroll',update,{passive:true});
 update();

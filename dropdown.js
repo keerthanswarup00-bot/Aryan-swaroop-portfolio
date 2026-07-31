@@ -75,7 +75,7 @@
               '<span class="mega-cs-card-sub">Brand Identity &amp; Packaging</span>' +
             '</div>' +
           '</a>' +
-          '<a href="/real-estate#paavani" class="mega-cs-card">' +
+          '<a href="/work/paavani-properties" class="mega-cs-card">' +
             '<div class="mega-cs-card-img">' +
               '<picture>' +
                 '<source srcset="/images/paavani-cards.avif" type="image/avif">' +
@@ -85,7 +85,7 @@
             '</div>' +
             '<div class="mega-cs-card-info">' +
               '<span class="mega-cs-card-title">Paavani Properties</span>' +
-              '<span class="mega-cs-card-sub">Real Estate Branding</span>' +
+              '<span class="mega-cs-card-sub">End-to-End Brand System</span>' +
             '</div>' +
           '</a>' +
           '<a href="/playground" class="mega-cs-card">' +
