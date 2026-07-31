@@ -63,15 +63,79 @@
   justify-content: center;
 }
 
-.premium-flipbook-stage ._df_book {
+.fb-desktop {
+  position: relative;
   width: 100%;
-  height: 100%;
+  max-width: 1500px;
+  padding: 0 64px;
+  box-sizing: border-box;
+}
+
+.fb-desktop__book {
+  width: 100%;
+}
+
+.fb-desktop__nav {
+  position: absolute;
+  top: 42%;
+  transform: translateY(-50%);
+  z-index: 10;
+  width: 38px;
+  height: 52px;
+  background: rgba(255, 255, 255, 0.06);
+  border: none;
+  color: rgba(255, 255, 255, 0.45);
+  font-size: 22px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  transition: background 0.2s ease, color 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
+  padding: 0;
+  margin: 0;
+}
+
+.fb-desktop__nav:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.fb-desktop__nav:active {
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.fb-desktop__nav:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.5);
+  outline-offset: 2px;
+}
+
+.fb-desktop__prev {
+  left: 16px;
+}
+
+.fb-desktop__next {
+  right: 16px;
+}
+
+.fb-desktop__counter {
+  margin-top: 14px;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  font-variant-numeric: tabular-nums;
+  color: rgba(255, 255, 255, 0.35);
 }
 
 @media (max-width: 1200px) {
   .premium-flipbook-wrapper {
     min-height: 70vh;
     max-height: 80vh;
+  }
+  .fb-desktop {
+    padding: 0 40px;
   }
 }
 
@@ -82,6 +146,9 @@
   .premium-flipbook-wrapper {
     min-height: 60vh;
     max-height: 70vh;
+  }
+  .fb-desktop {
+    padding: 0 28px;
   }
 }
 
@@ -112,142 +179,6 @@
   }
 }
 
-.df-container > .df-ui-wrapper.df-ui-zoom {
-  display: none;
-}
-
-.df-container .df-ui-controls {
-  background: transparent;
-  height: 36px;
-  box-shadow: none;
-}
-
-.df-container .df-ui-wrapper {
-  background: transparent;
-  box-shadow: none;
-}
-
-.df-ui-page-label {
-  display: none !important;
-}
-
-.df-container .df-ui-page {
-  background: transparent;
-  width: auto;
-  min-width: 50px;
-  padding: 0 4px;
-  display: inline-flex;
-  align-items: center;
-  border: none;
-  gap: 0;
-}
-
-.df-container.df-xs .df-ui-controls .df-ui-page {
-  display: inline-flex !important;
-}
-
-.df-container .df-ui-page input {
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  border: 0;
-  position: absolute;
-}
-
-.df-container .df-ui-page label {
-  position: static !important;
-  display: inline-block;
-  line-height: 32px;
-  color: rgba(255, 255, 255, 0.3);
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.03em;
-  font-variant-numeric: tabular-nums;
-  cursor: default;
-  background: transparent;
-  top: auto;
-  height: auto;
-  width: auto;
-  z-index: auto;
-  padding: 0;
-  opacity: 1 !important;
-}
-
-.df-container > .df-ui-btn.df-ui-prev,
-.df-container > .df-ui-btn.df-ui-next {
-  width: 34px;
-  height: 34px;
-  font-size: 14px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: rgba(255, 255, 255, 0.3);
-  background: transparent;
-  opacity: 1;
-  transition: color 0.3s ease, background 0.3s ease;
-  z-index: 10;
-}
-
-.df-container > .df-ui-btn.df-ui-prev:hover,
-.df-container > .df-ui-btn.df-ui-next:hover {
-  color: rgba(255, 255, 255, 0.85);
-  background: rgba(255, 255, 255, 0.06);
-  opacity: 1;
-}
-
-.df-container > .df-ui-btn.df-ui-prev.df-ui-disabled,
-.df-container > .df-ui-btn.df-ui-next.df-ui-disabled {
-  opacity: 0.12;
-  pointer-events: none;
-  background: transparent;
-}
-
-.df-container > .df-ui-btn.df-ui-prev:focus-visible,
-.df-container > .df-ui-btn.df-ui-next:focus-visible {
-  outline: 2px solid rgba(255, 255, 255, 0.5);
-  outline-offset: 2px;
-}
-
-.df-container > .df-ui-btn.df-ui-prev {
-  left: 12px;
-}
-
-.df-container > .df-ui-btn.df-ui-next {
-  right: 12px;
-}
-
-.df-container .df-ui-btn {
-  color: rgba(255, 255, 255, 0.35);
-  font-size: 13px;
-  line-height: 30px;
-  width: 30px;
-  height: 30px;
-  transition: color 0.25s ease;
-  background: transparent;
-}
-
-.df-container .df-ui-btn:hover {
-  color: rgba(255, 255, 255, 0.85);
-  background: transparent;
-}
-
-.df-container .df-ui-btn.df-active {
-  color: rgba(255, 255, 255, 0.85);
-}
-
-@media (max-width: 768px) {
-  .df-container > .df-ui-btn.df-ui-prev {
-    left: 6px;
-  }
-  .df-container > .df-ui-btn.df-ui-next {
-    right: 6px;
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
   .premium-flipbook-wrapper {
     opacity: 1;
@@ -255,5 +186,3 @@
     transition: none;
   }
 }
-
-

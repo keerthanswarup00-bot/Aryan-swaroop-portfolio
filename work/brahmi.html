@@ -44,8 +44,6 @@
 <link rel="stylesheet" href="/style.css">
   <link rel="stylesheet" href="/css/case-study.css">
   <link rel="stylesheet" href="/css/case-study-dark.css">
-  <link rel="stylesheet" href="/dflip/css/dflip.min.css">
-  <link rel="stylesheet" href="/dflip/css/themify-icons.min.css">
   <link rel="stylesheet" href="/css/phone-viewer.css">
 <link rel="stylesheet" href="/css/premium-flipbook.css">
 <link rel="stylesheet" href="/css/mobile-fixes.css">
@@ -244,7 +242,12 @@
     <div class="desktop-only">
       <div class="premium-flipbook-wrapper">
         <div class="premium-flipbook-stage">
-          <div class="_df_book" id="flipbook_brahmi" df-parsed="true"></div>
+          <div class="fb-desktop">
+            <button class="fb-desktop__nav fb-desktop__prev" type="button" aria-label="Previous pages">&#8592;</button>
+            <div id="flipbook_brahmi" class="fb-desktop__book"></div>
+            <button class="fb-desktop__nav fb-desktop__next" type="button" aria-label="Next pages">&#8594;</button>
+            <div class="fb-desktop__counter" aria-live="polite">&nbsp;</div>
+          </div>
         </div>
       </div>
     </div>
@@ -286,97 +289,7 @@
   </div>
 </footer>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<script src="/dflip/js/dflip.min.js"></script>
-
-<script>
-(function () {
-  var TOTAL_PAGES = 44;
-  if (window.innerWidth < 768) return;
-
-  var wrapper = document.querySelector('.premium-flipbook-wrapper');
-  if (!wrapper) return;
-
-  function pad(n) {
-    return n < 10 ? '0' + n : '' + n;
-  }
-
-  var source = [];
-  for (var i = 1; i <= TOTAL_PAGES; i++) {
-    source.push('/images/brahmi/page-' + pad(i) + '.jpg');
-  }
-
-  function revealWrapper() {
-    wrapper.classList.add('visible');
-  }
-
-  function hasWebGL() {
-    try {
-      var canvas = document.createElement('canvas');
-      return !!(canvas.getContext('webgl') || canvas.getContext('experimental-webgl'));
-    } catch (e) {
-      return false;
-    }
-  }
-
-  var options = {
-    source: source,
-    webgl: hasWebGL(),
-    height: '100%',
-    duration: 500,
-    hard: 'none',
-    enableDownload: false,
-    soundEnable: true,
-    transparent: true,
-    backgroundColor: 'transparent',
-    direction: 1,
-    pageMode: 2,
-    webglShadow: true,
-    shadowOpacity: 0.2,
-    paddingTop: 10,
-    paddingBottom: 10,
-    paddingLeft: 15,
-    paddingRight: 15,
-    allControls: 'pageNumber',
-    moreControls: '',
-    controlsPosition: 'bottom',
-    onReady: function () {
-      var inp = document.getElementById('df_book_page_number');
-      if (inp) inp.readOnly = true;
-    }
-  };
-
-  var flipbookEl = document.getElementById('flipbook_brahmi');
-  if (!flipbookEl) return;
-
-  var revealObserver = new IntersectionObserver(function (entries) {
-    entries.forEach(function (entry) {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-        revealObserver.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.08 });
-
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    revealWrapper();
-  } else if ('IntersectionObserver' in window) {
-    revealObserver.observe(wrapper);
-  } else {
-    revealWrapper();
-  }
-
-  $(document).ready(function () {
-    try {
-      window.flipbook_brahmi = $('#flipbook_brahmi').flipBook(source, options);
-    } catch (e) {
-      console.error('Flipbook init failed:', e);
-      revealWrapper();
-    }
-  });
-})();
-</script>
-
+<script src="/js/flipbook-desktop.js"></script>
 <script src="/js/flipbook-mobile.js"></script>
 
 <script src="../dropdown.js"></script>
