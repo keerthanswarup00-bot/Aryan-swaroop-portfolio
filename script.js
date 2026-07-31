@@ -164,6 +164,7 @@ var dd=document.getElementById('designDropdown');
 if(!dd)return;
 var trigger=dd.querySelector('.nav-dropdown-trigger');
 var menu=dd.querySelector('.mega-menu-root');
+if(!trigger||!menu)return;
 var closeTimer=null;
 function blockReveal(){window.dispatchEvent(new CustomEvent('revealblock'))}
 function unblockReveal(){window.dispatchEvent(new CustomEvent('revealunblock'))}
