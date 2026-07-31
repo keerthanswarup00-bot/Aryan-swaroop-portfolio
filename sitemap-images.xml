@@ -157,6 +157,34 @@
     </image:image>
   </url>
   <url>
+    <loc>https://www.aryanswaroop.com/work/paavani-properties</loc>
+    <image:image>
+      <image:loc>https://www.aryanswaroop.com/images/hero-paavani-main.jpg</image:loc>
+      <image:title>Paavani Properties — Campaign Hero</image:title>
+      <image:caption>Paavani Properties case study hero campaign visual</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.aryanswaroop.com/images/applied-logo.jpg</image:loc>
+      <image:title>Paavani Properties — Applied Logo</image:title>
+      <image:caption>Applied logo usage from the Paavani Properties brand system</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.aryanswaroop.com/images/applied-3d.jpg</image:loc>
+      <image:title>Paavani Properties — 3D Applied</image:title>
+      <image:caption>3D application of the Paavani Properties brand identity</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.aryanswaroop.com/images/process-01.jpg</image:loc>
+      <image:title>Paavani Properties — Process</image:title>
+      <image:caption>Brand development process for Paavani Properties</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.aryanswaroop.com/images/devaiah-preview.jpg</image:loc>
+      <image:title>Paavani Properties — Plot Finder</image:title>
+      <image:caption>Interactive plot finder preview for Paavani Properties</image:caption>
+    </image:image>
+  </url>
+  <url>
     <loc>https://www.aryanswaroop.com/about</loc>
     <image:image>
       <image:loc>https://www.aryanswaroop.com/images/portrait.jpg</image:loc>
