@@ -16,34 +16,34 @@
   }
 }
 
-.mobile-book {
+/* ── Mobile flipbook (BEM-scoped, no shared classes with desktop) ── */
+
+.fb-mobile {
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.mobile-book-stage {
+.fb-mobile__wrapper {
   position: relative;
   width: 100%;
   display: flex;
-  align-items: center;
   justify-content: center;
-  gap: 12px;
-  padding: 0;
+  padding: 0 16px;
   box-sizing: border-box;
 }
 
-.mobile-book-inner {
-  flex: 0 1 auto;
-  width: 88%;
-  max-width: 340px;
+.fb-mobile__book {
   position: relative;
   overflow: visible;
 }
 
-.mobile-nav {
-  flex: 0 0 auto;
+.fb-mobile__nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
   width: 36px;
   height: 52px;
   background: rgba(255, 255, 255, 0.06);
@@ -51,7 +51,6 @@
   color: rgba(255, 255, 255, 0.45);
   font-size: 22px;
   cursor: pointer;
-  z-index: 10;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -62,21 +61,29 @@
   margin: 0;
 }
 
-.mobile-nav:hover {
+.fb-mobile__nav:hover {
   background: rgba(255, 255, 255, 0.12);
   color: rgba(255, 255, 255, 0.85);
 }
 
-.mobile-nav:active {
+.fb-mobile__nav:active {
   background: rgba(255, 255, 255, 0.18);
 }
 
-.mobile-book-footer {
+.fb-mobile__prev {
+  left: 16px;
+}
+
+.fb-mobile__next {
+  right: 16px;
+}
+
+.fb-mobile__footer {
   margin-top: 20px;
   text-align: center;
 }
 
-.mobile-page-indicator {
+.fb-mobile__indicator {
   font-size: 11px;
   font-weight: 500;
   color: rgba(255, 255, 255, 0.35);
@@ -86,48 +93,26 @@
 }
 
 @media (max-width: 480px) {
-  .mobile-book-stage {
-    gap: 8px;
-  }
-
-  .mobile-book-inner {
-    width: 86%;
-    max-width: 300px;
-  }
-
-  .mobile-nav {
+  .fb-mobile__nav {
     width: 30px;
     height: 44px;
     font-size: 18px;
     border-radius: 6px;
   }
 
-  .mobile-book-footer {
-    margin-top: 16px;
+  .fb-mobile__prev {
+    left: 16px;
   }
 
-  .mobile-page-indicator {
+  .fb-mobile__next {
+    right: 16px;
+  }
+
+  .fb-mobile__footer {
+    margin-top: 20px;
+  }
+
+  .fb-mobile__indicator {
     font-size: 10px;
-  }
-}
-
-@media (max-width: 380px) {
-  .mobile-book-stage {
-    gap: 6px;
-  }
-
-  .mobile-book-inner {
-    width: 84%;
-    max-width: 260px;
-  }
-
-  .mobile-nav {
-    width: 26px;
-    height: 38px;
-    font-size: 15px;
-  }
-
-  .mobile-book-footer {
-    margin-top: 14px;
   }
 }
