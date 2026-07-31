@@ -16,77 +16,142 @@
   }
 }
 
-.fb-mobile {
-  width: 100%;
+.fb-custom {
   display: flex;
-  flex-direction: column;
+  justify-content: center;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.fb-custom__inner {
+  position: relative;
+  display: inline-flex;
   align-items: center;
 }
 
-.fb-mobile__wrapper {
+.fb-custom__stage {
   position: relative;
+  perspective: 1400px;
+  touch-action: pan-y;
+}
+
+.fb-custom__stack,
+.fb-custom__page,
+.fb-custom__flip {
+  position: absolute;
+  top: 0;
+  height: 100%;
+}
+
+.fb-custom__stack {
+  left: 0;
+  z-index: 1;
+  opacity: 0;
+  background:
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.03) 0 1px, transparent 1px 5px),
+    linear-gradient(90deg, #080808 0%, #161616 65%, #242424 100%);
+  border-radius: 2px 0 0 2px;
+  box-shadow: inset 1px 0 2px rgba(0, 0, 0, 0.9), inset -2px 0 3px rgba(255, 255, 255, 0.05);
+  transition: width 0.4s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.4s ease;
+}
+
+.fb-custom__page {
+  z-index: 2;
+  overflow: hidden;
+  border-radius: 2px;
+  background: #0a0a0a;
+  box-shadow: -12px 0 22px -8px rgba(0, 0, 0, 0.55), 0 16px 34px -8px rgba(0, 0, 0, 0.45);
+  transition: left 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.fb-custom__page img {
   width: 100%;
-  display: flex;
-  justify-content: center;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  user-select: none;
+  -webkit-user-select: none;
+  pointer-events: none;
 }
 
-.fb-mobile__book {
-  position: relative;
-  overflow: visible;
+.fb-custom__flip {
+  left: 0;
+  z-index: 3;
+  transform: rotateY(0deg);
+  transform-origin: left center;
+  backface-visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  background: #0a0a0a;
+  box-shadow: -14px 0 24px -6px rgba(0, 0, 0, 0.5);
 }
 
-.fb-mobile__nav {
+.fb-custom__flip img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  user-select: none;
+  -webkit-user-select: none;
+  pointer-events: none;
+}
+
+.fb-custom__flip.active {
+  opacity: 1;
+}
+
+.fb-custom__flip.turn-next {
+  transform: rotateY(-90deg);
+  transition: transform 0.45s cubic-bezier(0.45, 0, 1, 1);
+}
+
+.fb-custom__flip.turn-prev {
+  transform: rotateY(0deg);
+  transition: transform 0.45s cubic-bezier(0, 0, 0.2, 1);
+}
+
+.fb-custom__flip.turn-prev.start {
+  transform: rotateY(90deg);
+  transition: none;
+}
+
+.fb-custom__nav {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  z-index: 10;
-  width: 36px;
-  height: 52px;
-  background: rgba(255, 255, 255, 0.06);
-  border: none;
-  color: rgba(255, 255, 255, 0.45);
-  font-size: 22px;
-  cursor: pointer;
+  z-index: 12;
+  width: 34px;
+  height: 48px;
   display: flex;
   align-items: center;
   justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 8px;
-  transition: background 0.2s ease, color 0.2s ease;
-  -webkit-tap-highlight-color: transparent;
+  background: rgba(255, 255, 255, 0.05);
+  color: rgba(255, 255, 255, 0.65);
+  font-size: 18px;
+  line-height: 1;
   padding: 0;
   margin: 0;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: background 0.2s ease, color 0.2s ease, opacity 0.2s ease;
 }
 
-.fb-mobile__nav:hover {
+.fb-custom__prev { left: -42px; }
+.fb-custom__next { right: -42px; }
+
+.fb-custom__nav:not(:disabled):hover {
   background: rgba(255, 255, 255, 0.12);
-  color: rgba(255, 255, 255, 0.85);
+  color: rgba(255, 255, 255, 0.9);
 }
 
-.fb-mobile__nav:active {
-  background: rgba(255, 255, 255, 0.18);
+.fb-custom__nav:disabled {
+  opacity: 0.25;
+  cursor: default;
 }
 
-.fb-mobile__prev {
-  left: 16px;
-}
-
-.fb-mobile__next {
-  right: 16px;
-}
-
-@media (max-width: 480px) {
-  .fb-mobile__nav {
-    width: 30px;
-    height: 44px;
-    font-size: 18px;
-    border-radius: 6px;
-  }
-
-  .fb-mobile__prev {
-    left: 12px;
-  }
-
-  .fb-mobile__next {
-    right: 12px;
-  }
+.fb-custom__stage.fb-custom--noanim .fb-custom__page,
+.fb-custom__stage.fb-custom--noanim .fb-custom__stack,
+.fb-custom__stage.fb-custom--noanim .fb-custom__flip {
+  transition: none !important;
 }

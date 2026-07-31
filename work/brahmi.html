@@ -256,11 +256,17 @@
       </div>
     </div>
     <div class="mobile-only">
-      <div class="fb-mobile">
-        <div class="fb-mobile__wrapper">
-          <button class="fb-mobile__nav fb-mobile__prev" aria-label="Previous page">&#8592;</button>
-          <div class="fb-mobile__book" id="mobile-flipbook"></div>
-          <button class="fb-mobile__nav fb-mobile__next" aria-label="Next page">&#8594;</button>
+      <div class="fb-custom">
+        <div class="fb-custom__inner">
+          <button class="fb-custom__nav fb-custom__prev" type="button" aria-label="Previous page">&#8592;</button>
+          <div class="fb-custom__stage" id="mobile-flipbook">
+            <div class="fb-custom__stack" aria-hidden="true"></div>
+            <div class="fb-custom__page">
+              <img src="/images/brahmi/page-01.jpg" alt="Brahmi brand guidelines page" draggable="false">
+            </div>
+            <div class="fb-custom__flip" aria-hidden="true"><img alt="" draggable="false"></div>
+          </div>
+          <button class="fb-custom__nav fb-custom__next" type="button" aria-label="Next page">&#8594;</button>
         </div>
       </div>
     </div>
@@ -294,7 +300,7 @@
 </footer>
 
 <script src="/js/flipbook-desktop.js"></script>
-<script src="/js/flipbook-mobile.js"></script>
+<script src="/js/flipbook-custom.js"></script>
 
 <script defer src="../dropdown.js"></script>
 <script defer src="../script.js"></script>
