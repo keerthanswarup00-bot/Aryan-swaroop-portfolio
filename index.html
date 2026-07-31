@@ -264,11 +264,6 @@
 }
 </script>
 <link rel="preload" as="image" href="/images/brahmi-pourshot.avif" type="image/avif" fetchpriority="high">
-<style>
-@media (max-width: 640px) {
-  .hero-char { color: var(--hero-invert) !important; }
-}
-</style>
 </head>
 <body>
 <a href="#main-content" class="skip-to-content">Skip to main content</a>
@@ -282,14 +277,10 @@
   <div class="header-row">
     <a href="/" class="header-left">
       <picture>
-  <source srcset="images/nav-avatar-400.avif 400w, images/nav-avatar-800.avif 800w" sizes="44px" type="image/avif">
-  <source srcset="images/nav-avatar-400.webp 400w, images/nav-avatar-800.webp 800w" sizes="44px" type="image/webp">
-      <picture>
-        <source srcset="images/nav-avatar-400.avif 400w, images/nav-avatar-800.avif 800w" sizes="44px" type="image/avif">
-        <source srcset="images/nav-avatar-400.webp 400w, images/nav-avatar-800.webp 800w" sizes="44px" type="image/webp">
-        <img src="images/nav-avatar.png" alt="Aryan Swaroop" class="header-avatar" width="44" height="44" loading="lazy" decoding="async">
+        <source srcset="/images/nav-avatar-400.avif 400w, /images/nav-avatar-800.avif 800w" sizes="44px" type="image/avif">
+        <source srcset="/images/nav-avatar-400.webp 400w, /images/nav-avatar-800.webp 800w" sizes="44px" type="image/webp">
+        <img src="/images/nav-avatar.png" alt="Aryan Swaroop" class="header-avatar" width="44" height="44" loading="lazy" decoding="async">
       </picture>
-</picture>
       <div class="header-identity">
         <span class="header-name">Aryan Swaroop</span>
         <span class="header-status"><span class="status-ping"></span>Open to work</span>
@@ -299,12 +290,11 @@
       <a href="/">Home</a>
       <div class="nav-dropdown" id="designDropdown">
         <button class="nav-dropdown-trigger" aria-expanded="false" aria-haspopup="true">Design <span class="dropdown-arrow">&#9662;</span></button>
-        
       </div>
       <a href="/about">About</a>
     </nav>
     <div class="header-right">
-      <a href="Aryan_Swaroop_Resume.pdf" download class="resume-btn">Resume</a>
+      <a href="/Aryan_Swaroop_Resume.pdf" download class="resume-btn">Resume</a>
       <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false" aria-controls="mobileMenu"><span></span><span></span></button>
     </div>
   </div>
@@ -315,14 +305,10 @@
     <div class="mobile-top">
       <a href="/" class="mobile-profile">
         <picture>
-  <source srcset="images/nav-avatar-400.avif 400w, images/nav-avatar-800.avif 800w" sizes="56px" type="image/avif">
-  <source srcset="images/nav-avatar-400.webp 400w, images/nav-avatar-800.webp 800w" sizes="56px" type="image/webp">
-        <picture>
-          <source srcset="images/nav-avatar-400.avif 400w, images/nav-avatar-800.avif 800w" sizes="56px" type="image/avif">
-          <source srcset="images/nav-avatar-400.webp 400w, images/nav-avatar-800.webp 800w" sizes="56px" type="image/webp">
-          <img src="images/nav-avatar.png" alt="Aryan Swaroop" class="mobile-avatar" width="56" height="56" loading="lazy" decoding="async">
+          <source srcset="/images/nav-avatar-400.avif 400w, /images/nav-avatar-800.avif 800w" sizes="56px" type="image/avif">
+          <source srcset="/images/nav-avatar-400.webp 400w, /images/nav-avatar-800.webp 800w" sizes="56px" type="image/webp">
+          <img src="/images/nav-avatar.png" alt="Aryan Swaroop" class="mobile-avatar" width="56" height="56" loading="lazy" decoding="async">
         </picture>
-</picture>
         <div class="mobile-identity">
           <span class="mobile-name">Aryan Swaroop</span>
           <span class="mobile-status"><span class="status-ping"></span>Open to work</span>
@@ -338,28 +324,28 @@
       <h4 class="mobile-section-heading">Featured Work</h4>
       <a href="/real-estate" class="mobile-project-row">
         <div class="mobile-project-thumb"><picture>
-  <source srcset="images/mega-re-2.avif" type="image/avif">
-  <source srcset="images/mega-re-2.webp" type="image/webp">
-  <img src="images/mega-re-2.png" alt="Real estate brand identity thumbnail" width="800" height="800" loading="lazy" decoding="async">
-</picture></div>
+          <source srcset="/images/mega-re-2.avif" type="image/avif">
+          <source srcset="/images/mega-re-2.webp" type="image/webp">
+          <img src="/images/mega-re-2.png" alt="Real estate brand identity thumbnail" width="800" height="800" loading="lazy" decoding="async">
+        </picture></div>
         <div class="mobile-project-info"><span class="mobile-project-title">Real Estate</span><span class="mobile-project-sub">5 min</span></div>
         <span class="mobile-project-arrow">&rarr;</span>
       </a>
       <a href="/lifestyle" class="mobile-project-row">
         <div class="mobile-project-thumb"><picture>
-  <source srcset="images/mega-lifestyle-2.avif" type="image/avif">
-  <source srcset="images/mega-lifestyle-2.webp" type="image/webp">
-  <img src="images/mega-lifestyle-2.png" alt="Lifestyle brand identity thumbnail" width="800" height="800" loading="lazy" decoding="async">
-</picture></div>
+          <source srcset="/images/mega-lifestyle-2.avif" type="image/avif">
+          <source srcset="/images/mega-lifestyle-2.webp" type="image/webp">
+          <img src="/images/mega-lifestyle-2.png" alt="Lifestyle brand identity thumbnail" width="800" height="800" loading="lazy" decoding="async">
+        </picture></div>
         <div class="mobile-project-info"><span class="mobile-project-title">Lifestyle</span><span class="mobile-project-sub">5 min</span></div>
         <span class="mobile-project-arrow">&rarr;</span>
       </a>
       <a href="/builds" class="mobile-project-row">
         <div class="mobile-project-thumb"><picture>
-  <source srcset="images/mega-builds-2.avif" type="image/avif">
-  <source srcset="images/mega-builds-2.webp" type="image/webp">
-  <img src="images/mega-builds-2.png" alt="Web product builds thumbnail" width="800" height="800" loading="lazy" decoding="async">
-</picture></div>
+          <source srcset="/images/mega-builds-2.avif" type="image/avif">
+          <source srcset="/images/mega-builds-2.webp" type="image/webp">
+          <img src="/images/mega-builds-2.png" alt="Web product builds thumbnail" width="800" height="800" loading="lazy" decoding="async">
+        </picture></div>
         <div class="mobile-project-info"><span class="mobile-project-title">Builds</span><span class="mobile-project-sub">2 min</span></div>
         <span class="mobile-project-arrow">&rarr;</span>
       </a>
@@ -367,7 +353,7 @@
     <div class="mobile-section">
       <h4 class="mobile-section-heading">Other</h4>
       <a href="/playground" class="mobile-explore-link">Playground <span>&rarr;</span></a>
-      <a href="Aryan_Swaroop_Resume.pdf" download class="mobile-explore-link">Resume <span>&nearr;</span></a>
+      <a href="/Aryan_Swaroop_Resume.pdf" download class="mobile-explore-link">Resume <span>&nearr;</span></a>
       <a href="/tools" class="mobile-explore-link">Tools <span>&rarr;</span></a>
     </div>
     <div class="mobile-footer">

@@ -179,3 +179,30 @@
     transition: none;
   }
 }
+
+.desktop-only {
+  display: block;
+}
+
+.mobile-only {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  .desktop-only {
+    display: none !important;
+  }
+  .mobile-only {
+    display: block !important;
+  }
+}
+
+.cs-flipbook-embed {
+  width: 88vw;
+  max-width: 360px;
+  margin: 0 auto;
+  padding: 0;
+  background: transparent;
+  border: none;
+}
+

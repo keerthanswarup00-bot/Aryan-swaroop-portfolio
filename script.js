@@ -137,7 +137,11 @@ menu.classList.remove('open');
 menu.setAttribute('aria-hidden','true');
 hamburger.classList.remove('open');
 hamburger.setAttribute('aria-expanded','false');
+var root=document.documentElement;
+var prev=root.style.scrollBehavior;
+root.style.scrollBehavior='auto';
 window.scrollTo(0,scrollY);
+root.style.scrollBehavior=prev;
 }
 hamburger.addEventListener('click',function(){
 if(menu.classList.contains('open'))closeMenu();else openMenu();
@@ -162,14 +166,24 @@ if(diff>80&&menu.scrollTop<=0)closeMenu();
 var bar=document.getElementById('scrollBar');
 if(!bar)return;
 var header=document.querySelector('.site-header');
+var ticking=false;
+var lastPct=-1;
 function update(){
+ticking=false;
 var doc=document.documentElement;
-var pct=doc.scrollHeight>doc.clientHeight?(doc.scrollTop/(doc.scrollHeight-doc.clientHeight))*100:0;
+var max=doc.scrollHeight-doc.clientHeight;
+var pct=max>0?(doc.scrollTop/max)*100:0;
+if(pct===lastPct)return;
+lastPct=pct;
 bar.style.width=pct+'%';
 if(header)header.classList.toggle('scrolling',pct>0.5&&pct<99.5);
 if(header)header.classList.toggle('is-compact',doc.scrollTop>40);
 }
-window.addEventListener('scroll',update,{passive:true});
+function requestUpdate(){
+if(!ticking){ticking=true;requestAnimationFrame(update);}
+}
+window.addEventListener('scroll',requestUpdate,{passive:true});
+window.addEventListener('resize',requestUpdate,{passive:true});
 update();
 })();
 (function(){

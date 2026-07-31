@@ -88,9 +88,9 @@
   <div class="header-row">
     <a href="/" class="header-left">
       <picture>
-        <source srcset="images/nav-avatar-400.avif 400w, images/nav-avatar-800.avif 800w" sizes="44px" type="image/avif">
-        <source srcset="images/nav-avatar-400.webp 400w, images/nav-avatar-800.webp 800w" sizes="44px" type="image/webp">
-        <img src="images/nav-avatar.png" srcset="images/nav-avatar-400.jpg 400w, images/nav-avatar-800.jpg 800w" sizes="44px" alt="Aryan Swaroop" class="header-avatar" width="44" height="44" loading="lazy" decoding="async">
+        <source srcset="/images/nav-avatar-400.avif 400w, /images/nav-avatar-800.avif 800w" sizes="44px" type="image/avif">
+        <source srcset="/images/nav-avatar-400.webp 400w, /images/nav-avatar-800.webp 800w" sizes="44px" type="image/webp">
+        <img src="/images/nav-avatar.png" alt="Aryan Swaroop" class="header-avatar" width="44" height="44" loading="lazy" decoding="async">
       </picture>
       <div class="header-identity">
         <span class="header-name">Aryan Swaroop</span>
@@ -101,12 +101,11 @@
       <a href="/">Home</a>
       <div class="nav-dropdown" id="designDropdown">
         <button class="nav-dropdown-trigger" aria-expanded="false" aria-haspopup="true">Design <span class="dropdown-arrow">&#9662;</span></button>
-        
       </div>
       <a href="/about">About</a>
     </nav>
     <div class="header-right">
-      <a href="Aryan_Swaroop_Resume.pdf" download class="resume-btn">Resume</a>
+      <a href="/Aryan_Swaroop_Resume.pdf" download class="resume-btn">Resume</a>
       <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false" aria-controls="mobileMenu"><span></span><span></span></button>
     </div>
   </div>
@@ -117,9 +116,9 @@
     <div class="mobile-top">
       <a href="/" class="mobile-profile">
         <picture>
-          <source srcset="images/nav-avatar-400.avif 400w, images/nav-avatar-800.avif 800w" sizes="56px" type="image/avif">
-          <source srcset="images/nav-avatar-400.webp 400w, images/nav-avatar-800.webp 800w" sizes="56px" type="image/webp">
-          <img src="images/nav-avatar.png" srcset="images/nav-avatar-400.jpg 400w, images/nav-avatar-800.jpg 800w" sizes="56px" alt="Aryan Swaroop" class="mobile-avatar" width="56" height="56" loading="lazy" decoding="async">
+          <source srcset="/images/nav-avatar-400.avif 400w, /images/nav-avatar-800.avif 800w" sizes="56px" type="image/avif">
+          <source srcset="/images/nav-avatar-400.webp 400w, /images/nav-avatar-800.webp 800w" sizes="56px" type="image/webp">
+          <img src="/images/nav-avatar.png" alt="Aryan Swaroop" class="mobile-avatar" width="56" height="56" loading="lazy" decoding="async">
         </picture>
         <div class="mobile-identity">
           <span class="mobile-name">Aryan Swaroop</span>
@@ -135,17 +134,29 @@
     <div class="mobile-section">
       <h4 class="mobile-section-heading">Featured Work</h4>
       <a href="/real-estate" class="mobile-project-row">
-        <div class="mobile-project-thumb"><picture><source srcset="images/mega-re-2.avif" type="image/avif"><source srcset="images/mega-re-2.webp" type="image/webp"><img src="images/mega-re-2.png" alt="Real estate brand identity thumbnail" width="800" height="800" loading="lazy" decoding="async"></picture></div>
+        <div class="mobile-project-thumb"><picture>
+          <source srcset="/images/mega-re-2.avif" type="image/avif">
+          <source srcset="/images/mega-re-2.webp" type="image/webp">
+          <img src="/images/mega-re-2.png" alt="Real estate brand identity thumbnail" width="800" height="800" loading="lazy" decoding="async">
+        </picture></div>
         <div class="mobile-project-info"><span class="mobile-project-title">Real Estate</span><span class="mobile-project-sub">5 min</span></div>
         <span class="mobile-project-arrow">&rarr;</span>
       </a>
       <a href="/lifestyle" class="mobile-project-row">
-        <div class="mobile-project-thumb"><picture><source srcset="images/mega-lifestyle-2.avif" type="image/avif"><source srcset="images/mega-lifestyle-2.webp" type="image/webp"><img src="images/mega-lifestyle-2.png" alt="Lifestyle brand identity thumbnail" width="800" height="800" loading="lazy" decoding="async"></picture></div>
+        <div class="mobile-project-thumb"><picture>
+          <source srcset="/images/mega-lifestyle-2.avif" type="image/avif">
+          <source srcset="/images/mega-lifestyle-2.webp" type="image/webp">
+          <img src="/images/mega-lifestyle-2.png" alt="Lifestyle brand identity thumbnail" width="800" height="800" loading="lazy" decoding="async">
+        </picture></div>
         <div class="mobile-project-info"><span class="mobile-project-title">Lifestyle</span><span class="mobile-project-sub">5 min</span></div>
         <span class="mobile-project-arrow">&rarr;</span>
       </a>
       <a href="/builds" class="mobile-project-row">
-        <div class="mobile-project-thumb"><picture><source srcset="images/mega-builds-2.avif" type="image/avif"><source srcset="images/mega-builds-2.webp" type="image/webp"><img src="images/mega-builds-2.png" alt="Web product builds thumbnail" width="800" height="800" loading="lazy" decoding="async"></picture></div>
+        <div class="mobile-project-thumb"><picture>
+          <source srcset="/images/mega-builds-2.avif" type="image/avif">
+          <source srcset="/images/mega-builds-2.webp" type="image/webp">
+          <img src="/images/mega-builds-2.png" alt="Web product builds thumbnail" width="800" height="800" loading="lazy" decoding="async">
+        </picture></div>
         <div class="mobile-project-info"><span class="mobile-project-title">Builds</span><span class="mobile-project-sub">2 min</span></div>
         <span class="mobile-project-arrow">&rarr;</span>
       </a>
@@ -153,7 +164,7 @@
     <div class="mobile-section">
       <h4 class="mobile-section-heading">Other</h4>
       <a href="/playground" class="mobile-explore-link">Playground <span>&rarr;</span></a>
-      <a href="Aryan_Swaroop_Resume.pdf" download class="mobile-explore-link">Resume <span>&nearr;</span></a>
+      <a href="/Aryan_Swaroop_Resume.pdf" download class="mobile-explore-link">Resume <span>&nearr;</span></a>
       <a href="/tools" class="mobile-explore-link">Tools <span>&rarr;</span></a>
     </div>
     <div class="mobile-footer">
@@ -178,7 +189,7 @@
         <time style="font-size:13px; color:var(--graphite); font-family:var(--sans);">2026-07-27</time>
         <span style="font-size:12px; padding:3px 10px; border-radius:20px; background:var(--ink); color:var(--paper); font-weight:500;">Major</span>
       </div>
-      <h2 style="font-family:var(--serif); font-size:20px; margin-bottom:8px;">AI Metadata &amp; SEO Overhaul</h3>
+      <h2 style="font-family:var(--serif); font-size:20px; margin-bottom:8px;">AI Metadata &amp; SEO Overhaul</h2>
       <p style="color:var(--graphite); font-size:15px; line-height:1.6;">Added production-grade structured data (JSON-LD @graph), Speakable schema, expanded Person profile with nationality/credentials/InteractionCounter, SearchAction on WebSite, AI summary blocks on all pages, skip-to-content accessibility, enhanced Open Graph and Twitter Cards, and comprehensive llms.txt. Created security.txt, humans.txt, browserconfig.xml, sitemap-images.xml. Updated robots.txt with 15+ AI bot allowances.</p>
     </article>
 
@@ -187,7 +198,7 @@
         <time style="font-size:13px; color:var(--graphite); font-family:var(--sans);">2026-07-27</time>
         <span style="font-size:12px; padding:3px 10px; border-radius:20px; background:var(--ink); color:var(--paper); font-weight:500;">Major</span>
       </div>
-      <h2 style="font-family:var(--serif); font-size:20px; margin-bottom:8px;">Playground Page Launched</h3>
+      <h2 style="font-family:var(--serif); font-size:20px; margin-bottom:8px;">Playground Page Launched</h2>
       <p style="color:var(--graphite); font-size:15px; line-height:1.6;">Added Playground page with 22 media items (11 WebP images, 10 compressed H.264 videos). Lightbox with video play/pause, IntersectionObserver for performance, body scroll lock. Total page weight ~5.5MB down from ~55MB originals.</p>
     </article>
 
@@ -196,7 +207,7 @@
         <time style="font-size:13px; color:var(--graphite); font-family:var(--sans);">2026-07-27</time>
         <span style="font-size:12px; padding:3px 10px; border-radius:20px; border:1px solid var(--line); color:var(--ink); font-weight:500;">Feature</span>
       </div>
-      <h2 style="font-family:var(--serif); font-size:20px; margin-bottom:8px;">Premium Navigation Redesign</h3>
+      <h2 style="font-family:var(--serif); font-size:20px; margin-bottom:8px;">Premium Navigation Redesign</h2>
       <p style="color:var(--graphite); font-size:15px; line-height:1.6;">Desktop mega dropdown (Owen Hudock–matched), mobile menu overhaul with staggered fade-in, circular avatar, pulsing green "Open to work" badge, 3-part layout. All pages updated.</p>
     </article>
 
@@ -205,7 +216,7 @@
         <time style="font-size:13px; color:var(--graphite); font-family:var(--sans);">2026-07-25</time>
         <span style="font-size:12px; padding:3px 10px; border-radius:20px; border:1px solid var(--line); color:var(--ink); font-weight:500;">Feature</span>
       </div>
-      <h2 style="font-family:var(--serif); font-size:20px; margin-bottom:8px;">Game Audio Toggle</h3>
+      <h2 style="font-family:var(--serif); font-size:20px; margin-bottom:8px;">Game Audio Toggle</h2>
       <p style="color:var(--graphite); font-size:15px; line-height:1.6;">Added chiptune audio loop using Web Audio API with localStorage persistence. Muted by default. Works on home, about, and 404 pages.</p>
     </article>
 
@@ -214,7 +225,7 @@
         <time style="font-size:13px; color:var(--graphite); font-family:var(--sans);">2026-07-25</time>
         <span style="font-size:12px; padding:3px 10px; border-radius:20px; border:1px solid var(--line); color:var(--ink); font-weight:500;">Feature</span>
       </div>
-      <h2 style="font-family:var(--serif); font-size:20px; margin-bottom:8px;">Endless Runner Game</h3>
+      <h2 style="font-family:var(--serif); font-size:20px; margin-bottom:8px;">Endless Runner Game</h2>
       <p style="color:var(--graphite); font-size:15px; line-height:1.6;">Custom modular auto-runner game built with Canvas API. "WELCOME TO BENGALURU" intro sequence, speed reduced 10% for accessibility. Present on home, about, and 404 pages.</p>
     </article>
 
@@ -223,7 +234,7 @@
         <time style="font-size:13px; color:var(--graphite); font-family:var(--sans);">2026-07-25</time>
         <span style="font-size:12px; padding:3px 10px; border-radius:20px; border:1px solid var(--line); color:var(--ink); font-weight:500;">Enhancement</span>
       </div>
-      <h2 style="font-family:var(--serif); font-size:20px; margin-bottom:8px;">Site Launch &amp; Core Pages</h3>
+      <h2 style="font-family:var(--serif); font-size:20px; margin-bottom:8px;">Site Launch &amp; Core Pages</h2>
       <p style="color:var(--graphite); font-size:15px; line-height:1.6;">Initial launch with 7 pages: Home, Real Estate, Lifestyle, Builds, Tools, About, 404. Shared CSS/JS, custom cursor, scroll-reveal animations, stats rolling counter, favicon system, meta/OG/Twitter tags. Deployed on Vercel with clean URLs.</p>
     </article>
 

@@ -41,7 +41,11 @@ function close(){
 overlay.classList.remove('open');
 document.body.classList.remove('lb-open');
 img.src='';
+var root=document.documentElement;
+var prev=root.style.scrollBehavior;
+root.style.scrollBehavior='auto';
 window.scrollTo(0,scrollY);
+root.style.scrollBehavior=prev;
 }
 function go(d){
 idx=(idx+d+sources.length)%sources.length;
