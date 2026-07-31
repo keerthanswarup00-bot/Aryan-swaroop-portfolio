@@ -16,8 +16,6 @@
   }
 }
 
-/* ── Mobile flipbook (BEM-scoped, no shared classes with desktop) ── */
-
 .fb-mobile {
   width: 100%;
   display: flex;
@@ -30,12 +28,9 @@
   width: 100%;
   display: flex;
   justify-content: center;
-  padding: 0 16px;
-  box-sizing: border-box;
 }
 
 .fb-mobile__book {
-  position: relative;
   overflow: visible;
 }
 
@@ -78,20 +73,6 @@
   right: 16px;
 }
 
-.fb-mobile__footer {
-  margin-top: 20px;
-  text-align: center;
-}
-
-.fb-mobile__indicator {
-  font-size: 11px;
-  font-weight: 500;
-  color: rgba(255, 255, 255, 0.35);
-  font-family: 'Inter', system-ui, sans-serif;
-  font-variant-numeric: tabular-nums;
-  letter-spacing: 0.06em;
-}
-
 @media (max-width: 480px) {
   .fb-mobile__nav {
     width: 30px;
@@ -101,18 +82,10 @@
   }
 
   .fb-mobile__prev {
-    left: 16px;
+    left: 12px;
   }
 
   .fb-mobile__next {
-    right: 16px;
-  }
-
-  .fb-mobile__footer {
-    margin-top: 20px;
-  }
-
-  .fb-mobile__indicator {
-    font-size: 10px;
+    right: 12px;
   }
 }
