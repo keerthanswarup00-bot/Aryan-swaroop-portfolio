@@ -52,42 +52,55 @@ setTimeout(function () { window.location.href = href; }, 180);
 var cur = document.getElementById('cur');
 if (cur && !prefersReducedMotion) {
 var curSpan = cur.querySelector('span') || {};
-function isDarkBg(el) {
-while (el && el !== document.body) {
-var bg = getComputedStyle(el).backgroundColor;
-if (bg && bg !== 'rgba(0, 0, 0, 0)' && bg !== 'transparent') {
-var m = bg.match(/\d+/g);
-if (m) {
-var lum = 0.2126 * parseInt(m[0]) + 0.7152 * parseInt(m[1]) + 0.0722 * parseInt(m[2]);
-if (lum < 70) return true;
-if (lum > 150) return false;
+var pageIsDark = document.body.classList.contains('page-dark');
+var cursorTheme = pageIsDark ? 'dark' : 'light';
+var lastX = -100, lastY = -100;
+function sectionTheme(el) {
+  if (!el) return null;
+  if (el.classList && (el.classList.contains('theme-dark') || el.classList.contains('page-dark'))) return 'dark';
+  if (el.classList && el.classList.contains('theme-light')) return 'light';
+  var t = el.getAttribute ? el.getAttribute('data-theme') : null;
+  if (t === 'dark' || t === 'light') return t;
+  return null;
 }
+function applyTheme(theme) {
+  if (theme === cursorTheme) return;
+  cursorTheme = theme;
+  cur.classList.toggle('cursor-dark', theme === 'light');
+  cur.classList.toggle('cursor-light', theme === 'dark');
 }
-el = el.parentElement;
-}
-return false;
+function themeAt(x, y) {
+  var el = document.elementFromPoint(x, y);
+  while (el) {
+    var t = sectionTheme(el);
+    if (t) return t;
+    if (el === document.body) break;
+    el = el.parentElement;
+  }
+  return pageIsDark ? 'dark' : 'light';
 }
 window.addEventListener('mousemove', function (e) {
-cur.style.left = e.clientX + 'px';
-cur.style.top = e.clientY + 'px';
-cur.style.display = 'none';
-var under = document.elementFromPoint(e.clientX, e.clientY);
-cur.style.display = '';
-if (under) {
-if (isDarkBg(under)) cur.classList.remove('dark');
-else cur.classList.add('dark');
-}
+  lastX = e.clientX;
+  lastY = e.clientY;
+  cur.style.left = e.clientX + 'px';
+  cur.style.top = e.clientY + 'px';
+  applyTheme(themeAt(e.clientX, e.clientY));
+}, { passive: true });
+window.addEventListener('resize', function () {
+  if (lastX < 0) return;
+  applyTheme(themeAt(lastX, lastY));
 }, { passive: true });
 document.querySelectorAll('[data-cur]').forEach(function (el) {
-el.addEventListener('mouseenter', function () {
-cur.classList.add('grow');
-curSpan.textContent = el.getAttribute('data-cur');
+  el.addEventListener('mouseenter', function () {
+    cur.classList.add('grow');
+    curSpan.textContent = el.getAttribute('data-cur');
+  });
+  el.addEventListener('mouseleave', function () {
+    cur.classList.remove('grow');
+    curSpan.textContent = '';
+  });
 });
-el.addEventListener('mouseleave', function () {
-cur.classList.remove('grow');
-curSpan.textContent = '';
-});
-});
+applyTheme(pageIsDark ? 'dark' : 'light');
 }
 (function(){
 var hamburger=document.getElementById('hamburger');

@@ -2,6 +2,7 @@
 if(!window.matchMedia('(min-width:1024px)').matches) return;
 var overlay=document.createElement('div');
 overlay.className='lb-overlay';
+overlay.setAttribute('data-theme','dark');
 overlay.innerHTML='<button class="lb-close" aria-label="Close">&times;</button><button class="lb-prev" aria-label="Previous image">&#8249;</button><button class="lb-next" aria-label="Next image">&#8250;</button><div class="lb-stage"><img class="lb-img" alt=""></div>';
 document.body.appendChild(overlay);
 var img=overlay.querySelector('.lb-img');

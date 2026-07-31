@@ -3,7 +3,7 @@
   if (!dd || dd.querySelector('.mega-menu-root')) return;
 
   dd.insertAdjacentHTML('beforeend',
-    '<div class="mega-menu-root">' +
+    '<div class="mega-menu-root" data-theme="dark">' +
       '<div class="mega-menu">' +
         '<div class="mega-row">' +
         '<div class="mega-left">' +
