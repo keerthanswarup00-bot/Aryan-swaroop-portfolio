@@ -58,6 +58,54 @@ export const MOBILE_MENU_HTML = `<div class="mobile-menu" id="mobileMenu" aria-h
       <a href="/about" class="mobile-nav-link">About</a>
     </nav>
     <div class="mobile-section">
+      <h4 class="mobile-section-heading">Case Studies</h4>
+      <a href="/real-estate" class="mobile-project-row">
+        <div class="mobile-project-thumb"><picture>
+          <source srcset="/images/mega-re-2.avif" type="image/avif">
+          <source srcset="/images/mega-re-2.webp" type="image/webp">
+          <img src="/images/mega-re-2.png" alt="Real estate brand identity thumbnail" width="800" height="800" loading="lazy" decoding="async">
+        </picture></div>
+        <div class="mobile-project-info"><span class="mobile-project-title">Real Estate</span><span class="mobile-cs-desc">Campaign systems, branding &amp; art direction</span><span class="mobile-project-sub">5 min</span></div>
+        <span class="mobile-project-arrow">&rarr;</span>
+      </a>
+      <a href="/lifestyle" class="mobile-project-row">
+        <div class="mobile-project-thumb"><picture>
+          <source srcset="/images/mega-lifestyle-2.avif" type="image/avif">
+          <source srcset="/images/mega-lifestyle-2.webp" type="image/webp">
+          <img src="/images/mega-lifestyle-2.png" alt="Lifestyle brand identity thumbnail" width="800" height="800" loading="lazy" decoding="async">
+        </picture></div>
+        <div class="mobile-project-info"><span class="mobile-project-title">Lifestyle</span><span class="mobile-cs-desc">Identity, packaging &amp; campaign work</span><span class="mobile-project-sub">4 min</span></div>
+        <span class="mobile-project-arrow">&rarr;</span>
+      </a>
+      <a href="/work/paavani-properties.html" class="mobile-project-row">
+        <div class="mobile-project-thumb"><picture>
+          <source srcset="/images/hero-paavani-main.avif" type="image/avif">
+          <source srcset="/images/hero-paavani-main.webp" type="image/webp">
+          <img src="/images/hero-paavani-main.jpg" alt="Architecture case study thumbnail" width="800" height="450" loading="lazy" decoding="async">
+        </picture></div>
+        <div class="mobile-project-info"><span class="mobile-project-title">Architecture</span><span class="mobile-cs-desc">3D walkthroughs &amp; brand systems</span><span class="mobile-project-sub">3 min</span></div>
+        <span class="mobile-project-arrow">&rarr;</span>
+      </a>
+      <a href="/lifestyle" class="mobile-project-row">
+        <div class="mobile-project-thumb"><picture>
+          <source srcset="/images/brahmi-pourshot.avif" type="image/avif">
+          <source srcset="/images/brahmi-pourshot.webp" type="image/webp">
+          <img src="/images/brahmi-pourshot.jpg" alt="Consumer brands case study thumbnail" width="800" height="1000" loading="lazy" decoding="async">
+        </picture></div>
+        <div class="mobile-project-info"><span class="mobile-project-title">Consumer Brands</span><span class="mobile-cs-desc">Identity, packaging &amp; retail collateral</span><span class="mobile-project-sub">4 min</span></div>
+        <span class="mobile-project-arrow">&rarr;</span>
+      </a>
+      <a href="/work/brahmi.html" class="mobile-project-row">
+        <div class="mobile-project-thumb"><picture>
+          <source srcset="/images/brahmi-packaging-1.avif" type="image/avif">
+          <source srcset="/images/brahmi-packaging-1.webp" type="image/webp">
+          <img src="/images/brahmi-packaging-1.jpg" alt="Packaging case study thumbnail" width="800" height="1000" loading="lazy" decoding="async">
+        </picture></div>
+        <div class="mobile-project-info"><span class="mobile-project-title">Packaging</span><span class="mobile-cs-desc">Illustration &amp; structural packaging design</span><span class="mobile-project-sub">3 min</span></div>
+        <span class="mobile-project-arrow">&rarr;</span>
+      </a>
+    </div>
+    <div class="mobile-section">
       <h4 class="mobile-section-heading">Featured Work</h4>
       <a href="/real-estate" class="mobile-project-row">
         <div class="mobile-project-thumb"><picture>
@@ -88,8 +136,11 @@ export const MOBILE_MENU_HTML = `<div class="mobile-menu" id="mobileMenu" aria-h
       </a>
     </div>
     <div class="mobile-section">
-      <h4 class="mobile-section-heading">Other</h4>
+      <h4 class="mobile-section-heading">Others</h4>
       <a href="/playground" class="mobile-explore-link">Playground <span>&rarr;</span></a>
+      <span class="mobile-explore-link mobile-explore-link-disabled" aria-disabled="true" tabindex="-1">Future Labs <span>&rarr;</span></span>
+      <span class="mobile-explore-link mobile-explore-link-disabled" aria-disabled="true" tabindex="-1">Experiments <span>&rarr;</span></span>
+      <span class="mobile-explore-link mobile-explore-link-disabled" aria-disabled="true" tabindex="-1">Resources <span>&rarr;</span></span>
       <a href="/Aryan_Swaroop_Resume.pdf" download class="mobile-explore-link">Resume <span>&nearr;</span></a>
       <a href="/tools" class="mobile-explore-link">Tools <span>&rarr;</span></a>
     </div>

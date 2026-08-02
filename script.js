@@ -216,6 +216,13 @@ if(diff>80&&menu.scrollTop<=0)closeMenu();
 var bar=document.getElementById('scrollBar');
 if(!bar)return;
 var header=document.querySelector('.site-header');
+var mProg=document.getElementById('mobileProgress');
+var mBar=document.getElementById('mobileProgressBar');
+var hero=document.querySelector('.hero-section');
+var heroBottom=0;
+function measureHero(){
+heroBottom=hero?hero.offsetTop+hero.offsetHeight:0;
+}
 var ticking=false;
 var lastPct=-1;
 function update(){
@@ -228,12 +235,19 @@ lastPct=pct;
 bar.style.width=pct+'%';
 if(header)header.classList.toggle('scrolling',pct>0.5&&pct<99.5);
 if(header)header.classList.toggle('is-compact',doc.scrollTop>40);
+if(mBar){
+mBar.style.width=pct+'%';
+var past=doc.scrollTop>heroBottom;
+if(mProg)mProg.classList.toggle('visible',past);
+document.body.classList.toggle('past-hero',past);
+}
 }
 function requestUpdate(){
 if(!ticking){ticking=true;requestAnimationFrame(update);}
 }
+measureHero();
 window.addEventListener('scroll',requestUpdate,{passive:true});
-window.addEventListener('resize',requestUpdate,{passive:true});
+window.addEventListener('resize',function(){measureHero();requestUpdate();},{passive:true});
 update();
 })();
 (function(){
