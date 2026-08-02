@@ -81,12 +81,13 @@
     padding-right: 12px;
   }
   .pg-grid {
-    padding-left: 12px;
-    padding-right: 12px;
+    padding-left: 6px;
+    padding-right: 6px;
+    gap: 4px;
   }
   .pg-section-label {
-    padding-left: 12px;
-    padding-right: 12px;
+    padding-left: 6px;
+    padding-right: 6px;
   }
 }
 
