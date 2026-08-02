@@ -41,17 +41,17 @@
 .pg-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
+  gap: 12px;
   align-items: start;
   max-width: 1560px;
   margin: 0 auto;
-  padding: 0 32px 120px;
+  padding: 0 24px 120px;
 }
 
 .pg-section-label {
   max-width: 1560px;
   margin: 0 auto;
-  padding: 0 32px 40px;
+  padding: 0 24px 24px;
   font-size: 0.75rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
@@ -60,7 +60,7 @@
 }
 
 .pg-section + .pg-section .pg-section-label {
-  padding-top: 2.5rem;
+  padding-top: 1.5rem;
 }
 
 @media (min-width: 768px) {
@@ -71,7 +71,7 @@
 
 @media (min-width: 1200px) {
   .pg-grid {
-    grid-template-columns: repeat(8, 1fr);
+    grid-template-columns: repeat(6, minmax(0, 1fr));
   }
 }
 
@@ -102,19 +102,9 @@
   border-radius: 18px;
   overflow: hidden;
   cursor: pointer;
-  translate: 0 var(--pg-offset, 0px);
   transition: scale 0.5s ease-out, box-shadow 0.5s ease-out;
   will-change: transform;
 }
-
-.pg-offset-1 { --pg-offset: 0px; }
-.pg-offset-2 { --pg-offset: 12px; }
-.pg-offset-3 { --pg-offset: -10px; }
-.pg-offset-4 { --pg-offset: 20px; }
-.pg-offset-5 { --pg-offset: 6px; }
-.pg-offset-6 { --pg-offset: -15px; }
-.pg-offset-7 { --pg-offset: 18px; }
-.pg-offset-8 { --pg-offset: -8px; }
 
 .pg-media {
   position: absolute;
