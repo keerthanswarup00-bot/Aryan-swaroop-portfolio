@@ -38,6 +38,10 @@
   margin-top: 0;
 }
 
+#brahmi.csx .feature-visual {
+  width: fit-content;
+}
+
 #brahmi.csx .feature-visual img {
   width: auto;
   max-width: 100%;
@@ -396,6 +400,10 @@
 }
 
 @media (max-width: 820px) {
+  #brahmi.csx .feature-visual {
+    width: auto;
+  }
+
   #brahmi.csx .csx-block.csx-desk {
     display: none;
   }
