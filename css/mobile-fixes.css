@@ -319,7 +319,8 @@
   .mobile-project-thumb img {
     width: 100% !important;
     height: 100% !important;
-    object-fit: contain;
+    object-fit: cover;
+    object-position: center;
   }
   .mobile-close {
     top: calc(env(safe-area-inset-top, 0px) + 20px);
