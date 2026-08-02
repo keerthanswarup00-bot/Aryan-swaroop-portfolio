@@ -80,7 +80,7 @@
 }
 
 .csx-copy {
-  font-size: 15px;
+  font-size: 18px;
   line-height: 1.7;
   color: #c9c8c4;
   max-width: 480px;
@@ -125,44 +125,55 @@
 .cs-insight {
   font-family: var(--serif);
   font-weight: 600;
-  font-size: clamp(1.7rem, 3vw, 2.4rem);
-  line-height: 1.25;
+  font-size: clamp(3.25rem, 5vw, 3.75rem);
+  line-height: 1.1;
   letter-spacing: -0.01em;
   color: var(--paper);
+  max-width: 520px;
 }
 
 /* === 3b. Animated storytelling mode (enabled by JS) === */
+/* Only the left column pins. The right side is natural document flow — each
+   block reserves its own scroll distance (min-height) and reveals in-place
+   (opacity 0->1->0.35, y 40->0) via ScrollTrigger. The hero image keeps the
+   exact same size/crop/border-radius as the static layout — never scaled. */
 #brahmi.csx.csx-anim .csx-left {
   position: sticky;
   top: calc(var(--nav-height) + 24px);
 }
 
 #brahmi.csx.csx-anim .csx-right {
-  height: calc(100svh * var(--csx-distance, 7));
+  height: auto;
 }
 
 #brahmi.csx.csx-anim .csx-stage {
-  position: sticky;
-  top: calc(var(--nav-height) + 24px);
-  height: calc(100svh - (var(--nav-height) + 48px));
-  display: grid;
+  position: static;
+  display: block;
 }
 
 #brahmi.csx.csx-anim .csx-block {
-  grid-area: 1 / 1;
-  align-self: center;
-  justify-self: start;
+  position: relative;
+  grid-area: auto;
+  align-self: auto;
+  justify-self: auto;
   margin-top: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 80svh;
   will-change: transform, opacity;
 }
 
-/* Keep the pinned left column within the viewport: the hero image scales
-   down proportionally (never cropped) so the sticky column always fits. */
-#brahmi.csx.csx-anim .feature-visual img {
-  width: auto;
-  height: auto;
-  max-width: 100%;
-  max-height: calc(100svh - 360px);
+#brahmi.csx.csx-anim .csx-block:first-child {
+  min-height: 100svh;
+}
+
+#brahmi.csx.csx-anim .csx-block:last-child {
+  min-height: 40svh;
+}
+
+#brahmi.csx.csx-anim .csx-cta {
+  margin-top: 0;
 }
 
 /* === 5. Horizontal work section === */
@@ -350,8 +361,7 @@
     grid-template-columns: 1fr;
   }
 
-  #brahmi.csx.csx-anim .csx-left,
-  #brahmi.csx.csx-anim .csx-stage {
+  #brahmi.csx.csx-anim .csx-left {
     position: static;
   }
 
@@ -359,11 +369,17 @@
     height: auto;
   }
 
-  #brahmi.csx.csx-anim .csx-block {
-    grid-area: auto;
-    align-self: auto;
-    justify-self: auto;
+  #brahmi.csx.csx-anim .csx-stage {
     position: static;
+  }
+
+  #brahmi.csx.csx-anim .csx-block {
+    min-height: 0;
+    display: block;
+  }
+
+  #brahmi.csx.csx-anim .csx-block + .csx-block {
+    margin-top: clamp(56px, 8vh, 88px);
   }
 }
 
