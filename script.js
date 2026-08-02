@@ -35,6 +35,7 @@ setTimeout(flashNext,40);
 },350);
 }
 })();
+if (navigator.vendor && navigator.vendor.indexOf('Apple') > -1) document.documentElement.classList.add('sf-safari');
 var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 if(document.body) document.body.classList.add('loaded');
 if (!prefersReducedMotion) {
@@ -344,8 +345,6 @@ aboutImg.addEventListener('click',function(){window.location.href='/about'});
 }
 (function(){
 if(prefersReducedMotion) return;
-var TEXT_1 = 'Brand systems that ship.';
-var TEXT_2 = 'Not just look good in Figma.';
 var IMAGES = [
 '/images/brahmi-pourshot.jpg',
 '/images/brahmi-shelf.jpg',
@@ -382,8 +381,8 @@ chars.push(sp);
 }
 return chars;
 }
-splitIntoChars(line1, TEXT_1);
-var line2Chars = splitIntoChars(line2, TEXT_2);
+splitIntoChars(line1, line1.textContent.trim());
+var line2Chars = splitIntoChars(line2, line2.textContent.trim());
 var enabled = false;
 var blocked = false;
 var active = [];
