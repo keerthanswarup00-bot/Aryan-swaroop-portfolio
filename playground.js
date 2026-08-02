@@ -1,11 +1,12 @@
 document.addEventListener('DOMContentLoaded',function(){
-var grid=document.getElementById('pgGrid');
-if(!grid)return;
-var items=grid.querySelectorAll('.pg-item');
+var grids=document.querySelectorAll('.pg-grid');
+if(!grids.length)return;
+var items=[];
+grids.forEach(function(g){items=items.concat(Array.prototype.slice.call(g.querySelectorAll('.pg-item')));});
 var lightbox=document.getElementById('pgLightbox');
 var lightboxContent=document.getElementById('pgLightboxContent');
 var closeBtn=document.getElementById('pgLightboxClose');
-var videos=grid.querySelectorAll('video');
+var videos=document.querySelectorAll('.pg-grid video');
 var visObs=new IntersectionObserver(function(entries){
 entries.forEach(function(e){
 var v=e.target;

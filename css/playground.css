@@ -48,6 +48,21 @@
   padding: 0 40px 120px;
 }
 
+.pg-section-label {
+  max-width: 1560px;
+  margin: 0 auto;
+  padding: 0 40px 44px;
+  font-size: 0.75rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #A8A8A8;
+  text-align: center;
+}
+
+.pg-section + .pg-section .pg-section-label {
+  padding-top: 2.5rem;
+}
+
 @media (min-width: 768px) {
   .pg-grid {
     grid-template-columns: repeat(5, 1fr);
@@ -66,6 +81,10 @@
     padding-right: 24px;
   }
   .pg-grid {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+  .pg-section-label {
     padding-left: 24px;
     padding-right: 24px;
   }

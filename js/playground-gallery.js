@@ -2,9 +2,9 @@
    Requires: gsap.min.js, ScrollTrigger.min.js, CustomEase.min.js, lenis.min.js
    All animation is transform/opacity only for GPU-accelerated motion. */
 document.addEventListener('DOMContentLoaded', function () {
-  var grid = document.getElementById('pgGrid');
+  var grids = document.querySelectorAll('.pg-grid');
   var heroInner = document.querySelector('.pg-hero-inner');
-  if (!grid || !window.gsap || !window.ScrollTrigger) return;
+  if (!grids.length || !window.gsap || !window.ScrollTrigger) return;
 
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var gsap = window.gsap;
@@ -30,7 +30,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
   if (reduceMotion) return;
 
-  var items = Array.prototype.slice.call(grid.querySelectorAll('.pg-item'));
+  var items = [];
+  grids.forEach(function (g) {
+    items = items.concat(Array.prototype.slice.call(g.querySelectorAll('.pg-item')));
+  });
   if (!items.length) return;
 
   var medias = items.map(function (item) { return item.querySelector('.pg-media'); });
