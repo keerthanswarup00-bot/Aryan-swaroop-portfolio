@@ -36,7 +36,6 @@ document.addEventListener('DOMContentLoaded', function () {
   });
   if (!items.length) return;
 
-  var medias = items.map(function (item) { return item.querySelector('.pg-media'); });
   var viewportH = window.innerHeight;
   var initial = [];
 
@@ -70,25 +69,6 @@ document.addEventListener('DOMContentLoaded', function () {
     gsap.set([h1, p], { y: 48, opacity: 0 });
     gsap.to([h1, p], { y: 0, opacity: 1, duration: 0.9, ease: ease, stagger: 0.08, delay: 0.1 });
   }
-
-  /* Subtle parallax: each media drifts at its own speed. */
-  var parallaxScale = window.innerWidth < 768 ? 0.6 : 1;
-  items.forEach(function (item, i) {
-    var media = medias[i];
-    if (!media) return;
-    var speed = (14 + (i % 5) * 3) * parallaxScale;
-    var dist = i % 2 === 0 ? speed : -speed;
-    gsap.fromTo(media, { y: -dist }, {
-      y: dist,
-      ease: 'none',
-      scrollTrigger: {
-        trigger: item,
-        start: 'top bottom',
-        end: 'bottom top',
-        scrub: 0.8
-      }
-    });
-  });
 
   window.addEventListener('load', function () { ScrollTrigger.refresh(); });
 });
