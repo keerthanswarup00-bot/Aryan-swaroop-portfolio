@@ -47,7 +47,7 @@ export const MOBILE_MENU_HTML = `<div class="mobile-menu" id="mobileMenu" aria-h
           <img src="/images/nav-avatar.png" alt="Aryan Swaroop" class="mobile-avatar" width="72" height="72" loading="lazy" decoding="async">
         </picture>
         <div class="mobile-identity">
-          <span class="mobile-name">Aryan Swaroop</span>
+          <span class="mobile-name">Aryan</span>
           <span class="mobile-status"><span class="status-ping"></span>Open to work</span>
         </div>
       </a>
