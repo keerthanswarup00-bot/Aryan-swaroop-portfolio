@@ -65,15 +65,12 @@
     }
   }
 
-  /* 3. Interactive iframe — click to load */
-  var launch = document.getElementById("interactiveLaunch");
+  /* 3. Interactive iframe — load live tool when scrolled into view */
   var embed = document.getElementById("interactiveEmbed");
   var frame = document.getElementById("interactiveFrame");
   var loading = document.getElementById("interactiveLoading");
-  if (launch && embed && frame) {
-    launch.addEventListener("click", function () {
-      launch.hidden = true;
-      embed.hidden = false;
+  if (embed && frame) {
+    var loadFrame = function () {
       frame.setAttribute("src", "https://vr-devaiah-enclave.vercel.app/");
       var done = false;
       var timer = setTimeout(function () {
@@ -81,7 +78,7 @@
           done = true;
           if (loading) loading.hidden = true;
         }
-      }, 12000);
+      }, 15000);
       frame.addEventListener("load", function () {
         if (!done) {
           done = true;
@@ -89,7 +86,20 @@
           if (loading) loading.hidden = true;
         }
       });
-    });
+    };
+    if ("IntersectionObserver" in window) {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            io.disconnect();
+            loadFrame();
+          }
+        });
+      }, { rootMargin: "300px 0px" });
+      io.observe(embed);
+    } else {
+      loadFrame();
+    }
   }
 
   })();
