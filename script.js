@@ -50,11 +50,18 @@ setTimeout(function () { window.location.href = href; }, 180);
 });
 }
 var cur = document.getElementById('cur');
-if (cur && !prefersReducedMotion) {
+if (cur && !prefersReducedMotion && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
 var curSpan = cur.querySelector('span') || {};
 var pageIsDark = document.body.classList.contains('page-dark');
 var cursorTheme = pageIsDark ? 'dark' : 'light';
-var lastX = -100, lastY = -100;
+var dotSize = 18;
+var curSize = window.innerWidth >= 1024 ? 132 : 108;
+var size = dotSize, targetSize = dotSize;
+var px = -100, py = -100, tx = -100, ty = -100;
+var activeEl = null;
+var rafId = null;
+var scrollPending = false;
+var TARGET_SEL = '[data-cur], [data-image-reveal], .sfp-media, .pg-item';
 function sectionTheme(el) {
   if (!el) return null;
   if (el.classList && (el.classList.contains('theme-dark') || el.classList.contains('page-dark'))) return 'dark';
@@ -79,27 +86,71 @@ function themeAt(x, y) {
   }
   return pageIsDark ? 'dark' : 'light';
 }
+function setActive(el) {
+  if (el === activeEl) return;
+  if (activeEl && activeEl.classList) activeEl.classList.remove('cursor-img-active');
+  activeEl = el;
+  if (el) {
+    var labelText = (el.getAttribute('data-cur') || el.getAttribute('data-image-reveal') || '').trim() || 'VIEW';
+    curSpan.textContent = labelText;
+    cur.classList.add('invert');
+    cur.classList.add('show-label');
+    targetSize = curSize;
+    if (el.querySelector && el.querySelector('img, picture')) el.classList.add('cursor-img-active');
+  } else {
+    cur.classList.remove('show-label');
+    targetSize = dotSize;
+  }
+}
+document.addEventListener('mouseover', function (e) {
+  var el = e.target && e.target.closest ? e.target.closest(TARGET_SEL) : null;
+  if (el) setActive(el);
+}, { passive: true });
+document.addEventListener('mouseout', function (e) {
+  if (!activeEl) return;
+  var t = e.target;
+  if (t !== activeEl && !activeEl.contains(t)) return;
+  var to = e.relatedTarget;
+  if (to && activeEl.contains(to)) return;
+  setActive(null);
+}, { passive: true });
 window.addEventListener('mousemove', function (e) {
-  lastX = e.clientX;
-  lastY = e.clientY;
-  cur.style.left = e.clientX + 'px';
-  cur.style.top = e.clientY + 'px';
+  tx = e.clientX;
+  ty = e.clientY;
   applyTheme(themeAt(e.clientX, e.clientY));
 }, { passive: true });
-window.addEventListener('resize', function () {
-  if (lastX < 0) return;
-  applyTheme(themeAt(lastX, lastY));
+window.addEventListener('scroll', function () {
+  if (scrollPending || !activeEl || tx < 0) return;
+  scrollPending = true;
+  requestAnimationFrame(function () {
+    scrollPending = false;
+    var el = document.elementFromPoint(tx, ty);
+    if (!el) return;
+    var hit = el.closest ? el.closest(TARGET_SEL) : null;
+    setActive(hit);
+  });
 }, { passive: true });
-document.querySelectorAll('[data-cur]').forEach(function (el) {
-  el.addEventListener('mouseenter', function () {
-    cur.classList.add('grow');
-    curSpan.textContent = el.getAttribute('data-cur');
-  });
-  el.addEventListener('mouseleave', function () {
-    cur.classList.remove('grow');
+window.addEventListener('resize', function () {
+  curSize = window.innerWidth >= 1024 ? 132 : 108;
+  if (activeEl) targetSize = curSize;
+}, { passive: true });
+function frame() {
+  rafId = requestAnimationFrame(frame);
+  size += (targetSize - size) * 0.22;
+  if (Math.abs(size - targetSize) < 0.05) size = targetSize;
+  if (!activeEl && size === dotSize && cur.classList.contains('invert')) {
+    cur.classList.remove('invert');
     curSpan.textContent = '';
-  });
-});
+  }
+  px += (tx - px) * 0.16;
+  py += (ty - py) * 0.16;
+  if (Math.abs(px - tx) < 0.05) px = tx;
+  if (Math.abs(py - ty) < 0.05) py = ty;
+  cur.style.transform = 'translate3d(' + (px - size / 2).toFixed(2) + 'px,' + (py - size / 2).toFixed(2) + 'px,0)';
+  cur.style.width = size.toFixed(2) + 'px';
+  cur.style.height = size.toFixed(2) + 'px';
+}
+rafId = requestAnimationFrame(frame);
 applyTheme(pageIsDark ? 'dark' : 'light');
 }
 (function(){
