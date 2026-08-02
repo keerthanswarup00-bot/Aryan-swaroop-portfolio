@@ -43,6 +43,30 @@
     var prevBtn = document.querySelector('.fb-desktop__prev');
     var nextBtn = document.querySelector('.fb-desktop__next');
     var counter = document.querySelector('.fb-desktop__counter');
+    var frame = document.querySelector('.fb-desktop');
+
+    function getPageHalfWidth() {
+      if (!book) return 0;
+      var rect = book.getBoundsRect();
+      return rect && rect.pageWidth ? rect.pageWidth / 2 : 0;
+    }
+
+    function syncShift(pageIndex) {
+      if (!frame) return;
+      frame.style.setProperty('--flipbook-shift', getPageHalfWidth() + 'px');
+      frame.setAttribute('data-flip-state', pageIndex <= 0 ? 'closed' : 'opened');
+    }
+
+    function handleFlipStart() {
+      if (!book) return;
+      var dir = -1;
+      try {
+        var calc = book.getFlipController() && book.getFlipController().getCalculation();
+        if (calc && typeof calc.getDirection === 'function') dir = calc.getDirection();
+      } catch (e) {}
+      if (dir < 0) return;
+      syncShift(book.getCurrentPageIndex() + (dir === 0 ? 1 : -1));
+    }
 
     function updateDisplay() {
       if (!book || !counter) return;
@@ -80,8 +104,19 @@
       book.loadFromHTML(pageEls);
       window.__brahmiFlipbook = book;
 
-      book.on('flip', updateDisplay);
-      book.on('init', updateDisplay);
+      book.on('flip', function () {
+        updateDisplay();
+        syncShift(book.getCurrentPageIndex());
+      });
+      book.on('init', function () {
+        updateDisplay();
+        syncShift(book.getCurrentPageIndex());
+      });
+      book.on('changeState', function (e) {
+        var state = e && e.data;
+        if (state === 'flipping' || state === 'fold_corner') handleFlipStart();
+        if (state === 'read') syncShift(book.getCurrentPageIndex());
+      });
       updateDisplay();
     }
 
@@ -103,6 +138,7 @@
       resizeTimer = setTimeout(function () {
         if (book) {
           updateDisplay();
+          syncShift(book.getCurrentPageIndex());
         } else {
           loadLibAndInit();
         }

@@ -74,6 +74,13 @@
 
 .fb-desktop__book {
   width: 100%;
+  transform: translateX(0);
+  transition: transform 0.3s ease-in-out;
+  will-change: transform;
+}
+
+.fb-desktop[data-flip-state="closed"] .fb-desktop__book {
+  transform: translateX(calc(0px - var(--flipbook-shift, 0px)));
 }
 
 .fb-desktop__nav {
@@ -176,6 +183,9 @@
   .premium-flipbook-wrapper {
     opacity: 1;
     transform: none;
+    transition: none;
+  }
+  .fb-desktop__book {
     transition: none;
   }
 }
