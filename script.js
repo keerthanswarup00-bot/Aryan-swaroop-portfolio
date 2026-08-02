@@ -143,10 +143,8 @@ function frame() {
     cur.classList.remove('invert');
     curSpan.textContent = '';
   }
-  px += (tx - px) * 0.16;
-  py += (ty - py) * 0.16;
-  if (Math.abs(px - tx) < 0.05) px = tx;
-  if (Math.abs(py - ty) < 0.05) py = ty;
+  px = tx;
+  py = ty;
   cur.style.transform = 'translate3d(' + (px - size / 2).toFixed(2) + 'px,' + (py - size / 2).toFixed(2) + 'px,0)';
   cur.style.width = size.toFixed(2) + 'px';
   cur.style.height = size.toFixed(2) + 'px';
