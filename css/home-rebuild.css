@@ -38,10 +38,6 @@
   margin-top: 0;
 }
 
-.csx-left h2 {
-  margin-bottom: 40px;
-}
-
 .csx-right {
   position: relative;
 }
@@ -139,7 +135,8 @@
    exact same size/crop/border-radius as the static layout — never scaled. */
 #brahmi.csx.csx-anim .csx-left {
   position: sticky;
-  top: calc(var(--nav-height) + 24px);
+  top: 120px;
+  align-self: flex-start;
 }
 
 #brahmi.csx.csx-anim .csx-right {

@@ -1,5 +1,5 @@
 /* Featured Case Study — Sastry's by Brahmi, sticky-left scroll storytelling.
-   The left column (label + heading + image) is pinned via CSS position:sticky;
+   The left column (image only) is pinned via CSS position:sticky;
    the right column is normal document flow — each block reserves its own scroll
    distance (min-height) and reveals in-place: fade in (opacity 0->1, y 40->0,
    power3.out), hold, then fade out slightly (opacity 1->0.35) as it leaves.
