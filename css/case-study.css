@@ -214,3 +214,26 @@
     grid-template-columns: 1fr;
   }
 }
+
+.cs-media-static {
+  display: none;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.cs-media-video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cs-media-static {
+    display: block;
+  }
+  .cs-media-video {
+    display: none !important;
+  }
+}

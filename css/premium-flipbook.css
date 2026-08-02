@@ -80,7 +80,7 @@
 }
 
 .fb-desktop[data-flip-state="closed"] .fb-desktop__book {
-  transform: translateX(calc(0px - var(--flipbook-shift, 0px)));
+  transform: translateX(var(--flipbook-shift, 0px));
 }
 
 .fb-desktop__nav {

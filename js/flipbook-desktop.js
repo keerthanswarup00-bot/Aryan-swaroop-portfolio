@@ -35,7 +35,6 @@
       img.alt = '';
       img.style.cssText = 'width:100%;height:100%;display:block;object-fit:contain;pointer-events:none;user-select:none;-webkit-user-select:none;';
       page.appendChild(img);
-      container.appendChild(page);
       pageEls.push(page);
     }
 
@@ -53,8 +52,16 @@
 
     function syncShift(pageIndex) {
       if (!frame) return;
-      frame.style.setProperty('--flipbook-shift', getPageHalfWidth() + 'px');
-      frame.setAttribute('data-flip-state', pageIndex <= 0 ? 'closed' : 'opened');
+      var half = getPageHalfWidth();
+      if (pageIndex <= 0) {
+        frame.style.setProperty('--flipbook-shift', (-half) + 'px');
+        frame.setAttribute('data-flip-state', 'closed');
+      } else if (pageIndex >= TOTAL_IMAGES - 1) {
+        frame.style.setProperty('--flipbook-shift', half + 'px');
+        frame.setAttribute('data-flip-state', 'closed');
+      } else {
+        frame.setAttribute('data-flip-state', 'opened');
+      }
     }
 
     function handleFlipStart() {
@@ -82,6 +89,10 @@
 
     function initBook() {
       if (typeof St === 'undefined' || !St.PageFlip || book) return;
+
+      for (var p = 0; p < pageEls.length; p++) {
+        container.appendChild(pageEls[p]);
+      }
 
       book = new St.PageFlip(container, {
         width: PAGE_W,

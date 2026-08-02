@@ -293,8 +293,8 @@ aboutImg.addEventListener('click',function(){window.location.href='/about'});
 }
 (function(){
 if(prefersReducedMotion) return;
-var TEXT_1 = 'Not another portfolio.';
-var TEXT_2 = 'Just my best work.';
+var TEXT_1 = 'Brand systems that ship.';
+var TEXT_2 = 'Not just look good in Figma.';
 var IMAGES = [
 '/images/brahmi-pourshot.jpg',
 '/images/brahmi-shelf.jpg',
@@ -576,6 +576,7 @@ setTimeout(function(){if(!started){started=true; startAnimation()}}, 5200);
 (function(){
 var counters = document.querySelectorAll('.stat-count');
 if(!counters.length) return;
+var started = false;
 function easeOutCubic(t){return 1-Math.pow(1-t,3)}
 function animateCount(el){
 var target = parseInt(el.getAttribute('data-target'), 10);
@@ -590,9 +591,21 @@ if(t < 1) requestAnimationFrame(tick);
 requestAnimationFrame(tick);
 }
 function startRolling(){
+if(started) return;
+started = true;
 counters.forEach(animateCount);
 }
 window.addEventListener('hero:ready', startRolling, { once: true });
+if ('IntersectionObserver' in window) {
+var io = new IntersectionObserver(function(entries){
+entries.forEach(function(entry){
+if(entry.isIntersecting){ startRolling(); io.disconnect(); }
+});
+}, { threshold: 0.4 });
+counters.forEach(function(c){ io.observe(c); });
+} else {
+startRolling();
+}
 })();
 (function(){
 var header=document.querySelector('.site-header');
@@ -614,7 +627,7 @@ document.addEventListener("DOMContentLoaded", function(){
 var section = document.getElementById("credibilityReveal");
 var paragraphEl = document.getElementById("srtParagraph");
 if(!section || !paragraphEl) return;
-var fullText = "Brand identity and creative systems for real estate, F&B, and consumer brands. Designed, and often built into working product, by one person. For Paavani Properties, that meant building the Meta Ads and creative system behind 302 qualified leads in 66 days, and leading creative across 30+ launches spanning identity, print, video, and 3D.";
+var fullText = "Identity, packaging, 3D, film, and the product itself — for real estate, F&B, and consumer brands. For Paavani Properties, that meant building the campaign system behind 302 qualified leads in 66 days at ₹82 per lead, and leading creative across 30+ launches spanning identity, print, video, and 3D.";
 var words = fullText.split(" ");
 paragraphEl.innerHTML = words.map(function(w){ return '<span class="srt-word">' + w + '</span>'; }).join(" ");
 var wordEls = paragraphEl.querySelectorAll(".srt-word");
