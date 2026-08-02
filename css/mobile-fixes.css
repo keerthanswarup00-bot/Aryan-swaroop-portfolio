@@ -316,6 +316,11 @@
   .mobile-project-row:last-child {
     margin-bottom: 0;
   }
+  .mobile-project-thumb img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain;
+  }
   .mobile-close {
     top: calc(env(safe-area-inset-top, 0px) + 20px);
   }
