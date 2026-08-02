@@ -92,45 +92,5 @@
     });
   }
 
-  /* 4. Reading progress rail */
-  var progress = document.getElementById("csProgressMarker");
-  var dots = document.querySelectorAll(".cs-progress a[data-section]");
-  if (progress && dots.length) {
-    var main = document.querySelector(".case-study");
-    var sections = [];
-    for (var d = 0; d < dots.length; d++) {
-      sections.push(dots[d].getAttribute("data-section"));
-    }
-    function updateProgress() {
-      if (!main) return;
-      var mTop = main.getBoundingClientRect().top + window.scrollY;
-      var mBottom = main.getBoundingClientRect().bottom + window.scrollY;
-      var winH = window.innerHeight;
-      var total = Math.max(1, mBottom - mTop - winH);
-      var done = Math.min(1, Math.max(0, (window.scrollY - mTop) / total));
-      progress.style.height = Math.round(done * 100) + "%";
-      var probe = window.scrollY + winH * 0.4;
-      var current = 0;
-      for (var sec = 0; sec < sections.length; sec++) {
-        var el = document.getElementById(sections[sec]);
-        if (!el) continue;
-        var top = el.getBoundingClientRect().top + window.scrollY;
-        if (top <= probe) current = sec;
-      }
-      for (var dot = 0; dot < dots.length; dot++) {
-        dots[dot].classList.toggle("active", dot === current);
-      }
-    }
-    var railTick = false;
-    window.addEventListener("scroll", function () {
-      if (!railTick) {
-        railTick = true;
-        window.requestAnimationFrame(function () {
-          updateProgress();
-          railTick = false;
-        });
-      }
-    }, { passive: true });
-    updateProgress();
-  }
-})();
+  })();
+

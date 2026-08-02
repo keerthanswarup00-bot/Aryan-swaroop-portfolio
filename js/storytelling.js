@@ -1,0 +1,84 @@
+/* Storytelling Scroll Section — pinned GSAP narrative
+   Replaces the Brief / Problem / Process blocks with a full-screen,
+   scroll-scrubbed storytelling sequence. Each paragraph enters from
+   slightly below, holds still for reading, then retreats backward into
+   darkness (scale + blur + perspective depth — never an upward exit).
+
+   Degrades to a static readable flow when JS is unavailable or
+   prefers-reduced-motion is set. Scoped via gsap.matchMedia so the
+   desktop / mobile setups revert and clean up automatically. */
+(function () {
+  'use strict';
+
+  if (window.storytellingInit) return;
+  window.storytellingInit = true;
+
+  var sections = document.querySelectorAll('.cs-story');
+  if (!sections.length || !window.gsap || !window.ScrollTrigger) return;
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  var mm = gsap.matchMedia();
+
+  function activate(section, pin, slides, scrollVh) {
+    section.classList.add('cs-story--active');
+
+    var count = slides.length;
+    var perSlide = 1 / count;
+
+    gsap.set(slides, { opacity: 0, y: 80, scale: 1, z: 0, filter: 'blur(0px)' });
+
+    var tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: pin,
+        start: 'top top',
+        end: function () { return '+=' + window.innerHeight * scrollVh; },
+        pin: true,
+        pinSpacing: true,
+        scrub: 0.5,
+        anticipatePin: 1,
+        invalidateOnRefresh: true
+      }
+    });
+
+    slides.forEach(function (slide, i) {
+      var seg = i * perSlide;
+
+      tl.to(slide, {
+        opacity: 1,
+        y: 0,
+        ease: 'power3.out',
+        duration: perSlide * 0.18
+      }, seg);
+
+      tl.to(slide, {
+        opacity: 0,
+        y: 0,
+        scale: 0.88,
+        z: -100,
+        filter: 'blur(8px)',
+        ease: 'power2.in',
+        duration: perSlide * 0.22
+      }, seg + perSlide * 0.52);
+    });
+  }
+
+  sections.forEach(function (section) {
+    var pin = section.querySelector('.cs-story__pin');
+    var slides = Array.prototype.slice.call(section.querySelectorAll('.cs-story__slide'));
+    if (!pin || slides.length < 2) return;
+
+    mm.add('(min-width: 901px)', function () {
+      activate(section, pin, slides, 4);
+    });
+    mm.add('(max-width: 900px)', function () {
+      activate(section, pin, slides, 3);
+    });
+  });
+
+  window.addEventListener('load', function () {
+    if (window.ScrollTrigger) ScrollTrigger.refresh();
+  });
+})();

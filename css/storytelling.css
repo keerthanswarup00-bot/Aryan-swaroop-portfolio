@@ -1,0 +1,88 @@
+/* Storytelling Scroll Section — pinned cinematic narrative
+   GSAP ScrollTrigger drives the pinned, full-screen sequence.
+   Without JS (or with prefers-reduced-motion) it degrades to a static,
+   readable flow so the three story blocks stay accessible. */
+
+.cs-story {
+  width: 100vw;
+  max-width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  margin-bottom: 3rem;
+}
+
+.cs-story__pin {
+  position: relative;
+}
+
+.cs-story__slide {
+  padding: 0 0 3rem;
+}
+.cs-story__slide:last-child {
+  padding-bottom: 0;
+}
+
+.cs-story__content {
+  width: 100%;
+}
+
+.cs-story__label {
+  font-size: 0.8rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #C41E3A;
+  margin-bottom: 1.1rem;
+}
+
+.cs-story__text {
+  font-size: clamp(32px, 3vw, 56px);
+  line-height: 1.4;
+  font-weight: 400;
+  color: #FFFFFF;
+  max-width: 900px;
+}
+
+/* Pinned full-screen state (activated by JS) */
+.cs-story--active .cs-story__pin {
+  height: 100vh;
+  height: 100svh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: #000000;
+}
+
+.cs-story--active .cs-story__stage {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  perspective: 1200px;
+}
+
+.cs-story--active .cs-story__slide {
+  position: absolute;
+  inset: 0;
+  padding: 0 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.cs-story--active .cs-story__content {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+@media (max-width: 900px) {
+  .cs-story__text {
+    font-size: clamp(24px, 5.5vw, 34px);
+  }
+  .cs-story--active .cs-story__slide {
+    padding: 0 1.25rem;
+  }
+}

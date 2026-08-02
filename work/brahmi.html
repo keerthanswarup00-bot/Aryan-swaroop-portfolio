@@ -46,6 +46,7 @@
   <link rel="stylesheet" href="/css/case-study-dark.css?v=20260731">
 <link rel="stylesheet" href="/css/premium-flipbook.css?v=20260731">
 <link rel="stylesheet" href="/css/mobile-fixes.css?v=20260731">
+<link rel="stylesheet" href="/css/storytelling.css?v=20260802">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -192,9 +193,30 @@
     </video>
   </figure>
 
-  <section class="cs-block reveal-block">
-    <h2 class="cs-block-label">Brief</h2>
-    <p class="cs-block-text">Build a modern coffee brand that could stand next to international specialty brands without losing the warmth of South Indian filter coffee culture — the ritual, not just the product.</p>
+  <!-- Storytelling scroll section — Brief / The Problem / Process -->
+  <section class="cs-story" aria-label="The story of this project">
+    <div class="cs-story__pin">
+      <div class="cs-story__stage">
+        <div class="cs-story__slide">
+          <div class="cs-story__content">
+            <h2 class="cs-story__label">Brief</h2>
+            <p class="cs-story__text">Build a modern coffee brand that could stand next to international specialty brands without losing the warmth of South Indian filter coffee culture — the ritual, not just the product.</p>
+          </div>
+        </div>
+        <div class="cs-story__slide">
+          <div class="cs-story__content">
+            <h2 class="cs-story__label">The Problem</h2>
+            <p class="cs-story__text">Most specialty coffee brands lean on dark industrial minimalism or Western café aesthetics. It reads as premium, but it strips out the parts that actually make filter coffee what it is — brass filters passed down through a family, the smell before sunrise, a conversation that starts over the first cup. Nobody was designing for how the coffee actually feels, only for how it looks on a shelf.</p>
+          </div>
+        </div>
+        <div class="cs-story__slide">
+          <div class="cs-story__content">
+            <h2 class="cs-story__label">Process</h2>
+            <p class="cs-story__text">Skipped the expected coffee-brown palette for a deep teal, paired with brass-toned accents pulled directly from the traditional filter itself — the color set the brand apart on shelf while the brass kept it rooted in the ritual it came from. The harder call was avoiding every cliché in the coffee-branding playbook: no beans, no steam, no café illustrations. Distinction had to come from color, type, and composition alone, not from the obvious imagery every competitor already uses.</p>
+          </div>
+        </div>
+      </div>
+    </div>
   </section>
 
   <figure class="cs-interleave-image reveal-block">
@@ -205,19 +227,9 @@
     </picture>
   </figure>
 
-  <section class="cs-block reveal-block">
-    <h2 class="cs-block-label">The Problem</h2>
-    <p class="cs-block-text">Most specialty coffee brands lean on dark industrial minimalism or Western café aesthetics. It reads as premium, but it strips out the parts that actually make filter coffee what it is — brass filters passed down through a family, the smell before sunrise, a conversation that starts over the first cup. Nobody was designing for how the coffee actually feels, only for how it looks on a shelf.</p>
-  </section>
-
   <figure class="cs-interleave-image reveal-block">
     <img src="/images/brahmi-pourshot.jpg" alt="Sastry's by Brahmi packaging with filter coffee being poured" width="800" height="1000" loading="lazy">
   </figure>
-
-  <section class="cs-block reveal-block">
-    <h2 class="cs-block-label">Process</h2>
-    <p class="cs-block-text">Skipped the expected coffee-brown palette for a deep teal, paired with brass-toned accents pulled directly from the traditional filter itself — the color set the brand apart on shelf while the brass kept it rooted in the ritual it came from. The harder call was avoiding every cliché in the coffee-branding playbook: no beans, no steam, no café illustrations. Distinction had to come from color, type, and composition alone, not from the obvious imagery every competitor already uses.</p>
-  </section>
 
   <figure class="cs-interleave-image reveal-block">
     <img src="/images/brahmi-stickers.jpg" alt="Brahmi brochure and marketing collateral mockup" width="1051" height="599" loading="lazy">
@@ -293,5 +305,8 @@
 <script src="../lightbox.js?v=20260731"></script>
 <script src="../js/reveal-on-scroll.js?v=20260731"></script>
 <script src="../js/blend-selector.js?v=20260731"></script>
+<script src="/js/vendor/gsap.min.js"></script>
+<script src="/js/vendor/ScrollTrigger.min.js"></script>
+<script src="/js/storytelling.js?v=20260802"></script>
 </body>
 </html>

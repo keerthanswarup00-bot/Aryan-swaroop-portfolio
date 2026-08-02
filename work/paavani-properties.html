@@ -46,6 +46,7 @@
 <link rel="stylesheet" href="/css/case-study-dark.css?v=20260731">
 <link rel="stylesheet" href="/css/paavani.css?v=20260731">
 <link rel="stylesheet" href="/css/mobile-fixes.css?v=20260731">
+<link rel="stylesheet" href="/css/storytelling.css?v=20260802">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -211,22 +212,30 @@
     </div>
   </section>
 
-  <!-- Brief -->
-  <section class="cs-block reveal-block" id="cs-brief">
-    <h2 class="cs-block-label">Brief</h2>
-    <p class="cs-block-text">Paavani needed a single creative system that could scale across 30+ residential launches without every project looking like a different company. Each new campaign also had to work hard on its own — generate real leads — while still reinforcing trust in the parent brand every time someone saw it.</p>
-  </section>
-
-  <!-- The Problem -->
-  <section class="cs-block reveal-block" id="cs-problem">
-    <h2 class="cs-block-label">The Problem</h2>
-    <p class="cs-block-text">Real estate buyers decide who to trust before they ever speak to a salesperson. Paavani had strong land and strong projects, but no consistent visual language tying them together — every launch was its own island, which meant every campaign started from zero instead of building on the last one.</p>
-  </section>
-
-  <!-- Process -->
-  <section class="cs-block reveal-block" id="cs-process">
-    <h2 class="cs-block-label">Process</h2>
-    <p class="cs-block-text">I built one brand system and applied it everywhere: identity, print collateral, 3D renders, video, and the ad creative running the campaigns. Instead of treating each launch as a new design problem, every asset fed the same recognizable system — so campaign five looked unmistakably like the same company as campaign one, and the trust compounded instead of resetting.</p>
+  <!-- Storytelling scroll section — Brief / The Problem / Process -->
+  <section class="cs-story" aria-label="The story of this project">
+    <div class="cs-story__pin">
+      <div class="cs-story__stage">
+        <div class="cs-story__slide">
+          <div class="cs-story__content">
+            <h2 class="cs-story__label">Brief</h2>
+            <p class="cs-story__text">Paavani needed a single creative system that could scale across 30+ residential launches without every project looking like a different company. Each new campaign also had to work hard on its own — generate real leads — while still reinforcing trust in the parent brand every time someone saw it.</p>
+          </div>
+        </div>
+        <div class="cs-story__slide">
+          <div class="cs-story__content">
+            <h2 class="cs-story__label">The Problem</h2>
+            <p class="cs-story__text">Real estate buyers decide who to trust before they ever speak to a salesperson. Paavani had strong land and strong projects, but no consistent visual language tying them together — every launch was its own island, which meant every campaign started from zero instead of building on the last one.</p>
+          </div>
+        </div>
+        <div class="cs-story__slide">
+          <div class="cs-story__content">
+            <h2 class="cs-story__label">Process</h2>
+            <p class="cs-story__text">I built one brand system and applied it everywhere: identity, print collateral, 3D renders, video, and the ad creative running the campaigns. Instead of treating each launch as a new design problem, every asset fed the same recognizable system — so campaign five looked unmistakably like the same company as campaign one, and the trust compounded instead of resetting.</p>
+          </div>
+        </div>
+      </div>
+    </div>
   </section>
 
   <!-- Process — stage diagram -->
@@ -354,18 +363,6 @@
     </div>
   </section>
 
-  <!-- Reading progress rail -->
-  <nav class="cs-progress" aria-label="Case study sections">
-    <div class="cs-progress-track"><span class="cs-progress-marker" id="csProgressMarker"></span></div>
-    <ol class="cs-progress-dots">
-      <li><a href="#cs-brief" data-section="cs-brief" aria-label="Go to Brief"><span></span></a></li>
-      <li><a href="#cs-problem" data-section="cs-problem" aria-label="Go to The Problem"><span></span></a></li>
-      <li><a href="#cs-process" data-section="cs-process" aria-label="Go to Process"><span></span></a></li>
-      <li><a href="#cs-result" data-section="cs-result" aria-label="Go to Result"><span></span></a></li>
-      <li><a href="#cs-live" data-section="cs-live" aria-label="Go to Live Plot Selection"><span></span></a></li>
-      <li><a href="#cs-applied" data-section="cs-applied" aria-label="Go to Applied Across the System"><span></span></a></li>
-    </ol>
-  </nav>
 
   <!-- Next Project Nav -->
   <nav class="cs-next reveal-block">
@@ -401,6 +398,9 @@
 <script src="../lightbox.js?v=20260731"></script>
 <script src="../js/image-cursor-reveal.js?v=20260731"></script>
 <script src="../js/reveal-on-scroll.js?v=20260731"></script>
-<script src="../js/paavani.js?v=20260731"></script>
+<script src="../js/paavani.js?v=20260807"></script>
+<script src="../js/vendor/gsap.min.js"></script>
+<script src="../js/vendor/ScrollTrigger.min.js"></script>
+<script src="../js/storytelling.js?v=20260802"></script>
 </body>
 </html>
