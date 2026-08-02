@@ -30,6 +30,7 @@ lightboxContent.appendChild(img);
 }
 lightbox.classList.add('open');
 document.body.classList.add('pg-lightbox-open');
+if(window.__pgLenis)window.__pgLenis.stop();
 });
 });
 function closeLightbox(){
@@ -38,6 +39,7 @@ if(vid){vid.pause();vid.src=''}
 lightbox.classList.remove('open');
 document.body.classList.remove('pg-lightbox-open');
 lightboxContent.innerHTML = '';
+if(window.__pgLenis)window.__pgLenis.start();
 }
 closeBtn.addEventListener('click',closeLightbox);
 lightbox.addEventListener('click',function(e){if(e.target===lightbox)closeLightbox()});

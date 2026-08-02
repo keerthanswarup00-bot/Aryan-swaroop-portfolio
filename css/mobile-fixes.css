@@ -87,16 +87,6 @@
     object-fit: contain;
   }
 
-  .pg-item {
-    aspect-ratio: auto !important;
-  }
-  .pg-item img,
-  .pg-item video {
-    width: 100% !important;
-    height: auto !important;
-    object-fit: contain;
-  }
-
   .cs-gallery img {
     width: 100% !important;
     height: auto !important;

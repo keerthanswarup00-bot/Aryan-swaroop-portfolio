@@ -79,6 +79,7 @@
 }
 </script>
   <link rel="stylesheet" href="css/mobile-fixes.css?v=20260811">
+  <link rel="stylesheet" href="css/playground.css?v=20260803">
 </head>
 <body>
 <a href="#main-content" class="skip-to-content">Skip to main content</a>
@@ -230,106 +231,130 @@
 
 <main id="main-content" class="pg-page">
   <section class="pg-hero">
-    <h1>Playground</h1>
-    <p>Motion, renders, and behind-the-scenes work that doesn't fit a case study.</p>
+    <div class="pg-hero-inner">
+      <h1>Playground</h1>
+      <p>Motion, renders, behind-the-scenes experiments, AI explorations, unused concepts, visual studies, and creative work that doesn't belong inside a full case study.</p>
+    </div>
   </section>
 
   <section class="pg-grid" id="pgGrid">
-    <button class="pg-item" data-cur="VIEW" data-type="video" aria-label="Play video" data-src="images/pg-video-01.m4v">
-      <video src="images/pg-video-01.m4v" muted loop playsinline preload="auto" width="800" height="1000"></video>
+    <button class="pg-item pg-offset-1" data-cur="VIEW" data-type="video" aria-label="Play video" data-src="images/pg-video-01.m4v">
+      <span class="pg-media"><video src="images/pg-video-01.m4v" muted loop playsinline preload="auto" width="800" height="1000"></video></span>
     </button>
-    <button class="pg-item" data-cur="VIEW" data-type="image" aria-label="View image" data-src="images/pg-brahmi-courtyard.webp" width="800" height="1000">
-      <picture>
-        <source srcset="images/pg-brahmi-courtyard.avif" type="image/avif">
-        <img src="images/pg-brahmi-courtyard.webp" width="800" height="1000" alt="Brahmi courtyard" loading="eager" fetchpriority="high" decoding="async">
-      </picture>
+    <button class="pg-item pg-offset-2" data-cur="VIEW" data-type="image" aria-label="View image" data-src="images/pg-brahmi-courtyard.webp">
+      <span class="pg-media">
+        <picture>
+          <source srcset="images/pg-brahmi-courtyard.avif" type="image/avif">
+          <img src="images/pg-brahmi-courtyard.webp" width="800" height="1000" alt="Brahmi courtyard" loading="eager" fetchpriority="high" decoding="async">
+        </picture>
+      </span>
     </button>
-    <button class="pg-item" data-cur="VIEW" data-type="image" aria-label="View image" data-src="images/pg-02.webp" width="800" height="1000">
-      <picture>
-        <source srcset="images/pg-02.avif" type="image/avif">
-        <img src="images/pg-02.webp" width="800" height="1000" alt="Playground render 2" loading="lazy" decoding="async">
-      </picture>
+    <button class="pg-item pg-offset-3" data-cur="VIEW" data-type="image" aria-label="View image" data-src="images/pg-02.webp">
+      <span class="pg-media">
+        <picture>
+          <source srcset="images/pg-02.avif" type="image/avif">
+          <img src="images/pg-02.webp" width="800" height="1000" alt="Playground render 2" loading="lazy" decoding="async">
+        </picture>
+      </span>
     </button>
-    <button class="pg-item" data-cur="VIEW" data-type="image" aria-label="View image" data-src="images/pg-04.webp" width="800" height="1000">
-      <picture>
-        <source srcset="images/pg-04.avif" type="image/avif">
-        <img src="images/pg-04.webp" width="800" height="1000" alt="Playground render 4" loading="lazy" decoding="async">
-      </picture>
+    <button class="pg-item pg-offset-4" data-cur="VIEW" data-type="image" aria-label="View image" data-src="images/pg-04.webp">
+      <span class="pg-media">
+        <picture>
+          <source srcset="images/pg-04.avif" type="image/avif">
+          <img src="images/pg-04.webp" width="800" height="1000" alt="Playground render 4" loading="lazy" decoding="async">
+        </picture>
+      </span>
     </button>
-    <button class="pg-item" data-cur="VIEW" data-type="video" aria-label="Play video" data-src="images/pg-video-02.m4v">
-      <video src="images/pg-video-02.m4v" muted loop playsinline preload="auto" width="800" height="1000"></video>
+    <button class="pg-item pg-offset-5" data-cur="VIEW" data-type="video" aria-label="Play video" data-src="images/pg-video-02.m4v">
+      <span class="pg-media"><video src="images/pg-video-02.m4v" muted loop playsinline preload="auto" width="800" height="1000"></video></span>
     </button>
-    <button class="pg-item" data-cur="VIEW" data-type="image" aria-label="View image" data-src="images/pg-brahmi-doorway.webp" width="800" height="1000">
-      <picture>
-        <source srcset="images/pg-brahmi-doorway.avif" type="image/avif">
-        <img src="images/pg-brahmi-doorway.webp" width="800" height="1000" alt="Brahmi doorway" loading="lazy" decoding="async">
-      </picture>
+    <button class="pg-item pg-offset-6" data-cur="VIEW" data-type="image" aria-label="View image" data-src="images/pg-brahmi-doorway.webp">
+      <span class="pg-media">
+        <picture>
+          <source srcset="images/pg-brahmi-doorway.avif" type="image/avif">
+          <img src="images/pg-brahmi-doorway.webp" width="800" height="1000" alt="Brahmi doorway" loading="lazy" decoding="async">
+        </picture>
+      </span>
     </button>
-    <button class="pg-item" data-cur="VIEW" data-type="video" aria-label="Play video" data-src="images/pg-video-03.m4v">
-      <video src="images/pg-video-03.m4v" muted loop playsinline preload="auto" width="800" height="1000"></video>
+    <button class="pg-item pg-offset-7" data-cur="VIEW" data-type="video" aria-label="Play video" data-src="images/pg-video-03.m4v">
+      <span class="pg-media"><video src="images/pg-video-03.m4v" muted loop playsinline preload="auto" width="800" height="1000"></video></span>
     </button>
-    <button class="pg-item" data-cur="VIEW" data-type="image" aria-label="View image" data-src="images/pg-07.webp" width="800" height="1000">
-      <picture>
-        <source srcset="images/pg-07.avif" type="image/avif">
-        <img src="images/pg-07.webp" width="800" height="1000" alt="Playground render 7" loading="lazy" decoding="async">
-      </picture>
+    <button class="pg-item pg-offset-8" data-cur="VIEW" data-type="image" aria-label="View image" data-src="images/pg-07.webp">
+      <span class="pg-media">
+        <picture>
+          <source srcset="images/pg-07.avif" type="image/avif">
+          <img src="images/pg-07.webp" width="800" height="1000" alt="Playground render 7" loading="lazy" decoding="async">
+        </picture>
+      </span>
     </button>
-    <button class="pg-item" data-cur="VIEW" data-type="video" aria-label="Play video" data-src="images/pg-video-04.m4v">
-      <video src="images/pg-video-04.m4v" muted loop playsinline preload="auto" width="800" height="1000"></video>
+    <button class="pg-item pg-offset-1" data-cur="VIEW" data-type="video" aria-label="Play video" data-src="images/pg-video-04.m4v">
+      <span class="pg-media"><video src="images/pg-video-04.m4v" muted loop playsinline preload="auto" width="800" height="1000"></video></span>
     </button>
-    <button class="pg-item" data-cur="VIEW" data-type="image" aria-label="View image" data-src="images/pg-05.webp" width="800" height="999">
-      <picture>
-        <source srcset="images/pg-05.avif" type="image/avif">
-        <img src="images/pg-05.webp" width="800" height="999" alt="Playground render 5" loading="lazy" decoding="async">
-      </picture>
+    <button class="pg-item pg-offset-2" data-cur="VIEW" data-type="image" aria-label="View image" data-src="images/pg-05.webp">
+      <span class="pg-media">
+        <picture>
+          <source srcset="images/pg-05.avif" type="image/avif">
+          <img src="images/pg-05.webp" width="800" height="999" alt="Playground render 5" loading="lazy" decoding="async">
+        </picture>
+      </span>
     </button>
-    <button class="pg-item" data-cur="VIEW" data-type="video" aria-label="Play video" data-src="images/pg-video-05.m4v">
-      <video src="images/pg-video-05.m4v" muted loop playsinline preload="auto" width="800" height="1000"></video>
+    <button class="pg-item pg-offset-3" data-cur="VIEW" data-type="video" aria-label="Play video" data-src="images/pg-video-05.m4v">
+      <span class="pg-media"><video src="images/pg-video-05.m4v" muted loop playsinline preload="auto" width="800" height="1000"></video></span>
     </button>
-    <button class="pg-item" data-cur="VIEW" data-type="image" aria-label="View image" data-src="images/pg-01.webp" width="800" height="1000">
-      <picture>
-        <source srcset="images/pg-01.avif" type="image/avif">
-        <img src="images/pg-01.webp" width="800" height="1000" alt="Playground render 1" loading="lazy" decoding="async">
-      </picture>
+    <button class="pg-item pg-offset-4" data-cur="VIEW" data-type="image" aria-label="View image" data-src="images/pg-01.webp">
+      <span class="pg-media">
+        <picture>
+          <source srcset="images/pg-01.avif" type="image/avif">
+          <img src="images/pg-01.webp" width="800" height="1000" alt="Playground render 1" loading="lazy" decoding="async">
+        </picture>
+      </span>
     </button>
-    <button class="pg-item" data-cur="VIEW" data-type="video" aria-label="Play video" data-src="images/pg-video-06.m4v">
-      <video src="images/pg-video-06.m4v" muted loop playsinline preload="auto" width="800" height="1000"></video>
+    <button class="pg-item pg-offset-5" data-cur="VIEW" data-type="video" aria-label="Play video" data-src="images/pg-video-06.m4v">
+      <span class="pg-media"><video src="images/pg-video-06.m4v" muted loop playsinline preload="auto" width="800" height="1000"></video></span>
     </button>
-    <button class="pg-item" data-cur="VIEW" data-type="image" aria-label="View image" data-src="images/pg-09.webp" width="800" height="1000">
-      <picture>
-        <source srcset="images/pg-09.avif" type="image/avif">
-        <img src="images/pg-09.webp" width="800" height="1000" alt="Playground render 9" loading="lazy" decoding="async">
-      </picture>
+    <button class="pg-item pg-offset-6" data-cur="VIEW" data-type="image" aria-label="View image" data-src="images/pg-09.webp">
+      <span class="pg-media">
+        <picture>
+          <source srcset="images/pg-09.avif" type="image/avif">
+          <img src="images/pg-09.webp" width="800" height="1000" alt="Playground render 9" loading="lazy" decoding="async">
+        </picture>
+      </span>
     </button>
-    <button class="pg-item" data-cur="VIEW" data-type="video" aria-label="Play video" data-src="images/pg-video-07.m4v">
-      <video src="images/pg-video-07.m4v" muted loop playsinline preload="auto" width="800" height="1000"></video>
+    <button class="pg-item pg-offset-7" data-cur="VIEW" data-type="video" aria-label="Play video" data-src="images/pg-video-07.m4v">
+      <span class="pg-media"><video src="images/pg-video-07.m4v" muted loop playsinline preload="auto" width="800" height="1000"></video></span>
     </button>
-    <button class="pg-item" data-cur="VIEW" data-type="image" aria-label="View image" data-src="images/pg-06.webp" width="800" height="1000">
-      <picture>
-        <source srcset="images/pg-06.avif" type="image/avif">
-        <img src="images/pg-06.webp" width="800" height="1000" alt="Playground render 6" loading="lazy" decoding="async">
-      </picture>
+    <button class="pg-item pg-offset-8" data-cur="VIEW" data-type="image" aria-label="View image" data-src="images/pg-06.webp">
+      <span class="pg-media">
+        <picture>
+          <source srcset="images/pg-06.avif" type="image/avif">
+          <img src="images/pg-06.webp" width="800" height="1000" alt="Playground render 6" loading="lazy" decoding="async">
+        </picture>
+      </span>
     </button>
-    <button class="pg-item" data-cur="VIEW" data-type="video" aria-label="Play video" data-src="images/pg-video-08.m4v">
-      <video src="images/pg-video-08.m4v" muted loop playsinline preload="auto" width="800" height="1000"></video>
+    <button class="pg-item pg-offset-1" data-cur="VIEW" data-type="video" aria-label="Play video" data-src="images/pg-video-08.m4v">
+      <span class="pg-media"><video src="images/pg-video-08.m4v" muted loop playsinline preload="auto" width="800" height="1000"></video></span>
     </button>
-    <button class="pg-item" data-cur="VIEW" data-type="image" aria-label="View image" data-src="images/pg-03.webp" width="800" height="1000">
-      <picture>
-        <source srcset="images/pg-03.avif" type="image/avif">
-        <img src="images/pg-03.webp" width="800" height="1000" alt="Playground render 3" loading="lazy" decoding="async">
-      </picture>
+    <button class="pg-item pg-offset-2" data-cur="VIEW" data-type="image" aria-label="View image" data-src="images/pg-03.webp">
+      <span class="pg-media">
+        <picture>
+          <source srcset="images/pg-03.avif" type="image/avif">
+          <img src="images/pg-03.webp" width="800" height="1000" alt="Playground render 3" loading="lazy" decoding="async">
+        </picture>
+      </span>
     </button>
-    <button class="pg-item" data-cur="VIEW" data-type="video" aria-label="Play video" data-src="images/pg-video-09.m4v">
-      <video src="images/pg-video-09.m4v" muted loop playsinline preload="auto" width="800" height="1000"></video>
+    <button class="pg-item pg-offset-3" data-cur="VIEW" data-type="video" aria-label="Play video" data-src="images/pg-video-09.m4v">
+      <span class="pg-media"><video src="images/pg-video-09.m4v" muted loop playsinline preload="auto" width="800" height="1000"></video></span>
     </button>
-    <button class="pg-item" data-cur="VIEW" data-type="image" aria-label="View image" data-src="images/pg-08.webp" width="800" height="1000">
-      <picture>
-        <source srcset="images/pg-08.avif" type="image/avif">
-        <img src="images/pg-08.webp" width="800" height="1000" alt="Playground render 8" loading="lazy" decoding="async">
-      </picture>
+    <button class="pg-item pg-offset-4" data-cur="VIEW" data-type="image" aria-label="View image" data-src="images/pg-08.webp">
+      <span class="pg-media">
+        <picture>
+          <source srcset="images/pg-08.avif" type="image/avif">
+          <img src="images/pg-08.webp" width="800" height="1000" alt="Playground render 8" loading="lazy" decoding="async">
+        </picture>
+      </span>
     </button>
-    <button class="pg-item" data-cur="VIEW" data-type="video" aria-label="Play video" data-src="images/pg-video-10.m4v">
-      <video src="images/pg-video-10.m4v" muted loop playsinline preload="auto" width="800" height="1000"></video>
+    <button class="pg-item pg-offset-5" data-cur="VIEW" data-type="video" aria-label="Play video" data-src="images/pg-video-10.m4v">
+      <span class="pg-media"><video src="images/pg-video-10.m4v" muted loop playsinline preload="auto" width="800" height="1000"></video></span>
     </button>
   </section>
 
@@ -356,6 +381,11 @@
 
 <script defer src="dropdown.js?v=20260731"></script>
 <script defer src="script.js?v=20260811"></script>
-<script src="playground.js?v=20260731" defer></script>
+<script src="playground.js?v=20260803" defer></script>
+<script src="js/vendor/gsap.min.js"></script>
+<script src="js/vendor/ScrollTrigger.min.js"></script>
+<script src="js/vendor/CustomEase.min.js"></script>
+<script src="js/vendor/lenis.min.js"></script>
+<script src="js/playground-gallery.js?v=20260803" defer></script>
 </body>
 </html>
