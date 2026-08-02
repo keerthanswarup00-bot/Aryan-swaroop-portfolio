@@ -57,16 +57,17 @@
 }
 
 /* === Overview block (Role/Scope etc) === */
-.cs-overview--block {
+.cs-overview.cs-overview--block {
   margin-top: 0;
+  margin-bottom: 2rem;
 }
 
 /* === Result — large stat treatment === */
 .cs-result {
-  padding: 4rem 0;
+  padding: 3.5rem 0;
   border-top: 1px solid #2A2A2A;
   border-bottom: 1px solid #2A2A2A;
-  margin-bottom: 3rem;
+  margin-bottom: 2rem;
   text-align: center;
 }
 
@@ -105,7 +106,7 @@
 
 /* === Interactive Embed === */
 .cs-interactive {
-  margin-bottom: 3rem;
+  margin-bottom: 2rem;
 }
 
 .cs-interactive-embed {
@@ -137,6 +138,10 @@
   font-size: 0.9rem;
   color: #B3B3B3;
   background: #111;
+}
+
+.cs-interactive-loading[hidden] {
+  display: none;
 }
 
 .cs-interactive-loading span {
@@ -172,7 +177,7 @@
 
 /* === Applied Everywhere Grid === */
 .cs-applied {
-  margin-bottom: 3rem;
+  margin-bottom: 2rem;
 }
 
 .cs-applied-grid {
@@ -213,7 +218,7 @@
 
 /* === Stats strip === */
 .cs-stats {
-  padding: 0 0 3rem;
+  padding: 0 0 1.5rem;
 }
 
 .cs-stats-grid {
@@ -256,15 +261,15 @@
 
 /* === Process — stage diagram === */
 .cs-process {
-  margin: 0 0 3rem;
+  margin: 0 0 2rem;
 }
 
 .cs-process-steps {
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 4.5rem;
-  margin-top: 2.5rem;
+  gap: 3rem;
+  margin-top: 1.5rem;
 }
 
 .cs-process-step {
@@ -396,7 +401,7 @@
 /* === Mobile === */
 @media (max-width: 900px) {
   .cs-process-steps {
-    gap: 3rem;
+    gap: 2.5rem;
   }
 }
 
@@ -435,7 +440,7 @@
 
 @media (max-width: 480px) {
   .cs-process-steps {
-    gap: 2.5rem;
+    gap: 2rem;
   }
 
   .cs-applied-grid {

@@ -69,11 +69,14 @@
     var slides = Array.prototype.slice.call(section.querySelectorAll('.cs-story__slide'));
     if (!pin || slides.length < 2) return;
 
+    var paceDesktop = parseFloat(section.getAttribute('data-scrollvh-desktop')) || 2;
+    var paceMobile = parseFloat(section.getAttribute('data-scrollvh-mobile')) || 1.5;
+
     mm.add('(min-width: 901px)', function () {
-      activate(section, pin, slides, 2);
+      activate(section, pin, slides, paceDesktop);
     });
     mm.add('(max-width: 900px)', function () {
-      activate(section, pin, slides, 1.5);
+      activate(section, pin, slides, paceMobile);
     });
   });
 
