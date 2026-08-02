@@ -384,12 +384,27 @@ if(!line1 || !line2) return;
 function splitIntoChars(el, text){
 el.innerHTML = '';
 var chars = [];
-for(var ci = 0; ci < text.length; ci++){
+var words = text.split(/\s+/);
+for(var wi = 0; wi < words.length; wi++){
+if(wi > 0){
 var sp = document.createElement('span');
-sp.className = 'hero-char';
-sp.textContent = text[ci] === ' ' ? '\u00A0' : text[ci];
+sp.className = 'hero-char hero-space';
+sp.textContent = ' ';
 el.appendChild(sp);
 chars.push(sp);
+}
+if(!words[wi]) continue;
+var wrap = document.createElement('span');
+wrap.className = 'hero-word';
+wrap.style.whiteSpace = 'nowrap';
+for(var ci = 0; ci < words[wi].length; ci++){
+var c = document.createElement('span');
+c.className = 'hero-char';
+c.textContent = words[wi][ci];
+wrap.appendChild(c);
+chars.push(c);
+}
+el.appendChild(wrap);
 }
 return chars;
 }

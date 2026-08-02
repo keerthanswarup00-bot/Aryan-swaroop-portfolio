@@ -235,11 +235,24 @@
   .hero-v3 .kicker {
     margin-bottom: 40px !important;
   }
+  .hero-v3 .hero-line {
+    font-size: clamp(36px, 9vw, 60px);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    text-wrap: balance;
+    word-break: normal;
+    overflow-wrap: normal;
+    hyphens: none;
+  }
+  .hero-char.hero-space {
+    display: inline !important;
+    white-space: normal;
+  }
   .hero-stats-v3 {
     margin-top: 56px !important;
   }
   .hero-scroll-prompt {
-    margin-top: 56px !important;
+    margin-top: 100px !important;
   }
 
   /* Compact screens (e.g. iPhone SE 375×667) — tightened rhythm */
@@ -251,11 +264,14 @@
     .hero-v3 .kicker {
       margin-bottom: 32px !important;
     }
+    .hero-v3 .hero-line {
+      font-size: clamp(30px, 9vw, 36px);
+    }
     .hero-stats-v3 {
       margin-top: 40px !important;
     }
     .hero-scroll-prompt {
-      margin-top: 40px !important;
+      margin-top: 76px !important;
     }
   }
 
