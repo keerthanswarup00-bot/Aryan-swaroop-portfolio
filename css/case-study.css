@@ -215,7 +215,7 @@
   }
 }
 
-.cs-media-static {
+.cs-media-figure .cs-media-static {
   display: none;
   width: 100%;
   height: 100%;
@@ -230,7 +230,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .cs-media-static {
+  .cs-media-figure .cs-media-static {
     display: block;
   }
   .cs-media-video {

@@ -1,5 +1,5 @@
 /* Sticky Featured Projects — Skiper17-style stacked images (GSAP + ScrollTrigger)
-   Adapted to a scoped gsap.context so cleanup only kills this section's triggers. */
+   The same pin-and-slide animation runs at every viewport size (desktop + mobile). */
 (function () {
   'use strict';
 
@@ -20,20 +20,17 @@
 
   gsap.registerPlugin(ScrollTrigger);
 
-  var mq = window.matchMedia('(min-width: 901px)');
   var ctx = null;
   var ro = null;
-  var io = null;
 
   function teardown() {
     if (ro) { ro.disconnect(); ro = null; }
     if (ctx) { ctx.revert(); ctx = null; }
   }
 
-  function initDesktop() {
+  function init() {
     teardown();
     section.classList.remove('sfp-static');
-    if (io) { cards.forEach(function (c) { io.unobserve(c); }); }
     cards.forEach(function (c) { c.classList.remove('in-view'); });
 
     gsap.set(media[0], { y: 0, scale: 1, rotation: 0, opacity: 1, filter: 'blur(0px) brightness(1)' });
@@ -49,7 +46,7 @@
         scrollTrigger: {
           trigger: stage,
           start: 'top top',
-          end: function () { return '+=' + window.innerHeight * (media.length - 1); },
+          end: function () { return '+=' + stage.offsetHeight * (media.length - 1); },
           pin: true,
           scrub: 0.5,
           pinSpacing: true,
@@ -72,29 +69,11 @@
     }, section);
   }
 
-  function initMobile() {
-    teardown();
-    if (!io) {
-      io = new IntersectionObserver(function (entries) {
-        entries.forEach(function (entry) {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('in-view');
-            io.unobserve(entry.target);
-          }
-        });
-      }, { threshold: 0.2, rootMargin: '0px 0px -8% 0px' });
-    }
-    cards.forEach(function (c) { io.observe(c); });
-  }
+  init();
 
   function refresh() {
     if (window.ScrollTrigger) ScrollTrigger.refresh();
   }
-
-  mq.addEventListener('change', function () {
-    if (mq.matches) initDesktop(); else initMobile();
-  });
-  if (mq.matches) initDesktop(); else initMobile();
 
   window.addEventListener('load', refresh);
   if (document.fonts && document.fonts.ready) {

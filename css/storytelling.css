@@ -16,7 +16,7 @@
 }
 
 .cs-story__slide {
-  padding: 0 0 3rem;
+  padding: 0 0 2rem;
 }
 .cs-story__slide:last-child {
   padding-bottom: 0;
@@ -31,15 +31,15 @@
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: #C41E3A;
-  margin-bottom: 1.1rem;
+  margin-bottom: 1rem;
 }
 
 .cs-story__text {
-  font-size: clamp(32px, 3vw, 56px);
-  line-height: 1.4;
+  font-size: clamp(20px, 1.6vw, 26px);
+  line-height: 1.6;
   font-weight: 400;
   color: #FFFFFF;
-  max-width: 900px;
+  max-width: 680px;
 }
 
 /* Pinned full-screen state (activated by JS) */
@@ -74,13 +74,13 @@
 }
 
 .cs-story--active .cs-story__content {
-  max-width: 900px;
+  max-width: 680px;
   margin: 0 auto;
 }
 
 @media (max-width: 900px) {
   .cs-story__text {
-    font-size: clamp(24px, 5.5vw, 34px);
+    font-size: clamp(17px, 4.5vw, 20px);
   }
   .cs-story--active .cs-story__slide {
     padding: 0 1.25rem;

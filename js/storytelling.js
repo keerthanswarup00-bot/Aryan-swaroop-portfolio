@@ -28,7 +28,7 @@
     var count = slides.length;
     var perSlide = 1 / count;
 
-    gsap.set(slides, { opacity: 0, y: 80, scale: 1, z: 0, filter: 'blur(0px)' });
+    gsap.set(slides, { opacity: 0, y: 40, scale: 1, z: 0 });
 
     var tl = gsap.timeline({
       scrollTrigger: {
@@ -56,9 +56,8 @@
       tl.to(slide, {
         opacity: 0,
         y: 0,
-        scale: 0.88,
-        z: -100,
-        filter: 'blur(8px)',
+        scale: 0.96,
+        z: -40,
         ease: 'power2.in',
         duration: perSlide * 0.22
       }, seg + perSlide * 0.52);
@@ -71,10 +70,10 @@
     if (!pin || slides.length < 2) return;
 
     mm.add('(min-width: 901px)', function () {
-      activate(section, pin, slides, 4);
+      activate(section, pin, slides, 2);
     });
     mm.add('(max-width: 900px)', function () {
-      activate(section, pin, slides, 3);
+      activate(section, pin, slides, 1.5);
     });
   });
 
