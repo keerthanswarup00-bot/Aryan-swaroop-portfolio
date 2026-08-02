@@ -1,27 +1,9 @@
-/* Homepage motion — case-study beat reveals + GSAP horizontal scroll-jack */
+/* Homepage motion — GSAP horizontal scroll-jack */
 (function () {
   'use strict';
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  /* --- 1. Case study blocks: fade/slide in as they enter view --- */
-  var beats = document.querySelectorAll('.cs-beat');
-  if (beats.length) {
-    if (reduced) {
-      beats.forEach(function (b) { b.classList.add('in-view'); });
-    } else {
-      var io = new IntersectionObserver(function (entries) {
-        entries.forEach(function (entry) {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('in-view');
-            io.unobserve(entry.target);
-          }
-        });
-      }, { threshold: 0.2, rootMargin: '0px 0px -12% 0px' });
-      beats.forEach(function (b) { io.observe(b); });
-    }
-  }
-
-  /* --- 2. Horizontal scroll-jack for "Three ways I build brands" --- */
+  /* --- Horizontal scroll-jack for "Three ways I build brands" --- */
   var horizontal = document.getElementById('workHorizontal');
   var track = horizontal ? horizontal.querySelector('.work-horizontal-track') : null;
   if (!horizontal || !track || !window.gsap || !window.ScrollTrigger) {
