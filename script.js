@@ -257,10 +257,12 @@ var trigger=dd.querySelector('.nav-dropdown-trigger');
 var menu=dd.querySelector('.mega-menu-root');
 if(!trigger||!menu)return;
 var closeTimer=null;
+var reopenGuard=false;
 function blockReveal(){window.dispatchEvent(new CustomEvent('revealblock'))}
 function unblockReveal(){window.dispatchEvent(new CustomEvent('revealunblock'))}
 function openMenu(){clearTimeout(closeTimer);dd.classList.add('open');trigger.setAttribute('aria-expanded','true');blockReveal()}
-function closeMenu(){closeTimer=setTimeout(function(){dd.classList.remove('open');trigger.setAttribute('aria-expanded','false');unblockReveal()},250)}
+function closeNow(){clearTimeout(closeTimer);dd.classList.remove('open');trigger.setAttribute('aria-expanded','false');unblockReveal()}
+function closeMenu(){closeTimer=setTimeout(closeNow,250)}
 function cancelClose(){clearTimeout(closeTimer)}
 trigger.addEventListener('mouseenter',function(){if(window.innerWidth>700)openMenu()});
 trigger.addEventListener('mouseleave',function(){if(window.innerWidth>700)closeMenu()});
@@ -270,8 +272,12 @@ trigger.addEventListener('click',function(e){
 if(window.innerWidth<=700){e.preventDefault();dd.classList.toggle('open');trigger.setAttribute('aria-expanded',dd.classList.contains('open'));if(dd.classList.contains('open'))blockReveal();else unblockReveal()}
 else{if(dd.classList.contains('open'))closeMenu();else openMenu()}
 });
-document.addEventListener('keydown',function(e){if(e.key==='Escape')dd.classList.remove('open')});
-document.addEventListener('click',function(e){if(!dd.contains(e.target) && dd.classList.contains('open')){dd.classList.remove('open');trigger.setAttribute('aria-expanded','false');unblockReveal()}});
+trigger.addEventListener('focus',function(){if(window.innerWidth>700&&!reopenGuard)openMenu()});
+document.addEventListener('keydown',function(e){
+if(e.key==='Escape'&&dd.classList.contains('open')){closeNow();reopenGuard=true;trigger.focus();setTimeout(function(){reopenGuard=false},0)}
+});
+dd.addEventListener('focusout',function(e){if(window.innerWidth>700&&!dd.contains(e.relatedTarget))closeNow()});
+document.addEventListener('click',function(e){if(!dd.contains(e.target) && dd.classList.contains('open'))closeNow()});
 })();
 (function(){
 var header=document.querySelector('.site-header');
