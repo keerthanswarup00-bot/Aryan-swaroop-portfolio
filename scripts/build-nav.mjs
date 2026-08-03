@@ -144,6 +144,28 @@ export const MOBILE_MENU_HTML = `<div class="mobile-menu" id="mobileMenu" aria-h
   </div>
 </div>`;
 
+export const FOOTER_HTML = `<footer id="contact" class="theme-dark">
+  <div class="wrap">
+    <div class="kicker">Get in touch</div>
+    <h2>Let's talk<br><em style="font-style:italic;">about the role.</em></h2>
+    <div class="contact-row">
+      <a class="btn btn-solid" href="mailto:aryanswaroop.0@gmail.com" data-cur="SEND">Email Me</a>
+      <a class="btn btn-ghost" href="Aryan_Swaroop_Resume.pdf" download data-cur="GET">Resume</a>
+    </div>
+    <button class="copy-email" data-email="aryanswaroop.0@gmail.com" data-cur="COPY">
+      aryanswaroop.0@gmail.com <span class="copy-icon">&#x29C9;</span>
+    </button>
+    <p class="currently-line">Currently: open to Creative Lead roles in Bengaluru.</p>
+    <div class="foot-bottom">
+      <span>&copy; Aryan Swaroop, Bengaluru</span>
+      <div style="display:flex; gap:22px;">
+        <a href="https://linkedin.com/in/aryanswaroop" target="_blank" rel="noopener noreferrer" data-cur="GO">LinkedIn</a>
+        <a href="https://behance.net/Aryan-swaroop" target="_blank" rel="noopener noreferrer" data-cur="GO">Behance</a>
+      </div>
+    </div>
+  </div>
+</footer>`;
+
 export const TARGETS = [
   'index.html',
   'about.html',
@@ -189,11 +211,32 @@ function replaceMobileMenu(html) {
   return html.slice(0, start) + MOBILE_MENU_HTML + html.slice(end);
 }
 
+function replaceFooter(html) {
+  const start = html.indexOf('<footer');
+  if (start === -1) throw new Error('Footer start not found');
+  const end = html.indexOf('</footer>', start);
+  if (end === -1) throw new Error('Footer end not found');
+  return html.slice(0, start) + FOOTER_HTML + html.slice(end + '</footer>'.length);
+}
+
+function removeGameFootBottom(html) {
+  const gsStart = html.indexOf('<div class="game-section">');
+  if (gsStart === -1) return html;
+  const gsEnd = findEndIndex(html, gsStart, 'div');
+  const gs = html.slice(gsStart, gsEnd);
+  const fbStart = gs.indexOf('<div class="foot-bottom">');
+  if (fbStart === -1) return html;
+  const fbEnd = findEndIndex(gs, fbStart, 'div');
+  return html.slice(0, gsStart + fbStart) + html.slice(gsStart + fbEnd);
+}
+
 function build(file) {
   const path = join(ROOT, file);
   let html = readFileSync(path, 'utf8');
   html = replaceHeader(html);
   html = replaceMobileMenu(html);
+  html = replaceFooter(html);
+  html = removeGameFootBottom(html);
   writeFileSync(path, html);
   return { file, chars: html.length };
 }
