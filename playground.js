@@ -10,7 +10,13 @@ var videos=document.querySelectorAll('.pg-grid video');
 var visObs=new IntersectionObserver(function(entries){
 entries.forEach(function(e){
 var v=e.target;
-if(e.isIntersecting)v.play().catch(function(){});
+if(e.isIntersecting){
+if(!v.src){
+var lazySrc=v.getAttribute('data-src');
+if(lazySrc){v.src=lazySrc;v.load();}
+}
+v.play().catch(function(){});
+}
 else v.pause();
 });
 },{threshold:0.25});
