@@ -4,6 +4,13 @@
   "functions": {
     "api/manifest.js": { "maxDuration": 10 }
   },
+  "routes": [
+    {
+      "src": "^/google469c96c221aaafc3\\.html$",
+      "dest": "/google469c96c221aaafc3"
+    },
+    { "handle": "filesystem" }
+  ],
   "headers": [
     {
       "source": "/images/(.*)",
