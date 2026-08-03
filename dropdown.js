@@ -78,9 +78,9 @@
           '<a href="/work/paavani-properties" class="mega-cs-card">' +
             '<div class="mega-cs-card-img">' +
               '<picture>' +
-                '<source srcset="/images/paavani-cards.avif" type="image/avif">' +
-                '<source srcset="/images/paavani-cards.webp" type="image/webp">' +
-                '<img src="/images/paavani-cards.png" alt="Paavani Properties" width="800" height="640" loading="lazy" decoding="async">' +
+                '<source srcset="/images/mega-paavani.avif" type="image/avif">' +
+                '<source srcset="/images/mega-paavani.webp" type="image/webp">' +
+                '<img src="/images/mega-paavani.png" alt="Paavani Properties" width="144" height="160" loading="lazy" decoding="async">' +
               '</picture>' +
             '</div>' +
             '<div class="mega-cs-card-info">' +
