@@ -348,7 +348,7 @@
   .mobile-cs-desc {
     font-size: 16px;
     line-height: 1.3;
-    color: rgba(255, 255, 255, 0.45);
+    color: rgba(255, 255, 255, 0.55);
   }
   .mobile-project-row {
     min-height: 96px;
@@ -384,6 +384,20 @@
   }
   p {
     text-wrap: pretty;
+  }
+
+  /* === 16. Touch targets >= 44px (M4) — hit area via pseudo-element, no layout shift === */
+  .copy-email,
+  .foot-bottom a,
+  .teaser-link {
+    position: relative;
+  }
+  .copy-email::before,
+  .foot-bottom a::before,
+  .teaser-link::before {
+    content: "";
+    position: absolute;
+    inset: -14px -8px;
   }
 
 }
