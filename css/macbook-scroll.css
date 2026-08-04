@@ -1,0 +1,463 @@
+/* Builds hero — MacBook Scroll.
+   Vanilla GSAP/ScrollTrigger port of Aceternity's MacbookScroll (inspired by
+   Fey.com): on a 200vh scroll canvas the heading fades away, the screen lid
+   unfurls (scaleX/scaleY/rotateX with a held keyframe, reading as
+   pause-then-open) and then carries DOWN and out the bottom via translateY.
+   js/macbook-scroll.js drives the scrub; the .macbook-anim class (added by
+   that script) gates the tall canvas so reduced-motion / no-JS visitors get a
+   normal-height, fully-open, static laptop. Animates transform/opacity only. */
+
+/* ============================================================
+   SECTION — scroll canvas. 100vh by default (static fallback);
+   200vh when the scrub is live (150vh on phones).
+   ============================================================ */
+.macbook-scroll {
+  position: relative;
+  z-index: 2;
+  min-height: 100vh;
+  background: #050505;
+  overflow: hidden;
+}
+
+.macbook-scroll.macbook-anim {
+  min-height: 200vh;
+}
+
+@media (max-width: 700px) {
+  .macbook-scroll.macbook-anim {
+    min-height: 150vh;
+  }
+}
+
+/* Decorative atmosphere layers — the giant outline word, a soft top glow,
+   a faint technical grid and a fine film grain. All inert, z-index 0. */
+.macbook-scroll-word {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  z-index: 0;
+  transform: translate(-50%, -50%);
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: 8vw;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.5);
+  opacity: 0.05;
+  pointer-events: none;
+  user-select: none;
+}
+
+.macbook-scroll-glow {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: radial-gradient(120% 85% at 50% -5%, rgba(255, 255, 255, 0.07), transparent 62%);
+  pointer-events: none;
+}
+
+.macbook-scroll-grid {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 76px 76px;
+  -webkit-mask-image: radial-gradient(85% 75% at 50% 30%, #000 0%, transparent 100%);
+  mask-image: radial-gradient(85% 75% at 50% 30%, #000 0%, transparent 100%);
+  pointer-events: none;
+}
+
+.macbook-scroll-grain {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+  opacity: 0.035;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+}
+
+/* Drop the grain while the scrub is live: it sits ABOVE the lid (z 3 vs 2)
+   and its overlay blend composites over the transforming screen every frame —
+   the last per-frame blend cost in the hero. Returns for the static state. */
+.macbook-scroll.macbook-anim .macbook-scroll-grain {
+  display: none;
+}
+
+/* ============================================================
+   HEADING — scrub-tied: fades over [0, 0.2] and slides down/away
+   over [0, 0.3] of the scroll. Scoped inside js/macbook-scroll.js.
+   ============================================================ */
+.macbook-scroll-title {
+  position: relative;
+  z-index: 2;
+  max-width: 760px;
+  margin: 0 auto;
+  padding: calc(var(--nav-height, 68px) + 48px) 24px 0;
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: clamp(40px, 6.4vw, 78px);
+  line-height: 1.04;
+  letter-spacing: -0.02em;
+  color: #fff;
+  text-align: center;
+  text-wrap: balance;
+  will-change: transform, opacity;
+}
+
+/* ============================================================
+   STAGE — centres the laptop; carries the deck badge.
+   ============================================================ */
+.macbook-scroll-stage {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  padding: 56px 24px 0;
+}
+
+/* Whole-laptop responsive scale — Aceternity's 0.35 / 0.5 / 1. */
+.macbook-scroll-scene {
+  position: relative;
+  width: 512px;
+  transform: scale(0.35);
+  transform-origin: top center;
+  will-change: transform;
+}
+
+@media (min-width: 640px) {
+  .macbook-scroll-scene {
+    transform: scale(0.5);
+  }
+}
+
+@media (min-width: 768px) {
+  .macbook-scroll-scene {
+    transform: none;
+  }
+}
+
+/* 3D context for the lid. Sized by the frame (which is in flow). */
+.macbook-scroll-persp {
+  position: relative;
+  width: 512px;
+  height: 192px;
+  perspective: 800px;
+}
+
+/* Static lid back — always tilted -25deg toward the viewer, hinged at its
+   bottom edge. Decorative plate; the monogram badge links out to IronLog. */
+.macbook-scroll-frame {
+  position: relative;
+  z-index: 1;
+  width: 512px;
+  height: 192px;
+  border-radius: 24px;
+  padding: 10px;
+  background: linear-gradient(180deg, #111116, #010101);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  transform: rotateX(-25deg);
+  transform-origin: bottom;
+  will-change: transform;
+}
+
+/* Animated screen — GSAP scrubs scaleX/scaleY/rotateX/translateY.
+   transform-origin: top (Aceternity spec): the lid's top edge is pinned and
+   the screen expands down over the deck as it opens.
+   Default CSS state is the fully-open laptop (static / reduced-motion /
+   no-JS fallback). */
+.macbook-scroll-lid {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  width: 512px;
+  height: 384px;
+  border-radius: 24px;
+  padding: 18px 20px 26px;
+  background: #010101;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+  transform-origin: top;
+  /* No preserve-3d: every child (screen/display/img) is flat 2D, so flattening
+     them into the lid's plane gives an identical picture as ONE composited
+     layer. preserve-3d here made the browser re-flatten the nested
+     overflow:hidden + border-radius clips every scrub frame (a glitch/jitter
+     source) for no visual benefit. */
+  will-change: transform;
+}
+
+/* Notch — the camera island at the top of the display, so the lid reads as a
+   MacBook screen and not just a floating screenshot. */
+.macbook-scroll-notch {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  z-index: 3;
+  width: 120px;
+  height: 16px;
+  margin-left: -60px;
+  border-radius: 0 0 12px 12px;
+  background: #010101;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.macbook-scroll-camera {
+  position: absolute;
+  top: 6px;
+  left: 50%;
+  width: 3px;
+  height: 3px;
+  margin-left: -1.5px;
+  border-radius: 50%;
+  background: #020204;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.12);
+}
+
+/* Display frame — the bezel: an outer outline, then a black stroke, and the
+   screenshot inside a dedicated display panel (like a real MacBook screen). */
+.macbook-scroll-screen {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  padding: 9px;
+  border-radius: 12px;
+  background: #000;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow:
+    inset 0 0 0 1px rgba(0, 0, 0, 0.9),
+    0 0 42px rgba(150, 180, 220, 0.13);
+}
+
+/* During the live scrub the 42px blur glow is dropped: blur shadows under a
+   rotating 3D transform are re-rasterized every frame. The inset stroke and
+   border stay (no blur, cheap). Glow returns for the static state. */
+.macbook-scroll.macbook-anim .macbook-scroll-screen {
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.9);
+}
+
+.macbook-scroll-display {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
+  overflow: hidden;
+  background: #17171c;
+}
+
+.macbook-scroll-display picture,
+.macbook-scroll-display img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.macbook-scroll-display img {
+  object-fit: cover;
+  /* object-position: left top keeps the left edge of the dashboard anchored
+     while the lid scales, so the shot pans like the reference's. */
+  object-position: left top;
+}
+
+/* Static / no-JS / reduced-motion state keeps the brightened screenshot.
+   During the live scrub (.macbook-anim) the filter is dropped: filtering a
+   raster inside a rotateX/perspective-animated parent forces the browser to
+   re-rasterize the image every frame — that is what reads as "shaky". */
+.macbook-scroll:not(.macbook-anim) .macbook-scroll-display img {
+  filter: brightness(1.15) saturate(1.05) contrast(1.02);
+}
+
+/* Glass sheen — the display reads as the light source in the dark studio. */
+.macbook-scroll-glass {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    radial-gradient(85% 70% at 50% 18%, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.06) 55%, transparent 82%),
+    linear-gradient(rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.03));
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+
+/* During the live scrub, drop the glass overlay entirely — compositing a
+   mix-blend layer on top of the transforming lid every frame is the other
+   per-frame cost. It returns for the static / no-JS / reduced-motion state. */
+.macbook-scroll.macbook-anim .macbook-scroll-glass {
+  display: none;
+}
+
+/* ============================================================
+   KEYBOARD BASE — sits below the lid (its top edge is covered by
+   the screen while it is open). Hinge bar, 3-column speaker / key
+   layout, trackpad. The keyboard is a single inline SVG well
+   (js/vendor-free data URI, macbook-scale key rows).
+   ============================================================ */
+.macbook-scroll-base {
+  position: relative;
+  /* Negative z-index keeps the keyboard behind the screen assembly (the
+     reference build's trick) — the lid can never paint under the deck. */
+  z-index: -1;
+  width: 512px;
+  height: 400px;
+  border-radius: 24px;
+  background: linear-gradient(180deg, #2e2e33, #222226);
+  overflow: hidden;
+  box-shadow: 0 40px 80px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+/* Recessed hinge strip under the screen */
+.macbook-scroll-hinge {
+  position: relative;
+  height: 40px;
+}
+
+.macbook-scroll-hinge-bar {
+  position: absolute;
+  left: 10%;
+  right: 10%;
+  top: 14px;
+  height: 14px;
+  border-radius: 4px;
+  background: #050505;
+}
+
+.macbook-scroll-speakers {
+  position: relative;
+  display: flex;
+  height: 256px;
+}
+
+/* Dot-matrix speaker grilles (the reference's exact dot spec) */
+.macbook-scroll-speaker {
+  width: 10%;
+  background-image: radial-gradient(circle, #101013 0.6px, transparent 0.6px);
+  background-size: 3px 3px;
+  background-position: center;
+  background-repeat: repeat;
+}
+
+/* Keyboard well — full SVG drawn below (see .macbook-scroll-keys). */
+.macbook-scroll-keys {
+  width: 80%;
+  background-color: #060608;
+  background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22410%22%20height%3D%22256%22%20viewBox%3D%220%200%20410%20256%22%20font-family%3D%22Inter%2C%20system-ui%2C%20sans-serif%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22k%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%220%22%20y2%3D%221%22%3E%0A%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23202024%22%2F%3E%3Cstop%20offset%3D%220.35%22%20stop-color%3D%22%2317171b%22%2F%3E%0A%3Cstop%20offset%3D%221%22%20stop-color%3D%22%230b0b0e%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20x%3D%220%22%20y%3D%220%22%20width%3D%22410%22%20height%3D%22256%22%20rx%3D%2212%22%20fill%3D%22%23060608%22%2F%3E%3Cg%3E%3Crect%20x%3D%224.0%22%20y%3D%224.0%22%20width%3D%2228.0%22%20height%3D%2215%22%20rx%3D%222.6%22%20fill%3D%22url(%23k)%22%20stroke%3D%22rgba(0%2C0%2C0%2C0.65)%22%20stroke-width%3D%220.6%22%2F%3E%3Ctext%20x%3D%2218.0%22%20y%3D%2213.0%22%20font-size%3D%224.6%22%20text-anchor%3D%22middle%22%20fill%3D%22%2366666e%22%3Eesc%3C%2Ftext%3E%3Crect%20x%3D%2263.0%22%20y%3D%224.0%22%20width%3D%2222.0%22%20height%3D%2215%22%20rx%3D%222.6%22%20fill%3D%22url(%23k)%22%20stroke%3D%22rgba(0%2C0%2C0%2C0.65)%22%20stroke-width%3D%220.6%22%2F%3E%3Ctext%20x%3D%2274.0%22%20y%3D%2213.4%22%20font-size%3D%225.6%22%20text-anchor%3D%22middle%22%20fill%3D%22%2366666e%22%3EF1%3C%2Ftext%3E%3Crect%20x%3D%2289.0%22%20y%3D%224.0%22%20width%3D%2222.0%22%20height%3D%2215%22%20rx%3D%222.6%22%20fill%3D%22url(%23k)%22%20stroke%3D%22rgba(0%2C0%2C0%2C0.65)%22%20stroke-width%3D%220.6%22%2F%3E%3Ctext%20x%3D%22100.0%22%20y%3D%2213.4%22%20font-size%3D%225.6%22%20text-anchor%3D%22middle%22%20fill%3D%22%2366666e%22%3EF2%3C%2Ftext%3E%3Crect%20x%3D%22115.0%22%20y%3D%224.0%22%20width%3D%2222.0%22%20height%3D%2215%22%20rx%3D%222.6%22%20fill%3D%22url(%23k)%22%20stroke%3D%22rgba(0%2C0%2C0%2C0.65)%22%20stroke-width%3D%220.6%22%2F%3E%3Ctext%20x%3D%22126.0%22%20y%3D%2213.4%22%20font-size%3D%225.6%22%20text-anchor%3D%22middle%22%20fill%3D%22%2366666e%22%3EF3%3C%2Ftext%3E%3Crect%20x%3D%22141.0%22%20y%3D%224.0%22%20width%3D%2222.0%22%20height%3D%2215%22%20rx%3D%222.6%22%20fill%3D%22url(%23k)%22%20stroke%3D%22rgba(0%2C0%2C0%2C0.65)%22%20stroke-width%3D%220.6%22%2F%3E%3Ctext%20x%3D%22152.0%22%20y%3D%2213.4%22%20font-size%3D%225.6%22%20text-anchor%3D%22middle%22%20fill%3D%22%2366666e%22%3EF4%3C%2Ftext%3E%3Crect%20x%3D%22167.0%22%20y%3D%224.0%22%20width%3D%2222.0%22%20height%3D%2215%22%20rx%3D%222.6%22%20fill%3D%22url(%23k)%22%20stroke%3D%22rgba(0%2C0%2C0%2C0.65)%22%20stroke-width%3D%220.6%22%2F%3E%3Ctext%20x%3D%22178.0%22%20y%3D%2213.4%22%20font-size%3D%225.6%22%20text-anchor%3D%22middle%22%20fill%3D%22%2366666e%22%3EF5%3C%2Ftext%3E%3Crect%20x%3D%22193.0%22%20y%3D%224.0%22%20width%3D%2222.0%22%20height%3D%2215%22%20rx%3D%222.6%22%20fill%3D%22url(%23k)%22%20stroke%3D%22rgba(0%2C0%2C0%2C0.65)%22%20stroke-width%3D%220.6%22%2F%3E%3Ctext%20x%3D%22204.0%22%20y%3D%2213.4%22%20font-size%3D%225.6%22%20text-anchor%3D%22middle%22%20fill%3D%22%2366666e%22%3EF6%3C%2Ftext%3E%3Crect%20x%3D%22219.0%22%20y%3D%224.0%22%20width%3D%2222.0%22%20height%3D%2215%22%20rx%3D%222.6%22%20fill%3D%22url(%23k)%22%20stroke%3D%22rgba(0%2C0%2C0%2C0.65)%22%20stroke-width%3D%220.6%22%2F%3E%3Ctext%20x%3D%22230.0%22%20y%3D%2213.4%22%20font-size%3D%225.6%22%20text-anchor%3D%22middle%22%20fill%3D%22%2366666e%22%3EF7%3C%2Ftext%3E%3Crect%20x%3D%22245.0%22%20y%3D%224.0%22%20width%3D%2222.0%22%20height%3D%2215%22%20rx%3D%222.6%22%20fill%3D%22url(%23k)%22%20stroke%3D%22rgba(0%2C0%2C0%2C0.65)%22%20stroke-width%3D%220.6%22%2F%3E%3Ctext%20x%3D%22256.0%22%20y%3D%2213.4%22%20font-size%3D%225.6%22%20text-anchor%3D%22middle%22%20fill%3D%22%2366666e%22%3EF8%3C%2Ftext%3E%3Crect%20x%3D%22271.0%22%20y%3D%224.0%22%20width%3D%2222.0%22%20height%3D%2215%22%20rx%3D%222.6%22%20fill%3D%22url(%23k)%22%20stroke%3D%22rgba(0%2C0%2C0%2C0.65)%22%20stroke-width%3D%220.6%22%2F%3E%3Ctext%20x%3D%22282.0%22%20y%3D%2213.4%22%20font-size%3D%225.6%22%20text-anchor%3D%22middle%22%20fill%3D%22%2366666e%22%3EF9%3C%2Ftext%3E%3Crect%20x%3D%22297.0%22%20y%3D%224.0%22%20width%3D%2222.0%22%20height%3D%2215%22%20rx%3D%222.6%22%20fill%3D%22url(%23k)%22%20stroke%3D%22rgba(0%2C0%2C0%2C0.65)%22%20stroke-width%3D%220.6%22%2F%3E%3Ctext%20x%3D%22308.0%22%20y%3D%2213.0%22%20font-size%3D%224.6%22%20text-anchor%3D%22middle%22%20fill%3D%22%2366666e%22%3EF10%3C%2Ftext%3E%3Crect%20x%3D%22323.0%22%20y%3D%224.0%22%20width%3D%2222.0%22%20height%3D%2215%22%20rx%3D%222.6%22%20fill%3D%22url(%23k)%22%20stroke%3D%22rgba(0%2C0%2C0%2C0.65)%22%20stroke-width%3D%220.6%22%2F%3E%3Ctext%20x%3D%22334.0%22%20y%3D%2213.0%22%20font-size%3D%224.6%22%20text-anchor%3D%22middle%22%20fill%3D%22%2366666e%22%3EF11%3C%2Ftext%3E%3Crect%20x%3D%22349.0%22%20y%3D%224.0%22%20width%3D%2222.0%22%20height%3D%2215%22%20rx%3D%222.6%22%20fill%3D%22url(%23k)%22%20stroke%3D%22rgba(0%2C0%2C0%2C0.65)%22%20stroke-width%3D%220.6%22%2F%3E%3Ctext%20x%3D%22360.0%22%20y%3D%2213.0%22%20font-size%3D%224.6%22%20text-anchor%3D%22middle%22%20fill%3D%22%2366666e%22%3EF12%3C%2Ftext%3E%3Crect%20x%3D%22402.0%22%20y%3D%224.0%22%20width%3D%2228.0%22%20height%3D%2215%22%20rx%3D%222.6%22%20fill%3D%22url(%23k)%22%20stroke%3D%22rgba(0%2C0%2C0%2C0.65)%22%20stroke-width%3D%220.6%22%2F%3E%3C%2Fg%3E%3Cg%3E%3Crect%20x%3D%224.0%22%20y%3D%2222.0%22%20width%3D%2225.7%22%20height%3D%2242%22%20rx%3D%222.6%22%20fill%3D%22url(%23k)%22%20stroke%3D%22rgba(0%2C0%2C0%2C0.65)%22%20stroke-width%3D%220.6%22%2F%3E%3Ctext%20x%3D%2216.9%22%20y%3D%2244.9%22%20font-size%3D%225.6%22%20text-anchor%3D%22middle%22%20fill%3D%22%2366666e%22%3E%60%3C%2Ftext%3E%3Crect%20x%3D%2233.7%22%20y%3D%2222.0%22%20width%3D%2225.7%22%20height%3D%2242%22%20rx%3D%222.6%22%20fill%3D%22url(%23k)%22%20stroke%3D%22rgba(0%2C0%2C0%2C0.65)%22%20stroke-width%3D%220.6%22%2F%3E%3Ctext%20x%3D%2246.6%22%20y%3D%2244.9%22%20font-size%3D%225.6%22%20text-anchor%3D%22middle%22%20fill%3D%22%2366666e%22%3E1%3C%2Ftext%3E%3Crect%20x%3D%2263.4%22%20y%3D%2222.0%22%20width%3D%2225.7%22%20height%3D%2242%22%20rx%3D%222.6%22%20fill%3D%22url(%23k)%22%20stroke%3D%22rgba(0%2C0%2C0%2C0.65)%22%20stroke-width%3D%220.6%22%2F%3E%3Ctext%20x%3D%2276.3%22%20y%3D%2244.9%22%20font-size%3D%225.6%22%20text-anchor%3D%22middle%22%20fill%3D%22%2366666e%22%3E2%3C%2Ftext%3E%3Crect%20x%3D%2293.2%22%20y%3D%2222.0%22%20width%3D%2225.7%22%20height%3D%2242%22%20rx%3D%222.6%22%20fill%3D%22url(%23k)%22%20stroke%3D%22rgba(0%2C0%2C0%2C0.65)%22%20stroke-width%3D%220.6%22%2F%3E%3Ctext%20x%3D%22106.0%22%20y%3D%2244.9%22%20font-size%3D%225.6%22%20text-anchor%3D%22middle%22%20fill%3D%22%2366666e%22%3E3%3C%2Ftext%3E%3Crect%20x%3D%22122.9%22%20y%3D%2222.0%22%20width%3D%2225.7%22%20height%3D%2242%22%20rx%3D%222.6%22%20fill%3D%22url(%23k)%22%20stroke%3D%22rgba(0%2C0%2C0%2C0.65)%22%20stroke-width%3D%220.6%22%2F%3E%3Ctext%20x%3D%22135.8%22%20y%3D%2244.9%22%20font-size%3D%225.6%22%20text-anchor%3D%22middle%22%20fill%3D%22%2366666e%22%3E4%3C%2Ftext%3E%3Crect%20x%3D%22152.6%22%20y%3D%2222.0%22%20width%3D%2225.7%22%20height%3D%2242%22%20rx%3D%222.6%22%20fill%3D%22url(%23k)%22%20stroke%3D%22rgba(0%2C0%2C0%2C0.65)%22%20stroke-width%3D%220.6%22%2F%3E%3Ctext%20x%3D%22165.5%22%20y%3D%2244.9%22%20font-size%3D%225.6%22%20text-anchor%3D%22middle%22%20fill%3D%22%2366666e%22%3E5%3C%2Ftext%3E%3Crect%20x%3D%22182.3%22%20y%3D%2222.0%22%20width%3D%2225.7%22%20height%3D%2242%22%20rx%3D%222.6%22%20fill%3D%22url(%23k)%22%20stroke%3D%22rgba(0%2C0%2C0%2C0.65)%22%20stroke-width%3D%220.6%22%2F%3E%3Ctext%20x%3D%22195.2%22%20y%3D%2244.9%22%20font-size%3D%225.6%22%20text-anchor%3D%22middle%22%20fill%3D%22%2366666e%22%3E6%3C%2Ftext%3E%3Crect%20x%3D%22212.1%22%20y%3D%2222.0%22%20width%3D%2225.7%22%20height%3D%2242%22%20rx%3D%222.6%22%20fill%3D%22url(%23k)%22%20stroke%3D%22rgba(0%2C0%2C0%2C0.65)%22%20stroke-width%3D%220.6%22%2F%3E%3Ctext%20x%3D%22224.9%22%20y%3D%2244.9%22%20font-size%3D%225.6%22%20text-anchor%3D%22middle%22%20fill%3D%22%2366666e%22%3E7%3C%2Ftext%3E%3Crect%20x%3D%22241.8%22%20y%3D%2222.0%22%20width%3D%2225.7%22%20height%3D%2242%22%20rx%3D%222.6%22%20fill%3D%22url(%23k)%22%20stroke%3D%22rgba(0%2C0%2C0%2C0.65)%22%20stroke-width%3D%220.6%22%2F%3E%3Ctext%20x%3D%22254.7%22%20y%3D%2244.9%22%20font-size%3D%225.6%22%20text-anchor%3D%22middle%22%20fill%3D%22%2366666e%22%3E8%3C%2Ftext%3E%3Crect%20x%3D%22271.5%22%20y%3D%2222.0%22%20width%3D%2225.7%22%20height%3D%2242%22%20rx%3D%222.6%22%20fill%3D%22url(%23k)%22%20stroke%3D%22rgba(0%2C0%2C0%2C0.65)%22%20stroke-width%3D%220.6%22%2F%3E%3Ctext%20x%3D%22284.4%22%20y%3D%2244.9%22%20font-size%3D%225.6%22%20text-anchor%3D%22middle%22%20fill%3D%22%2366666e%22%3E9%3C%2Ftext%3E%3Crect%20x%3D%22301.2%22%20y%3D%2222.0%22%20width%3D%2225.7%22%20height%3D%2242%22%20rx%3D%222.6%22%20fill%3D%22url(%23k)%22%20stroke%3D%22rgba(0%2C0%2C0%2C0.65)%22%20stroke-width%3D%220.6%22%2F%3E%3Ctext%20x%3D%22314.1%22%20y%3D%2244.9%22%20font-size%3D%225.6%22%20text-anchor%3D%22middle%22%20fill%3D%22%2366666e%22%3E0%3C%2Ftext%3E%3Crect%20x%3D%22331.0%22%20y%3D%2222.0%22%20width%3D%2225.7%22%20height%3D%2242%22%20rx%3D%222.6%22%20fill%3D%22url(%23k)%22%20stroke%3D%22rgba(0%2C0%2C0%2C0.65)%22%20stroke-width%3D%220.6%22%2F%3E%3Ctext%20x%3D%22343.8%22%20y%3D%2244.9%22%20font-size%3D%225.6%22%20text-anchor%3D%22middle%22%20fill%3D%22%2366666e%22%3E-%3C%2Ftext%3E%3Crect%20x%3D%22360.7%22%20y%3D%2222.0%22%20width%3D%2225.7%22%20height%3D%2242%22%20rx%3D%222.6%22%20fill%3D%22url(%23k)%22%20stroke%3D%22rgba(0%2C0%2C0%2C0.65)%22%20stroke-width%3D%220.6%22%2F%3E%3Ctext%20x%3D%22373.6%22%20y%3D%2244.9%22%20font-size%3D%225.6%22%20text-anchor%3D%22middle%22%20fill%3D%22%2366666e%22%3E%3D%3C%2Ftext%3E%3Crect%20x%3D%22390.4%22%20y%3D%2222.0%22%20width%3D%2239.6%22%20height%3D%2242%22%20rx%3D%222.6%22%20fill%3D%22url(%23k)%22%20stroke%3D%22rgba(0%2C0%2C0%2C0.65)%22%20stroke-width%3D%220.6%22%2F%3E%3Ctext%20x%3D%22410.2%22%20y%3D%2244.5%22%20font-size%3D%224.6%22%20text-anchor%3D%22middle%22%20fill%3D%22%2366666e%22%3Edelete%3C%2Ftext%3E%3C%2Fg%3E%3Cg%3E%3Crect%20x%3D%224.0%22%20y%3D%2267.0%22%20width%3D%2238.2%22%20height%3D%2242%22%20rx%3D%222.6%22%20fill%3D%22url(%23k)%22%20stroke%3D%22rgba(0%2C0%2C0%2C0.65)%22%20stroke-width%3D%220.6%22%2F%3E%3Ctext%20x%3D%2223.1%22%20y%3D%2289.5%22%20font-size%3D%224.6%22%20text-anchor%3D%22middle%22%20fill%3D%22%2366666e%22%3Etab%3C%2Ftext%3E%3Crect%20x%3D%2246.2%22%20y%3D%2267.0%22%20width%3D%2224.8%22%20height%3D%2242%22%20rx%3D%222.6%22%20fill%3D%22url(%23k)%22%20stroke%3D%22rgba(0%2C0%2C0%2C0.65)%22%20stroke-width%3D%220.6%22%2F%3E%3Ctext%20x%3D%2258.6%22%20y%3D%2289.9%22%20font-size%3D%225.6%22%20text-anchor%3D%22middle%22%20fill%3D%22%2366666e%22%3EQ%3C%2Ftext%3E%3Crect%20x%3D%2275.0%22%20y%3D%2267.0%22%20width%3D%2224.8%22%20height%3D%2242%22%20rx%3D%222.6%22%20fill%3D%22url(%23k)%22%20stroke%3D%22rgba(0%2C0%2C0%2C0.65)%22%20stroke-width%3D%220.6%22%2F%3E%3Ctext%20x%3D%2287.4%22%20y%3D%2289.9%22%20font-size%3D%225.6%22%20text-anchor%3D%22middle%22%20fill%3D%22%2366666e%22%3EW%3C%2Ftext%3E%3Crect%20x%3D%22103.8%22%20y%3D%2267.0%22%20width%3D%2224.8%22%20height%3D%2242%22%20rx%3D%222.6%22%20fill%3D%22url(%23k)%22%20stroke%3D%22rgba(0%2C0%2C0%2C0.65)%22%20stroke-width%3D%220.6%22%2F%3E%3Ctext%20x%3D%22116.2%22%20y%3D%2289.9%22%20font-size%3D%225.6%22%20text-anchor%3D%22middle%22%20fill%3D%22%2366666e%22%3EE%3C%2Ftext%3E%3Crect%20x%3D%22132.6%22%20y%3D%2267.0%22%20width%3D%2224.8%22%20height%3D%2242%22%20rx%3D%222.6%22%20fill%3D%22url(%23k)%22%20stroke%3D%22rgba(0%2C0%2C0%2C0.65)%22%20stroke-width%3D%220.6%22%2F%3E%3Ctext%20x%3D%22145.0%22%20y%3D%2289.9%22%20font-size%3D%225.6%22%20text-anchor%3D%22middle%22%20fill%3D%22%2366666e%22%3ER%3C%2Ftext%3E%3Crect%20x%3D%22161.4%22%20y%3D%2267.0%22%20width%3D%2224.8%22%20height%3D%2242%22%20rx%3D%222.6%22%20fill%3D%22url(%23k)%22%20stroke%3D%22rgba(0%2C0%2C0%2C0.65)%22%20stroke-width%3D%220.6%22%2F%3E%3Ctext%20x%3D%22173.8%22%20y%3D%2289.9%22%20font-size%3D%225.6%22%20text-anchor%3D%22middle%22%20fill%3D%22%2366666e%22%3ET%3C%2Ftext%3E%3Crect%20x%3D%22190.2%22%20y%3D%2267.0%22%20width%3D%2224.8%22%20height%3D%2242%22%20rx%3D%222.6%22%20fill%3D%22url(%23k)%22%20stroke%3D%22rgba(0%2C0%2C0%2C0.65)%22%20stroke-width%3D%220.6%22%2F%3E%3Ctext%20x%3D%22202.6%22%20y%3D%2289.9%22%20font-size%3D%225.6%22%20text-anchor%3D%22middle%22%20fill%3D%22%2366666e%22%3EY%3C%2Ftext%3E%3Crect%20x%3D%22219.0%22%20y%3D%2267.0%22%20width%3D%2224.8%22%20height%3D%2242%22%20rx%3D%222.6%22%20fill%3D%22url(%23k)%22%20stroke%3D%22rgba(0%2C0%2C0%2C0.65)%22%20stroke-width%3D%220.6%22%2F%3E%3Ctext%20x%3D%22231.4%22%20y%3D%2289.9%22%20font-size%3D%225.6%22%20text-anchor%3D%22middle%22%20fill%3D%22%2366666e%22%3EU%3C%2Ftext%3E%3Crect%20x%3D%22247.8%22%20y%3D%2267.0%22%20width%3D%2224.8%22%20height%3D%2242%22%20rx%3D%222.6%22%20fill%3D%22url(%23k)%22%20stroke%3D%22rgba(0%2C0%2C0%2C0.65)%22%20stroke-width%3D%220.6%22%2F%3E%3Ctext%20x%3D%22260.2%22%20y%3D%2289.9%22%20font-size%3D%225.6%22%20text-anchor%3D%22middle%22%20fill%3D%22%2366666e%22%3EI%3C%2Ftext%3E%3Crect%20x%3D%22276.6%22%20y%3D%2267.0%22%20width%3D%2224.8%22%20height%3D%2242%22%20rx%3D%222.6%22%20fill%3D%22url(%23k)%22%20stroke%3D%22rgba(0%2C0%2C0%2C0.65)%22%20stroke-width%3D%220.6%22%2F%3E%3Ctext%20x%3D%22289.0%22%20y%3D%2289.9%22%20font-size%3D%225.6%22%20text-anchor%3D%22middle%22%20fill%3D%22%2366666e%22%3EO%3C%2Ftext%3E%3Crect%20x%3D%22305.4%22%20y%3D%2267.0%22%20width%3D%2224.8%22%20height%3D%2242%22%20rx%3D%222.6%22%20fill%3D%22url(%23k)%22%20stroke%3D%22rgba(0%2C0%2C0%2C0.65)%22%20stroke-width%3D%220.6%22%2F%3E%3Ctext%20x%3D%22317.8%22%20y%3D%2289.9%22%20font-size%3D%225.6%22%20text-anchor%3D%22middle%22%20fill%3D%22%2366666e%22%3EP%3C%2Ftext%3E%3Crect%20x%3D%22334.2%22%20y%3D%2267.0%22%20width%3D%2224.8%22%20height%3D%2242%22%20rx%3D%222.6%22%20fill%3D%22url(%23k)%22%20stroke%3D%22rgba(0%2C0%2C0%2C0.65)%22%20stroke-width%3D%220.6%22%2F%3E%3Ctext%20x%3D%22346.6%22%20y%3D%2289.9%22%20font-size%3D%225.6%22%20text-anchor%3D%22middle%22%20fill%3D%22%2366666e%22%3E%5B%3C%2Ftext%3E%3Crect%20x%3D%22363.0%22%20y%3D%2267.0%22%20width%3D%2224.8%22%20height%3D%2242%22%20rx%3D%222.6%22%20fill%3D%22url(%23k)%22%20stroke%3D%22rgba(0%2C0%2C0%2C0.65)%22%20stroke-width%3D%220.6%22%2F%3E%3Ctext%20x%3D%22375.4%22%20y%3D%2289.9%22%20font-size%3D%225.6%22%20text-anchor%3D%22middle%22%20fill%3D%22%2366666e%22%3E%5D%3C%2Ftext%3E%3Crect%20x%3D%22391.8%22%20y%3D%2267.0%22%20width%3D%2238.2%22%20height%3D%2242%22%20rx%3D%222.6%22%20fill%3D%22url(%23k)%22%20stroke%3D%22rgba(0%2C0%2C0%2C0.65)%22%20stroke-width%3D%220.6%22%2F%3E%3Ctext%20x%3D%22410.9%22%20y%3D%2289.9%22%20font-size%3D%225.6%22%20text-anchor%3D%22middle%22%20fill%3D%22%2366666e%22%3E%5C%3C%2Ftext%3E%3C%2Fg%3E%3Cg%3E%3Crect%20x%3D%224.0%22%20y%3D%22112.0%22%20width%3D%2248.3%22%20height%3D%2242%22%20rx%3D%222.6%22%20fill%3D%22url(%23k)%22%20stroke%3D%22rgba(0%2C0%2C0%2C0.65)%22%20stroke-width%3D%220.6%22%2F%3E%3Ctext%20x%3D%2228.1%22%20y%3D%22134.5%22%20font-size%3D%224.6%22%20text-anchor%3D%22middle%22%20fill%3D%22%2366666e%22%3Ecaps%20lock%3C%2Ftext%3E%3Crect%20x%3D%2256.3%22%20y%3D%22112.0%22%20width%3D%2226.7%22%20height%3D%2242%22%20rx%3D%222.6%22%20fill%3D%22url(%23k)%22%20stroke%3D%22rgba(0%2C0%2C0%2C0.65)%22%20stroke-width%3D%220.6%22%2F%3E%3Ctext%20x%3D%2269.6%22%20y%3D%22134.9%22%20font-size%3D%225.6%22%20text-anchor%3D%22middle%22%20fill%3D%22%2366666e%22%3EA%3C%2Ftext%3E%3Crect%20x%3D%2287.0%22%20y%3D%22112.0%22%20width%3D%2226.7%22%20height%3D%2242%22%20rx%3D%222.6%22%20fill%3D%22url(%23k)%22%20stroke%3D%22rgba(0%2C0%2C0%2C0.65)%22%20stroke-width%3D%220.6%22%2F%3E%3Ctext%20x%3D%22100.3%22%20y%3D%22134.9%22%20font-size%3D%225.6%22%20text-anchor%3D%22middle%22%20fill%3D%22%2366666e%22%3ES%3C%2Ftext%3E%3Crect%20x%3D%22117.7%22%20y%3D%22112.0%22%20width%3D%2226.7%22%20height%3D%2242%22%20rx%3D%222.6%22%20fill%3D%22url(%23k)%22%20stroke%3D%22rgba(0%2C0%2C0%2C0.65)%22%20stroke-width%3D%220.6%22%2F%3E%3Ctext%20x%3D%22131.0%22%20y%3D%22134.9%22%20font-size%3D%225.6%22%20text-anchor%3D%22middle%22%20fill%3D%22%2366666e%22%3ED%3C%2Ftext%3E%3Crect%20x%3D%22148.4%22%20y%3D%22112.0%22%20width%3D%2226.7%22%20height%3D%2242%22%20rx%3D%222.6%22%20fill%3D%22url(%23k)%22%20stroke%3D%22rgba(0%2C0%2C0%2C0.65)%22%20stroke-width%3D%220.6%22%2F%3E%3Ctext%20x%3D%22161.8%22%20y%3D%22134.9%22%20font-size%3D%225.6%22%20text-anchor%3D%22middle%22%20fill%3D%22%2366666e%22%3EF%3C%2Ftext%3E%3Crect%20x%3D%22179.1%22%20y%3D%22112.0%22%20width%3D%2226.7%22%20height%3D%2242%22%20rx%3D%222.6%22%20fill%3D%22url(%23k)%22%20stroke%3D%22rgba(0%2C0%2C0%2C0.65)%22%20stroke-width%3D%220.6%22%2F%3E%3Ctext%20x%3D%22192.5%22%20y%3D%22134.9%22%20font-size%3D%225.6%22%20text-anchor%3D%22middle%22%20fill%3D%22%2366666e%22%3EG%3C%2Ftext%3E%3Crect%20x%3D%22209.8%22%20y%3D%22112.0%22%20width%3D%2226.7%22%20height%3D%2242%22%20rx%3D%222.6%22%20fill%3D%22url(%23k)%22%20stroke%3D%22rgba(0%2C0%2C0%2C0.65)%22%20stroke-width%3D%220.6%22%2F%3E%3Ctext%20x%3D%22223.2%22%20y%3D%22134.9%22%20font-size%3D%225.6%22%20text-anchor%3D%22middle%22%20fill%3D%22%2366666e%22%3EH%3C%2Ftext%3E%3Crect%20x%3D%22240.5%22%20y%3D%22112.0%22%20width%3D%2226.7%22%20height%3D%2242%22%20rx%3D%222.6%22%20fill%3D%22url(%23k)%22%20stroke%3D%22rgba(0%2C0%2C0%2C0.65)%22%20stroke-width%3D%220.6%22%2F%3E%3Ctext%20x%3D%22253.9%22%20y%3D%22134.9%22%20font-size%3D%225.6%22%20text-anchor%3D%22middle%22%20fill%3D%22%2366666e%22%3EJ%3C%2Ftext%3E%3Crect%20x%3D%22271.3%22%20y%3D%22112.0%22%20width%3D%2226.7%22%20height%3D%2242%22%20rx%3D%222.6%22%20fill%3D%22url(%23k)%22%20stroke%3D%22rgba(0%2C0%2C0%2C0.65)%22%20stroke-width%3D%220.6%22%2F%3E%3Ctext%20x%3D%22284.6%22%20y%3D%22134.9%22%20font-size%3D%225.6%22%20text-anchor%3D%22middle%22%20fill%3D%22%2366666e%22%3EK%3C%2Ftext%3E%3Crect%20x%3D%22302.0%22%20y%3D%22112.0%22%20width%3D%2226.7%22%20height%3D%2242%22%20rx%3D%222.6%22%20fill%3D%22url(%23k)%22%20stroke%3D%22rgba(0%2C0%2C0%2C0.65)%22%20stroke-width%3D%220.6%22%2F%3E%3Ctext%20x%3D%22315.3%22%20y%3D%22134.9%22%20font-size%3D%225.6%22%20text-anchor%3D%22middle%22%20fill%3D%22%2366666e%22%3EL%3C%2Ftext%3E%3Crect%20x%3D%22332.7%22%20y%3D%22112.0%22%20width%3D%2226.7%22%20height%3D%2242%22%20rx%3D%222.6%22%20fill%3D%22url(%23k)%22%20stroke%3D%22rgba(0%2C0%2C0%2C0.65)%22%20stroke-width%3D%220.6%22%2F%3E%3Ctext%20x%3D%22346.0%22%20y%3D%22134.9%22%20font-size%3D%225.6%22%20text-anchor%3D%22middle%22%20fill%3D%22%2366666e%22%3E%3B%3C%2Ftext%3E%3Crect%20x%3D%22363.4%22%20y%3D%22112.0%22%20width%3D%2226.7%22%20height%3D%2242%22%20rx%3D%222.6%22%20fill%3D%22url(%23k)%22%20stroke%3D%22rgba(0%2C0%2C0%2C0.65)%22%20stroke-width%3D%220.6%22%2F%3E%3Ctext%20x%3D%22376.8%22%20y%3D%22134.9%22%20font-size%3D%225.6%22%20text-anchor%3D%22middle%22%20fill%3D%22%2366666e%22%3E'%3C%2Ftext%3E%3Crect%20x%3D%22394.1%22%20y%3D%22112.0%22%20width%3D%2233.9%22%20height%3D%2242%22%20rx%3D%222.6%22%20fill%3D%22url(%23k)%22%20stroke%3D%22rgba(0%2C0%2C0%2C0.65)%22%20stroke-width%3D%220.6%22%2F%3E%3Ctext%20x%3D%22411.1%22%20y%3D%22134.5%22%20font-size%3D%224.6%22%20text-anchor%3D%22middle%22%20fill%3D%22%2366666e%22%3Ereturn%3C%2Ftext%3E%3C%2Fg%3E%3Cg%3E%3Crect%20x%3D%224.0%22%20y%3D%22157.0%22%20width%3D%2262.6%22%20height%3D%2242%22%20rx%3D%222.6%22%20fill%3D%22url(%23k)%22%20stroke%3D%22rgba(0%2C0%2C0%2C0.65)%22%20stroke-width%3D%220.6%22%2F%3E%3Ctext%20x%3D%2235.3%22%20y%3D%22179.5%22%20font-size%3D%224.6%22%20text-anchor%3D%22middle%22%20fill%3D%22%2366666e%22%3Eshift%3C%2Ftext%3E%3Crect%20x%3D%2270.6%22%20y%3D%22157.0%22%20width%3D%2226.7%22%20height%3D%2242%22%20rx%3D%222.6%22%20fill%3D%22url(%23k)%22%20stroke%3D%22rgba(0%2C0%2C0%2C0.65)%22%20stroke-width%3D%220.6%22%2F%3E%3Ctext%20x%3D%2284.0%22%20y%3D%22179.9%22%20font-size%3D%225.6%22%20text-anchor%3D%22middle%22%20fill%3D%22%2366666e%22%3EZ%3C%2Ftext%3E%3Crect%20x%3D%22101.3%22%20y%3D%22157.0%22%20width%3D%2226.7%22%20height%3D%2242%22%20rx%3D%222.6%22%20fill%3D%22url(%23k)%22%20stroke%3D%22rgba(0%2C0%2C0%2C0.65)%22%20stroke-width%3D%220.6%22%2F%3E%3Ctext%20x%3D%22114.7%22%20y%3D%22179.9%22%20font-size%3D%225.6%22%20text-anchor%3D%22middle%22%20fill%3D%22%2366666e%22%3EX%3C%2Ftext%3E%3Crect%20x%3D%22132.0%22%20y%3D%22157.0%22%20width%3D%2226.7%22%20height%3D%2242%22%20rx%3D%222.6%22%20fill%3D%22url(%23k)%22%20stroke%3D%22rgba(0%2C0%2C0%2C0.65)%22%20stroke-width%3D%220.6%22%2F%3E%3Ctext%20x%3D%22145.4%22%20y%3D%22179.9%22%20font-size%3D%225.6%22%20text-anchor%3D%22middle%22%20fill%3D%22%2366666e%22%3EC%3C%2Ftext%3E%3Crect%20x%3D%22162.8%22%20y%3D%22157.0%22%20width%3D%2226.7%22%20height%3D%2242%22%20rx%3D%222.6%22%20fill%3D%22url(%23k)%22%20stroke%3D%22rgba(0%2C0%2C0%2C0.65)%22%20stroke-width%3D%220.6%22%2F%3E%3Ctext%20x%3D%22176.1%22%20y%3D%22179.9%22%20font-size%3D%225.6%22%20text-anchor%3D%22middle%22%20fill%3D%22%2366666e%22%3EV%3C%2Ftext%3E%3Crect%20x%3D%22193.5%22%20y%3D%22157.0%22%20width%3D%2226.7%22%20height%3D%2242%22%20rx%3D%222.6%22%20fill%3D%22url(%23k)%22%20stroke%3D%22rgba(0%2C0%2C0%2C0.65)%22%20stroke-width%3D%220.6%22%2F%3E%3Ctext%20x%3D%22206.8%22%20y%3D%22179.9%22%20font-size%3D%225.6%22%20text-anchor%3D%22middle%22%20fill%3D%22%2366666e%22%3EB%3C%2Ftext%3E%3Crect%20x%3D%22224.2%22%20y%3D%22157.0%22%20width%3D%2226.7%22%20height%3D%2242%22%20rx%3D%222.6%22%20fill%3D%22url(%23k)%22%20stroke%3D%22rgba(0%2C0%2C0%2C0.65)%22%20stroke-width%3D%220.6%22%2F%3E%3Ctext%20x%3D%22237.5%22%20y%3D%22179.9%22%20font-size%3D%225.6%22%20text-anchor%3D%22middle%22%20fill%3D%22%2366666e%22%3EN%3C%2Ftext%3E%3Crect%20x%3D%22254.9%22%20y%3D%22157.0%22%20width%3D%2226.7%22%20height%3D%2242%22%20rx%3D%222.6%22%20fill%3D%22url(%23k)%22%20stroke%3D%22rgba(0%2C0%2C0%2C0.65)%22%20stroke-width%3D%220.6%22%2F%3E%3Ctext%20x%3D%22268.3%22%20y%3D%22179.9%22%20font-size%3D%225.6%22%20text-anchor%3D%22middle%22%20fill%3D%22%2366666e%22%3EM%3C%2Ftext%3E%3Crect%20x%3D%22285.6%22%20y%3D%22157.0%22%20width%3D%2226.7%22%20height%3D%2242%22%20rx%3D%222.6%22%20fill%3D%22url(%23k)%22%20stroke%3D%22rgba(0%2C0%2C0%2C0.65)%22%20stroke-width%3D%220.6%22%2F%3E%3Ctext%20x%3D%22299.0%22%20y%3D%22179.9%22%20font-size%3D%225.6%22%20text-anchor%3D%22middle%22%20fill%3D%22%2366666e%22%3E%2C%3C%2Ftext%3E%3Crect%20x%3D%22316.3%22%20y%3D%22157.0%22%20width%3D%2226.7%22%20height%3D%2242%22%20rx%3D%222.6%22%20fill%3D%22url(%23k)%22%20stroke%3D%22rgba(0%2C0%2C0%2C0.65)%22%20stroke-width%3D%220.6%22%2F%3E%3Ctext%20x%3D%22329.7%22%20y%3D%22179.9%22%20font-size%3D%225.6%22%20text-anchor%3D%22middle%22%20fill%3D%22%2366666e%22%3E.%3C%2Ftext%3E%3Crect%20x%3D%22347.0%22%20y%3D%22157.0%22%20width%3D%2226.7%22%20height%3D%2242%22%20rx%3D%222.6%22%20fill%3D%22url(%23k)%22%20stroke%3D%22rgba(0%2C0%2C0%2C0.65)%22%20stroke-width%3D%220.6%22%2F%3E%3Ctext%20x%3D%22360.4%22%20y%3D%22179.9%22%20font-size%3D%225.6%22%20text-anchor%3D%22middle%22%20fill%3D%22%2366666e%22%3E%2F%3C%2Ftext%3E%3Crect%20x%3D%22377.8%22%20y%3D%22157.0%22%20width%3D%2248.3%22%20height%3D%2242%22%20rx%3D%222.6%22%20fill%3D%22url(%23k)%22%20stroke%3D%22rgba(0%2C0%2C0%2C0.65)%22%20stroke-width%3D%220.6%22%2F%3E%3Ctext%20x%3D%22401.9%22%20y%3D%22179.5%22%20font-size%3D%224.6%22%20text-anchor%3D%22middle%22%20fill%3D%22%2366666e%22%3Eshift%3C%2Ftext%3E%3C%2Fg%3E%3Cg%3E%3Crect%20x%3D%224.0%22%20y%3D%22202.0%22%20width%3D%2232.1%22%20height%3D%2246%22%20rx%3D%222.6%22%20fill%3D%22url(%23k)%22%20stroke%3D%22rgba(0%2C0%2C0%2C0.65)%22%20stroke-width%3D%220.6%22%2F%3E%3Ctext%20x%3D%2220.0%22%20y%3D%22226.9%22%20font-size%3D%225.6%22%20text-anchor%3D%22middle%22%20fill%3D%22%2366666e%22%3Efn%3C%2Ftext%3E%3Crect%20x%3D%2240.1%22%20y%3D%22202.0%22%20width%3D%2232.1%22%20height%3D%2246%22%20rx%3D%222.6%22%20fill%3D%22url(%23k)%22%20stroke%3D%22rgba(0%2C0%2C0%2C0.65)%22%20stroke-width%3D%220.6%22%2F%3E%3Ctext%20x%3D%2256.1%22%20y%3D%22226.5%22%20font-size%3D%224.6%22%20text-anchor%3D%22middle%22%20fill%3D%22%2366666e%22%3Ectrl%3C%2Ftext%3E%3Crect%20x%3D%2276.1%22%20y%3D%22202.0%22%20width%3D%2232.1%22%20height%3D%2246%22%20rx%3D%222.6%22%20fill%3D%22url(%23k)%22%20stroke%3D%22rgba(0%2C0%2C0%2C0.65)%22%20stroke-width%3D%220.6%22%2F%3E%3Ctext%20x%3D%2292.2%22%20y%3D%22226.5%22%20font-size%3D%224.6%22%20text-anchor%3D%22middle%22%20fill%3D%22%2366666e%22%3Ealt%3C%2Ftext%3E%3Crect%20x%3D%22112.2%22%20y%3D%22202.0%22%20width%3D%2232.1%22%20height%3D%2246%22%20rx%3D%222.6%22%20fill%3D%22url(%23k)%22%20stroke%3D%22rgba(0%2C0%2C0%2C0.65)%22%20stroke-width%3D%220.6%22%2F%3E%3Ctext%20x%3D%22128.2%22%20y%3D%22226.5%22%20font-size%3D%224.6%22%20text-anchor%3D%22middle%22%20fill%3D%22%2366666e%22%3Ecmd%3C%2Ftext%3E%3Crect%20x%3D%22148.3%22%20y%3D%22202.0%22%20width%3D%22113.8%22%20height%3D%2246%22%20rx%3D%222.6%22%20fill%3D%22url(%23k)%22%20stroke%3D%22rgba(0%2C0%2C0%2C0.65)%22%20stroke-width%3D%220.6%22%2F%3E%3Ctext%20x%3D%22205.2%22%20y%3D%22226.5%22%20font-size%3D%224.6%22%20text-anchor%3D%22middle%22%20fill%3D%22%2366666e%22%3Espace%3C%2Ftext%3E%3Crect%20x%3D%22266.1%22%20y%3D%22202.0%22%20width%3D%2232.1%22%20height%3D%2246%22%20rx%3D%222.6%22%20fill%3D%22url(%23k)%22%20stroke%3D%22rgba(0%2C0%2C0%2C0.65)%22%20stroke-width%3D%220.6%22%2F%3E%3Ctext%20x%3D%22282.1%22%20y%3D%22226.5%22%20font-size%3D%224.6%22%20text-anchor%3D%22middle%22%20fill%3D%22%2366666e%22%3Ecmd%3C%2Ftext%3E%3Crect%20x%3D%22302.2%22%20y%3D%22202.0%22%20width%3D%2232.1%22%20height%3D%2246%22%20rx%3D%222.6%22%20fill%3D%22url(%23k)%22%20stroke%3D%22rgba(0%2C0%2C0%2C0.65)%22%20stroke-width%3D%220.6%22%2F%3E%3Ctext%20x%3D%22318.2%22%20y%3D%22226.5%22%20font-size%3D%224.6%22%20text-anchor%3D%22middle%22%20fill%3D%22%2366666e%22%3Ealt%3C%2Ftext%3E%3Crect%20x%3D%22338.2%22%20y%3D%22202.0%22%20width%3D%2232.1%22%20height%3D%2246%22%20rx%3D%222.6%22%20fill%3D%22url(%23k)%22%20stroke%3D%22rgba(0%2C0%2C0%2C0.65)%22%20stroke-width%3D%220.6%22%2F%3E%3Ctext%20x%3D%22354.3%22%20y%3D%22226.5%22%20font-size%3D%224.6%22%20text-anchor%3D%22middle%22%20fill%3D%22%2366666e%22%3Ectrl%3C%2Ftext%3E%3Crect%20x%3D%22374.3%22%20y%3D%22202.0%22%20width%3D%2245.7%22%20height%3D%2246%22%20rx%3D%222.6%22%20fill%3D%22url(%23k)%22%20stroke%3D%22rgba(0%2C0%2C0%2C0.65)%22%20stroke-width%3D%220.6%22%2F%3E%3Ctext%20x%3D%22397.2%22%20y%3D%22226.5%22%20font-size%3D%224.6%22%20text-anchor%3D%22middle%22%20fill%3D%22%2366666e%22%3E%E2%86%90%E2%86%91%E2%86%93%E2%86%92%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fsvg%3E");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}
+
+.macbook-scroll-trackpad {
+  position: relative;
+  width: 42%;
+  height: 96px;
+  margin: 8px auto 0;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.028), rgba(255, 255, 255, 0.014));
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.35);
+}
+
+/* Front lip notch — the little V-shaped tab at the deck's front edge. */
+.macbook-scroll-base::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 88px;
+  height: 16px;
+  transform: translateX(-50%);
+  border-radius: 14px 14px 0 0;
+  background: linear-gradient(180deg, #242428, #0c0c0f);
+  box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.6);
+  pointer-events: none;
+}
+
+/* Screen light spilling onto the palm rest */
+.macbook-scroll-base::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 8%;
+  right: 8%;
+  height: 46%;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.1), transparent);
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/* ============================================================
+   DECK BADGE — the "AS" monogram sticker at the bottom-left of
+   the laptop. Sits outside the scaled scene so it keeps a usable
+   hit area on every viewport; positioned against the stage centre.
+   ============================================================ */
+.macbook-scroll-badge {
+  position: absolute;
+  bottom: 14px;
+  left: calc(50% - 242px);
+  z-index: 6;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  color: rgba(255, 255, 255, 0.88);
+  background: #050505;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5);
+  text-decoration: none;
+  transition: color 0.3s ease, border-color 0.3s ease;
+}
+
+.macbook-scroll-badge:hover {
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.45);
+}
+
+.macbook-scroll-badge:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Scene is 512 wide at scale 1, 256 at 0.5, ~179 at 0.35 */
+@media (min-width: 640px) and (max-width: 767px) {
+  .macbook-scroll-badge {
+    left: calc(50% - 128px + 12px);
+  }
+}
+
+@media (max-width: 639px) {
+  .macbook-scroll-badge {
+    left: calc(50% - 89px + 12px);
+    bottom: 10px;
+  }
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .macbook-scroll-badge {
+    width: 44px;
+    height: 44px;
+    font-size: 14px;
+  }
+}
+
+/* ============================================================
+   REDUCED MOTION / NO-JS — static, fully-open laptop. No scrub,
+   no reserved dead scroll (the tall canvas is gated behind
+   .macbook-anim). The lid's default transform is already "open",
+   so this only needs to restore a sane section height if a user
+   flips the preference after load. */
+@media (prefers-reduced-motion: reduce) {
+  .macbook-scroll-title {
+    opacity: 1;
+    transform: none;
+  }
+}

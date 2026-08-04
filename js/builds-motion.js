@@ -1,8 +1,8 @@
-/* Builds — cinematic Apple-style MacBook hero (scroll-open lid + screenshot
-   slideshow), Aceternity-style 3D pin cards (CSS-only hover tilt + badge +
+/* Builds — Aceternity-style 3D pin cards (CSS-only hover tilt + badge +
    beam + rings; no cursor tracking), scroll reveal. Vanilla ES5-style for
-   consistency with the rest of the site. Animates only transform/opacity;
-   honours prefers-reduced-motion. */
+   consistency with the rest of the site. The scroll-scrub MacBook hero lives
+   in js/macbook-scroll.js. Animates only transform/opacity; honours
+   prefers-reduced-motion. */
 (function () {
   "use strict";
 
@@ -22,37 +22,15 @@
        >= 1600px wide, -1600 variants are expected and used.
      ============================================================ */
   var BUILDS = [
-    { name: "IronLog", sub: "AI Workout Platform", href: "/builds/ironlog", chips: ["React", "Supabase", "AI"], img: "build-striv", alt: "IronLog — AI workout platform", w: 2880, h: 1612 },
-    { name: "AlbumFlow", sub: "Photographer SaaS", href: "/builds/albumflow", chips: ["Next.js", "Supabase"], img: "build-albumflow", alt: "AlbumFlow — photographer SaaS application", w: 1200, h: 672 },
+    { name: "IronLog", sub: "AI Workout Platform", href: "https://workout-tracker-virid-kappa.vercel.app", chips: ["React", "Supabase", "AI"], img: "build-striv", alt: "IronLog — AI workout platform", w: 2880, h: 1612 },
+    { name: "AlbumFlow", sub: "Photographer SaaS", href: "https://albumflow-seven.vercel.app", chips: ["Next.js", "Supabase"], img: "build-albumflow", alt: "AlbumFlow — photographer SaaS application", w: 1200, h: 672 },
     { name: "Selixo", sub: "Wedding Photography SaaS", href: "/builds/selixo", chips: ["Next.js", "Supabase"], img: "build-selixo", alt: "Selixo — wedding photography SaaS dashboard", w: 2880, h: 1616 },
-    { name: "Expenses Tracker", sub: "Personal finance tracker", href: "/builds/expenses", chips: ["Next.js", "Supabase"], img: "build-foundations", alt: "Expenses Tracker — personal finance web app", w: 2880, h: 1614 },
-    { name: "Property Image Optimizer", sub: "Real estate image tool", href: "/builds/property-optimizer", chips: ["Canvas API"], img: "build-imageoptimizer", alt: "Property Image Optimizer — browser-only image tool", w: 1200, h: 675 },
-    { name: "Weekend Planner", sub: "Bangalore spot finder", href: "/builds/weekend-planner", chips: ["Next.js"], img: "build-weekend", alt: "Weekend Planner — Bangalore spot finder", w: 1200, h: 672 }
+    { name: "Fitness Guide", sub: "Fitness & wellness guide", href: "https://aryan-guide.vercel.app", chips: ["Next.js", "Supabase"], img: "build-foundations", alt: "Fitness Guide — personal fitness web app", w: 2880, h: 1614 },
+    { name: "Property Image Optimizer", sub: "Real estate image tool", href: "https://property-image-optimizer.vercel.app", chips: ["Canvas API"], img: "build-imageoptimizer", alt: "Property Image Optimizer — browser-only image tool", w: 1200, h: 675 },
+    { name: "Weekend Planner", sub: "Bangalore spot finder", href: "https://bangalore-gamma.vercel.app", chips: ["Next.js"], img: "build-weekend", alt: "Weekend Planner — Bangalore spot finder", w: 1200, h: 672 }
   ];
 
-  /* ============================================================
-     CONFIG — MacBook screen slideshow. Swap img paths here; each
-     entry needs the -400 / -800 AVIF+WebP+JPG variants in /images.
-     ============================================================ */
-  var SCREENS = [
-    { img: "build-striv", alt: "IronLog — AI workout platform", w: 2880, h: 1612 },
-    { img: "build-albumflow", alt: "AlbumFlow — photographer SaaS application", w: 1200, h: 672 },
-    { img: "build-selixo", alt: "Selixo — wedding photography SaaS dashboard", w: 2880, h: 1616 },
-    { img: "build-foundations", alt: "Expenses Tracker — personal finance web app", w: 2880, h: 1614 },
-    { img: "build-imageoptimizer", alt: "Property Image Optimizer — browser-only image tool", w: 1200, h: 675 }
-  ];
-
-  /* Tilt tuning — removed: the 3D pin interaction is now pure CSS
-     (`:hover` on .pin-cell toggles two fixed states), so no JS tilt
-     or cursor-tracking exists on this page. */
-
-  var hero = document.getElementById("buildsHero");
-  var heroWord = document.getElementById("buildsHeroWord");
   var grid = document.getElementById("buildsGrid");
-  var lid = document.getElementById("macbookLid");
-  var mac = document.getElementById("macbook");
-  var cue = document.getElementById("buildsHeroCue");
-  var macScale = 1;
 
   /* ============================================================
      RENDER — builds the six cards from BUILDS into #buildsGrid.
@@ -106,94 +84,6 @@
         "</div>";
     }
     grid.innerHTML = html;
-  }
-
-  /* ============================================================
-     MACBOOK SLIDESHOW — renders SCREENS as fading slides.
-     ============================================================ */
-  function renderSlides() {
-    var box = document.getElementById("macbookSlides");
-    if (!box || !SCREENS.length) return;
-    var sizes = "min(880px, 92vw)";
-    var html = "";
-    for (var i = 0; i < SCREENS.length; i++) {
-      var s = SCREENS[i];
-      html +=
-        '<div class="macbook-slide">' +
-          "<picture>" +
-            '<source srcset="images/' + s.img + '-400.avif 400w, images/' + s.img + '-800.avif 800w" type="image/avif" sizes="' + sizes + '">' +
-            '<source srcset="images/' + s.img + '-400.webp 400w, images/' + s.img + '-800.webp 800w" type="image/webp" sizes="' + sizes + '">' +
-            '<img loading="lazy" decoding="async" src="images/' + s.img + '.jpg" srcset="images/' + s.img + '-400.jpg 400w, images/' + s.img + '-800.jpg 800w" sizes="' + sizes + '" width="' + s.w + '" height="' + s.h + '" alt="' + s.alt + '">' +
-          "</picture>" +
-        "</div>";
-    }
-    box.innerHTML = html;
-  }
-
-  function initSlideshow() {
-    var box = document.getElementById("macbookSlides");
-    var logo = document.getElementById("macbookLogo");
-    if (!box) return;
-    var slides = Array.prototype.slice.call(box.querySelectorAll(".macbook-slide"));
-    if (!slides.length) return;
-    var cur = 0;
-
-    if (reduce) {
-      slides[0].classList.add("is-active");
-      if (logo) logo.classList.add("is-hidden");
-      return;
-    }
-
-    /* Boot: the AS monogram fades out as the first screenshot fades in. */
-    setTimeout(function () {
-      if (slides[0]) slides[0].classList.add("is-active");
-      if (logo) logo.classList.add("is-hidden");
-    }, 1100);
-
-    var timer = null;
-    function next() {
-      slides[cur].classList.remove("is-active");
-      cur = (cur + 1) % slides.length;
-      slides[cur].classList.add("is-active");
-    }
-    function start() {
-      if (!timer) timer = setInterval(next, 4000);
-    }
-    function stop() {
-      if (timer) {
-        clearInterval(timer);
-        timer = null;
-      }
-    }
-
-    /* Only cycle while the MacBook is on screen — saves cycles. */
-    if ("IntersectionObserver" in window) {
-      var io = new IntersectionObserver(
-        function (entries) {
-          for (var i = 0; i < entries.length; i++) {
-            if (entries[i].isIntersecting) start();
-            else stop();
-          }
-        },
-        { threshold: 0.15 }
-      );
-      io.observe(box);
-    } else {
-      start();
-    }
-  }
-
-  /* ============================================================
-     HERO ENTRANCE — staggered fade-up on load.
-     ============================================================ */
-  function entrance() {
-    var els = document.querySelectorAll(".builds-hero-eyebrow, .builds-hero-title, .builds-hero-sub, .builds-hero-cue, .macbook-stage");
-    var i = 0;
-    for (var k = 0; k < els.length; k++) {
-      (function (el, delay) {
-        setTimeout(function () { el.classList.add("in-view"); }, delay);
-      })(els[k], 140 + i++ * 160);
-    }
   }
 
   /* ============================================================
@@ -255,81 +145,13 @@
      ============================================================ */
 
   /* ============================================================
-     HERO SCROLL — scroll-opens the MacBook lid, gently scales
-     the laptop, drifts the outline word, fades the scroll cue.
-     All transform/opacity, rAF-throttled, linear + luxurious.
-     ============================================================ */
-  function lerp2(p, a, b, f, t) {
-    if (p <= a) return f;
-    if (p >= b) return t;
-    return f + (t - f) * ((p - a) / (b - a));
-  }
-
-  function setMacScale() {
-    macScale = window.innerWidth <= 700 ? 0.8 : 1;
-  }
-
-  var ticking = false;
-
-  function heroTick() {
-    ticking = false;
-    if (!hero) return;
-    var vh = window.innerHeight || 1;
-    var top = hero.getBoundingClientRect().top;
-    var range = Math.max(hero.offsetHeight - vh, 1);
-    var p = Math.min(Math.max(-top / range, 0), 1);
-
-    if (cue) {
-      if (-top > 60) cue.style.opacity = 0;
-      else if (cue.style.opacity === "0") cue.style.opacity = "";
-    }
-
-    if (reduce) return;
-
-    /* Outline word drifts up, capped at 80px. */
-    if (heroWord) {
-      var wy = Math.min(Math.max(-top * 0.06, 0), 80);
-      heroWord.style.transform = "translate3d(-50%, calc(-50% + " + wy.toFixed(1) + "px), 0)";
-    }
-
-    /* Lid unrolls toward the viewer: hold the closed pose, then open. */
-    if (lid) {
-      var r = lerp2(p, 0.1, 0.62, -32, 0);
-      var sy = lerp2(p, 0, 0.55, 0.78, 1.02);
-      var ty = lerp2(p, 0, 0.55, 0, 30);
-      lid.style.transform =
-        "translate3d(0," + ty.toFixed(2) + "px,0) scaleY(" + sy.toFixed(3) + ") rotateX(" + r.toFixed(2) + "deg)";
-    }
-
-    /* Whole laptop settles in as the hero scrolls. */
-    if (mac) {
-      var ls = lerp2(p, 0, 0.45, 0.92, 1.03);
-      mac.style.transform = "scale(" + (ls * macScale).toFixed(3) + ")";
-    }
-  }
-
-  function onScroll() {
-    if (!ticking) {
-      ticking = true;
-      requestAnimationFrame(heroTick);
-    }
-  }
-
-  /* ============================================================
      INIT
      ============================================================ */
   render();
-  renderSlides();
-  entrance();
   revealCards();
 
-  setMacScale();
-  heroTick();
-  window.addEventListener("scroll", onScroll, { passive: true });
-  window.addEventListener("resize", function () {
-    setMacScale();
-    onScroll();
-  }, { passive: true });
-
-  initSlideshow();
+  /* Re-run reveal after the hero image loads (it can shift layout). */
+  window.addEventListener("load", function () {
+    revealCards();
+  });
 })();

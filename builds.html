@@ -42,7 +42,8 @@
 <link rel="preload" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600&display=swap"></noscript>
 <link rel="stylesheet" href="style.css?v=20260901">
-<link rel="stylesheet" href="css/builds.css?v=20260809">
+<link rel="stylesheet" href="css/builds.css?v=20260804">
+<link rel="stylesheet" href="css/macbook-scroll.css?v=20260812">
 
 <script type="application/ld+json">
 {
@@ -90,7 +91,7 @@
   ]
 }
 </script>
-<link rel="stylesheet" href="css/mobile-fixes.css?v=20260830">
+<link rel="stylesheet" href="css/mobile-fixes.css?v=20260902">
 </head>
 <body class="page-dark">
 <a href="#main-content" class="skip-to-content">Skip to main content</a>
@@ -235,34 +236,43 @@
 </div>
 
 <main id="main-content">
-<section class="builds-hero" id="buildsHero" aria-labelledby="buildsHeroTitle">
-  <div class="builds-hero-word" id="buildsHeroWord" aria-hidden="true">BUILDS</div>
-  <div class="builds-hero-glow" aria-hidden="true"></div>
-  <div class="builds-hero-grid" aria-hidden="true"></div>
-  <div class="builds-hero-grain" aria-hidden="true"></div>
-  <div class="wrap builds-hero-inner">
-    <p class="builds-hero-eyebrow">Build</p>
-    <h1 class="builds-hero-title" id="buildsHeroTitle"><span class="builds-hero-line">Products I designed,</span> <span class="builds-hero-line">built,</span> <span class="builds-hero-line">and shipped.</span></h1>
-    <p class="builds-hero-sub"><span class="builds-hero-subline">From AI tools to productivity platforms,</span> <span class="builds-hero-subline">every product here started as an idea and was</span> <span class="builds-hero-subline">designed, developed, tested, and iterated by me from start to finish.</span></p>
-  </div>
-  <div class="builds-hero-cue" id="buildsHeroCue" aria-hidden="true"><span class="builds-hero-cue-arrow">&darr;</span>Scroll to Explore</div>
-  <div class="macbook-stage" id="macbookStage">
-    <div class="macbook" id="macbook">
-      <div class="macbook-lid" id="macbookLid">
-        <div class="macbook-screen">
-          <div class="macbook-display">
-            <span class="macbook-logo" id="macbookLogo" aria-hidden="true">AS</span>
-            <div class="macbook-slides" id="macbookSlides" aria-hidden="true"></div>
-            <div class="macbook-reflect" aria-hidden="true"></div>
+<section class="macbook-scroll" id="macbookScroll" aria-labelledby="buildsHeroTitle">
+  <div class="macbook-scroll-glow" aria-hidden="true"></div>
+  <div class="macbook-scroll-grid" aria-hidden="true"></div>
+  <div class="macbook-scroll-grain" aria-hidden="true"></div>
+  <div class="macbook-scroll-word" aria-hidden="true">BUILDS</div>
+
+  <h1 class="macbook-scroll-title" id="buildsHeroTitle">Designed, built, shipped.</h1>
+
+  <div class="macbook-scroll-stage">
+    <div class="macbook-scroll-scene">
+      <div class="macbook-scroll-persp">
+        <div class="macbook-scroll-frame" aria-hidden="true"></div>
+        <div class="macbook-scroll-lid" id="macbookScrollLid">
+          <div class="macbook-scroll-screen">
+            <div class="macbook-scroll-display">
+              <picture>
+                <source srcset="/images/build-striv-400.avif 400w, /images/build-striv-800.avif 800w, /images/build-striv-1600.avif 1600w" type="image/avif" sizes="512px">
+                <source srcset="/images/build-striv-400.webp 400w, /images/build-striv-800.webp 800w, /images/build-striv-1600.webp 1600w" type="image/webp" sizes="512px">
+                <img src="/images/build-striv.jpg" srcset="/images/build-striv-400.jpg 400w, /images/build-striv-800.jpg 800w, /images/build-striv-1600.jpg 1600w" sizes="512px" width="2880" height="1612" fetchpriority="high" decoding="async" alt="IronLog — AI workout platform, the app inside the opening MacBook">
+              </picture>
+              <span class="macbook-scroll-glass" aria-hidden="true"></span>
+            </div>
           </div>
+          <span class="macbook-scroll-notch" aria-hidden="true"><span class="macbook-scroll-camera"></span></span>
         </div>
       </div>
-      <div class="macbook-deck" aria-hidden="true">
-        <div class="macbook-keyboard"></div>
-        <div class="macbook-trackpad"></div>
+      <div class="macbook-scroll-base" aria-hidden="true">
+        <div class="macbook-scroll-hinge"><span class="macbook-scroll-hinge-bar"></span></div>
+        <div class="macbook-scroll-speakers">
+          <div class="macbook-scroll-speaker"></div>
+          <div class="macbook-scroll-keys"></div>
+          <div class="macbook-scroll-speaker"></div>
+        </div>
+        <div class="macbook-scroll-trackpad"></div>
       </div>
-      <div class="macbook-shadow" aria-hidden="true"></div>
     </div>
+    <a class="macbook-scroll-badge" href="https://workout-tracker-virid-kappa.vercel.app" target="_blank" rel="noopener noreferrer" data-cur="VIEW" aria-label="Open IronLog live app">AS</a>
   </div>
 </section>
 
@@ -270,7 +280,7 @@
   <div class="wrap">
     <h2 class="builds-section-title" id="buildsSectionTitle">Selected Work</h2>
     <div class="builds-grid" id="buildsGrid"></div>
-    <p style="margin-top:44px; font-size:14px; color:rgba(255,255,255,.45);">Also built the interactive plot-finder web app for VR Devaiah Enclave — <a href="/real-estate" style="color:var(--accent); font-weight:600;">see Real Estate &rarr;</a></p>
+    <p style="margin-top:44px; font-size:14px; color:rgba(255,255,255,.45);">Also built the interactive plot-finder web app for VR Devaiah Enclave — <a href="https://vr-devaiah-enclave.vercel.app" target="_blank" rel="noopener noreferrer" style="color:var(--accent); font-weight:600;">launch the plot-finder &rarr;</a></p>
   </div>
 </section>
 
@@ -310,8 +320,11 @@
   </div>
 </footer>
 
+<script src="js/vendor/gsap.min.js"></script>
+<script src="js/vendor/ScrollTrigger.min.js"></script>
 <script defer src="dropdown.js?v=20260828"></script>
 <script defer src="script.js?v=20260831"></script>
-<script defer src="js/builds-motion.js?v=20260807"></script>
+<script defer src="js/macbook-scroll.js?v=20260810"></script>
+<script defer src="js/builds-motion.js?v=20260804"></script>
 </body>
 </html>
