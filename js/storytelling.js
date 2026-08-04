@@ -30,6 +30,11 @@
 
     gsap.set(slides, { opacity: 0, y: 40, scale: 1, z: 0 });
 
+    /* The first slide (Brief) stays visible from the start so the pinned
+       section never scrolls in as an empty black screen — it arrives already
+       showing the Brief text. */
+    gsap.set(slides[0], { opacity: 1, y: 0, scale: 1, z: 0 });
+
     var tl = gsap.timeline({
       scrollTrigger: {
         trigger: pin,
@@ -46,12 +51,14 @@
     slides.forEach(function (slide, i) {
       var seg = i * perSlide;
 
-      tl.to(slide, {
-        opacity: 1,
-        y: 0,
-        ease: 'power3.out',
-        duration: perSlide * 0.18
-      }, seg);
+      if (i > 0) {
+        tl.to(slide, {
+          opacity: 1,
+          y: 0,
+          ease: 'power3.out',
+          duration: perSlide * 0.18
+        }, seg);
+      }
 
       tl.to(slide, {
         opacity: 0,
