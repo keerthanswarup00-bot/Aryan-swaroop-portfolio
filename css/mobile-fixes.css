@@ -104,6 +104,14 @@
     object-fit: contain;
   }
 
+  /* Builds page — these images are absolutely positioned to fill a fixed box
+     with object-fit: cover; the blanket height:auto above would leave a gap at
+     their bottom edge (hero screenshot + project card screenshots). */
+  .pin-media img,
+  .macbook-scroll-display img {
+    height: 100% !important;
+  }
+
   /* === 3. Increase horizontal breathing room === */
   .wrap {
     padding-left: 24px !important;
@@ -398,6 +406,41 @@
     content: "";
     position: absolute;
     inset: -14px -8px;
+  }
+
+  /* === 17. Floating hero character — keep it a small bottom-right accent.
+       The blanket img height:auto above would otherwise blow the character up
+       to its full natural size (~624px) and cover the whole hero. Shrink the
+       anchor to its content too, so its invisible tap zone wraps the character
+       instead of spanning the full hero width. === */
+  .floating-character {
+    width: fit-content;
+  }
+  .floating-character::before {
+    content: "";
+    position: absolute;
+    inset: -8px -12px;
+  }
+  .floating-character img {
+    max-width: none !important;
+    width: auto !important;
+    height: clamp(48px, 7vh, 64px) !important;
+  }
+
+  /* Compact phones (e.g. iPhone SE 375×667) — smaller character */
+  @media (max-width: 380px) and (max-height: 720px) {
+    .floating-character img {
+      height: clamp(40px, 6vh, 52px) !important;
+    }
+  }
+
+  /* === 18. Game mute button — full 44px touch target === */
+  #mute {
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
 }

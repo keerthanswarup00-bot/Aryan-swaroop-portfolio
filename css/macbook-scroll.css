@@ -121,7 +121,12 @@
   padding: 56px 24px 0;
 }
 
-/* Whole-laptop responsive scale — Aceternity's 0.35 / 0.5 / 1. */
+/* Whole-laptop responsive scale — Aceternity's 0.35 / 0.5 / 1.
+   The scene's layout box is 512×592; the transform shrinks it visually while
+   the box keeps its layout size. `transform-origin: top center` pins the
+   visual laptop to the box's top, and the negative margin-bottom below
+   collapses the leftover (invisible) layout height so the laptop, badge and
+   title group tightly instead of floating in dead black space. */
 .macbook-scroll-scene {
   position: relative;
   width: 512px;
@@ -130,15 +135,26 @@
   will-change: transform;
 }
 
+/* Phones: 0.42 (up from 0.35) so the laptop reads clearly, with the
+   dead-zone margin to match (592 × (1 − 0.42) ≈ −343px). */
+@media (max-width: 639px) {
+  .macbook-scroll-scene {
+    transform: scale(0.42);
+    margin-bottom: -343px;
+  }
+}
+
 @media (min-width: 640px) {
   .macbook-scroll-scene {
     transform: scale(0.5);
+    margin-bottom: -296px;
   }
 }
 
 @media (min-width: 768px) {
   .macbook-scroll-scene {
     transform: none;
+    margin-bottom: 0;
   }
 }
 
@@ -427,7 +443,7 @@
   outline-offset: 2px;
 }
 
-/* Scene is 512 wide at scale 1, 256 at 0.5, ~179 at 0.35 */
+/* Scene is 512 wide at scale 1, 256 at 0.5, ~215 at 0.42 */
 @media (min-width: 640px) and (max-width: 767px) {
   .macbook-scroll-badge {
     left: calc(50% - 128px + 12px);
@@ -436,7 +452,7 @@
 
 @media (max-width: 639px) {
   .macbook-scroll-badge {
-    left: calc(50% - 89px + 12px);
+    left: calc(50% - 108px + 12px);
     bottom: 10px;
   }
 }
