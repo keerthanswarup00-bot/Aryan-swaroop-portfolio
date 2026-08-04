@@ -13,9 +13,9 @@ export const HEADER_HTML = `<header class="site-header" aria-label="Site">
   <div class="header-row">
     <a href="/" class="header-left">
       <picture>
-        <source srcset="/images/nav-avatar-400.avif 400w, /images/nav-avatar-800.avif 800w" sizes="44px" type="image/avif">
-        <source srcset="/images/nav-avatar-400.webp 400w, /images/nav-avatar-800.webp 800w" sizes="44px" type="image/webp">
-        <img src="/images/nav-avatar.png" alt="Aryan Swaroop" class="header-avatar" width="44" height="44" loading="lazy" decoding="async">
+        <source srcset="/images/nav-avatar-400.avif 400w, /images/nav-avatar-800.avif 800w" sizes="52px" type="image/avif">
+        <source srcset="/images/nav-avatar-400.webp 400w, /images/nav-avatar-800.webp 800w" sizes="52px" type="image/webp">
+        <img src="/images/nav-avatar.png" alt="Aryan Swaroop" class="header-avatar" width="52" height="52" loading="lazy" decoding="async">
       </picture>
       <div class="header-identity">
         <span class="header-name">Aryan Swaroop</span>

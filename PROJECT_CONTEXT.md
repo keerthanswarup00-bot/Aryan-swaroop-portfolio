@@ -214,7 +214,7 @@ Scripts: `dropdown.js`, `script.js`, `lightbox.js` (no-op), `js/reveal-on-scroll
 | `--serif` | `'Fraunces', serif` | Display font |
 | `--sans` | `'Inter', sans-serif` | UI/body font |
 | `--hero-text` / `--hero-invert` | `#111111` / `#ffffff` | Hero heading color (light/dark hero) |
-| `--nav-height` | `68px` (scrolled 56px) | Header height |
+| `--nav-height` | `90px` (scrolled 66px) | Header height |
 
 Scoped accents: `case-study.css` defines `--cs-accent` (`#C41E3A`, overridden to brass `#C99A4B` on `.theme-brahmi`), `--cs-header-bg`, `--cs-header-text` (Brahmi: deep teal `#0F3B3E` bg, cream `#F5F1E8` text). `builds.css` defines `--accent-soft: #e4576b` for pin-card glows.
 
