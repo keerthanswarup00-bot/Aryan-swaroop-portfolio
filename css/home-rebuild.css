@@ -634,8 +634,7 @@
   will-change: transform;
   transform: translateZ(0);
   backface-visibility: hidden;
-  animation: hero-char-float var(--char-duration, 6s)
-             cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+  animation: hero-char-float var(--char-duration, 6s) ease-in-out infinite;
 }
 
 .floating-character-shadow {
@@ -649,8 +648,7 @@
   filter: blur(2px);
   pointer-events: none;
   will-change: transform, opacity;
-  animation: hero-char-shadow var(--char-duration, 6s)
-             cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+  animation: hero-char-shadow var(--char-duration, 6s) ease-in-out infinite;
 }
 
 .floating-character img {
@@ -667,18 +665,14 @@
 
 @keyframes hero-char-float {
   0%   { transform: translate3d(0, 0, 0) rotate(-0.4deg) scale(1); }
-  12%  { transform: translate3d(1.2px, -5px, 0) rotate(-0.15deg) scale(1.003); }
-  35%  { transform: translate3d(-1px, -17px, 0) rotate(0.4deg) scale(1.01); }
-  50%  { transform: translate3d(-1.8px, -22px, 0) rotate(0.7deg) scale(1.015); }
-  65%  { transform: translate3d(-1px, -17px, 0) rotate(0.4deg) scale(1.01); }
-  88%  { transform: translate3d(1.2px, -5px, 0) rotate(-0.15deg) scale(1.003); }
+  50%  { transform: translate3d(1.5px, -22px, 0) rotate(0.6deg) scale(1.015); }
   100% { transform: translate3d(0, 0, 0) rotate(-0.4deg) scale(1); }
 }
 
 @keyframes hero-char-shadow {
-  0%   { transform: translateX(-50%) scale(1); opacity: 0.5; }
-  50%  { transform: translateX(-50%) scale(0.85); opacity: 0.22; }
-  100% { transform: translateX(-50%) scale(1); opacity: 0.5; }
+  0%   { transform: translateX(-50%) translateY(0) scale(1); opacity: 0.5; }
+  50%  { transform: translateX(-50%) translateY(7px) scale(1.05); opacity: 0.2; }
+  100% { transform: translateX(-50%) translateY(0) scale(1); opacity: 0.5; }
 }
 
 /* Large desktop */
