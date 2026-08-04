@@ -9,8 +9,8 @@
 
   if (!reduced) {
     var idle = anchor.querySelector('.floating-character-idle');
-    var BASE = 5.2;
-    var VARY = 0.35;
+    var BASE = 6;
+    var VARY = 0.4;
     var setDuration = function () {
       var d = BASE + (Math.random() - 0.5) * 2 * VARY;
       anchor.style.setProperty('--char-duration', d.toFixed(2) + 's');
