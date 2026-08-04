@@ -67,9 +67,9 @@
             '<a class="pin-link" href="' + b.href + '"' + ext + ' aria-label="View project: ' + b.name + '">' +
               '<div class="pin-media">' +
                 "<picture>" +
-                  '<source srcset="images/' + b.img + '-400.avif 400w, images/' + b.img + '-800.avif 800w' + (big ? ", images/" + b.img + "-1600.avif 1600w" : "") + '" type="image/avif" sizes="' + sizes + '">' +
-                  '<source srcset="images/' + b.img + '-400.webp 400w, images/' + b.img + '-800.webp 800w' + (big ? ", images/" + b.img + "-1600.webp 1600w" : "") + '" type="image/webp" sizes="' + sizes + '">' +
-                  '<img loading="lazy" decoding="async" src="images/' + b.img + '.jpg" srcset="images/' + b.img + '-400.jpg 400w, images/' + b.img + '-800.jpg 800w' + (big ? ", images/" + b.img + "-1600.jpg 1600w" : "") + '" sizes="' + sizes + '" width="' + b.w + '" height="' + b.h + '" alt="' + b.alt + '">' +
+                  '<source srcset="/images/' + b.img + '-400.avif 400w, /images/' + b.img + '-800.avif 800w' + (big ? ", /images/" + b.img + "-1600.avif 1600w" : "") + '" type="image/avif" sizes="' + sizes + '">' +
+                  '<source srcset="/images/' + b.img + '-400.webp 400w, /images/' + b.img + '-800.webp 800w' + (big ? ", /images/" + b.img + "-1600.webp 1600w" : "") + '" type="image/webp" sizes="' + sizes + '">' +
+                  '<img loading="lazy" decoding="async" src="/images/' + b.img + '.jpg" srcset="/images/' + b.img + '-400.jpg 400w, /images/' + b.img + '-800.jpg 800w' + (big ? ", /images/" + b.img + "-1600.jpg 1600w" : "") + '" sizes="' + sizes + '" width="' + b.w + '" height="' + b.h + '" alt="' + b.alt + '">' +
                 "</picture>" +
                 '<span class="pin-shine" aria-hidden="true"></span>' +
               "</div>" +
