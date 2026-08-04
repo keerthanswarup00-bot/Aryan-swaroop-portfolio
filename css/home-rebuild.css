@@ -594,3 +594,148 @@
     aspect-ratio: 4 / 5;
   }
 }
+
+/* === 8. Floating pixel character — bottom-right hero accent === */
+/* Entrance lives on the anchor (plays once, ends on natural state); the idle
+   levitation lives on .floating-character-idle so it never fights the hover
+   transform. The shadow is a sibling of the idle wrapper — it does NOT inherit
+   the vertical drift, so it can react inversely as the character rises. */
+.floating-character {
+  position: absolute;
+  right: clamp(32px, 6vw, 120px);
+  bottom: clamp(24px, 7vh, 100px);
+  z-index: 5;
+  display: block;
+  line-height: 0;
+  text-decoration: none;
+  cursor: pointer;
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  animation: hero-char-enter 1.2s cubic-bezier(0.22, 1, 0.36, 1) 0.6s backwards;
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+              filter 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.floating-character:hover,
+.floating-character:focus-visible {
+  transform: scale(1.04);
+  filter: brightness(1.06);
+}
+
+/* Neutralise the site's cursor-img-active img scale so it never stacks with
+   the hover scale above. */
+.floating-character.cursor-img-active img {
+  transform: none;
+}
+
+.floating-character-idle {
+  display: block;
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  animation: hero-char-float var(--char-duration, 5.2s)
+             cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+}
+
+.floating-character-shadow {
+  position: absolute;
+  left: 50%;
+  bottom: -6px;
+  width: 74%;
+  height: 16px;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0));
+  filter: blur(2px);
+  pointer-events: none;
+  will-change: transform, opacity;
+  animation: hero-char-shadow var(--char-duration, 5.2s)
+             cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+}
+
+.floating-character img {
+  display: block;
+  width: auto;
+  height: clamp(120px, 16vh, 180px);
+  -webkit-user-drag: none;
+}
+
+@keyframes hero-char-enter {
+  0%   { opacity: 0; transform: translate3d(0, 20px, 0) scale(0.95); }
+  100% { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
+}
+
+@keyframes hero-char-float {
+  0%   { transform: translate3d(0, 0, 0) rotate(-0.5deg) scale(1); }
+  20%  { transform: translate3d(1.5px, -8px, 0) rotate(-0.2deg) scale(1.004); }
+  50%  { transform: translate3d(-1.5px, -15px, 0) rotate(0.8deg) scale(1.015); }
+  75%  { transform: translate3d(1px, -7px, 0) rotate(0.3deg) scale(1.006); }
+  100% { transform: translate3d(0, 0, 0) rotate(-0.5deg) scale(1); }
+}
+
+@keyframes hero-char-shadow {
+  0%   { transform: translateX(-50%) scale(1); opacity: 0.5; }
+  50%  { transform: translateX(-50%) scale(0.88); opacity: 0.26; }
+  100% { transform: translateX(-50%) scale(1); opacity: 0.5; }
+}
+
+/* Large desktop */
+@media (min-width: 1600px) {
+  .floating-character {
+    right: 7vw;
+    bottom: 8vh;
+  }
+  .floating-character img {
+    height: clamp(140px, 18vh, 200px);
+  }
+}
+
+/* Tablet */
+@media (max-width: 1024px) {
+  .floating-character {
+    right: 4vw;
+    bottom: 6vh;
+  }
+  .floating-character img {
+    height: clamp(96px, 13vh, 150px);
+  }
+}
+
+/* Mobile */
+@media (max-width: 700px) {
+  .floating-character {
+    right: 20px;
+    bottom: calc(24px + env(safe-area-inset-bottom, 0px));
+  }
+  .floating-character img {
+    height: clamp(80px, 11vh, 100px);
+  }
+}
+
+/* Compact phones — shrink + soften so it never crowds the scroll prompt */
+@media (max-width: 380px) and (max-height: 720px) {
+  .floating-character {
+    bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+    opacity: 0.85;
+  }
+  .floating-character img {
+    height: clamp(64px, 9vh, 80px);
+  }
+}
+
+/* Reduced motion — static companion, no levitation or fade-in */
+@media (prefers-reduced-motion: reduce) {
+  .floating-character {
+    animation: none;
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .floating-character-idle {
+    animation: none;
+  }
+  .floating-character-shadow {
+    animation: none;
+    opacity: 0.45;
+  }
+}
