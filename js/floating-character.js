@@ -1,6 +1,9 @@
 /* Floating pixel character — organic idle drift + smooth scroll to the game.
-   Keeps the CSS idle animation alive but nudges the per-cycle duration so the
-   levitation never loops perfectly. No-JS / reduced-motion stays fully static. */
+   Picks one randomized levitation duration at load so the float never runs on
+   a clean 6s beat. Must NOT re-randomize on animationiteration: mutating
+   animation-duration on a running CSS animation forces Chromium to restart it,
+   and each restart re-fires animationiteration — a feedback loop that makes
+   the character flicker fast up and down. No-JS / reduced-motion stays static. */
 (function () {
   'use strict';
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -8,17 +11,10 @@
   if (!anchor) return;
 
   if (!reduced) {
-    var idle = anchor.querySelector('.floating-character-idle');
     var BASE = 6;
     var VARY = 0.4;
-    var setDuration = function () {
-      var d = BASE + (Math.random() - 0.5) * 2 * VARY;
-      anchor.style.setProperty('--char-duration', d.toFixed(2) + 's');
-    };
-    setDuration();
-    if (idle) {
-      idle.addEventListener('animationiteration', setDuration, { passive: true });
-    }
+    var d = BASE + (Math.random() - 0.5) * 2 * VARY;
+    anchor.style.setProperty('--char-duration', d.toFixed(2) + 's');
   }
 
   var game = document.getElementById('game');
