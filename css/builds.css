@@ -1,0 +1,976 @@
+/* Builds — premium product showcase (Aceternity-style 3D pin cards, cinematic hero) */
+
+body.page-dark {
+  background: #050505;
+  color: #e9e9e9;
+  --accent-soft: #e4576b;
+}
+
+/* ============================================================
+   HERO — 180vh cinematic stage: intro copy in the first
+   viewport, MacBook showcase unrolling through the scroll space.
+   ============================================================ */
+
+.builds-hero {
+  position: relative;
+  min-height: 180vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  background: #050505;
+  overflow: hidden;
+  padding: calc(var(--nav-height, 68px) + 48px) 0 0;
+}
+
+/* Giant outlined word behind the copy */
+.builds-hero-word {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: 8vw;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.5);
+  opacity: 0.05;
+  pointer-events: none;
+  user-select: none;
+  will-change: transform;
+  z-index: 0;
+}
+
+/* Soft radial light at the top of the stage */
+.builds-hero-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(120% 85% at 50% -5%, rgba(255, 255, 255, 0.07), transparent 62%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Faint technical grid, faded at the edges */
+.builds-hero-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 76px 76px;
+  -webkit-mask-image: radial-gradient(85% 75% at 50% 30%, #000 0%, transparent 100%);
+  mask-image: radial-gradient(85% 75% at 50% 30%, #000 0%, transparent 100%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Fine film grain */
+.builds-hero-grain {
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+  opacity: 0.035;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.builds-hero-inner {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  min-height: 100svh;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.builds-hero-eyebrow {
+  font-size: 13px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent-soft, var(--accent));
+  font-weight: 600;
+  margin-bottom: 28px;
+}
+
+.builds-hero-title {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: clamp(44px, 7vw, 84px);
+  line-height: 1.06;
+  letter-spacing: -0.02em;
+  color: #fff;
+  max-width: 700px;
+  text-wrap: balance;
+}
+
+/* Editorial line breaks on desktop; natural wrap on mobile */
+.builds-hero-line {
+  display: block;
+}
+
+.builds-hero-sub {
+  margin: 28px auto 0;
+  max-width: 560px;
+  font-size: clamp(15px, 1.6vw, 17px);
+  color: rgba(255, 255, 255, 0.6);
+  line-height: 1.7;
+  text-wrap: pretty;
+}
+
+.builds-hero-subline {
+  display: block;
+}
+
+.builds-hero-cue {
+  position: absolute;
+  left: 50%;
+  bottom: calc(100svh - 26px);
+  bottom: calc(100vh - 26px);
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: rgba(255, 255, 255, 0.34);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+
+.builds-hero-cue-arrow {
+  font-size: 15px;
+  line-height: 1;
+  color: rgba(255, 255, 255, 0.5);
+  animation: cue-bob 2.6s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+}
+
+@keyframes cue-bob {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.9;
+  }
+  50% {
+    transform: translateY(5px);
+    opacity: 0.4;
+  }
+}
+
+/* ============================================================
+   MACBOOK SHOWCASE — scroll-opens like an Apple product page.
+   The screen lid unrolls toward the viewer as the hero scrolls
+   (rotateX + scaleY + translateY driven by js/builds-motion.js).
+   ============================================================ */
+
+.macbook-stage {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  flex: 1 1 auto;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 48px 24px 130px;
+  perspective: 1400px;
+}
+
+/* Soft white halo behind the laptop — its matte-black silhouette would
+   otherwise vanish against the #050505 page. Apple-keynote-style backlight,
+   monochrome and barely-there. */
+.macbook-stage::before {
+  content: '';
+  position: absolute;
+  top: -60px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(780px, 84%);
+  height: 320px;
+  background: radial-gradient(50% 50% at 50% 50%, rgba(255, 255, 255, 0.07), transparent 72%);
+  pointer-events: none;
+}
+
+.macbook {
+  position: relative;
+  width: min(880px, 92vw);
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+/* Screen lid — hinge at the top edge, transform driven by JS */
+.macbook-lid {
+  position: relative;
+  z-index: 2;
+  transform-origin: 50% 0%;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.macbook-screen {
+  position: relative;
+  background: linear-gradient(180deg, #1d1d23, #0e0e12);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 18px;
+  padding: 11px;
+  box-shadow:
+    0 30px 80px rgba(0, 0, 0, 0.55),
+    inset 0 1px 0 rgba(255, 255, 255, 0.07);
+}
+
+.macbook-display {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  border-radius: 9px;
+  overflow: hidden;
+  background: #0a0a0d;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+}
+
+.macbook-logo {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--serif);
+  font-size: clamp(28px, 4vw, 44px);
+  letter-spacing: 0.08em;
+  color: rgba(255, 255, 255, 0.55);
+  opacity: 1;
+  transition: opacity 0.7s ease;
+}
+
+.macbook-logo.is-hidden {
+  opacity: 0;
+}
+
+.macbook-slides {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+}
+
+.macbook-slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+}
+
+.macbook-slide.is-active {
+  opacity: 1;
+}
+
+.macbook-slide picture,
+.macbook-slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.macbook-slide img {
+  object-fit: cover;
+  /* The screenshots are dark-mode product shots; a gentle lift keeps the
+     dark content separating from the black bezel without washing it. */
+  filter: brightness(1.12);
+}
+
+/* Screen light — the display reads as the light source in the dark studio
+   scene (the dark-mode UI shots sit on a glowing panel, like a real screen
+   in a dim room). screen-blend adds light: the flat layer lifts the whole
+   panel, the radial concentrates the glow at the top-center of the glass. */
+.macbook-display::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  background:
+    radial-gradient(85% 70% at 50% 18%, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.08) 55%, transparent 82%),
+    linear-gradient(rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.04));
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+
+/* Screen reflection — faint glass sheen, never distracting */
+.macbook-reflect {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  background: linear-gradient(165deg, rgba(255, 255, 255, 0.05), transparent 42%);
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+/* Keyboard deck — sits below the lid, gently receding */
+.macbook-deck {
+  position: relative;
+  z-index: 1;
+  width: 94%;
+  margin: -14px auto 0;
+  padding: 10px 10px 16px;
+  background: linear-gradient(180deg, #17171d, #0b0b0f);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0 0 16px 16px;
+  box-shadow:
+    0 18px 50px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  transform: rotateX(22deg);
+  transform-origin: 50% 100%;
+}
+
+/* Screen light spilling onto the palm rest */
+.macbook-deck::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 10%;
+  right: 10%;
+  height: 55%;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.1), transparent);
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.macbook-keyboard {
+  height: 34px;
+  border-radius: 6px;
+  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.16) 0.5px, transparent 0.5px);
+  background-size: 3.5px 3.5px;
+  background-position: center;
+  opacity: 0.65;
+}
+
+.macbook-trackpad {
+  width: 34%;
+  height: 22px;
+  margin: 8px auto 0;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  background: rgba(255, 255, 255, 0.015);
+}
+
+/* Soft ground shadow beneath the laptop */
+.macbook-shadow {
+  position: absolute;
+  left: 50%;
+  bottom: -34px;
+  transform: translateX(-50%);
+  width: 70%;
+  height: 46px;
+  border-radius: 50%;
+  background: radial-gradient(50% 50% at 50% 50%, rgba(0, 0, 0, 0.75), transparent 70%);
+  filter: blur(4px);
+  pointer-events: none;
+}
+
+/* ============================================================
+   GRID SECTION
+   ============================================================ */
+
+.builds-section {
+  position: relative;
+  background: #050505;
+  padding: 40px 0 120px;
+}
+
+/* Soft white ambient beam above the grid — barely there */
+.builds-section::before {
+  content: '';
+  position: absolute;
+  top: -80px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(960px, 86%);
+  height: 240px;
+  background: radial-gradient(50% 50% at 50% 0%, rgba(255, 255, 255, 0.05), transparent 72%);
+  pointer-events: none;
+}
+
+.builds-section-title {
+  font-size: 13px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.42);
+  font-weight: 600;
+}
+
+.builds-grid {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 36px;
+  margin-top: 48px;
+}
+
+/* ============================================================
+   PIN CARD — Aceternity "3D Pin" ported to pure CSS.
+   .pin-cell is the perspective context (1000px). The interaction
+   layers (floor, beam, rings, badge) are absolutely positioned
+   against it, so the card's box and its grid footprint never
+   change. Hover toggles two fixed states via CSS only — the
+   reference's mouseenter/mouseleave behaviour, no cursor-tracking
+   JS. Animates transform/opacity only.
+   ============================================================ */
+
+.pin-cell {
+  position: relative;
+  perspective: 1000px;
+}
+
+/* Tilted "floor" plane — the reference's rotateX(70deg) panel that
+   the beam / rings / badge read as sitting on an angled surface.
+   Fades in with the rest of the interaction; invisible at rest. */
+.pin-floor {
+  position: absolute;
+  left: -6%;
+  right: -6%;
+  bottom: -14%;
+  height: 96%;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 24px;
+  background: radial-gradient(85% 62% at 50% 86%, rgba(228, 87, 107, 0.14), rgba(228, 87, 107, 0.02) 55%, transparent 78%);
+  transform: rotateX(70deg) translateZ(0);
+  transform-origin: 50% 100%;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.7s ease;
+  z-index: 0;
+}
+
+.pin-card {
+  position: relative;
+  z-index: 1;
+  background-color: #0a0a0a;
+  background-image: radial-gradient(120% 90% at 50% -10%, rgba(255, 255, 255, 0.04), transparent 55%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 24px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
+  padding: 14px;
+  transform: rotateX(0deg) scale(1);
+  transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.pin-card:hover {
+  border-color: rgba(255, 255, 255, 0.14);
+  box-shadow: 0 26px 80px rgba(0, 0, 0, 0.55);
+}
+
+.pin-card:focus-within {
+  border-color: rgba(255, 255, 255, 0.14);
+}
+
+.pin-link {
+  position: relative;
+  z-index: 1;
+  display: block;
+}
+
+.pin-link:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 20px;
+}
+
+/* Screenshot */
+.pin-media {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #111;
+}
+
+.pin-media picture,
+.pin-media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.pin-media img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.001);
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.pin-card:hover .pin-media img,
+.pin-card:focus-within .pin-media img {
+  transform: scale(1.02);
+}
+
+/* Reflected studio lighting — replaces the Aceternity blue glow */
+.pin-shine {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.05), transparent 55%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.pin-card:hover .pin-shine,
+.pin-card:focus-within .pin-shine {
+  opacity: 1;
+}
+
+/* Body */
+.pin-body {
+  padding: 26px 16px 20px;
+}
+
+.pin-name {
+  font-family: var(--serif);
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  color: #fff;
+}
+
+.pin-sub {
+  margin-top: 10px;
+  max-width: 44ch;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.6);
+  line-height: 1.6;
+  text-wrap: pretty;
+}
+
+.pin-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.pin-chip {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: rgba(255, 255, 255, 0.72);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  padding: 5px 11px;
+  border-radius: 100px;
+}
+
+.pin-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 24px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--accent-soft, var(--accent));
+}
+
+.pin-cta-arrow {
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
+
+.pin-card:hover .pin-cta-arrow,
+.pin-card:focus-within .pin-cta-arrow {
+  transform: translateX(4px);
+}
+
+/* ============================================================
+   PIN INTERACTION — badge, beam, rings (Aceternity port)
+   All layers are absolutely positioned against .pin-cell and stay
+   invisible at rest. Hover (gated to fine pointers below) fades the
+   badge + beam in and plays the rings while the card tilts back in
+   the .pin-cell perspective. Nothing here affects the card's box.
+   ============================================================ */
+
+/* Floating title pill — the project name, linked to the SAME href
+   as the card's own link. An invisible ::before bridges the gap to
+   the card so the hover chain (and the beam) stays alive while the
+   cursor travels up to the badge. */
+.pin-badge {
+  position: absolute;
+  top: -58px;
+  left: 50%;
+  z-index: 3;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 18px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 999px;
+  background: rgba(10, 10, 10, 0.92);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
+  white-space: nowrap;
+  visibility: hidden;
+  opacity: 0;
+  transform: translate(-50%, 0) scale(0.9);
+  pointer-events: none;
+  transition: opacity 0.5s ease, transform 0.5s ease, visibility 0s linear 0.5s;
+}
+
+.pin-badge::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  width: 48px;
+  height: 52px;
+  transform: translateX(-50%);
+}
+
+.pin-badge-label {
+  font-family: var(--serif);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: #fff;
+}
+
+.pin-badge-line {
+  width: 28px;
+  height: 2px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent-soft, var(--accent)), transparent);
+  box-shadow: 0 0 12px rgba(228, 87, 107, 0.65);
+}
+
+/* Glow beam — thin accent pillar running from the card's top edge
+   up toward the badge. Fades in on hover only (opacity 0.5s). */
+.pin-beam {
+  position: absolute;
+  top: -46px;
+  left: 50%;
+  z-index: 2;
+  width: 2px;
+  height: 46px;
+  transform: translateX(-50%);
+  background: linear-gradient(to bottom, transparent, var(--accent-soft, var(--accent)));
+  box-shadow: 0 0 14px rgba(228, 87, 107, 0.55);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s ease;
+}
+
+/* Pulsing rings — three stacked accent discs, the reference's three
+   staggered motion.divs (6s loop, delays 0 / 2 / 4s). Paused + hidden
+   at rest so nothing animates off-hover; the reference only plays them
+   while hovered. `visibility` gates them so a paused mid-cycle frame
+   can never linger after mouse-leave. */
+.pin-ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 2;
+  width: min(78%, 440px);
+  aspect-ratio: 1 / 1;
+  border: 1px solid rgba(228, 87, 107, 0.22);
+  border-radius: 50%;
+  background: rgba(228, 87, 107, 0.08);
+  transform: translate(-50%, -50%) scale(0);
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  animation: pin-ring-pulse 6s ease-out infinite;
+  animation-play-state: paused;
+}
+
+.pin-ring-1 { animation-delay: 0s; }
+.pin-ring-2 { animation-delay: 2s; }
+.pin-ring-3 { animation-delay: 4s; }
+
+@keyframes pin-ring-pulse {
+  0%   { transform: translate(-50%, -50%) scale(0);   opacity: 0; }
+  20%  { transform: translate(-50%, -50%) scale(0.2); opacity: 1; }
+  50%  { transform: translate(-50%, -50%) scale(0.5); opacity: 0.5; }
+  100% { transform: translate(-50%, -50%) scale(1);   opacity: 0; }
+}
+
+/* ============================================================
+   HOVER STATE — the entire interaction lives here, gated to
+   hover-capable fine pointers (same scope as #custom-cursor).
+   Two fixed states, exactly like the reference's mouseenter /
+   mouseleave. :focus-within keeps it keyboard-visible.
+   ============================================================ */
+@media (hover: hover) and (pointer: fine) {
+  .pin-cell:hover .pin-card,
+  .pin-cell:focus-within .pin-card {
+    transform: rotateX(40deg) scale(0.8);
+  }
+
+  .pin-cell:hover .pin-floor,
+  .pin-cell:focus-within .pin-floor {
+    opacity: 1;
+  }
+
+  .pin-cell:hover .pin-badge,
+  .pin-cell:focus-within .pin-badge {
+    visibility: visible;
+    opacity: 1;
+    transform: translate(-50%, 0) scale(1);
+    pointer-events: auto;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+
+  .pin-cell:hover .pin-beam,
+  .pin-cell:focus-within .pin-beam {
+    opacity: 1;
+  }
+
+  .pin-cell:hover .pin-ring,
+  .pin-cell:focus-within .pin-ring {
+    visibility: visible;
+    opacity: 1;
+    animation-play-state: running;
+  }
+}
+
+/* ============================================================
+   RELATED WORK (closing section)
+   ============================================================ */
+
+.builds-related {
+  background: #050505;
+  padding: 8px 0 128px;
+}
+
+.builds-related .wrap {
+  max-width: 720px;
+  text-align: center;
+}
+
+.builds-related .kicker {
+  color: var(--accent-soft, var(--accent));
+}
+
+.builds-related h2 {
+  font-size: clamp(26px, 4.2vw, 40px);
+  margin-bottom: 28px;
+  color: #fff;
+}
+
+.builds-related .builds-related-links {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.builds-related .btn-ghost {
+  border-color: rgba(255, 255, 255, 0.18);
+  color: #fff;
+  transition: border-color 0.3s ease, background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.builds-related .btn-ghost:hover {
+  border-color: #fff;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+/* ============================================================
+   SCROLL REVEAL (only active when JS + motion are enabled)
+   ============================================================ */
+
+.builds-anim .pin-cell {
+  opacity: 0;
+  transform: translateY(40px) scale(0.98);
+  will-change: transform, opacity;
+  transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1), transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.builds-anim .pin-cell.in-view {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.builds-anim .builds-hero-eyebrow,
+.builds-anim .builds-hero-title,
+.builds-anim .builds-hero-sub {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1), transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.builds-anim .builds-hero-eyebrow.in-view,
+.builds-anim .builds-hero-title.in-view,
+.builds-anim .builds-hero-sub.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Scroll cue fades in on load (own 0.4s transition), then fades out on scroll */
+.builds-anim .builds-hero-cue {
+  opacity: 0;
+}
+
+.builds-anim .builds-hero-cue.in-view {
+  opacity: 1;
+}
+
+/* MacBook stage scales in on load; scroll transform lives on .macbook (JS) */
+.builds-anim .macbook-stage {
+  transform: scale(0.96);
+  transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.builds-anim .macbook-stage.in-view {
+  transform: scale(1);
+}
+
+/* Featured Builds heading fades up as the laptop finishes opening */
+.builds-anim .builds-section-title {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1), transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.builds-anim .builds-section-title.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+
+@media (max-width: 900px) {
+  .builds-grid {
+    gap: 28px;
+  }
+}
+
+@media (max-width: 700px) {
+  .builds-hero {
+    min-height: 0;
+    padding: calc(var(--nav-height, 68px) + 24px) 0 0;
+  }
+
+  .builds-hero-inner {
+    min-height: 74svh;
+    min-height: 74vh;
+    padding-bottom: 20px;
+  }
+
+  .builds-hero-title {
+    font-size: clamp(36px, 9vw, 50px);
+  }
+
+  .builds-hero-line,
+  .builds-hero-subline {
+    display: inline;
+  }
+
+  .builds-hero-cue {
+    bottom: 10px;
+  }
+
+  .macbook-stage {
+    padding: 32px 16px 88px;
+    perspective: 900px;
+  }
+
+  .builds-grid {
+    grid-template-columns: 1fr;
+    gap: 26px;
+    margin-top: 36px;
+  }
+
+  .builds-section {
+    padding: 32px 0 80px;
+  }
+
+  .builds-related {
+    padding: 8px 0 88px;
+  }
+
+  .pin-body {
+    padding: 24px 14px 18px;
+  }
+
+  .pin-name {
+    font-size: 21px;
+  }
+}
+
+/* Touch: no persistent hover, so the whole pin interaction is
+   redundant — the card itself is the tappable target. Drop every
+   effect layer to avoid needless compositing and residual states. */
+@media (hover: none), (pointer: coarse) {
+  .pin-badge,
+  .pin-beam,
+  .pin-ring,
+  .pin-floor {
+    display: none;
+  }
+}
+
+/* Safety: if the motion preference flips after load, snap states on */
+@media (prefers-reduced-motion: reduce) {
+  .builds-anim .builds-hero-eyebrow,
+  .builds-anim .builds-hero-title,
+  .builds-anim .builds-hero-sub,
+  .builds-anim .builds-hero-cue,
+  .builds-anim .macbook-stage,
+  .builds-anim .builds-section-title,
+  .builds-anim .pin-cell {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .builds-hero-cue-arrow {
+    animation: none;
+  }
+
+  /* No tilt — the card stays flat; the badge + beam fade in as a
+     simple opacity change (site-wide reduced-motion convention).
+     Rings are fully inert and never shown. */
+  .pin-card {
+    transform: none !important;
+    transition: none;
+  }
+
+  .pin-ring {
+    animation: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+  }
+
+  .pin-badge {
+    transition: opacity 0.5s ease, transform 0.5s ease, visibility 0s linear 0.5s;
+  }
+
+  .pin-beam {
+    transition: opacity 0.5s ease;
+  }
+
+  .pin-floor {
+    transition: opacity 0.5s ease;
+  }
+
+  /* Static pose: lid stays open (no inline scroll transform), laptop full size */
+  .macbook-lid,
+  .macbook {
+    transform: none !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) and (max-width: 700px) {
+  .macbook {
+    transform: scale(0.8) !important;
+  }
+}
