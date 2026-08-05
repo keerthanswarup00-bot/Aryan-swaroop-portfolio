@@ -1,6 +1,6 @@
 # Cursor System Audit & Production Enhancements
 
-Commit: `0c02080` (plus `dcfcf42` prod audit, `e57bde7` sfp-5 swap) · 2026-08-05 · **Follow-up fix `5e8a2c4`**
+Commit: `0c02080` (plus `dcfcf42` prod audit, `e57bde7` sfp-5 swap) · 2026-08-05 · **Follow-up fix `dcaed72`**
 
 ## Follow-up: cursor invisible in production (2026-08-05)
 
