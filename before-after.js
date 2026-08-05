@@ -7,7 +7,6 @@
   var handle = slider.querySelector('.compare-handle');
   var before = slider.querySelector('.compare-before');
   var marker = slider.querySelector('.compare-marker');
-  var prev = document.querySelector('.compare-prev');
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   var pct = 50;
@@ -84,7 +83,6 @@
   });
 
   function revealNow() {
-    if (prev) prev.classList.add('ba-prev-fade');
     stage.classList.remove('ba-pre');
     stage.classList.add('ba-revealed');
   }
@@ -100,7 +98,7 @@
           io.disconnect();
         }
       });
-    }, { threshold: 0.25 });
+    }, { threshold: 0 });
     io.observe(stage);
   }
 })();
