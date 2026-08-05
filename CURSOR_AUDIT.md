@@ -1,6 +1,14 @@
 # Cursor System Audit & Production Enhancements
 
-Commit: `0c02080` (plus `dcfcf42` prod audit, `e57bde7` sfp-5 swap) · 2026-08-05
+Commit: `0c02080` (plus `dcfcf42` prod audit, `e57bde7` sfp-5 swap) · 2026-08-05 · **Follow-up fix `5e8a2c4`**
+
+## Follow-up: cursor invisible in production (2026-08-05)
+
+Reported after deploy: the cursor was never rendered. Root cause: the JS-opt-in base rule `#cur{display:none}` added for `html.has-cursor` gating was never overridden — the `html.has-cursor #cur{...}` rule set position/size but **no `display`**, so `display:none` persisted and the cursor stayed hidden on every page (JS was still writing transforms). The original shipped without a base `display:none` rule, so this was a regression introduced by the gating change.
+
+Fix: `display:block` added to `html.has-cursor #cur`. Also marked `.intro-overlay` `theme-dark` (index) so the dot is white during the intro animation. Cache-busters bumped to `?v=20260806`.
+
+Re-verified (CDP, Brave): `display:block` + 18×18 on all 11 pages; **black dot** on light sections (about story), **white dot** on dark (index hero, about-hero, builds); **132px difference-blend invert disc with "VIEW"** over `.sfp-media`/`data-cur` images; reduced-motion/mobile gating unchanged.
 
 Part 3 of the engagement: a complete audit of the custom cursor system (`script.js` + `style.css`) and a production-grade enhancement pass. **This was NOT a redesign.** Every approved visual and timing value was preserved exactly; the work was internal correctness, performance, and theme-awareness.
 

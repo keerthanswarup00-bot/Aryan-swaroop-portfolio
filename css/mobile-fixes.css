@@ -233,6 +233,18 @@
     height: 2px;
   }
 
+  /* === 10b. Ultra-narrow screens — compact identity so the 44px hamburger
+       stays fully on-screen (down to 320px). Only font sizes change; layout,
+       avatar, and touch targets are untouched. === */
+  @media (max-width: 350px) {
+    .header-name {
+      font-size: 22px;
+    }
+    .header-status {
+      font-size: 13px;
+    }
+  }
+
   /* === 11. Hero — full-viewport rhythm === */
   .hero-section {
     min-height: 100svh;

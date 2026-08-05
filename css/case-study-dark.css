@@ -2,7 +2,12 @@
   background: #000000;
   caret-color: #fff;
 }
-.page-dark, .page-dark * { cursor: none !important; }
+/* Custom cursor is only active on fine-pointer devices >900px (see style.css).
+   Hide the native cursor there ONLY when the JS cursor is live (html.has-cursor),
+   so reduced-motion, no-JS, touch, and narrow-window users keep a real cursor. */
+@media (min-width: 901px) {
+  html.has-cursor .page-dark, html.has-cursor .page-dark * { cursor: none !important; }
+}
 .page-dark .site-header {
   background: rgba(0, 0, 0, 0.85);
 }
