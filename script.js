@@ -364,15 +364,15 @@ aboutImg.addEventListener('click',function(){window.location.href='/about'});
 (function(){
 if(prefersReducedMotion) return;
 var IMAGES = [
-'/images/brahmi-pourshot.jpg',
-'/images/brahmi-shelf.jpg',
-'/images/brahmi-label.jpg',
-'/images/brahmi-kolam.jpg',
-'/images/brahmi-courtyard.jpg',
-'/images/brahmi-tumbler.jpg',
-'/images/brahmi-spices.jpg',
-'/images/brahmi-doorway.jpg',
-'/images/snehaloka-aerial.jpg'
+'/images/brahmi-pourshot.avif',
+'/images/brahmi-shelf.avif',
+'/images/brahmi-label.avif',
+'/images/brahmi-kolam.avif',
+'/images/brahmi-courtyard.avif',
+'/images/brahmi-tumbler.avif',
+'/images/brahmi-spices.avif',
+'/images/brahmi-doorway.avif',
+'/images/snehaloka-aerial.avif'
 ];
 var MAX_VISIBLE = 6;
 var SPAWN_MIN = 60;
@@ -382,7 +382,12 @@ var ROTATIONS = [-3, -1, 0, 1, 3];
 var BEHIND = 15;
 var DESKTOP = 1024;
 var heroSection = document.querySelector('.hero-section');
-if(heroSection) IMAGES.forEach(function(src){ var i=new Image(); i.src=src; });
+var heroPreloaded = false;
+function preloadHeroImages(){
+if(heroPreloaded) return;
+heroPreloaded = true;
+IMAGES.forEach(function(src){ var i=new Image(); i.src=src; });
+}
 var line1 = document.getElementById('hero-line-1');
 var line2 = document.getElementById('hero-line-2');
 var animFinished = false;
@@ -466,6 +471,7 @@ el.style.width = size + 'px';
 el.style.transform = 'translate3d(0,0,0) scale(0.6) rotate(' + rot + 'deg)';
 var elImg = document.createElement('img');
 elImg.src = IMAGES[idx];
+elImg.onerror = function(){ if(this.dataset.fb) return; this.dataset.fb = '1'; this.src = this.src.replace('.avif', '.jpg'); };
 elImg.draggable = false;
 elImg.alt = '';
 elImg.style.opacity = '0';
@@ -594,6 +600,7 @@ accDist = 0;
 function enableReveal(){
 if(enabled) return;
 enabled = true;
+preloadHeroImages();
 window.addEventListener('mousemove', onMove, { passive: true });
 startOverlapLoop();
 }

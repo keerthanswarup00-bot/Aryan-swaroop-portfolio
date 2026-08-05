@@ -57,7 +57,8 @@
 
       /* In-place cross-fade: each step spends the first 0.5 viewport transitioning
          and the remaining 0.5 settled (hold) so an image never scrolls off or
-         dwells mid-blur — 0.5 is the dwell tuner. */
+         dwells mid-blur — 0.5 is the dwell tuner. The trailing hold keeps the
+         timeline exactly 5.0 (one viewport per image) so the scrub maps 1:1. */
       for (var i = 0; i < media.length - 1; i++) {
         tl.to(media[i], {
           scale: 0.92,
@@ -69,6 +70,7 @@
         }, i);
         tl.to(media[i + 1], { opacity: 1, duration: 0.5, ease: 'none' }, i);
       }
+      tl.to({}, { duration: 0.5 }, media.length - 1.5);
     }, section);
   }
 
