@@ -102,7 +102,7 @@ Complete inventory of every tracked file, verified by walking the tree (excludin
 
 | File | Purpose |
 |---|---|
-| `work/brahmi.html` | Sastry's by Brahmi case study — kolam header, story blocks, blend selector, desktop PageFlip book + **broken mobile Elfsight widget**, storytelling section |
+| `work/brahmi.html` | Brahmi Coffee Roasters case study — kolam header, story blocks, blend selector, desktop PageFlip book + **broken mobile Elfsight widget**, storytelling section |
 | `work/paavani-properties.html` | Paavani case study — dark hero, stats count-up, process steps, interactive VR iframe embed, reading-progress rail |
 
 ## `images/` (357 files, 50 MB) + `images/brahmi/`

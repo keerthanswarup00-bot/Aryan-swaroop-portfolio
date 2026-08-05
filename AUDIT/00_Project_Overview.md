@@ -34,7 +34,7 @@ A hand-coded, static **single-developer design portfolio** for Aryan Swaroop —
 | Tools | `/tools` | Skills groups + resume download | yes |
 | Playground | `/playground` | 11-image / 10-video editorial gallery | yes |
 | 404 / Game | `/404` | Custom 404 with endless-runner game | yes (`/404`) |
-| Work — Brahmi | `/work/brahmi` | Sastry's by Brahmi case study (44-page flipbook) | yes |
+| Work — Brahmi | `/work/brahmi` | Brahmi Coffee Roasters case study (44-page flipbook) | yes |
 | Work — Paavani | `/work/paavani-properties` | Paavani Properties case study (stats, process, VR embed) | yes |
 | Changelog | `/changelog` | Site update history | **noindex** (correct) |
 

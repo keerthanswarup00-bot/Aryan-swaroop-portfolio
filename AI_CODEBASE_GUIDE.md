@@ -98,7 +98,7 @@ Only technologies that actually exist in the repository are listed. Versions are
 ├── changelog.html          Site changelog
 ├── 404.html                Custom 404 + endless-runner game
 ├── work/                   Nested case-study pages (2 levels deep)
-│   ├── brahmi.html         Sastry's by Brahmi case study (flipbook)
+│   ├── brahmi.html         Brahmi Coffee Roasters case study (flipbook)
 │   └── paavani-properties.html  Paavani case study (VR iframe)
 ├── style.css               Minified GLOBAL stylesheet (~39 KB, 10 physical lines)
 ├── css/                    10 scoped stylesheets (loaded per page)
@@ -348,7 +348,7 @@ All in `js/`, consumed by `main.js`:
 
 ### 7.4 `lifestyle.html` (598 lines, largest page) — Lifestyle
 
-**Purpose:** 4 lifestyle case studies: Sastry's by Brahmi (`.idea-gallery` ×8), Isha V, **Arvi Hospital** (includes the only `.compare-slider` before/after interaction), Snehaloka Cricket Academy.
+**Purpose:** 4 lifestyle case studies: Brahmi Coffee Roasters (`.idea-gallery` ×8), Isha V, **Arvi Hospital** (includes the only `.compare-slider` before/after interaction), Snehaloka Cricket Academy.
 
 **Scripts:** `dropdown.js`, `script.js`, `lightbox.js`, `before-after.js`. **Interactions:** lightbox; compare slider with pointer/keyboard (arrows ±5, Shift ±10, Home/End), `clipPath: inset()` before-image reveal, `aria-valuenow` sync, IntersectionObserver reveal. Arvi tiles use `.png` fallbacks (not `.jpg`).
 
@@ -380,7 +380,7 @@ All in `js/`, consumed by `main.js`:
 
 **Purpose:** Custom 404 with the endless-runner game as primary engagement. `noindex, follow`, canonical → `/`. Game section sits **before** `<main>`; `removeGameFootBottom()` in `build-nav.mjs` dedupes its footer row.
 
-### 7.10 `work/brahmi.html` (358 lines) — Sastry's by Brahmi case study
+### 7.10 `work/brahmi.html` (358 lines) — Brahmi Coffee Roasters case study
 
 **Purpose:** Flagship brand-identity case study (coffee). `body.page-dark`.
 

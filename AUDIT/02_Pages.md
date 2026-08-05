@@ -80,7 +80,7 @@ Shared scripts: `dropdown.js` (defer) + `script.js` (defer) on **every** page.
 - **Scripts:** dropdown, script, `main.js` (module → game). `lightbox.js` NOT loaded (no images needing it).
 - **Notes:** game boots on this page AND on index. The 404 links Home from the game section (README of game section). Duplicate game-section divs were merged in v2.0 — verified single section.
 
-## work/brahmi.html — Sastry's by Brahmi (case study)
+## work/brahmi.html — Brahmi Coffee Roasters (case study)
 
 - **Head:** unique, canonical `/work/brahmi`, OG (`brahmi-pourshot.jpg`), Article + CreativeWork + ImageObject JSON-LD.
 - **Sections:** teal/brass kolam header, overview, story blocks (reveal-on-scroll), blend selector (packaging variants), 44-page flipbook, storytelling section, next-project link.

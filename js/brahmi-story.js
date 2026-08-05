@@ -1,4 +1,4 @@
-/* Featured Case Study — Sastry's by Brahmi, sticky-left scroll storytelling.
+/* Featured Case Study — Brahmi Coffee Roasters, sticky-left scroll storytelling.
    The left column (image only) is pinned via CSS position:sticky;
    the right column is normal document flow — each block reserves its own scroll
    distance (min-height) and fades in once when it enters the viewport

@@ -30,7 +30,7 @@
   margin-bottom: 1.5rem;
 }
 
-/* === 3. Sastry's case study — sticky left column, scrubbed story blocks === */
+/* === 3. Brahmi Coffee Roasters case study — sticky left column, scrubbed story blocks === */
 /* Base state: static, stacked, fully readable. This is the no-JS,
    reduced-motion, and tablet/mobile layout. JS adds `.csx-anim` to switch
    into the pinned sticky-left storytelling mode. */
@@ -367,7 +367,7 @@
   }
 }
 
-/* === 6. Sastry's case study — tablet/mobile fallback: stack all content === */
+/* === 6. Brahmi Coffee Roasters case study — tablet/mobile fallback: stack all content === */
 @media (max-width: 820px) {
   #brahmi.csx .csx-list {
     grid-template-columns: 1fr;

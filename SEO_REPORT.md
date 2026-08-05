@@ -16,7 +16,7 @@ Every page ships `<title>`, meta description, canonical, `og:title`, `og:image`,
 | `/tools` | Tools & Skills | ✓ |
 | `/playground` | Playground — Motion, Rendering & Experiments | ✓ |
 | `/changelog` | Changelog — Portfolio Updates | ✓ |
-| `/work/brahmi` | Sastry's by Brahmi — Brand Identity & Packaging | ✓ |
+| `/work/brahmi` | Brahmi Coffee Roasters — Brand Identity & Packaging | ✓ |
 | `/work/paavani-properties` | Paavani Properties — End-to-End Brand System | ✓ |
 | `/404` | Page Not Found | ✓ |
 
