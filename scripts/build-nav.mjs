@@ -9,7 +9,7 @@ import { fileURLToPath } from 'node:url';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 
-export const HEADER_HTML = `<header class="site-header" aria-label="Site">
+export const HEADER_HTML = `<header class="site-header theme-dark" aria-label="Site">
   <div class="header-row">
     <a href="/" class="header-left">
       <picture>
