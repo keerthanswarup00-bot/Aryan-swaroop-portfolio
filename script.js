@@ -346,6 +346,11 @@ el.textContent = 'Design';
 if (prefersReducedMotion) return;
 var targets = document.querySelectorAll('section .kicker, section h2, .page-header .kicker, .page-header h1');
 targets.forEach(function(el){ el.classList.add('reveal'); });
+if (!('IntersectionObserver' in window)) {
+  targets.forEach(function(el){ el.classList.add('in-view'); });
+  document.querySelectorAll('.about-story .reveal').forEach(function(el){ el.classList.add('in-view'); });
+  return;
+}
 var observer = new IntersectionObserver(function(entries) {
 entries.forEach(function(entry) {
 if (entry.isIntersecting) {

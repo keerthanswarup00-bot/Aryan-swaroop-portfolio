@@ -45,6 +45,7 @@
 #brahmi.csx .feature-visual img {
   width: auto;
   max-width: 100%;
+  max-height: calc(100vh - 180px);
   max-height: calc(100dvh - 180px);
 }
 
@@ -168,15 +169,18 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  min-height: 80vh;
   min-height: 80svh;
   will-change: transform, opacity;
 }
 
 #brahmi.csx.csx-anim .csx-block:first-child {
+  min-height: 100vh;
   min-height: 100svh;
 }
 
 #brahmi.csx.csx-anim .csx-block:last-child {
+  min-height: 40vh;
   min-height: 40svh;
 }
 
