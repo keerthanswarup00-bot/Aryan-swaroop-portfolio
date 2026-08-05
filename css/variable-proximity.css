@@ -1,0 +1,29 @@
+/* VariableProximity — letter-by-letter variable-font response on the About hero.
+   Scoped classes are injected by js/variable-proximity.js; the h1 stays static
+   semantic text when JS is unavailable, reduced motion is set, or on touch. */
+
+.about-hero-inner h1 {
+  font-variation-settings: 'wght' 500, 'opsz' 9;
+}
+
+.vp-word {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.vp-letter {
+  display: inline-block;
+  font-variation-settings: 'wght' 500, 'opsz' 9;
+  will-change: font-variation-settings;
+}
+
+.vp-break {
+  display: block;
+  height: 0;
+}
+
+@media (hover: none), (pointer: coarse), (prefers-reduced-motion: reduce) {
+  .vp-letter {
+    font-variation-settings: 'wght' 500, 'opsz' 9;
+  }
+}
