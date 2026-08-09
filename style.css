@@ -15,3 +15,30 @@ section.sd-section{padding:0;background:var(--ink)}
 .sd-viewport .sd-canvas{display:block;width:100%;height:100%}
 .sd-nojs{display:block;width:100%;height:100vh;height:100svh;height:100dvh;object-fit:cover}
 .sd-fallback-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1}
+/* Social flip buttons — footer CONTACT strip (scripts/build-nav.mjs FOOTER_HTML) */
+.social-flip{position:relative;display:flex;gap:8px;padding:16px;border-radius:16px;background:#000;border:1px solid rgba(255,255,255,.08)}
+.sf-clip{position:absolute;inset:0;overflow:hidden;border-radius:inherit;pointer-events:none}
+.sf-border{position:absolute;left:0;width:100%;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.5),transparent);animation:sf-sweep 2.5s linear infinite}
+.sf-border-top{top:0}
+.sf-border-bottom{bottom:0;animation-direction:reverse}
+@keyframes sf-sweep{from{transform:translateX(-100%)}to{transform:translateX(100%)}}
+.sf-btn{position:relative;display:block;width:40px;height:40px;perspective:1000px;border-radius:10px}
+.sf-btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.sf-inner{position:relative;display:block;width:100%;height:100%;transform-style:preserve-3d;transition:transform .8s cubic-bezier(.2,1.25,.3,1)}
+.social-flip:hover .sf-inner{transform:rotateY(180deg)}
+.sf-btn:nth-of-type(1) .sf-inner{transition-delay:0s}
+.sf-btn:nth-of-type(2) .sf-inner{transition-delay:.08s}
+.sf-btn:nth-of-type(3) .sf-inner{transition-delay:.16s}
+.sf-btn:nth-of-type(4) .sf-inner{transition-delay:.24s}
+.sf-btn:nth-of-type(5) .sf-inner{transition-delay:.32s}
+.sf-btn:nth-of-type(6) .sf-inner{transition-delay:.40s}
+.sf-btn:nth-of-type(7) .sf-inner{transition-delay:.48s}
+.sf-face{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;border-radius:10px;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.sf-front{background:#171717;color:#e5e5e5;font-size:17px;font-weight:700}
+.sf-back{transform:rotateY(180deg);background:#fff;color:#000}
+.sf-back svg{display:block}
+.sf-tip{position:absolute;left:50%;top:-4px;transform:translate(-50%,-100%) scale(.8);opacity:0;pointer-events:none;white-space:nowrap;z-index:50;background:#fff;color:#0a0a0a;font-size:12px;font-weight:600;line-height:1;padding:7px 12px;border-radius:8px;box-shadow:0 10px 20px rgba(0,0,0,.4);transition:opacity .2s ease,transform .2s ease}
+.sf-tip::after{content:'';position:absolute;bottom:-4px;left:50%;transform:translateX(-50%) rotate(45deg);width:8px;height:8px;background:#fff}
+.sf-btn:hover .sf-tip{opacity:1;transform:translate(-50%,-100%) scale(1)}
+@media(max-width:480px){.social-flip{gap:6px;padding:10px;border-radius:12px}.sf-btn{width:36px;height:36px}.sf-face{border-radius:8px}.sf-front{font-size:15px}.sf-back svg{width:16px;height:16px}}
+@media(prefers-reduced-motion:reduce){.sf-border{animation:none}.sf-inner{transition:none}}
