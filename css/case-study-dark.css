@@ -20,9 +20,8 @@
 .page-dark .nav-dropdown-trigger {
   color: #F5F5F5;
 }
-.page-dark .resume-btn {
-  border-color: #F5F5F5;
-  color: #F5F5F5;
+.page-dark .site-header .resume-btn {
+  color: #fff;
 }
 .page-dark .hamburger span {
   background: #F5F5F5;

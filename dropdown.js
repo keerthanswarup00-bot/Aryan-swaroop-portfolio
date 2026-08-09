@@ -88,17 +88,17 @@
               '<span class="mega-cs-card-sub">End-to-End Brand System</span>' +
             '</div>' +
           '</a>' +
-          '<a href="/playground" class="mega-cs-card">' +
+          '<a href="/#game" class="mega-cs-card mega-cs-card--portrait">' +
             '<div class="mega-cs-card-img">' +
               '<picture>' +
-                '<source srcset="/images/playground-preview.avif" type="image/avif">' +
-                '<source srcset="/images/playground-preview.webp" type="image/webp">' +
-                '<img src="/images/playground-preview.png" alt="Playground" width="600" height="251" loading="lazy" decoding="async">' +
+                '<source srcset="/images/hero-character.avif" type="image/avif">' +
+                '<source srcset="/images/hero-character.webp" type="image/webp">' +
+                '<img src="/images/hero-character.png" alt="Catch the BMTC" width="373" height="624" loading="lazy" decoding="async">' +
               '</picture>' +
             '</div>' +
             '<div class="mega-cs-card-info">' +
-              '<span class="mega-cs-card-title">Playground</span>' +
-              '<span class="mega-cs-card-sub">Creative Experiments</span>' +
+              '<span class="mega-cs-card-title">Catch the BMTC</span>' +
+              '<span class="mega-cs-card-sub">Endless Runner</span>' +
             '</div>' +
           '</a>' +
         '</div>' +

@@ -35,7 +35,7 @@
 
     gsap.set(media[0], { y: 0, scale: 1, rotation: 0, opacity: 1, filter: 'blur(0px) brightness(1)' });
     for (var i = 1; i < media.length; i++) {
-      gsap.set(media[i], { y: 0, scale: 1, rotation: 0, opacity: 0, filter: 'blur(0px) brightness(1)' });
+      gsap.set(media[i], { y: 60, scale: 1, rotation: 0, opacity: 0, filter: 'blur(0px) brightness(1)' });
     }
 
     ro = new ResizeObserver(function () { ScrollTrigger.refresh(); });
@@ -55,10 +55,9 @@
         }
       });
 
-      /* In-place cross-fade: each step spends the first 0.5 viewport transitioning
-         and the remaining 0.5 settled (hold) so an image never scrolls off or
-         dwells mid-blur — 0.5 is the dwell tuner. The trailing hold keeps the
-         timeline exactly 5.0 (one viewport per image) so the scrub maps 1:1. */
+      /* Slide-up cross-fade: each incoming image starts 60px low and slides up
+         into place while fading in; each step spends the first 0.5 viewport
+         transitioning and the remaining 0.5 settled (hold). */
       for (var i = 0; i < media.length - 1; i++) {
         tl.to(media[i], {
           scale: 0.92,
@@ -68,7 +67,7 @@
           duration: 0.5,
           ease: 'none'
         }, i);
-        tl.to(media[i + 1], { opacity: 1, duration: 0.5, ease: 'none' }, i);
+        tl.to(media[i + 1], { y: 0, opacity: 1, duration: 0.5, ease: 'none' }, i);
       }
       tl.to({}, { duration: 0.5 }, media.length - 1.5);
     }, section);
