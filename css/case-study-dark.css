@@ -11,7 +11,7 @@
 .page-dark .site-header {
   background: rgba(0, 0, 0, 0.85);
 }
-.page-dark .site-header a,
+.page-dark .site-header a:not(.resume-btn),
 .page-dark .site-header .header-name,
 .page-dark .site-header .header-status {
   color: #F5F5F5;
@@ -19,9 +19,6 @@
 .page-dark .navlinks a,
 .page-dark .nav-dropdown-trigger {
   color: #F5F5F5;
-}
-.page-dark .site-header .resume-btn {
-  color: #fff;
 }
 .page-dark .hamburger span {
   background: #F5F5F5;
