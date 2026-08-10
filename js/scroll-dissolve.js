@@ -3,8 +3,9 @@
    framer-motion useScroll is replaced by GSAP ScrollTrigger (per instance).
    Usage: <div data-scroll-dissolve data-front="..." data-back="..." data-alt="...">
    Multiple instances per page are supported. Reduced-motion / no-WebGL / no-JS
-   fall back to a static front image. */
-import * as THREE from './vendor/three.module.min.js';
+   fall back to a static front image. Phones (<=768px) skip WebGL entirely and
+   use a scroll-scrubbed crossfade instead; three.js is imported lazily only for
+   the desktop WebGL path. */
 
 var coverVertexShader = `
   varying vec2 vUv;
@@ -266,109 +267,6 @@ var coverFragmentShaderReverse = `
 `;
 
 
-/* Mobile-optimised variants — phones drop the expensive Sobel edge pass and the
-   multi-octave fbm noise; the dissolve threshold math stays identical so the
-   transition feels the same, but at a fraction of the per-fragment cost. */
-var mobileCoverFragmentShader = `
-  uniform sampler2D uTexture;
-  uniform vec2 uResolution;
-  uniform vec2 uImageResolution;
-  uniform float uDissolve;
-  uniform vec2 uCenter;
-  uniform float uGrayscale;
-  varying vec2 vUv;
-
-
-  float getLuminance(vec3 color) {
-    return dot(color, vec3(0.299, 0.587, 0.114));
-  }
-
-
-  float hash(vec2 p) {
-    return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453);
-  }
-
-
-  void main() {
-    vec2 ratio = vec2(
-      min((uResolution.x / uResolution.y) / (uImageResolution.x / uImageResolution.y), 1.0),
-      min((uResolution.y / uResolution.x) / (uImageResolution.y / uImageResolution.x), 1.0)
-    );
-
-
-    vec2 uv = vec2(
-      vUv.x * ratio.x + (1.0 - ratio.x) * 0.5,
-      vUv.y * ratio.y + (1.0 - ratio.y) * 0.5
-    );
-
-
-    vec4 texColor = texture2D(uTexture, uv);
-    float gray = getLuminance(texColor.rgb);
-    texColor.rgb = mix(texColor.rgb, vec3(gray), uGrayscale);
-
-
-    vec2 centeredUv = vUv - uCenter;
-    float aspect = uResolution.x / uResolution.y;
-    centeredUv.x *= aspect;
-    float dist = length(centeredUv);
-
-
-    float jitter = hash(floor(vUv * uResolution / 8.0)) * 0.1;
-    float maxDist = length(vec2(aspect * 0.5, 0.5));
-    float normalizedDist = (dist + jitter) / maxDist;
-
-
-    float dissolveThreshold = uDissolve * 1.5;
-    float dissolveMask = smoothstep(dissolveThreshold - 0.03, dissolveThreshold, normalizedDist);
-
-
-    vec3 baseColor = mix(texColor.rgb, vec3(0.0), uGrayscale);
-    float alpha = dissolveMask * texColor.a;
-
-
-    gl_FragColor = vec4(baseColor, alpha);
-  }
-`;
-
-
-var mobileCoverFragmentShaderReverse = `
-  uniform sampler2D uTexture;
-  uniform vec2 uResolution;
-  uniform vec2 uImageResolution;
-  uniform float uDarkness;
-  uniform float uGrayscale;
-  varying vec2 vUv;
-
-
-  float getLuminance(vec3 color) {
-    return dot(color, vec3(0.299, 0.587, 0.114));
-  }
-
-
-  void main() {
-    vec2 ratio = vec2(
-      min((uResolution.x / uResolution.y) / (uImageResolution.x / uImageResolution.y), 1.0),
-      min((uResolution.y / uResolution.x) / (uImageResolution.y / uImageResolution.x), 1.0)
-    );
-
-
-    vec2 uv = vec2(
-      vUv.x * ratio.x + (1.0 - ratio.x) * 0.5,
-      vUv.y * ratio.y + (1.0 - ratio.y) * 0.5
-    );
-
-
-    vec4 texColor = texture2D(uTexture, uv);
-    float gray = getLuminance(texColor.rgb);
-    vec3 tinted = mix(texColor.rgb, vec3(gray), uGrayscale);
-    vec3 baseColor = mix(tinted, vec3(0.0), uDarkness);
-
-
-    gl_FragColor = vec4(clamp(baseColor, 0.0, 1.0), texColor.a);
-  }
-`;
-
-
 (function () {
   'use strict';
 
@@ -380,6 +278,56 @@ var mobileCoverFragmentShaderReverse = `
   var isMobile = window.matchMedia('(max-width: 768px)').matches;
 
   ScrollTrigger.config({ ignoreMobileResize: true });
+
+  /* Phone path — no WebGL. Phones keep the sticky viewport but swap the shader
+     dissolve for a scroll-scrubbed crossfade (opacity + subtle scale only,
+     compositor-friendly, guaranteed smooth). Reduced-motion stays a static
+     front image via the fallback above. */
+  function setupMobileCrossfade(el, img, frontSrc, backSrc, alt) {
+    el.classList.add('sd-mobile');
+
+    var viewport = document.createElement('div');
+    viewport.className = 'sd-viewport';
+
+    var back = document.createElement('img');
+    back.className = 'sd-back-img';
+    back.src = backSrc;
+    back.alt = '';
+    back.loading = 'lazy';
+    back.decoding = 'async';
+
+    var front = document.createElement('img');
+    front.className = 'sd-front-img';
+    front.src = frontSrc;
+    front.alt = alt;
+    front.loading = 'eager';
+    front.decoding = 'async';
+
+    viewport.appendChild(back);
+    viewport.appendChild(front);
+    el.insertBefore(viewport, el.firstChild);
+
+    if (img) {
+      img.hidden = true;
+      img.classList.remove('sd-nojs');
+      img.classList.add('sd-fallback-img');
+    }
+
+    gsap.registerPlugin(ScrollTrigger);
+    gsap.timeline({
+      scrollTrigger: {
+        trigger: el,
+        start: 'top top',
+        end: function () { return '+=' + Math.round(window.innerHeight * 2); },
+        scrub: 0.5,
+        invalidateOnRefresh: true
+      }
+    })
+      .fromTo(back, { scale: 1.08 }, { scale: 1, ease: 'none' }, 0)
+      .fromTo(front, { opacity: 1, scale: 1 }, { opacity: 0, scale: 1.05, ease: 'none' }, 0);
+  }
+
+  var webglEls = [];
 
   els.forEach(function (el) {
     var frontSrc = el.getAttribute('data-front');
@@ -399,6 +347,25 @@ var mobileCoverFragmentShaderReverse = `
 
     if (!frontSrc || !backSrc) return;
 
+    if (isMobile) {
+      setupMobileCrossfade(el, img, frontSrc, backSrc, alt);
+      return;
+    }
+
+    webglEls.push({ el: el, img: img, frontSrc: frontSrc, backSrc: backSrc });
+  });
+
+  if (webglEls.length) {
+    /* three.js is ~365 KB — only pull it in on desktop, and only when an
+       element actually needs the WebGL dissolve. */
+    import('./vendor/three.module.min.js').then(function (THREE) {
+      webglEls.forEach(function (entry) {
+        setupWebGL(entry.el, entry.img, entry.frontSrc, entry.backSrc, THREE);
+      });
+    });
+  }
+
+  function setupWebGL(el, img, frontSrc, backSrc, THREE) {
     var viewport = document.createElement('div');
     viewport.className = 'sd-viewport';
     var canvas = document.createElement('canvas');
@@ -419,9 +386,7 @@ var mobileCoverFragmentShaderReverse = `
       preserveDrawingBuffer: true
     });
     renderer.setClearColor(0x000000, 0);
-    renderer.setPixelRatio(isMobile
-      ? Math.min(window.devicePixelRatio || 1, 1)
-      : Math.min(window.devicePixelRatio || 1, 1.5));
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
 
     var scene = new THREE.Scene();
     var camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0.1, 10);
@@ -441,7 +406,7 @@ var mobileCoverFragmentShaderReverse = `
 
     var materialFront = new THREE.ShaderMaterial({
       vertexShader: coverVertexShader,
-      fragmentShader: isMobile ? mobileCoverFragmentShader : coverFragmentShader,
+      fragmentShader: coverFragmentShader,
       transparent: true,
       uniforms: Object.assign(baseUniforms(), {
         uGrayscale: { value: 0.0 },
@@ -452,7 +417,7 @@ var mobileCoverFragmentShaderReverse = `
 
     var materialBack = new THREE.ShaderMaterial({
       vertexShader: coverVertexShader,
-      fragmentShader: isMobile ? mobileCoverFragmentShaderReverse : coverFragmentShaderReverse,
+      fragmentShader: coverFragmentShaderReverse,
       transparent: true,
       uniforms: Object.assign(baseUniforms(), {
         uBrightness: { value: 0.0 },
@@ -539,5 +504,5 @@ var mobileCoverFragmentShaderReverse = `
         render();
       }
     });
-  });
+  }
 })();

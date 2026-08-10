@@ -112,6 +112,17 @@
     height: 100% !important;
   }
 
+  /* Scroll-dissolve section — full-bleed sticky images; the blanket height:auto
+     above would collapse them to their natural aspect ratio. */
+  .sd-nojs {
+    max-width: none !important;
+    height: 100svh !important;
+  }
+  .sd-mobile .sd-viewport img {
+    max-width: none !important;
+    height: 100% !important;
+  }
+
   /* === 3. Increase horizontal breathing room === */
   .wrap {
     padding-left: 24px !important;

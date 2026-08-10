@@ -15,6 +15,9 @@ section.sd-section{padding:0;background:var(--ink)}
 .sd-viewport .sd-canvas{display:block;width:100%;height:100%}
 .sd-nojs{display:block;width:100%;height:100vh;height:100svh;height:100dvh;object-fit:cover}
 .sd-fallback-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1}
+.sd-mobile .sd-viewport img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;will-change:transform,opacity}
+.sd-mobile .sd-back-img{z-index:0}
+.sd-mobile .sd-front-img{z-index:1}
 /* Social flip buttons — footer CONTACT strip (scripts/build-nav.mjs FOOTER_HTML) */
 .social-flip{position:relative;display:flex;gap:8px;padding:16px;border-radius:16px;background:#000;border:1px solid rgba(255,255,255,.08)}
 .sf-clip{position:absolute;inset:0;overflow:hidden;border-radius:inherit;pointer-events:none}
