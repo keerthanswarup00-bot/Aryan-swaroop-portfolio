@@ -374,6 +374,21 @@ setTimeout(function() { btn.innerHTML = original; btn.classList.remove('copied')
 } catch(e) {}
 });
 });
+document.querySelectorAll('.social-flip .sf-btn[data-copy-email]').forEach(function(btn) {
+var tip = btn.querySelector('.sf-tip');
+var original = tip.textContent;
+btn.addEventListener('click', function() {
+var email = btn.dataset.copyEmail;
+var done = function() {
+tip.textContent = 'Email copied';
+setTimeout(function() { tip.textContent = original; }, 1600);
+window.location.href = 'mailto:' + email;
+};
+if(navigator.clipboard && navigator.clipboard.writeText){
+navigator.clipboard.writeText(email).then(done).catch(done);
+} else { done(); }
+});
+});
 if(window.matchMedia('(min-width:1024px)').matches && document.querySelector('.hero-v3')){
 var featureImg=document.querySelector('#brahmi .feature-visual');
 if(featureImg && !featureImg.closest('a')){
