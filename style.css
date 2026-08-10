@@ -27,13 +27,13 @@ button.sf-btn{border:0;margin:0;padding:0;background:none;font:inherit;color:inh
 .sf-btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .sf-inner{position:relative;display:block;width:100%;height:100%;transform-style:preserve-3d;transition:transform .8s cubic-bezier(.2,1.25,.3,1)}
 .social-flip:hover .sf-inner{transform:rotateY(180deg)}
-.sf-btn:nth-child(1) .sf-inner{transition-delay:0s}
-.sf-btn:nth-child(2) .sf-inner{transition-delay:.08s}
-.sf-btn:nth-child(3) .sf-inner{transition-delay:.16s}
-.sf-btn:nth-child(4) .sf-inner{transition-delay:.24s}
-.sf-btn:nth-child(5) .sf-inner{transition-delay:.32s}
-.sf-btn:nth-child(6) .sf-inner{transition-delay:.40s}
-.sf-btn:nth-child(7) .sf-inner{transition-delay:.48s}
+.sf-btn:nth-child(2) .sf-inner{transition-delay:0s}
+.sf-btn:nth-child(3) .sf-inner{transition-delay:.08s}
+.sf-btn:nth-child(4) .sf-inner{transition-delay:.16s}
+.sf-btn:nth-child(5) .sf-inner{transition-delay:.24s}
+.sf-btn:nth-child(6) .sf-inner{transition-delay:.32s}
+.sf-btn:nth-child(7) .sf-inner{transition-delay:.40s}
+.sf-btn:nth-child(8) .sf-inner{transition-delay:.48s}
 .sf-face{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;border-radius:10px;backface-visibility:hidden;-webkit-backface-visibility:hidden}
 .sf-front{background:#171717;color:#e5e5e5;font-size:17px;font-weight:700}
 .sf-back{transform:rotateY(180deg);background:#fff;color:#000}
