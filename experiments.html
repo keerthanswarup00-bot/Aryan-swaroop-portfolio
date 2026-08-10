@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Experiment — Interactive Profile Pill | Aryan</title>
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="description" content="Interactive profile widget experiment.">
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/morphing-pill.css">
+</head>
+<body>
+  <section class="mp-stage" id="hero" aria-label="Interactive profile hero">
+    <h1 class="sr-only">Interactive profile card</h1>
+    <div class="morph-shell" id="morphShell" data-state="compact">
+      <div class="mp-panel panel-compact" id="panelCompact"></div>
+      <div class="mp-panel panel-profile" id="panelProfile"></div>
+      <div class="mp-panel panel-bio" id="panelBio"></div>
+      <div class="mp-panel panel-socials" id="panelSocials"></div>
+    </div>
+    <p class="sr-only" id="morphLive" role="status" aria-live="polite"></p>
+  </section>
+  <script src="js/morphing-pill.js" defer></script>
+</body>
+</html>
