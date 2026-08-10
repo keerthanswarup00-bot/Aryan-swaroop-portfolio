@@ -33,8 +33,8 @@
   var TOTAL = WORK.length;
   var MAX_SCROLL = 3000; // virtual scroll range
   var MORPH_END = 600;   // circle -> arc completes at scroll 600
-  var CARD_W = 60;
-  var CARD_H = 85;
+  var CARD_W = 78;
+  var CARD_H = 110.5;
 
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var hasGsap = !!(window.gsap && window.ScrollTrigger);
