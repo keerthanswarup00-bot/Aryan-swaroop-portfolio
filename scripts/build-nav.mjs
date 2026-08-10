@@ -30,6 +30,10 @@ export const HEADER_HTML = `<header class="site-header theme-dark" aria-label="S
       <a href="/about">About</a>
     </nav>
     <div class="header-right">
+      <button class="search-trigger" id="searchTrigger" type="button" aria-label="Search the site" aria-haspopup="dialog" aria-expanded="false" data-search-trigger>
+        <svg class="search-trigger-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <kbd class="search-trigger-kbd" aria-hidden="true">&#8984;K</kbd>
+      </button>
       <a href="/Aryan_Swaroop_Resume.pdf" download class="resume-btn">Resume</a>
       <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false" aria-controls="mobileMenu"><span></span><span></span></button>
     </div>

@@ -1,9 +1,50 @@
 /* ============================================================
-   Site Search — inline panel + ⌘K modal (index.html only).
+   Site Search — header trigger + ⌘K modal (all pages).
    Port of the React "SearchModal" command palette to vanilla JS.
    Design tokens come from :root in style.css.
    ============================================================ */
 
+/* ---- Header search trigger (all pages) ---- */
+.search-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 999px;
+  padding: 8px 12px;
+  color: #fff;
+  cursor: pointer;
+  line-height: 1;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+.search-trigger:hover,
+.search-trigger:focus-visible {
+  background: #fff;
+  color: #000;
+  border-color: #fff;
+  outline: none;
+}
+.search-trigger-icon {
+  display: block;
+  flex-shrink: 0;
+}
+.search-trigger-kbd {
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+  padding: 2px 5px;
+  line-height: 1.4;
+}
+.search-trigger:hover .search-trigger-kbd,
+.search-trigger:focus-visible .search-trigger-kbd {
+  border-color: rgba(0, 0, 0, 0.3);
+}
+
+/* ---- Homepage static-search section (kept for the modal's ancestry) ---- */
 .site-search {
   background: var(--ink);
   color: var(--paper);

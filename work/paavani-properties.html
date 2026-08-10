@@ -74,7 +74,8 @@
   ]
 }
 </script>
-  <link rel="stylesheet" href="/css/mobile-fixes.css?v=20261002">
+  <link rel="stylesheet" href="/css/search.css?v=20261005">
+<link rel="stylesheet" href="/css/mobile-fixes.css?v=20261002">
 </head>
 <body class="page-dark">
 <noscript><style>body{opacity:1!important}#intro-overlay{display:none!important}</style></noscript>
@@ -106,6 +107,10 @@
       <a href="/about">About</a>
     </nav>
     <div class="header-right">
+      <button class="search-trigger" id="searchTrigger" type="button" aria-label="Search the site" aria-haspopup="dialog" aria-expanded="false" data-search-trigger>
+        <svg class="search-trigger-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <kbd class="search-trigger-kbd" aria-hidden="true">&#8984;K</kbd>
+      </button>
       <a href="/Aryan_Swaroop_Resume.pdf" download class="resume-btn">Resume</a>
       <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false" aria-controls="mobileMenu"><span></span><span></span></button>
     </div>
@@ -446,5 +451,6 @@
 <script src="../js/vendor/gsap.min.js"></script>
 <script src="../js/vendor/ScrollTrigger.min.js"></script>
 <script src="../js/storytelling.js?v=20260904"></script>
+  <script defer src="/js/site-search.js?v=20261005"></script>
 </body>
 </html>

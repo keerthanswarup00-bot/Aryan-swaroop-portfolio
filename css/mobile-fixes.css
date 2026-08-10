@@ -243,6 +243,15 @@
     width: 28px;
     height: 2px;
   }
+  .search-trigger {
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    justify-content: center;
+  }
+  .search-trigger-kbd {
+    display: none;
+  }
 
   /* === 10b. Ultra-narrow screens — compact identity so the 44px hamburger
        stays fully on-screen (down to 320px). Only font sizes change; layout,

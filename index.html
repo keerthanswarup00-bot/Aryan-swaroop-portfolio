@@ -47,7 +47,7 @@
 
 <link rel="stylesheet" href="css/home-rebuild.css?v=20260911">
 <link rel="stylesheet" href="css/case-studies.css?v=20260806">
-<link rel="stylesheet" href="css/search.css?v=20260929">
+  <link rel="stylesheet" href="css/search.css?v=20261005">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -299,6 +299,10 @@
       <a href="/about">About</a>
     </nav>
     <div class="header-right">
+      <button class="search-trigger" id="searchTrigger" type="button" aria-label="Search the site" aria-haspopup="dialog" aria-expanded="false" data-search-trigger>
+        <svg class="search-trigger-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <kbd class="search-trigger-kbd" aria-hidden="true">&#8984;K</kbd>
+      </button>
       <a href="/Aryan_Swaroop_Resume.pdf" download class="resume-btn">Resume</a>
       <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false" aria-controls="mobileMenu"><span></span><span></span></button>
     </div>
@@ -437,10 +441,10 @@
   </a>
 </section>
 
-<!-- ScrollDissolveReveal port — front: brand image 01, back: Brahmi kit. See js/scroll-dissolve.js. -->
+<!-- ScrollDissolveReveal port — front: brand image 01, back: Paavani hero. See js/scroll-dissolve.js. -->
 <section class="sd-section" data-scroll-dissolve
          data-front="images/sd-front.webp"
-         data-back="images/sd-back.webp"
+         data-back="images/sd-back-paavani.webp"
          data-alt="Brand identity work — scroll dissolve reveal">
   <img class="sd-nojs" src="images/sd-front.webp" alt="Brand identity work — scroll dissolve reveal" width="1920" height="1072" loading="eager" decoding="async">
 </section>
@@ -450,33 +454,6 @@
 <section class="scroll-reveal-text" id="credibilityReveal">
 
   <p class="srt-paragraph" id="srtParagraph"></p>
-</section>
-
-<section id="site-search" class="site-search theme-dark" aria-label="Search the site">
-  <div class="wrap">
-    <div class="site-search-head">
-      <div class="kicker">Explore</div>
-      <h2>Find anything on this site</h2>
-    </div>
-    <ul class="search-static-list">
-      <li><a href="/about">About</a></li>
-      <li><a href="/real-estate">Real Estate</a></li>
-      <li><a href="/lifestyle">Lifestyle</a></li>
-      <li><a href="/builds">Builds</a></li>
-      <li><a href="/tools">Tools</a></li>
-      <li><a href="/playground">Playground</a></li>
-      <li><a href="/changelog">Changelog</a></li>
-      <li><a href="/#game">Catch the BMTC — Game</a></li>
-      <li><a href="/work/brahmi.html">Brahmi Coffee Roasters</a></li>
-      <li><a href="/work/paavani-properties.html">Paavani Properties</a></li>
-      <li><a href="/lifestyle#ishav">Isha V</a></li>
-      <li><a href="/lifestyle#arvi">Arvi Hospital</a></li>
-      <li><a href="/lifestyle#snehaloka">Snehaloka Cricket Academy</a></li>
-      <li><a href="/real-estate#vr-devaiah">VR Devaiah Enclave</a></li>
-      <li><a href="/real-estate#sidvin-serenity">Sidvin Serenity</a></li>
-      <li><a href="/real-estate#royal-farm">Royal Farm</a></li>
-    </ul>
-  </div>
 </section>
 
 <section id="sticky-featured" class="sticky-featured theme-dark" aria-label="Selected projects">
@@ -779,7 +756,7 @@
 <script defer src="dropdown.js?v=20260912"></script>
 <script type="module" src="js/scroll-dissolve.js?v=20261002"></script>
 <script defer src="script.js?v=20260924"></script>
-<script defer src="js/site-search.js?v=20260930"></script>
+  <script defer src="js/site-search.js?v=20261005"></script>
 <script type="module" src="main.js?v=20260731"></script>
 </body>
 </html>

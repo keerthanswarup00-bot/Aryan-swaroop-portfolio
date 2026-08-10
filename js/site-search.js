@@ -1,5 +1,5 @@
 /* ============================================================
-   Site Search — inline panel + ⌘K modal (index.html only).
+   Site Search — ⌘K / Ctrl+K modal + header trigger (all pages).
    Vanilla port of the React "SearchModal" command palette.
    Zero deps, CSP-clean (no inline handlers — addEventListener only).
    ============================================================ */
@@ -329,6 +329,7 @@
     modalOpen = false;
     overlay.classList.remove('open');
     overlay.setAttribute('aria-hidden', 'true');
+    if (trigger) trigger.setAttribute('aria-expanded', 'false');
     if (lastFocused && lastFocused.focus) lastFocused.focus();
   }
 
@@ -354,6 +355,7 @@
     modalOpen = true;
     overlay.classList.add('open');
     overlay.removeAttribute('aria-hidden');
+    if (trigger) trigger.setAttribute('aria-expanded', 'true');
     modal.input.focus();
     modal.input.select();
   }
@@ -365,6 +367,14 @@
       else openModal();
     }
   });
+
+  var trigger = document.querySelector('[data-search-trigger]');
+  if (trigger) {
+    trigger.addEventListener('click', function () {
+      if (modalOpen) closeModal();
+      else openModal();
+    });
+  }
 
   /* ------------------------------------------------------------
      Inline panel — replaces the static list when JS runs.
