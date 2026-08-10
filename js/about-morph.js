@@ -64,6 +64,23 @@
   function lerp(a, b, t) { return a + (b - a) * t; }
 
   /* --- Card DOM --- */
+  // Cards render at 78x110 CSS px (max ~140x198 in the arc), so they use small
+  // pre-generated -thumb sources; full-res files stay as the last fallback.
+  function setSrcWithFallback(img, name) {
+    var chain = [
+      '/images/' + name + '-thumb.webp',
+      '/images/' + name + '-thumb.avif',
+      '/images/' + name + '.webp',
+      '/images/' + name + '.avif'
+    ];
+    var i = 0;
+    img.onerror = function () {
+      i++;
+      if (i < chain.length) img.src = chain[i];
+    };
+    img.src = chain[0];
+  }
+
   function buildCards() {
     var frag = document.createDocumentFragment();
     for (var i = 0; i < WORK.length; i++) {
@@ -78,33 +95,29 @@
       var front = document.createElement('div');
       front.className = 'morph-card-front';
       var img = document.createElement('img');
-      img.src = '/images/' + item.img + '.webp';
       img.width = CARD_W;
       img.height = CARD_H;
       img.alt = '';
       img.loading = 'lazy';
       img.decoding = 'async';
       img.draggable = false;
-      img.onerror = function () {
-        if (this.dataset.fb) return;
-        this.dataset.fb = '1';
-        this.src = this.src.replace('.webp', '.avif');
-      };
+      setSrcWithFallback(img, item.img);
       front.appendChild(img);
 
       var back = document.createElement('div');
       back.className = 'morph-card-back';
       var backImg = document.createElement('img');
-      backImg.src = '/images/' + item.img + '.webp';
       backImg.width = CARD_W;
       backImg.height = CARD_H;
       backImg.alt = '';
+      backImg.decoding = 'async';
       backImg.draggable = false;
-      backImg.onerror = function () {
-        if (this.dataset.fb) return;
-        this.dataset.fb = '1';
-        this.src = this.src.replace('.webp', '.avif');
-      };
+      // Back face is only visible on hover-flip, so defer its load to first hover.
+      card.addEventListener('mouseenter', function () {
+        if (backImg.dataset.loaded) return;
+        backImg.dataset.loaded = '1';
+        setSrcWithFallback(backImg, item.img);
+      });
       back.appendChild(backImg);
 
       inner.appendChild(front);
@@ -210,16 +223,28 @@
     }
   }
 
-  function frame() {
-    rafId = requestAnimationFrame(frame);
-    parallax += (parallaxTarget - parallax) * 0.08;
-    renderFrame();
+  // Render loop. Runs on demand only (scroll via the GSAP proxy onUpdate, mouse
+  // parallax via mousemove) and stops itself once parallax settles, so the page
+  // burns zero CPU when the section is idle.
+  function tick() {
+    rafId = 0;
+    var dp = parallaxTarget - parallax;
+    var moved = Math.abs(dp) > 0.05;
+    if (moved) parallax += dp * 0.08;
+    if (introDone) renderFrame();
+    if (moved) requestRender();
+  }
+
+  function requestRender() {
+    if (rafId) return;
+    rafId = requestAnimationFrame(tick);
   }
 
   function onMouseMove(e) {
     var rect = section.getBoundingClientRect();
     var nx = ((e.clientX - rect.left) / rect.width) * 2 - 1;
     parallaxTarget = nx * 100;
+    requestRender();
   }
 
   /* --- Interactive mode: intro timeline + pinned scrub --- */
@@ -247,7 +272,7 @@
     section.classList.add('is-live');
     section.classList.remove('is-static');
 
-    introTl = window.gsap.timeline({ onComplete: function () { introDone = true; } });
+    introTl = window.gsap.timeline({ onComplete: function () { introDone = true; requestRender(); } });
 
     // Scatter -> line
     introTl.to(cards, {
@@ -292,7 +317,7 @@
     st = window.gsap.to(proxy, {
       v: MAX_SCROLL,
       ease: 'none',
-      onUpdate: function () { scroll = proxy.v; },
+      onUpdate: function () { scroll = proxy.v; requestRender(); },
       scrollTrigger: {
         trigger: section,
         start: 'top top',
@@ -305,7 +330,7 @@
     });
 
     window.addEventListener('mousemove', onMouseMove, { passive: true });
-    if (!rafId) rafId = requestAnimationFrame(frame);
+    requestRender();
   }
 
   function teardownInteractive() {

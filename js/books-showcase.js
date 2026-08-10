@@ -6,60 +6,62 @@
    To change the books: edit the BOOKS array below. Each book gets a
    procedural cover by default; add `images: { front, back, spine }`
    (paths relative to the page) to use real cover art instead.
-   The two placeholder titles are waiting on cover art from Aryan. */
-import * as THREE from './vendor/three.module.min.js';
+    The two placeholder titles are waiting on cover art from Aryan. */
 
-var BOOKS = [
-  {
-    id: 'realtors-edge',
-    title: 'The Realtor\u2019s Edge',
-    author: 'Aryan Swaroop',
-    year: '2026',
-    stars: 5,
-    desc: 'A launch playbook built from four real real-estate campaigns — identity, 3D, film and the funnel that produced 302 leads in 66 days. Every page is field-tested, not theory.',
-    link: '/Realtors_Edge_Playbook.pdf',
-    linkLabel: 'Read the Playbook',
-    front: paintRealtorsFront,
-    edge: '#d9cfa9',
-    backBg: '#131c38',
-    backInk: '246,226,160',
-    spineBg: '#16213e',
-    spineInk: '#f6e2a0',
-    spineFont: '700 38px Georgia',
-    chapters: ['Positioning & Launch', 'The Identity System', '3D & Film', 'Campaign Mechanics', 'The Lead Funnel', 'Results & Learnings'],
-  },
-  {
-    id: 'brand-casebook',
-    title: 'The Brand Casebook',
-    author: 'Aryan Swaroop',
-    year: '2026',
-    stars: 4,
-    desc: 'Selected brand stories and the thinking behind them — identity, packaging and campaigns. Cover art coming soon.',
-    edge: '#e5d6da',
-    backBg: '#5b2a3c',
-    backInk: '243,217,224',
-    spineBg: '#5b2a3c',
-    spineInk: '#f3d9e0',
-    spineFont: '700 38px Georgia',
-  },
-  {
-    id: 'creative-notes',
-    title: 'Notes on Creative Work',
-    author: 'Aryan Swaroop',
-    year: '2026',
-    stars: 4,
-    desc: 'Process notes across identity, motion and 3D — the small rules that make work feel finished. Cover art coming soon.',
-    edge: '#d4e4e8',
-    backBg: '#25404b',
-    backInk: '214,238,242',
-    spineBg: '#25404b',
-    spineInk: '#d6eef2',
-    spineFont: '700 38px Georgia',
-  },
-];
+import * as THREE from './vendor/three.module.min.js';
 
 (function () {
   'use strict';
+
+  var BOOKS = [
+    {
+      id: 'realtors-edge',
+      title: 'The Realtor\u2019s Edge',
+      author: 'Aryan Swaroop',
+      year: '2026',
+      stars: 5,
+      desc: 'A launch playbook built from four real real-estate campaigns — identity, 3D, film and the funnel that produced 302 leads in 66 days. Every page is field-tested, not theory.',
+      link: '/Realtors_Edge_Playbook.pdf',
+      linkLabel: 'View',
+      front: paintRealtorsFront,
+      images: { front: 'images/realtors-edge-cover.png' },
+      edge: '#d9cfa9',
+      backBg: '#131c38',
+      backInk: '246,226,160',
+      spineBg: '#16213e',
+      spineInk: '#f6e2a0',
+      spineFont: '700 38px Georgia',
+      chapters: ['Positioning & Launch', 'The Identity System', '3D & Film', 'Campaign Mechanics', 'The Lead Funnel', 'Results & Learnings'],
+    },
+    {
+      id: 'brand-casebook',
+      title: 'The Brand Casebook',
+      author: 'Aryan Swaroop',
+      year: '2026',
+      stars: 4,
+      desc: 'Selected brand stories and the thinking behind them — identity, packaging and campaigns. Cover art coming soon.',
+      edge: '#e5d6da',
+      backBg: '#5b2a3c',
+      backInk: '243,217,224',
+      spineBg: '#5b2a3c',
+      spineInk: '#f3d9e0',
+      spineFont: '700 38px Georgia',
+    },
+    {
+      id: 'creative-notes',
+      title: 'Notes on Creative Work',
+      author: 'Aryan Swaroop',
+      year: '2026',
+      stars: 4,
+      desc: 'Process notes across identity, motion and 3D — the small rules that make work feel finished. Cover art coming soon.',
+      edge: '#d4e4e8',
+      backBg: '#25404b',
+      backInk: '214,238,242',
+      spineBg: '#25404b',
+      spineInk: '#d6eef2',
+      spineFont: '700 38px Georgia',
+    },
+  ];
 
   var root = document.getElementById('books-showcase');
   if (!root || root.dataset.bsInit) return;
@@ -1068,22 +1070,25 @@ var BOOKS = [
   }
 
   function updateDetail(book) {
-    detailTitle.textContent = book.title;
-    detailDesc.textContent = book.desc;
-    detailStars.innerHTML = renderStars(book.stars || 0);
-    detailYear.textContent = book.year || '—';
+    var cfg = book.cfg;
+    detailTitle.textContent = cfg.title;
+    detailDesc.textContent = cfg.desc;
+    detailStars.innerHTML = renderStars(cfg.stars || 0);
+    detailYear.textContent = cfg.year || '—';
     detailActions.innerHTML = '';
     var act = document.createElement('div');
     act.className = 'bs-detail-actions-row';
-    if (book.link) {
+    if (cfg.link) {
       var a = document.createElement('a');
       a.className = 'bs-btn bs-btn-primary';
-      a.href = book.link;
-      a.textContent = book.linkLabel || 'Read';
+      a.href = cfg.link;
+      a.target = '_blank';
+      a.rel = 'noopener';
+      a.textContent = cfg.linkLabel || 'View';
       act.appendChild(a);
       var d = document.createElement('a');
       d.className = 'bs-btn';
-      d.href = book.link;
+      d.href = cfg.link;
       d.setAttribute('download', '');
       d.textContent = 'Download';
       act.appendChild(d);
