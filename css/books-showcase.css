@@ -1,0 +1,501 @@
+/* ============================================================
+   Books Showcase — 3D bookshelf (tools.html only).
+   Vanilla port of the React "BooksShowcase" component.
+   Design tokens: navy #141a32, pink #f591ac, cream #fdfbf4,
+   lavender #c9d0ee, periwinkle #96a2de.
+   ============================================================ */
+
+.books-section {
+  padding: clamp(64px, 8vw, 110px) 0 0;
+}
+
+.books-section .wrap {
+  text-align: center;
+  margin-bottom: 34px;
+}
+
+.books-section .wrap h2 {
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: clamp(1.8rem, 3.4vw, 2.7rem);
+  line-height: 1.12;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  margin-bottom: 12px;
+}
+
+.books-section .wrap p {
+  max-width: 560px;
+  margin: 0 auto;
+  color: var(--graphite);
+  font-size: 15.5px;
+}
+
+/* ---- Showcase container ---- */
+.books-showcase {
+  position: relative;
+  isolation: isolate;
+  min-height: 660px;
+  overflow: hidden;
+  background:
+    radial-gradient(60% 45% at 12% 6%, rgba(201, 208, 238, 0.6), transparent 70%),
+    radial-gradient(48% 40% at 88% 16%, rgba(255, 182, 201, 0.42), transparent 70%),
+    radial-gradient(70% 55% at 50% 102%, rgba(150, 162, 222, 0.35), transparent 72%),
+    #fdfbf4;
+  color: #18181b;
+  transition: background-color 0.5s ease-out, color 0.5s ease-out;
+  container-type: size;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.books-showcase:focus-visible {
+  outline: 2px solid var(--bs-peri, #96a2de);
+  outline-offset: -2px;
+}
+
+.books-showcase.bs-detail-open {
+  background: #141a32;
+  color: #fdfbf4;
+}
+
+.bs-canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: block;
+  width: 100%;
+  height: 100%;
+  touch-action: none;
+}
+
+/* ---- Giant hero word ---- */
+.bs-hero-word {
+  position: absolute;
+  left: 50%;
+  top: 16%;
+  z-index: 1;
+  transform: translateX(-50%);
+  pointer-events: none;
+  user-select: none;
+  font-family: var(--sans);
+  font-weight: 800;
+  font-size: clamp(64px, 21vw, 210px);
+  line-height: 0.85;
+  letter-spacing: -0.015em;
+  white-space: nowrap;
+  color: rgba(20, 26, 50, 0.9);
+  opacity: 1;
+  transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+}
+
+.books-showcase.bs-detail-open .bs-hero-word {
+  opacity: 0;
+  transform: translate(-50%, -44px);
+}
+
+.books-showcase.bs-detail-open .bs-hero-word {
+  opacity: 0;
+  transform: translate(-50%, -44px);
+}
+
+/* ---- "Open" pill that follows the cursor ---- */
+.bs-open-pill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 30;
+  transform: translate(-50%, -50%) rotate(-1.6deg);
+  padding: 16px 38px 18px;
+  border: 0;
+  background:
+    repeating-linear-gradient(92deg, rgba(90, 74, 40, 0.03) 0px 2px, transparent 2px 6px),
+    radial-gradient(125% 150% at 28% 0%, #fffdf7 0%, #f8f2e3 58%, #ede4cf 100%);
+  font-family: var(--sans);
+  font-size: 15px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #141a32;
+  opacity: 0;
+  pointer-events: none;
+  clip-path: polygon(0% 0.9%, 8.3% 0.8%, 16.7% 6.3%, 25% 3.8%, 33.3% 5.5%, 41.7% 2.7%, 50% 5.2%, 58.3% 0.4%, 66.7% 5.9%, 75% 6.5%, 83.3% 1%, 91.7% 6.4%, 100% 0.7%, 97.7% 20%, 97% 40%, 99.6% 60%, 98.7% 80%, 100% 96.5%, 91.7% 99.8%, 83.3% 95.6%, 75% 94.9%, 66.7% 96.6%, 58.3% 93.5%, 50% 97.9%, 41.7% 99.5%, 33.3% 93.2%, 25% 93.6%, 16.7% 93.2%, 8.3% 93.1%, 0% 93.5%, 0.2% 80%, 1.1% 60%, 3.9% 40%, 3.8% 20%);
+  filter: drop-shadow(0 2px 1px rgba(0, 0, 0, 0.16)) drop-shadow(0 14px 26px rgba(0, 0, 0, 0.4));
+  transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+  will-change: left, top, opacity, transform;
+}
+
+.bs-open-pill.bs-open {
+  opacity: 1;
+}
+
+/* ---- Close button ---- */
+.bs-close {
+  position: absolute;
+  left: 50%;
+  top: 30px;
+  z-index: 40;
+  transform: translateX(-50%);
+  width: 52px;
+  height: 52px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 1.5px solid rgba(253, 251, 244, 0.4);
+  background: transparent;
+  color: #fdfbf4;
+  font-size: 17px;
+  line-height: 1;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease-out, border-color 0.3s ease-out;
+}
+
+.bs-close:hover {
+  border-color: rgba(253, 251, 244, 0.9);
+}
+
+.books-showcase.bs-detail-open .bs-close {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.bs-close:focus-visible {
+  outline: 2px solid var(--bs-peri, #96a2de);
+  outline-offset: 2px;
+}
+
+/* ---- Detail panel ---- */
+.bs-detail {
+  position: absolute;
+  right: 7%;
+  top: 50%;
+  z-index: 15;
+  width: min(560px, 42%);
+  transform: translateY(-50%);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease-out;
+}
+
+.books-showcase.bs-detail-open .bs-detail {
+  opacity: 1;
+  transition-delay: 0.15s;
+}
+
+.bs-detail-title {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: clamp(38px, 5.2vw, 72px);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.015em;
+  color: #f591ac;
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.books-showcase.bs-detail-open .bs-detail-title {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.1s;
+}
+
+.bs-detail-desc {
+  margin-top: 26px;
+  max-width: 54ch;
+  font-size: clamp(15px, 1.25vw, 19px);
+  line-height: 1.65;
+  color: #c9d0ee;
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.books-showcase.bs-detail-open .bs-detail-desc {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.2s;
+}
+
+.bs-detail-meta {
+  margin-top: 34px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.books-showcase.bs-detail-open .bs-detail-meta {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.3s;
+}
+
+.bs-detail-stars {
+  display: inline-flex;
+  gap: 5px;
+}
+
+.bs-detail-stars svg {
+  width: 25px;
+  height: 25px;
+  fill: #f591ac;
+}
+
+.bs-detail-stars svg.off {
+  opacity: 0.25;
+}
+
+.bs-detail-rule {
+  width: 1px;
+  height: 24px;
+  background: rgba(201, 208, 238, 0.28);
+}
+
+.bs-detail-label {
+  font-style: italic;
+  color: #98a4d6;
+}
+
+.bs-detail-year {
+  margin-left: auto;
+  font-style: italic;
+  color: #98a4d6;
+}
+
+.bs-detail-divider {
+  margin-top: 26px;
+  border-top: 1px solid rgba(201, 208, 238, 0.18);
+  opacity: 0;
+  transition: opacity 0.6s ease-out;
+}
+
+.books-showcase.bs-detail-open .bs-detail-divider {
+  opacity: 1;
+  transition-delay: 0.4s;
+}
+
+.bs-detail-actions {
+  margin-top: 32px;
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.books-showcase.bs-detail-open .bs-detail-actions {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.45s;
+}
+
+.bs-detail-actions-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  border-radius: 999px;
+  background: #1a2140;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+  pointer-events: auto;
+}
+
+.bs-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  height: 54px;
+  padding: 0 26px;
+  border-radius: 999px;
+  border: 0;
+  font-family: var(--sans);
+  font-size: 16.5px;
+  font-weight: 600;
+  color: #10152c;
+  background: #96a2de;
+  cursor: pointer;
+  text-decoration: none;
+  transition: transform 0.22s ease, filter 0.22s ease;
+  transition-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.bs-btn:hover {
+  transform: scale(1.04);
+  filter: brightness(1.05);
+}
+
+.bs-btn-primary {
+  background: #fdfbf4;
+  color: #141a32;
+}
+
+.bs-btn-disabled {
+  background: rgba(150, 162, 222, 0.28);
+  color: #c9d0ee;
+  cursor: default;
+  font-size: 15px;
+}
+
+.bs-btn:focus-visible {
+  outline: 2px solid var(--bs-peri, #96a2de);
+  outline-offset: 2px;
+}
+
+/* ---- No-JS fallback ---- */
+.bs-nojs {
+  position: relative;
+  z-index: 3;
+  list-style: none;
+  margin: 0 auto;
+  padding: 0;
+  max-width: 520px;
+  display: grid;
+  gap: 0;
+  border: 1px solid rgba(0, 0, 0, 0.07);
+  border-radius: 16px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.88);
+}
+
+.bs-nojs li {
+  margin: 0;
+}
+
+.bs-nojs a,
+.bs-nojs span {
+  display: block;
+  padding: 16px 20px;
+  color: #0e0e0f;
+  font-size: 14.5px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.bs-nojs li:last-child a,
+.bs-nojs li:last-child span {
+  border-bottom: 0;
+}
+
+.bs-nojs a:hover {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+.bs-nojs span {
+  color: #6b6b6b;
+}
+
+.js .bs-nojs {
+  display: none;
+}
+
+/* ---- WebGL-failure fallback ---- */
+.bs-fallback {
+  position: absolute;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  padding: 40px;
+  text-align: center;
+  background: #141a32;
+  color: #c9d0ee;
+}
+
+.bs-fallback h3 {
+  font-family: var(--serif);
+  font-size: 28px;
+  color: #fdfbf4;
+}
+
+.bs-fallback ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 10px;
+}
+
+.bs-fallback a {
+  color: #f591ac;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* ---- Reduced motion ---- */
+@media (prefers-reduced-motion: reduce) {
+  .books-showcase,
+  .bs-detail-title,
+  .bs-detail-desc,
+  .bs-detail-meta,
+  .bs-detail-divider,
+  .bs-detail-actions,
+  .bs-hero-word,
+  .bs-open-pill {
+    transition: none;
+  }
+}
+
+/* ---- Mobile ---- */
+@media (max-width: 760px) {
+  .books-showcase {
+    min-height: 640px;
+  }
+
+  .bs-detail {
+    right: auto;
+    left: 50%;
+    top: auto;
+    bottom: 3.5%;
+    width: min(560px, 92%);
+    transform: translateX(-50%);
+    text-align: left;
+  }
+
+  .bs-detail-title {
+    font-size: clamp(32px, 9.5vw, 48px);
+  }
+
+  .bs-detail-desc {
+    margin-top: 12px;
+    font-size: 15px;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .bs-detail-meta {
+    margin-top: 16px;
+  }
+
+  .bs-detail-actions {
+    margin-top: 16px;
+  }
+
+  .bs-detail-actions-row {
+    flex-wrap: wrap;
+    border-radius: 28px;
+  }
+
+  .bs-btn {
+    height: 48px;
+    padding: 0 20px;
+    font-size: 15px;
+  }
+
+  .bs-close {
+    left: auto;
+    right: 18px;
+    top: 18px;
+    transform: none;
+  }
+}
