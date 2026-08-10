@@ -266,6 +266,109 @@ var coverFragmentShaderReverse = `
 `;
 
 
+/* Mobile-optimised variants — phones drop the expensive Sobel edge pass and the
+   multi-octave fbm noise; the dissolve threshold math stays identical so the
+   transition feels the same, but at a fraction of the per-fragment cost. */
+var mobileCoverFragmentShader = `
+  uniform sampler2D uTexture;
+  uniform vec2 uResolution;
+  uniform vec2 uImageResolution;
+  uniform float uDissolve;
+  uniform vec2 uCenter;
+  uniform float uGrayscale;
+  varying vec2 vUv;
+
+
+  float getLuminance(vec3 color) {
+    return dot(color, vec3(0.299, 0.587, 0.114));
+  }
+
+
+  float hash(vec2 p) {
+    return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453);
+  }
+
+
+  void main() {
+    vec2 ratio = vec2(
+      min((uResolution.x / uResolution.y) / (uImageResolution.x / uImageResolution.y), 1.0),
+      min((uResolution.y / uResolution.x) / (uImageResolution.y / uImageResolution.x), 1.0)
+    );
+
+
+    vec2 uv = vec2(
+      vUv.x * ratio.x + (1.0 - ratio.x) * 0.5,
+      vUv.y * ratio.y + (1.0 - ratio.y) * 0.5
+    );
+
+
+    vec4 texColor = texture2D(uTexture, uv);
+    float gray = getLuminance(texColor.rgb);
+    texColor.rgb = mix(texColor.rgb, vec3(gray), uGrayscale);
+
+
+    vec2 centeredUv = vUv - uCenter;
+    float aspect = uResolution.x / uResolution.y;
+    centeredUv.x *= aspect;
+    float dist = length(centeredUv);
+
+
+    float jitter = hash(floor(vUv * uResolution / 8.0)) * 0.1;
+    float maxDist = length(vec2(aspect * 0.5, 0.5));
+    float normalizedDist = (dist + jitter) / maxDist;
+
+
+    float dissolveThreshold = uDissolve * 1.5;
+    float dissolveMask = smoothstep(dissolveThreshold - 0.03, dissolveThreshold, normalizedDist);
+
+
+    vec3 baseColor = mix(texColor.rgb, vec3(0.0), uGrayscale);
+    float alpha = dissolveMask * texColor.a;
+
+
+    gl_FragColor = vec4(baseColor, alpha);
+  }
+`;
+
+
+var mobileCoverFragmentShaderReverse = `
+  uniform sampler2D uTexture;
+  uniform vec2 uResolution;
+  uniform vec2 uImageResolution;
+  uniform float uDarkness;
+  uniform float uGrayscale;
+  varying vec2 vUv;
+
+
+  float getLuminance(vec3 color) {
+    return dot(color, vec3(0.299, 0.587, 0.114));
+  }
+
+
+  void main() {
+    vec2 ratio = vec2(
+      min((uResolution.x / uResolution.y) / (uImageResolution.x / uImageResolution.y), 1.0),
+      min((uResolution.y / uResolution.x) / (uImageResolution.y / uImageResolution.x), 1.0)
+    );
+
+
+    vec2 uv = vec2(
+      vUv.x * ratio.x + (1.0 - ratio.x) * 0.5,
+      vUv.y * ratio.y + (1.0 - ratio.y) * 0.5
+    );
+
+
+    vec4 texColor = texture2D(uTexture, uv);
+    float gray = getLuminance(texColor.rgb);
+    vec3 tinted = mix(texColor.rgb, vec3(gray), uGrayscale);
+    vec3 baseColor = mix(tinted, vec3(0.0), uDarkness);
+
+
+    gl_FragColor = vec4(clamp(baseColor, 0.0, 1.0), texColor.a);
+  }
+`;
+
+
 (function () {
   'use strict';
 
@@ -274,6 +377,7 @@ var coverFragmentShaderReverse = `
 
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var webgl2 = !!document.createElement('canvas').getContext('webgl2');
+  var isMobile = window.matchMedia('(max-width: 768px)').matches;
 
   ScrollTrigger.config({ ignoreMobileResize: true });
 
@@ -315,7 +419,9 @@ var coverFragmentShaderReverse = `
       preserveDrawingBuffer: true
     });
     renderer.setClearColor(0x000000, 0);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
+    renderer.setPixelRatio(isMobile
+      ? Math.min(window.devicePixelRatio || 1, 1)
+      : Math.min(window.devicePixelRatio || 1, 1.5));
 
     var scene = new THREE.Scene();
     var camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0.1, 10);
@@ -335,7 +441,7 @@ var coverFragmentShaderReverse = `
 
     var materialFront = new THREE.ShaderMaterial({
       vertexShader: coverVertexShader,
-      fragmentShader: coverFragmentShader,
+      fragmentShader: isMobile ? mobileCoverFragmentShader : coverFragmentShader,
       transparent: true,
       uniforms: Object.assign(baseUniforms(), {
         uGrayscale: { value: 0.0 },
@@ -346,7 +452,7 @@ var coverFragmentShaderReverse = `
 
     var materialBack = new THREE.ShaderMaterial({
       vertexShader: coverVertexShader,
-      fragmentShader: coverFragmentShaderReverse,
+      fragmentShader: isMobile ? mobileCoverFragmentShaderReverse : coverFragmentShaderReverse,
       transparent: true,
       uniforms: Object.assign(baseUniforms(), {
         uBrightness: { value: 0.0 },
