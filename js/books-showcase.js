@@ -202,7 +202,8 @@ import * as THREE from './vendor/three.module.min.js';
     });
     fail.appendChild(list);
     root.appendChild(fail);
-    throw new Error('BooksShowcase: WebGL unavailable');
+    console.warn('BooksShowcase: WebGL unavailable — showing fallback book list.');
+    return;
   }
 
   var dims = { w: 0, h: 0 };

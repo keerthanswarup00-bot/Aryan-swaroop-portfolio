@@ -28,8 +28,8 @@
     /* Game */
     { name: 'Catch the BMTC', meta: 'Endless runner game', href: '/#game', section: 'Game', icon: 'game' },
     /* Case studies */
-    { name: 'Brahmi Coffee Roasters', meta: 'Identity, packaging & brand system', href: '/work/brahmi.html', section: 'Case Studies', icon: 'cup' },
-    { name: 'Paavani Properties', meta: 'Real estate branding & marketing', href: '/work/paavani-properties.html', section: 'Case Studies', icon: 'building' },
+    { name: 'Brahmi Coffee Roasters', meta: 'Identity, packaging & brand system', href: '/work/brahmi', section: 'Case Studies', icon: 'cup' },
+    { name: 'Paavani Properties', meta: 'Real estate branding & marketing', href: '/work/paavani-properties', section: 'Case Studies', icon: 'building' },
     { name: 'Isha V', meta: 'Security & facility management', href: '/lifestyle#ishav', section: 'Case Studies', icon: 'shield' },
     { name: 'Arvi Hospital', meta: 'Collateral redesign & social system', href: '/lifestyle#arvi', section: 'Case Studies', icon: 'plus' },
     { name: 'Snehaloka Cricket Academy', meta: 'Sports complex 3D visualization', href: '/lifestyle#snehaloka', section: 'Case Studies', icon: 'trophy' },

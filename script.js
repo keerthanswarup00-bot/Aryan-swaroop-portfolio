@@ -393,7 +393,7 @@ if(window.matchMedia('(min-width:1024px)').matches && document.querySelector('.h
 var featureImg=document.querySelector('#brahmi .feature-visual');
 if(featureImg && !featureImg.closest('a')){
 featureImg.style.cursor='pointer';
-featureImg.addEventListener('click',function(){window.location.href='/work/brahmi.html'});
+featureImg.addEventListener('click',function(){window.location.href='/work/brahmi'});
 }
 var aboutImg=document.querySelector('#about .about-photo');
 if(aboutImg && !aboutImg.closest('a')){

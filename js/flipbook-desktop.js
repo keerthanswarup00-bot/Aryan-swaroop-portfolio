@@ -1,14 +1,4 @@
 (function () {
-  if (window.innerWidth < 768) {
-    var retry = function () {
-      if (window.innerWidth >= 768) {
-        window.removeEventListener('resize', retry);
-        init();
-      }
-    };
-    window.addEventListener('resize', retry);
-    return;
-  }
   init();
 
   function init() {

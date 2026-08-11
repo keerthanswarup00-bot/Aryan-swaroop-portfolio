@@ -432,14 +432,26 @@
   /* === 16. Touch targets >= 44px (M4) — hit area via pseudo-element, no layout shift === */
   .copy-email,
   .foot-bottom a,
+  button.sf-btn,
   .teaser-link,
-  .cs-next-link {
+  .cs-next-link,
+  #vr-devaiah p a,
+  .builds-section p a,
+  .cs-interactive-note a,
+  .books-showcase a,
+  .bs-nojs a {
     position: relative;
   }
   .copy-email::before,
   .foot-bottom a::before,
+  button.sf-btn::before,
   .teaser-link::before,
-  .cs-next-link::before {
+  .cs-next-link::before,
+  #vr-devaiah p a::before,
+  .builds-section p a::before,
+  .cs-interactive-note a::before,
+  .books-showcase a::before,
+  .bs-nojs a::before {
     content: "";
     position: absolute;
     inset: -14px -8px;

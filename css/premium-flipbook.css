@@ -168,6 +168,19 @@
     padding: 0 1rem;
     margin-bottom: 2rem;
   }
+  .fb-desktop {
+    padding: 0 12px;
+  }
+  .fb-desktop__nav {
+    width: 44px;
+    height: 56px;
+  }
+  .fb-desktop__prev {
+    left: 4px;
+  }
+  .fb-desktop__next {
+    right: 4px;
+  }
 }
 
 @media (max-width: 480px) {
@@ -188,31 +201,5 @@
   .fb-desktop__book {
     transition: none;
   }
-}
-
-.desktop-only {
-  display: block;
-}
-
-.mobile-only {
-  display: none;
-}
-
-@media (max-width: 767px) {
-  .desktop-only {
-    display: none !important;
-  }
-  .mobile-only {
-    display: block !important;
-  }
-}
-
-.cs-flipbook-embed {
-  width: 88vw;
-  max-width: 360px;
-  margin: 0 auto;
-  padding: 0;
-  background: transparent;
-  border: none;
 }
 

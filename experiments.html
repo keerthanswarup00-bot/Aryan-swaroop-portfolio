@@ -3,17 +3,29 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Experiment — Interactive Profile Pill | Aryan</title>
+  <title>Experiment — Animated Theme Toggler | Aryan</title>
   <meta name="robots" content="noindex, nofollow">
-  <meta name="description" content="Interactive profile widget experiment.">
+  <meta name="description" content="Animated light/dark theme toggle with View Transitions API clip-path reveals.">
+  <meta name="color-scheme" content="light dark">
   <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/theme-toggler.css">
   <link rel="stylesheet" href="css/morphing-pill.css">
+  <link rel="stylesheet" href="css/marquee-path.css">
 </head>
 <body>
-  <section class="mp-stage" id="hero" aria-label="Interactive profile hero">
-    <h1 class="sr-only">Interactive profile card</h1>
+  <section class="tt-stage" id="hero" aria-label="Animated theme toggle">
+    <h1 class="sr-only">Animated light and dark theme toggler</h1>
+    <button class="theme-toggle" id="themeToggle" type="button" data-variant="circle" aria-label="Toggle color theme" title="Toggle color theme">
+      <svg class="tt-icon tt-sun" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+      <svg class="tt-icon tt-moon" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+    </button>
+    <p class="tt-note">Light&nbsp;/&nbsp;Dark</p>
+  </section>
+
+  <section class="mp-stage" aria-label="Interactive profile hero">
+    <h2 class="sr-only">Interactive profile card</h2>
     <div class="morph-shell" id="morphShell" data-state="compact">
       <div class="mp-panel panel-compact" id="panelCompact"></div>
       <div class="mp-panel panel-profile" id="panelProfile"></div>
@@ -22,6 +34,20 @@
     </div>
     <p class="sr-only" id="morphLive" role="status" aria-live="polite"></p>
   </section>
+
+  <section class="mq-section" aria-label="Gallery marquee along a path">
+    <h2 class="sr-only">Image gallery travelling along a curved path</h2>
+    <div class="mq-wrap" id="mqWrap">
+      <div class="mq-inner" id="mqInner">
+        <svg class="mq-svg" viewBox="0 0 996 330" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+          <path id="mqPath" d="" fill="none" stroke="none"></path>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <script src="js/theme-toggler.js" defer></script>
   <script src="js/morphing-pill.js" defer></script>
+  <script src="js/marquee-path.js" defer></script>
 </body>
 </html>
